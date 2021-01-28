@@ -26,7 +26,7 @@ public class Teapot extends Demo3d {
     new TrigLookUp(0.01);
   }
   
-  private String teapotObjFilePath = "C:\\Users\\User\\eclipse-workspace\\Feyn3d\\src\\demo3d\\teapot\\minicooper.obj";
+  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot/minicooper.obj";
 
   private Model3d teapot = new Model3dBuilder()
     .fromObjFile(teapotObjFilePath)
