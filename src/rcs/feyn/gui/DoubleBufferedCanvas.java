@@ -16,7 +16,7 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.two.gfx.Graphics2d;
 
-public abstract class DoubleBufferedCanvas extends JComponent implements ComponentListener {
+public abstract class DoubleBufferedCanvas extends JComponent {
    
   private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public abstract class DoubleBufferedCanvas extends JComponent implements Compone
   private FeynColor background = FeynColor.black;
 
   public DoubleBufferedCanvas(Graphics2d graphics) {
-    this.addComponentListener(this);
+    this.addComponentListener(new ComponentResized());
     this.graphics = graphics; 
   }
 
@@ -71,27 +71,34 @@ public abstract class DoubleBufferedCanvas extends JComponent implements Compone
   protected Object getRenderingLock() {
     return renderingLock;
   } 
-
-  @Override
-  public final void componentResized(ComponentEvent e) {
-    synchronized (getRenderingLock()) {
-      Dimension size = getSize();
-      int w = size.width, h = size.height;
-      setWidth(w);
-      setHeight(h);
-      imageBuffer = (BufferedImage) createImage(w, h); 
-      graphics.setRaster(new Raster(
-          ((DataBufferInt) imageBuffer.getRaster().getDataBuffer()).getData(), 
-          w, h));
-    }
+  
+  protected void setImageBuffer(BufferedImage imageBuffer) {
+    this.imageBuffer = imageBuffer;
   }
+  
+  private class ComponentResized implements ComponentListener {
 
-  @Override
-  public void componentHidden(ComponentEvent e) { }
+    @Override
+    public final void componentResized(ComponentEvent e) {
+      synchronized (getRenderingLock()) {
+        Dimension size = getSize();
+        int w = size.width, h = size.height;
+        setWidth(w);
+        setHeight(h);
+        imageBuffer = (BufferedImage) createImage(w, h); 
+        graphics.setRaster(new Raster(
+            ((DataBufferInt) imageBuffer.getRaster().getDataBuffer()).getData(), 
+            w, h));
+      }
+    }
 
-  @Override
-  public void componentMoved(ComponentEvent e) { }
+    @Override
+    public void componentHidden(ComponentEvent e) { }
 
-  @Override
-  public void componentShown(ComponentEvent e) { }
+    @Override
+    public void componentMoved(ComponentEvent e) { }
+
+    @Override
+    public void componentShown(ComponentEvent e) { }
+  }
 }
