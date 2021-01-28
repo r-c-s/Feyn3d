@@ -1,4 +1,4 @@
-module feyn3d {
+module feyn {
     requires java.desktop;
 
     exports rcs.feyn.color;
