@@ -2,12 +2,12 @@ package demo3d.shatter;
 
 import java.util.EnumSet;
 
+import demo3d.Demo3d;
 import demo3d.animations.TrackLightSourceWithCamera;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.three.Demo3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;

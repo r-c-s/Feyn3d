@@ -1,7 +1,6 @@
 package demo2d;
 
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.two.Demo2d;
 
 public class Demo extends Demo2d {
 

@@ -1,8 +1,8 @@
 package demo3d.vortex;
 
+import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.three.Demo3d;
 import rcs.feyn.three.anim.Curve3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.render.primitives.Line3d;

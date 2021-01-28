@@ -3,12 +3,12 @@ package demo3d.gumballs;
 import java.util.EnumSet;
 import java.util.function.BiConsumer;
 
+import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.event.DragRotateObject;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.struct.FeynArray;
 import rcs.feyn.struct.FeynCollection;
-import rcs.feyn.three.Demo3d;
 import rcs.feyn.three.collision.BoundingBox3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.collision.Collidable3d;

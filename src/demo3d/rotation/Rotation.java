@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.three.Demo3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -16,6 +15,7 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
+import demo3d.Demo3d;
 import demo3d.Grid;
 
 public class Rotation extends Demo3d {
