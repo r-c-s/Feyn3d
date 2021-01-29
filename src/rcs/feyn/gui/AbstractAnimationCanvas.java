@@ -31,9 +31,7 @@ public abstract class AbstractAnimationCanvas
 
   private final Thread drawThread = new Thread(() -> {
     while (true) {
-      long duration = TimeUtils.getElapsedTimeMillis(() -> { 
-        repaintSynchronous();
-      });
+      long duration = TimeUtils.getElapsedTimeMillis(this::repaintSynchronous);
       
       // FPS:
       // System.out.println(1000.0 / duration);
@@ -49,9 +47,7 @@ public abstract class AbstractAnimationCanvas
 
   private final Thread mainThread = new Thread(() -> { 
     while (running) { 
-      long duration = TimeUtils.getElapsedTimeMillis(() -> {
-        updateState();
-      }); 
+      long duration = TimeUtils.getElapsedTimeMillis(this::updateState); 
       
       if (duration < UPS_DELAY_MS) {
         try {
