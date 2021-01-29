@@ -103,7 +103,7 @@ public class Polygon3d extends Primitive3d implements Colorable {
     };
   }  
 
-  public static Polygon3d regularPolygon(int radius, int sides) {
+  public static Polygon3d regularPolygon(double radius, int sides) {
     Vector3d[] vertices = new Vector3d[sides];
 
     double deg = MathConsts.TWO_PI / (double) sides;
