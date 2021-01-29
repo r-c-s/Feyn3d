@@ -1,4 +1,4 @@
-package demo3d.animations;
+package rcs.feyn.three.anim;
 
 import rcs.feyn.three.kernel.FeynApp3d;
 
