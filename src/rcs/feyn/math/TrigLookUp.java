@@ -1,5 +1,7 @@
 package rcs.feyn.math;
 
+import rcs.feyn.math.MathConsts;
+
 public class TrigLookUp {
   
   static {

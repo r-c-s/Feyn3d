@@ -1,7 +1,7 @@
 package rcs.feyn.two.geo;
 
-import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.MathConsts;
 
 public class GeoUtils2d {
   

@@ -10,8 +10,8 @@ import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.MathConsts;
+import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Plato extends Demo3d { 

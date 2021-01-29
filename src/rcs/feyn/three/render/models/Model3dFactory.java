@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.two.geo.GeoUtils2d;
+import rcs.feyn.math.MathConsts;
 
 public class Model3dFactory { 
 

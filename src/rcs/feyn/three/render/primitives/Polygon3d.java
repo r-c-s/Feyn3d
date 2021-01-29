@@ -6,11 +6,11 @@ import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.color.Colorable;
-import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.utils.ArrayUtils;
+import rcs.feyn.math.MathConsts;
 
 public class Polygon3d extends Primitive3d implements Colorable {
 
