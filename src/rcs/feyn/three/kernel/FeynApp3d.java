@@ -19,7 +19,7 @@ public class FeynApp3d {
   private static final RenderKernel3d renderKernel =
       new RenderKernel3d(Runtime.getRuntime().availableProcessors(), repository);
   
-  private static Camera3d camera = new Camera3d();
+  private static final Camera3d camera = new Camera3d();
   
   private static DiffuseLightSource3d lightSource = null;
   private static AmbientLightSource3d ambientLight = new AmbientLightSource3d(1);
@@ -39,10 +39,6 @@ public class FeynApp3d {
   public static Camera3d getCamera() {
     return camera;
   }
-
-  public static void setCamera(Camera3d cam) {
-    camera = cam;
-  } 
 
   public static Matrix44 getViewSpaceMatrix() {
     Vector3d p, i, j, k;
