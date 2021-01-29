@@ -1,4 +1,4 @@
-module feyn {
+module feyn3d {
     requires java.desktop;
 
     exports rcs.feyn.color;
@@ -6,7 +6,6 @@ module feyn {
     exports rcs.feyn.gfx;
     exports rcs.feyn.gui;
     exports rcs.feyn.math;
-    exports rcs.feyn.math.geo;
     exports rcs.feyn.math.linalg;
     exports rcs.feyn.physics;
     exports rcs.feyn.struct;
