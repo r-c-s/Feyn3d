@@ -40,9 +40,7 @@ public class Plato extends Demo3d {
   
   @Override
   protected void initialize() {
-    super.initialize(); 
-    
-    System.out.println(solids[0].getVertices().size());
+    super.initialize();
     
     setBackgroundColor(FeynColor.bisque3);
     

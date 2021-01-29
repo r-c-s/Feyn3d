@@ -26,13 +26,15 @@ public class Teapot extends Demo3d {
     new TrigLookUp(0.01);
   }
   
-  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot/minicooper.obj";
+  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot/teapot.obj";
 
   private Model3d teapot = new Model3dBuilder()
     .fromObjFile(teapotObjFilePath)
     .addColor(FeynColor.white)//.fade(0.5))
     .addTransform(Matrix44.createScaleMatrix(0.05))
     .build();
+  
+  private boolean trackLightsourceWithCamera = false;
 
   public Teapot() { }
 
@@ -42,22 +44,21 @@ public class Teapot extends Demo3d {
     
     wzc.setAmount(0.1);
     
-    teapot.pitch(-90);
-    
     setBackgroundColor(FeynColor.superDarkGray); 
     
     Model3dUtils.setOptions(
         teapot, 
         EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
-        null);
+        EnumSet.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(teapot);
     
-    camera.translate(1, 2, 5.5);
+    camera.translate(0.5, 2, 5.5);
     camera.rotate(Vector3d.X_AXIS, -20); 
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(30));
-    FeynApp3d.getDiffuseLightSource().setPosition(new Vector3d(3, 4, 5));
+    VariableIntensityLightSource3d lightSource = new VariableIntensityLightSource3d(30);
+    lightSource.setPosition(new Vector3d(3, 4, 5));
+    FeynApp3d.setDiffuseLightSource(lightSource);
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
   } 
 
@@ -65,7 +66,9 @@ public class Teapot extends Demo3d {
   public void runningLoop() {
     controlCamera();  
     handleInput();
-//    teapot.yaw(1); 
+    if (trackLightsourceWithCamera) {
+    	FeynApp3d.getDiffuseLightSource().setPosition(FeynApp3d.getCamera().getPosition()); 
+    }
   }
 
   @Override
@@ -113,6 +116,10 @@ public class Teapot extends Demo3d {
     if (pressed[KeyEvent.VK_S]) {
       inputDelay = 50;
       screenshot("./screenshots/"+System.currentTimeMillis()+".png");
+    }
+    if (pressed[KeyEvent.VK_L]) {
+      inputDelay = 50;
+      trackLightsourceWithCamera = !trackLightsourceWithCamera;
     }
   }
 
