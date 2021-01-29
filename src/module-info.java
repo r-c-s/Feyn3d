@@ -8,7 +8,7 @@ module feyn3d {
     exports rcs.feyn.math;
     exports rcs.feyn.math.linalg;
     exports rcs.feyn.physics;
-    exports rcs.feyn.struct;
+    exports rcs.feyn.utils.struct;
     exports rcs.feyn.three;
     exports rcs.feyn.three.anim;
     exports rcs.feyn.three.collision;

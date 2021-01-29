@@ -1,4 +1,4 @@
-package rcs.feyn.struct;
+package rcs.feyn.utils.struct;
 
 public interface FeyngGarbageCollectable {
   

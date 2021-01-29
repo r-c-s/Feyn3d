@@ -1,4 +1,4 @@
-package rcs.feyn.struct;
+package rcs.feyn.utils.struct;
 
 import java.util.Comparator;
 

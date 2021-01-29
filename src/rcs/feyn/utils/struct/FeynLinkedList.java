@@ -1,8 +1,8 @@
-package rcs.feyn.struct;
+package rcs.feyn.utils.struct;
 
 import java.util.Iterator;
 
-import rcs.feyn.struct.DoublyLinkedList;
+import rcs.feyn.utils.struct.DoublyLinkedList;
 
 public class FeynLinkedList<T extends FeyngGarbageCollectable> extends FeynCollection<T> {
   

@@ -2,9 +2,9 @@ package rcs.feyn.three.kernel;
 
 import java.util.Iterator;
 
-import rcs.feyn.struct.DoublyLinkedList;
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.render.patches.Patch3d;
+import rcs.feyn.utils.struct.DoublyLinkedList;
 
 public class ObjectRepository3d {
 
