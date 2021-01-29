@@ -1,11 +1,10 @@
 package rcs.feyn.three.geo;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.geo.Spherical;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class Sphere3d implements Spherical, Movable3d, Transformable3d {
+public class Sphere3d implements Movable3d, Transformable3d {
 
   protected Vector3d point;
   protected double   radius;
@@ -23,12 +22,10 @@ public class Sphere3d implements Spherical, Movable3d, Transformable3d {
     this.point.set(position);
   }
 
-  @Override
   public double getRadius() {
     return radius;
   }
 
-  @Override
   public void setRadius(double radius) {
     if (radius <= 0) {
       throw new IllegalArgumentException("Error: radius must be greater than 0.");

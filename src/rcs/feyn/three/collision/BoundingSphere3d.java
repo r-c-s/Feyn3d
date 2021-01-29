@@ -1,10 +1,9 @@
 package rcs.feyn.three.collision;
 
-import rcs.feyn.math.geo.Spherical;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class BoundingSphere3d extends BoundingObject3d implements Spherical {
+public class BoundingSphere3d extends BoundingObject3d {
   
   protected double radius;
   
@@ -17,12 +16,10 @@ public class BoundingSphere3d extends BoundingObject3d implements Spherical {
     this.radius = radius;
   }
 
-  @Override
   public double getRadius() {
     return radius;
   }
 
-  @Override
   public void setRadius(double radius) {
     this.radius = radius;
   } 
