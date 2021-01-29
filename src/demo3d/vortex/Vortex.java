@@ -34,7 +34,7 @@ public class Vortex extends Demo3d {
                              (int)(10+factor*factor*245), 
                              255);
       },
-      0.01, 
+      0.001, 
       0.1);
 
   public Vortex() { }
@@ -59,7 +59,7 @@ public class Vortex extends Demo3d {
 
     FeynApp3d.getRepository().add(curve);
     
-    camera.translate(0, 0, 10);
+    camera.translate(0, 0, 2);
   }
   
   @Override
