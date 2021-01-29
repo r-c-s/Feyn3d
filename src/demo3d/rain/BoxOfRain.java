@@ -1,7 +1,5 @@
 package demo3d.rain;
 
-import java.util.Iterator;
-
 import demo3d.Demo3d;
 import demo3d.Grid;
 import rcs.feyn.color.FeynColor;
