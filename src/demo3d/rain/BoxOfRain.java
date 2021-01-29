@@ -91,7 +91,7 @@ public class BoxOfRain extends Demo3d {
   	double maxRadius = 2;
   	waves.forEach(wave -> {
     	double radius = wave.getVertices()[0].distance(wave.getCenterOfMass());
-    	wave.scale(1 + 0.01/(radius / maxRadius));
+    	wave.scale(1 + 0.005/(radius / maxRadius));
     	wave.setColor(wave.getColor().fade(1 - (radius / maxRadius)));
     	if (radius > maxRadius) {
     		wave.destroy();
