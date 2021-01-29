@@ -1,6 +1,9 @@
 package rcs.feyn.three.kernel;
 
-import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.render.patches.Patch3d;
@@ -30,66 +33,10 @@ public class ObjectRepository3d {
     return listsOfObjects.remove(listOfRenderables);
   }
   
-  public Iterator<Patch3d> patchesIterator() {
-    return new Iterator<Patch3d>() {
-      private Iterator<Renderable3d>
-        objectsIterator = objectsIterator();
-      
-      private Patch3d[]
-        currentArray = objectsIterator.hasNext() 
-          ? objectsIterator.next().getRenderablePatches()
-          : null;
-          
-      private int currentIndex;
-
-      @Override
-      public boolean hasNext() {
-        return currentArray != null 
-            && currentIndex < currentArray.length
-            || objectsIterator.hasNext();
-      }
-
-      @Override
-      public synchronized Patch3d next() {
-        if (!hasNext()) {
-          return null;
-        }
-        if (currentIndex >= currentArray.length) {
-          currentArray = objectsIterator.next().getRenderablePatches();
-          currentIndex = 0;
-        }
-        return currentArray[currentIndex++];
-      }
-    };
-  }
-
-  public Iterator<Renderable3d> objectsIterator() {
-    return new Iterator<Renderable3d>() {
-      private Iterator<Iterable<? extends Renderable3d>>
-        listsOfObjectsIterator = listsOfObjects.iterator();
-     
-      private Iterator<? extends Renderable3d>
-        currentIterator = listsOfObjectsIterator.hasNext()
-          ? listsOfObjectsIterator.next().iterator()
-          : null;
-      
-      @Override
-      public boolean hasNext() {
-        return currentIterator != null
-            && currentIterator.hasNext() 
-            || listsOfObjectsIterator.hasNext();
-      } 
-      
-      @Override
-      public Renderable3d next() {
-        if (!hasNext()) {
-          return null;
-        }
-        if (currentIterator == null || !currentIterator.hasNext()) { 
-          currentIterator = listsOfObjectsIterator.next().iterator();
-        }
-        return currentIterator.next();
-      }
-    };
+	public Stream<Patch3d> patches() {
+		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
+		    .flatMap(listOfObjects -> StreamSupport.stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
+		    .map(Renderable3d::getRenderablePatches)
+		    .flatMap(Stream::of);
   }
 }

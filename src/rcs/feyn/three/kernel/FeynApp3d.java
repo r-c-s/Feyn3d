@@ -17,7 +17,7 @@ public class FeynApp3d {
       new ObjectRepository3d();
   
   private static final RenderKernel3d renderKernel =
-      new RenderKernel3d(Runtime.getRuntime().availableProcessors(), repository);
+      new RenderKernel3d(repository);
   
   private static final Camera3d camera = new Camera3d();
   

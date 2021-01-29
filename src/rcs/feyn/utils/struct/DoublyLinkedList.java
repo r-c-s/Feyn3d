@@ -1,6 +1,7 @@
 package rcs.feyn.utils.struct;
 
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 public class DoublyLinkedList<T> implements Iterable<T> { 
  
@@ -112,28 +113,22 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   }
 
   private Node unlink(Node n) {
-    N--; 
-    if (n != head && n != tail) { 
-      n.next.prev = n.prev;
-      n.prev.next = n.next;
+    if (--N == 0) {
+    	clear();
     }
-    if (n == head) {
-      head = n.next; 
-    }
-    if (n == tail) {
-      tail = n.prev; 
+    else {
+	    if (n != head && n != tail) { 
+	      n.next.prev = n.prev;
+	      n.prev.next = n.next;
+	    }
+	    if (n == head) {
+	      head = n.next; 
+	    }
+	    if (n == tail) {
+	      tail = n.prev; 
+	    }
     }
     return n;
-  }
-
-  @Override
-  public String toString() {
-    final StringBuilder s = new StringBuilder();
-    for (T item : this) {
-      s.append(item + ", ");
-    }
-    s.delete(s.length()-2, s.length());
-    return s.toString();
   }
 
   @Override
