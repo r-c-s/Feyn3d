@@ -3,7 +3,6 @@ package rcs.feyn.three;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.two.Particle2d;
 
 public class Particle3d implements IParticle3d {
   
@@ -33,10 +32,6 @@ public class Particle3d implements IParticle3d {
     this.position = new Vector3d(pos);
     this.velocity = new Vector3d(vel);
     setMass(mass);
-  } 
-
-  public Particle2d toParticle2d() {
-    return new Particle2d(position.toVector2d(), velocity.toVector2d(), mass);
   }
 
   public final double getPosX() {

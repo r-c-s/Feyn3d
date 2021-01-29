@@ -1,30 +1,35 @@
 package rcs.feyn.three.gfx;
 
+import java.util.Arrays;
+
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
-import rcs.feyn.two.gfx.Graphics2d;
 
-public class Graphics3d extends Graphics2d {
+public class Graphics3d {
 
   protected DepthBuffer zbuffer;
+  protected Raster raster;
 
   public Graphics3d(Raster raster) {
-    super(raster);
+    setRaster(raster);
   } 
+  
+  public Raster getRaster() {
+    return raster;
+  }
 
   public void setRaster(Raster raster) {
-    super.setRaster(raster);
-    zbuffer = new NdcZDepthBuffer64(raster.size());
+    this.raster = raster;
+	zbuffer = new NdcZDepthBuffer32(raster.size());
   }
 
   public DepthBuffer getZBuffer() {
     return zbuffer;
   }
 
-  @Override
   public void fill(FeynColor background) {
-    super.fill(background); 
+    Arrays.fill(raster.getData(), background.getRGBA());
     zbuffer.clear();
   }
 
@@ -46,6 +51,16 @@ public class Graphics3d extends Graphics2d {
     } else if (ColorUtils.getAlphaFromRGBA(pixel) != 255) {
       pixel = ColorUtils.alphaBlend(pixel, color);
     } 
+    raster.setPixel(index, pixel);
+  }
+  
+  protected void putPixel(int index, int color) {
+    int pixel = raster.getPixel(index);
+    if (ColorUtils.getAlphaFromRGBA(pixel) != 255) {
+      pixel = ColorUtils.alphaBlend(pixel, color);
+    } else {
+      pixel = ColorUtils.alphaBlend(color, pixel);
+    }
     raster.setPixel(index, pixel);
   }
 }

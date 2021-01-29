@@ -2,10 +2,12 @@ package rcs.feyn.three.geo;
 
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.MathConsts;
+import rcs.feyn.math.MathUtils;
 
 public class GeoUtils3d {
   
   public static final double COPLANAR_ERROR_THRESHOLD = 1 - MathConsts.EPSILON_0_001;
+  public static final double DEFAULT_CIRCLE_SIDES_ERROR_THRESHOLD = MathConsts.EPSILON_0_001;
 
   private GeoUtils3d() {
     throw new AssertionError();
@@ -121,5 +123,13 @@ public class GeoUtils3d {
       sum.addLocal(v[i]);
     }
     return sum.divLocal(N);
+  }
+  
+  public static final int getNumberOfSidesOfCircle(double radius) {
+    return getNumberOfSidesOfCircle(radius, DEFAULT_CIRCLE_SIDES_ERROR_THRESHOLD);
+  }
+
+  public static final int getNumberOfSidesOfCircle(double radius, double error) {
+    return (int) Math.ceil(MathConsts.TWO_PI / Math.acos(2 * MathUtils.squared(1 - error / radius) - 1));
   }
 }

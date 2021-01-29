@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import rcs.feyn.event.DeltaMouseHandler;
 import rcs.feyn.event.DeltaMouseListener;
-import rcs.feyn.two.gfx.Graphics2d;
+import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.utils.ArrayUtils;
 import rcs.feyn.utils.TimeUtils;
 
@@ -59,7 +59,7 @@ public abstract class AbstractAnimationCanvas
     System.exit(0);
   }); 
 
-  public AbstractAnimationCanvas(Graphics2d graphics) {
+  public AbstractAnimationCanvas(Graphics3d graphics) {
     super(graphics);
   }
 

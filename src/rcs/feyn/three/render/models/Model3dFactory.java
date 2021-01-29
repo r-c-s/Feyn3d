@@ -7,7 +7,7 @@ import java.util.Set;
 
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.two.geo.GeoUtils2d;
+import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.math.MathConsts;
 
 public class Model3dFactory { 
@@ -290,17 +290,17 @@ public class Model3dFactory {
   } 
 
   public static Model3dBuilder cone(double radius, double height) {
-    return pyramid(GeoUtils2d.getNumberOfSidesOfCircle(radius), radius, height);
+    return pyramid(GeoUtils3d.getNumberOfSidesOfCircle(radius), radius, height);
   }
 
   public static Model3dBuilder cylinder(double radius, double length) {
-    return prism(radius, length, GeoUtils2d.getNumberOfSidesOfCircle(radius));
+    return prism(radius, length, GeoUtils3d.getNumberOfSidesOfCircle(radius));
   }
 
   public static Model3dBuilder torus(double innerRadius, double outerRadius) {
     return torus(innerRadius, outerRadius, 
-        GeoUtils2d.getNumberOfSidesOfCircle(outerRadius), 
-        GeoUtils2d.getNumberOfSidesOfCircle((outerRadius-innerRadius)/2));
+        GeoUtils3d.getNumberOfSidesOfCircle(outerRadius), 
+        GeoUtils3d.getNumberOfSidesOfCircle((outerRadius-innerRadius)/2));
   }
 
   public static Model3dBuilder torus(double innerRadius, double outerRadius, int numI, int numJ) {

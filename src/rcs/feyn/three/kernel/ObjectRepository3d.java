@@ -13,7 +13,7 @@ public class ObjectRepository3d {
   
   private final DoublyLinkedList<Iterable<? extends Renderable3d>> 
     listsOfObjects = new DoublyLinkedList<>(singleObjects); 
-
+  
   public void add(Renderable3d renderable) {
     singleObjects.add(renderable);
   }

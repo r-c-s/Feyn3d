@@ -24,13 +24,5 @@ module feyn {
     exports rcs.feyn.three.render.primitives;
     exports rcs.feyn.three.render.renderers;
     exports rcs.feyn.three.view;
-    exports rcs.feyn.two;
-    exports rcs.feyn.two.gfx;
-    exports rcs.feyn.two.gui;
-    exports rcs.feyn.two.kernel;
-    exports rcs.feyn.two.render;
-    exports rcs.feyn.two.collision;
-    exports rcs.feyn.two.geo;
-    exports rcs.feyn.two.view;
     exports rcs.feyn.utils;
 }

@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
-import rcs.feyn.two.gfx.Graphics2d;
+import rcs.feyn.three.gfx.Graphics3d;
 
 public abstract class DoubleBufferedCanvas extends JComponent {
    
@@ -23,15 +23,15 @@ public abstract class DoubleBufferedCanvas extends JComponent {
   private final Object renderingLock = new Object();
   
   private BufferedImage imageBuffer = null;
-  private Graphics2d graphics = null;  
+  private Graphics3d graphics = null;  
   private FeynColor background = FeynColor.black;
 
-  public DoubleBufferedCanvas(Graphics2d graphics) {
+  public DoubleBufferedCanvas(Graphics3d graphics) {
     this.addComponentListener(new ComponentResized());
     this.graphics = graphics; 
   }
 
-  protected abstract void render(Graphics2d graphics);
+  protected abstract void render(Graphics3d graphics);
   
   protected abstract void setWidth(int width);
   

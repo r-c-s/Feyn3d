@@ -4,8 +4,8 @@ import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.AbstractAnimationCanvas;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Graphics3dSynchronized;
+import rcs.feyn.three.gfx.NdcZDepthBuffer32;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.two.gfx.Graphics2d;
 
 public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
   
@@ -20,7 +20,7 @@ public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
   }
 
   @Override
-  protected final void render(Graphics2d graphics) {
+  protected final void render(Graphics3d graphics) {
     FeynApp3d.getRenderKernel().renderAll((Graphics3d) graphics); 
   }
 
