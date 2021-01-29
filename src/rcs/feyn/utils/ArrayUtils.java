@@ -84,9 +84,6 @@ public final class ArrayUtils {
     return I;
   }
   
-  /*****************************************************************************
-   * 
-   */ 
   public static Double[] box(double[] d) {
     Double[] D = new Double[d.length];
     for (int j = 0; j < d.length; j++) {
