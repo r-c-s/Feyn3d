@@ -6,36 +6,6 @@ public final class ArrayUtils {
     throw new AssertionError();
   }
   
-  public static <T> int indexOf(T[] arr, T obj) {
-    for (int i = 0; i < arr.length; i++) {
-      if (arr[i] == obj) {
-        return i;
-      }
-    }
-    return -1;
-  }
- 
-  public static <T> int lastIndexOf(T[] arr, T obj) {
-    for (int i = 0; i < arr.length; i++) {
-      if (arr[arr.length - 1 - i] == obj) {
-        return i;
-      }
-    }
-    return -1;
-  }
- 
-  public static int[] range(int min, int max) {
-    return range(min, max, 1);
-  }
-
-  public static int[] range(int min, int max, int step) {
-    int[] range = new int[max - min];
-    for (int i = min; i < max; i+= step) {
-      range[i-min] = i;
-    }
-    return range;
-  } 
-  
   public static double[] unbox(Double[] D) {
     double[] d = new double[D.length];
     for (int i = 0; i < D.length; i++) {
@@ -120,13 +90,4 @@ public final class ArrayUtils {
     t[i] = t[j];
     t[j] = temp;
   }
- 
-  public static <T> boolean contains(T[] arr, T t) {
-    for (T i : arr) {
-      if (i.equals(t)) {
-        return true;
-      }
-    }
-    return false;
-  } 
 }

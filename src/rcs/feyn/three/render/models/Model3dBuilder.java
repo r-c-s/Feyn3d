@@ -38,7 +38,7 @@ public final class Model3dBuilder {
       
       try (Stream<String> lines = Files.lines(path)) {
           lines.forEach(line -> {
-              String[] split = StringUtils.split(line);
+              String[] split = StringUtils.split(line, " ");
 
               if (split.length == 0) {
                 return;

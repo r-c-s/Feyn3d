@@ -1,7 +1,6 @@
 package rcs.feyn.math;
 
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.utils.StringUtils;
 import rcs.feyn.math.MathConsts;
 
 public final class MathUtils {
@@ -356,17 +355,5 @@ public final class MathUtils {
       }
     }
     return min;
-  }
-  
-  public static boolean isDouble(String s) {
-    return StringUtils.isDouble(s);
-  }
-  
-  public static boolean isInteger(String s) {
-    return StringUtils.isInteger(s);
-  }
-  
-  public static boolean isNumeric(String s) {
-    return StringUtils.isNumeric(s);
   }
 }
