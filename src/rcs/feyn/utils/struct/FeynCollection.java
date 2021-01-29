@@ -28,9 +28,8 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
       
       op.accept(t, i);
       
-      if (t.isDestroyed()) { 
+      if (t.isDestroyed()) {
         it.remove();
-        break;
       }
     }
   }

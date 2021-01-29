@@ -14,6 +14,9 @@ import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.primitives.Polygon3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.struct.DoublyLinkedList;
+import rcs.feyn.utils.struct.FeynArray;
+import rcs.feyn.utils.struct.FeynCollection;
+import rcs.feyn.utils.struct.FeynLinkedList;
 
 public class BoxOfRain extends Demo3d {
   
@@ -27,8 +30,8 @@ public class BoxOfRain extends Demo3d {
   
   private Grid ground = new Grid(10, 10, 10);
   
-  private DoublyLinkedList<Line3d> raindrops = new DoublyLinkedList<>();
-  private DoublyLinkedList<Polygon3d> waves = new DoublyLinkedList<>();
+  private FeynCollection<Line3d> raindrops = new FeynLinkedList<>();
+  private FeynCollection<Polygon3d> waves = new FeynLinkedList<>();
   
   public BoxOfRain() {
     super();
@@ -65,12 +68,11 @@ public class BoxOfRain extends Demo3d {
     	raindrop.setVelocity(new Vector3d(0, -0.1, 0));
     	raindrops.add(raindrop);
     }
-  
-    Iterator<Line3d> itDrops = raindrops.iterator();
-    itDrops.forEachRemaining(raindrop -> {
+    
+    raindrops.forEach(raindrop -> {
     	raindrop.move();
     	if (raindrop.getA().y() < 0) {
-    		itDrops.remove();
+    		raindrop.destroy();
     		Polygon3d wave = Polygon3d.regularPolygon(0.1, 10);
     		wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
     		wave.setColor(FeynColor.white);
@@ -79,13 +81,12 @@ public class BoxOfRain extends Demo3d {
     	}
     });
     
-    Iterator<Polygon3d> itWaves = waves.iterator();
-    itWaves.forEachRemaining(wave -> {
+    waves.forEach(wave -> {
     	double radius = wave.getVertices()[0].distance(wave.getCenterOfMass());
     	wave.scale(1 + 0.01/(radius / 0.5));
     	wave.setColor(wave.getColor().fade(1.5 - (radius / 0.5)));
     	if (radius > 0.5) {
-    		itWaves.remove();
+    		wave.destroy();
     	}
     });
   } 
