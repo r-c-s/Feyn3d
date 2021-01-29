@@ -2,7 +2,7 @@ package rcs.feyn.three.anim;
 
 import java.util.function.BiFunction;
 
-import rcs.feyn.three.render.FeynSprite3d;
+import rcs.feyn.three.render.Sprite3d;
 import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.utils.TriFunction;
@@ -11,7 +11,7 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class Curve3d extends FeynSprite3d { 
+public class Curve3d extends Sprite3d { 
   
   protected Matrix44 transform = new Matrix44();
   

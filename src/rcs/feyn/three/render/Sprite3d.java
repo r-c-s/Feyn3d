@@ -4,11 +4,11 @@ import rcs.feyn.three.Particle3d;
 import rcs.feyn.utils.struct.FeyngGarbageCollectable;
 import rcs.feyn.math.linalg.Vector3d;
 
-public abstract class FeynSprite3d extends Particle3d implements Renderable3d, FeyngGarbageCollectable {
+public abstract class Sprite3d extends Particle3d implements Renderable3d, FeyngGarbageCollectable {
   
   private boolean active = true;
 
-  public FeynSprite3d() {
+  public Sprite3d() {
     super();
   }
 

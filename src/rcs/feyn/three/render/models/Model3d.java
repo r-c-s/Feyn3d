@@ -1,13 +1,13 @@
 package rcs.feyn.three.render.models;
 
-import rcs.feyn.three.render.FeynSprite3d;
+import rcs.feyn.three.render.Sprite3d;
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class Model3d extends FeynSprite3d implements Renderable3d {
+public class Model3d extends Sprite3d implements Renderable3d {
   
   protected Model3dVertices vertices;
   protected Model3dFace[] faces;
