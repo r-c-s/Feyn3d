@@ -17,6 +17,7 @@ import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.utils.AnimationTimer;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
 
@@ -34,6 +35,8 @@ public class FallingRocks extends Demo3d {
   
   private FeynCollection<Model3d> rocks = new FeynLinkedList<>();
   private FeynCollection<Model3d> shards = new FeynLinkedList<>();
+  
+  private AnimationTimer addRockTimer = new AnimationTimer(this::addNewRock, 1000);
   
   public FallingRocks() {
     super();
@@ -67,20 +70,9 @@ public class FallingRocks extends Demo3d {
   @Override
   public void runningLoop() { 
     controlCamera();
-    
-    every(1000, this::addNewRock);
-
+    addRockTimer.run();
     animateRocks();
     animateShards();
-  } 
-  
-  private long last = System.currentTimeMillis();
-  private void every(int millis, Runnable runnable) {
-  	long now = System.currentTimeMillis();
-  	if (now - last >= millis) {
-  		last = now;
-  		runnable.run();
-  	}
   }
   
   private void addNewRock() {
