@@ -111,7 +111,7 @@ public class FallingRocks extends Demo3d {
     	if (shard.getVelocity().equals(Vector3d.ZERO)) {
     		for (Model3dFace face : shard.getFaces()) {
     			FeynColor newColor = face.getColor().fadeTo(0.999);
-    			if (newColor.getAlpha() < 10) {
+    			if (newColor.getAlpha() < 5) {
     				shard.destroy();
     			} else {
     				face.setColor(newColor);
@@ -131,7 +131,7 @@ public class FallingRocks extends Demo3d {
   		shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
 			shard.setVelocity(
 					xorShift.randomDouble(-0.05, 0.05), 
-					0.1, 
+					xorShift.randomDouble(0.1, 0.2), 
 					xorShift.randomDouble(-0.05, 0.05));
   		shards.add(shard);
   	}
