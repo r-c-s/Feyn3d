@@ -10,17 +10,14 @@ public class DragRotateObject implements DeltaMouseListener {
   
   private Vector3d focus;
   private Vector2d delta;
+  private double dragAmount;
   
-  private double dragAmount = 0.1;
   private boolean dragged = false;
 
-  public DragRotateObject(Particle3d object) {
-    this(object, null);
-  }
-
-  public DragRotateObject(Particle3d object, Vector3d focus) {
+  public DragRotateObject(Particle3d object, Vector3d focus, double dragAmount) {
     this.object = object;
     this.focus = focus;
+    this.dragAmount = dragAmount;
   }
 
   public Particle3d getObject() {

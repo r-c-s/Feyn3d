@@ -5,7 +5,6 @@ import java.util.function.BiConsumer;
 
 import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.event.DragRotateObject;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.collision.BoundingBox3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
@@ -51,14 +50,11 @@ public class Gumballs extends Demo3d {
   private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS); 
   
-  private final DragRotateObject rotateCube = new DragRotateObject(cube, cube.getPosition());
-  
   @Override
   protected void initialize() {
     super.initialize();
     
     setBackgroundColor(FeynColor.superDarkGray);
-    addDeltaMouseListener(rotateCube);
     wzc.setAmount(0.2);
     
     XORShift xor = XORShift.getInstance();
@@ -109,7 +105,7 @@ public class Gumballs extends Demo3d {
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
 
-    camera.translate(0, 0, 5);
+    camera.translate(0, 0, 3);
     FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(1));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
