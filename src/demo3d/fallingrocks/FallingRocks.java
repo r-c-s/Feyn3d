@@ -89,6 +89,7 @@ public class FallingRocks extends Demo3d {
   
   private void animateRocks() {
   	rocks.forEach(rock -> {
+  		rock.spin(Vector3d.Z_AXIS, 1);
     	rock.move();
     	if (rock.getPosY() < 0) {
     		rock.destroy();

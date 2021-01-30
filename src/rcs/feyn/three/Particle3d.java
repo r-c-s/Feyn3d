@@ -185,7 +185,7 @@ public class Particle3d implements IParticle3d {
   @Override
   public void transform(Matrix44 m4x4) {
     position.affineTransformLocal(m4x4);
-    velocity.affineTransformAsVectorLocal(m4x4);
+    //velocity.affineTransformAsVectorLocal(m4x4);
     rf.transform(m4x4);
   }
 
