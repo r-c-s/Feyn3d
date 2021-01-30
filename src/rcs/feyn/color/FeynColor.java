@@ -273,7 +273,7 @@ public final class FeynColor {
       return mul(FACTOR);
   }
 
-  public FeynColor fade(double d) {
+  public FeynColor fadeTo(double d) {
     return new FeynColor(r, g, b, (int) (a * d));
   }
 

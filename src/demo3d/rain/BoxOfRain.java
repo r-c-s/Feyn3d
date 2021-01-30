@@ -92,7 +92,7 @@ public class BoxOfRain extends Demo3d {
   	waves.forEach(wave -> {
     	double radius = wave.getVertices()[0].distance(wave.getCenterOfMass());
     	wave.scale(1 + 0.005/(radius / maxRadius));
-    	wave.setColor(wave.getColor().fade(1 - (radius / maxRadius)));
+    	wave.setColor(wave.getColor().fadeTo(1 - (radius / maxRadius)));
     	if (radius > maxRadius) {
     		wave.destroy();
     	}
@@ -102,7 +102,7 @@ public class BoxOfRain extends Demo3d {
   private void addNewWave(Line3d raindrop) {
 		Polygon3d wave = Polygon3d.regularPolygon(0.1, 10);
 		wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
-		wave.setColor(FeynColor.white.fade(0.9));
+		wave.setColor(FeynColor.white.fadeTo(0.9));
 		wave.getRenderingOptions().enable(RenderOptions3d.Option.meshOnly);
 		waves.add(wave);
   }

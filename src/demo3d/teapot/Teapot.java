@@ -101,7 +101,7 @@ public class Teapot extends Demo3d {
           face.getRenderOptions().enable(RenderOptions3d.Option.cullIfBackface);
         }
       } else {
-        teapot.setColor(color.fade(0.5));
+        teapot.setColor(color.fadeTo(0.5));
         for (Model3dFace face : teapot.getFaces()) {
           face.getRenderOptions().disable(RenderOptions3d.Option.cullIfBackface);
         }
