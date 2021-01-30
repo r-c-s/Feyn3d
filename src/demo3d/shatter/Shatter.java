@@ -1,7 +1,5 @@
 package demo3d.shatter;
 
-import java.util.EnumSet;
-
 import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -15,7 +13,6 @@ import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.ThreadPool;
 
 public class Shatter extends Demo3d {
@@ -48,17 +45,12 @@ public class Shatter extends Demo3d {
         .addColor(new FeynColor(123, 234, 13, 255))
         .build();
     
-    objs = Model3dUtils.partition3d(obj, 1);
-    
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
-    
+
+    objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
-      Model3dUtils.setOptions(
-          model, 
-          EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
-          EnumSet.of(RenderOptions3d.Option.cullIfBackface));
       FeynApp3d.getRepository().add(model);
     }
     

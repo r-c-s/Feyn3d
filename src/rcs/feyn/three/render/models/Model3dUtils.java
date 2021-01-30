@@ -170,7 +170,7 @@ public class Model3dUtils {
       partFaces[len] = modelFace;
       for (int l = 0; l < len; l++) {
         partFaces[l] = new Model3dFace(
-            new int[] { l, (1+l)%len, len }, 
+            new int[] { (1+l)%len, l, len }, 
             faces[i].getColor());
       }
 
