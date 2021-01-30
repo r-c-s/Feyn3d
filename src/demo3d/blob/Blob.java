@@ -81,7 +81,7 @@ public class Blob extends Demo3d {
     for (Runnable animation : animations) {
       tp.runTask(animation);
     }
-  }
+  }  
   
   private class BlobAnimation implements Runnable {
     
