@@ -1,9 +1,8 @@
-package demo3d.gumballs;
+package demo3d;
 
 import java.util.EnumSet;
 import java.util.function.BiConsumer;
 
-import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.collision.BoundingBox3d;

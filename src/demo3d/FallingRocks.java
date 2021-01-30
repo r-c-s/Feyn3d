@@ -1,9 +1,7 @@
-package demo3d.fallingrocks;
+package demo3d;
 
 import java.util.EnumSet;
 
-import demo3d.Demo3d;
-import demo3d.Grid;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;

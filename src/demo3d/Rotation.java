@@ -1,4 +1,4 @@
-package demo3d.rotation;
+package demo3d;
 
 import java.awt.event.KeyEvent;
 
@@ -15,8 +15,6 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
-import demo3d.Demo3d;
-import demo3d.Grid;
 
 public class Rotation extends Demo3d {
   

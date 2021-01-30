@@ -1,6 +1,5 @@
-package demo3d.plato;
+package demo3d;
 
-import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.kernel.FeynApp3d;

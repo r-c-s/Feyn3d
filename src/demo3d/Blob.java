@@ -1,8 +1,7 @@
-package demo3d.blob;
+package demo3d;
 
 import java.util.EnumSet;
 
-import demo3d.Demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
