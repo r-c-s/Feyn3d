@@ -111,7 +111,7 @@ public class Gumballs extends Demo3d {
 
     camera.translate(0, 0, 5);
     FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(1));
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
 
   @Override
