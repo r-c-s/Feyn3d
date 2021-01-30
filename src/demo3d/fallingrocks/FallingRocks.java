@@ -1,4 +1,4 @@
-package FallingRocks;
+package demo3d.fallingrocks;
 
 import java.util.EnumSet;
 
