@@ -16,9 +16,6 @@ import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
-import rcs.feyn.three.render.primitives.Line3d;
-import rcs.feyn.three.render.primitives.Point3d;
-import rcs.feyn.three.render.primitives.Polygon3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
@@ -46,11 +43,11 @@ public class FallingRocks extends Demo3d {
   public void initialize() {
     super.initialize();
     
-    super.setBackgroundColor(FeynColor.black);
+    super.setBackgroundColor(FeynColor.white);
     
     FeynApp3d.getCamera().translate(0, 4, 10);
     
-    ground.setColor(FeynColor.rosyBrown);
+    ground.setColor(FeynColor.darkOliveGreen);
     
     FeynApp3d.getRepository().add(ground);
     FeynApp3d.getRepository().add(rocks);
@@ -70,24 +67,32 @@ public class FallingRocks extends Demo3d {
   @Override
   public void runningLoop() { 
     controlCamera();
+    
+    every(1000, this::addNewRock);
 
-    addNewRocks();
     animateRocks();
     animateShards();
   } 
   
-  private void addNewRocks() {
-    for (int i = 0; i < 1; i++) {
-    	Model3d rock = Model3dFactory.icosahedron(0.1)
-    			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5)))
-    			.build();
-    	
-    	Model3dUtils.deform(rock, 0.1);
+  private long last = System.currentTimeMillis();
+  private void every(int millis, Runnable runnable) {
+  	long now = System.currentTimeMillis();
+  	if (now - last >= millis) {
+  		last = now;
+  		runnable.run();
+  	}
+  }
+  
+  private void addNewRock() {
+  	Model3d rock = Model3dFactory.dodecahedron(0.5)
+  			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5)))
+  			.build();
+  	
+  	Model3dUtils.deform(rock, 0.1);
 
-    	rock.setColor(FeynColor.white);
-    	rock.setVelocity(0, -0.1, 0);
-    	rocks.add(rock);
-    }
+  	rock.setColor(FeynColor.rosyBrown);
+  	rock.setVelocity(0, -0.1, 0);
+  	rocks.add(rock);
   }
   
   private void animateRocks() {
@@ -126,11 +131,15 @@ public class FallingRocks extends Demo3d {
   private void addNewShards(Model3d rock) {
   	Model3d[] newShards = Model3dUtils.partition3d(rock);
   	for (Model3d shard : newShards) {
+      Model3dUtils.setOptions(
+          shard, 
+          EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+          null);
   		shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
 			shard.setVelocity(
-					xorShift.randomDouble(-0.02, 0.02), 
+					xorShift.randomDouble(-0.05, 0.05), 
 					0.1, 
-					xorShift.randomDouble(-0.02, 0.02));
+					xorShift.randomDouble(-0.05, 0.05));
   		shards.add(shard);
   	}
   }
