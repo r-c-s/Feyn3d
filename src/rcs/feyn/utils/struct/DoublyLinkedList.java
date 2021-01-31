@@ -113,11 +113,21 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   private synchronized Node unlink(Node n) {
     N--;
     
-    if (n == head) head = n.next; 
-    else n.prev.next = n.next;
+    if (n.prev != null) {
+    	n.prev.next = n.next;
+    }
+    if (n.next != null) {
+    	n.next.prev = n.prev;
+    }
     
-    if (n == tail) tail = n.prev;
-    else n.next.prev = n.prev;
+    if (n == head) {
+    	head = n.next; 
+    	n.next.prev = null;
+    }
+    if (n == tail) {
+    	tail = n.prev;
+    	n.prev.next = null;
+    }
     
     return n;
   }
