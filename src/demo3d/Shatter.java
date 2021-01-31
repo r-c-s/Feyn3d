@@ -12,7 +12,6 @@ import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
-import rcs.feyn.utils.ThreadPool;
 
 public class Shatter extends Demo3d {
 
