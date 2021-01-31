@@ -25,16 +25,14 @@ public class Vortex extends Demo3d {
                             radius*TrigLookUp.sin(r*t*360 + t),
                             r); 
       },
-      (r, t, z) -> { 
-        double factor = 1 - (MathUtils.min(Math.abs(z), 4) / 4);
-        
-        return new FeynColor((int)(10+factor*factor*245), 
-                             (int)(10+factor*factor*245), 
-                             (int)(10+factor*factor*245), 
+      (r, t, z) -> {         
+        return new FeynColor((int)(10+TrigLookUp.cos(r*t*360 + t)*245), 
+                             (int)(10+TrigLookUp.cos(r*t*180 + t)*245), 
+                             (int)(10+TrigLookUp.cos(r*t*90 + t)*245), 
                              255);
       },
       0.001, 
-      0.1);
+      0.05);
 
   public Vortex() { }
   
