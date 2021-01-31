@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
+import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
@@ -201,17 +202,19 @@ public class Model3dUtils {
     }
   }
   
-  // TODO
-  public static void deform(Model3d model, double factor, Vector3d directionBias) {
+  public static void deform(Model3d model, double factor, Vector3d directionBias, double toleranceAngle) {
     Vector3d com = model.getCenter();
     
     for (Model3dFace face : model.getFaces()) {
       Vector3d[] vertices = model.getVertices().getVertices(face.getIndices());
 
       for (Vector3d vertex : vertices) {
-        double dotProd = vertex.sub(com).normalizeLocal().dotProd(directionBias);
-        double scalar = 1 - (dotProd * factor * XORShift.getInstance().randomDouble());
-        vertex.mulLocal(scalar);
+        double angle = vertex.sub(com).normalizeLocal().angleBetween(directionBias);
+        boolean isInDirectionBias = MathConsts.RADIANS_TO_DEGREES * angle < toleranceAngle;
+        if (isInDirectionBias) {
+	        double scalar = 1 + (factor * XORShift.getInstance().randomDouble(-1, 1));
+	        vertex.mulLocal(scalar);
+        }
       }
       
       model.getVertices().setVertices(vertices, face.getIndices());
