@@ -14,7 +14,6 @@ import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
-import rcs.feyn.utils.ThreadPool;
 
 public class Blob extends Demo3d {
 
@@ -33,7 +32,7 @@ public class Blob extends Demo3d {
       .addColor(new FeynColor(123, 234, 13, 255))
       .build();
   
-  private final Runnable[] animations = new Runnable[] { new BlobAnimation() };
+  private final Runnable blobAnimation = new BlobAnimation();
   
   @Override
   protected void initialize() {
@@ -71,15 +70,8 @@ public class Blob extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-   
     FeynApp3d.getDiffuseLightSource().setPosition(camera.getPosition()); 
-    
-    obj.rotate(Vector3d.Y_AXIS, 0.1);
-    
-    ThreadPool tp = new ThreadPool(1);
-    for (Runnable animation : animations) {
-      tp.runTask(animation);
-    }
+    blobAnimation.run();
   }  
   
   private class BlobAnimation implements Runnable {
@@ -88,6 +80,8 @@ public class Blob extends Demo3d {
 
     @Override
     public void run() {
+      obj.rotate(Vector3d.Y_AXIS, 0.1);
+      
       double factor;
       if (++i % 2 == 0) {
         factor = 0.005*TrigLookUp.sin(i++);
