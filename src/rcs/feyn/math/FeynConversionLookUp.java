@@ -1,4 +1,4 @@
-package rcs.feyn.utils;
+package rcs.feyn.math;
 
 import rcs.feyn.physics.Conversions;
 

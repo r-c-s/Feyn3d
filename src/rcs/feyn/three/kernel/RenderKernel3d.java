@@ -19,9 +19,9 @@ public final class RenderKernel3d {
   }
 
   public void renderAll(Graphics3d graphics) {
-    Matrix44 viewMatrix = FeynApp3d.getViewSpaceMatrix();
-    Matrix44 projMatrix = FeynApp3d.getPerspectiveProjectionMatrix();
-    Matrix44 viewPortMatrix = FeynApp3d.getViewPortMatrix();
+    var viewMatrix = FeynApp3d.getViewSpaceMatrix();
+    var projMatrix = FeynApp3d.getPerspectiveProjectionMatrix();
+    var viewPortMatrix = FeynApp3d.getViewPortMatrix();
     
     repository.patches()
     	.forEach(patch -> {

@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.util.EnumSet;
+import java.util.function.Function;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -82,19 +83,19 @@ public class Blob extends Demo3d {
     public void run() {
       obj.rotate(Vector3d.Y_AXIS, 0.1);
       
-      double factor;
-      if (++i % 2 == 0) {
-        factor = 0.005*TrigLookUp.sin(i++);
-      } else {
-        factor = 0.005*TrigLookUp.cos(i++);
-      }
+      Function<Integer, Double> function = ++i % 2 == 0 
+      		? TrigLookUp::sin
+      		: TrigLookUp::cos;
+      
+      double factor = 0.005*function.apply(i);
+      		
       Model3dUtils.deform(obj, factor);
     }
   }
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Blob Demo", true, false);
-    Demo3d demo = new Blob();
+    var frame = new FeynFrame(800, 800, "Blob Demo", true, false);
+    var demo = new Blob();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

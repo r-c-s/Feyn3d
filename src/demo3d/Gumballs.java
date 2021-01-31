@@ -61,7 +61,7 @@ public class Gumballs extends Demo3d {
     for (int i = 0; i < NUM_BALLS; i++) {
       double radius = xor.randomDouble(0.05, 0.2);
       
-      CollidableModel3d sphere = (CollidableModel3d) Model3dFactory
+      var sphere = (CollidableModel3d) Model3dFactory
           .icosphere(radius, 1)
           .setOuterBoundingObject(new BoundingSphere3d(radius))
           .build();
@@ -128,10 +128,10 @@ public class Gumballs extends Demo3d {
    
     sphere.translate(normal.mul(overlap));
     
-    double dot = normal.dotProd(sphere.getVelocity());
+    double dotProd = normal.dotProd(sphere.getVelocity());
     
-    if (dot < 0) {
-      sphere.accelerate(normal.mul(dot).mul(-1.0-energyFactor)); 
+    if (dotProd < 0) {
+      sphere.accelerate(normal.mul(dotProd).mul(-1.0-energyFactor)); 
     } 
   }
   
@@ -159,7 +159,6 @@ public class Gumballs extends Demo3d {
 
     spheres.forEachWithIndex((sphere, i) -> { 
       Vector3d d = sphere.getPosition().subLocal(delta[i]);
-      
       Vector3d axis = d.crossProd(camera.getUpVector());
       
       sphere.rotate( 
@@ -197,8 +196,8 @@ public class Gumballs extends Demo3d {
   };
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Gumballs", true, false);
-    Demo3d demo = new Gumballs();
+    var frame = new FeynFrame(800, 800, "Gumballs", true, false);
+    var demo = new Gumballs();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

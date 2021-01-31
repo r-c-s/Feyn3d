@@ -300,7 +300,7 @@ public final class FeynColor {
       return false;
     }
     
-    FeynColor that = (FeynColor) obj;
+    var that = (FeynColor) obj;
     
     return this.r == that.r 
         && this.g == that.g

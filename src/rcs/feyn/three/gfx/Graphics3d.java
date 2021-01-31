@@ -21,7 +21,7 @@ public class Graphics3d {
 
   public void setRaster(Raster raster) {
     this.raster = raster;
-	zbuffer = new NdcZDepthBuffer32(raster.size());
+    this.zbuffer = new NdcZDepthBuffer32(raster.size());
   }
 
   public DepthBuffer getZBuffer() {

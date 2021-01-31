@@ -18,8 +18,8 @@ public class CollisionDetection3d {
       return null;
     }
     CollisionInfo3d ci;
-    for (BoundingObject3d bo1 : cc1.getInnerBoundingObjects()) {
-      for (BoundingObject3d bo2 : cc2.getInnerBoundingObjects()) {
+    for (var bo1 : cc1.getInnerBoundingObjects()) {
+      for (var bo2 : cc2.getInnerBoundingObjects()) {
         if (null != (ci = bo1.computeCollision(bo2))) {
           return ci;
         }
@@ -33,12 +33,12 @@ public class CollisionDetection3d {
   }
   
   public static final CollisionInfo3d computeCollision(ComplexCollidable3d cc, Collidable3d c) {
-    BoundingObject3d bo1 = c.getOuterBoundingObject();
+    var bo1 = c.getOuterBoundingObject();
     if (null == cc.getOuterBoundingObject().computeCollision(bo1)) {
       return null;
     } 
     CollisionInfo3d ci;
-    for (BoundingObject3d bo2 : cc.getInnerBoundingObjects()) {
+    for (var bo2 : cc.getInnerBoundingObjects()) {
       if (null != (ci = bo2.computeCollision(bo1))) {
         return ci;
       }
@@ -86,7 +86,7 @@ public class CollisionDetection3d {
 
   public static CollisionInfo3d computeCollision(BoundingBox3d a, BoundingSphere3d b) {
     Vector3d pos = b.getPosition();
-    double   r   = b.getRadius();
+    double r = b.getRadius();
     
     if (a.getOrientation() == BoundingObject3d.ORIENTATION_OUTSIDE) { 
       for (Plane3d side : a.getPlanes()) {

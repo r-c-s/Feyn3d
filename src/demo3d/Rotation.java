@@ -116,24 +116,24 @@ public class Rotation extends Demo3d {
     Matrix44 transform = new Matrix44(); 
     Vector3d position  = obj.getPosition();
      
-    if (pressed[KeyEvent.VK_X]) {
-      if (pressed[KeyEvent.VK_SHIFT]) {
+    if (keyHasBeenPressed(KeyEvent.VK_X)) {
+      if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
         transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getSideVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(xTransform); 
       }
     }
 
-    if (pressed[KeyEvent.VK_Y]) {
-      if (pressed[KeyEvent.VK_SHIFT]) {
+    if (keyHasBeenPressed(KeyEvent.VK_Y)) {
+      if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
         transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getUpVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(yTransform); 
       }
     }
 
-    if (pressed[KeyEvent.VK_Z]) {
-      if (pressed[KeyEvent.VK_SHIFT]) {
+    if (keyHasBeenPressed(KeyEvent.VK_Z)) {
+      if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
         transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getForwardVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(zTransform); 
@@ -147,8 +147,8 @@ public class Rotation extends Demo3d {
   } 
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Rotation Demo", true, false);
-    Demo3d demo = new Rotation();
+    var frame = new FeynFrame(800, 800, "Rotation Demo", true, false);
+    var demo = new Rotation();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

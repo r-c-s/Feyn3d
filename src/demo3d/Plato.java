@@ -81,8 +81,8 @@ public class Plato extends Demo3d {
   } 
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 600, "Feyn Demo", true, false);
-    Plato demo = new Plato();
+    var frame = new FeynFrame(800, 600, "Feyn Demo", true, false);
+    var demo = new Plato();
     frame.add("Center", demo);
     frame.setVisible(true); 
     frame.setLocationRelativeTo(null);

@@ -25,13 +25,14 @@ public class Teapot extends Demo3d {
     new TrigLookUp(0.01);
   }
   
-  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot/teapot.obj";
+  // todo fix path
+  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot.obj";
 
   private Model3d teapot = new Model3dBuilder()
-    .fromObjFile(teapotObjFilePath)
-    .addColor(FeynColor.white)//.fade(0.5))
-    .addTransform(Matrix44.createScaleMatrix(0.05))
-    .build();
+  		.fromObjFile(teapotObjFilePath)
+  		.addColor(FeynColor.white)//.fade(0.5))
+  		.addTransform(Matrix44.createScaleMatrix(0.05))
+  		.build();
   
   private boolean trackLightsourceWithCamera = false;
 
@@ -85,13 +86,13 @@ public class Teapot extends Demo3d {
       inputDelay = 0;
     }
      
-    if (pressed[KeyEvent.VK_G]) {
+    if (keyHasBeenPressed(KeyEvent.VK_G)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
         face.getRenderOptions().toggle(RenderOptions3d.Option.gouraudShaded);
       }
     }
-    if (pressed[KeyEvent.VK_A]) {
+    if (keyHasBeenPressed(KeyEvent.VK_A)) {
       inputDelay = 50;
       FeynColor color = teapot.getFaces()[0].getColor();
       if (color.isTransparent()) {
@@ -106,25 +107,25 @@ public class Teapot extends Demo3d {
         }
       }
     }
-    if (pressed[KeyEvent.VK_M]) { 
+    if (keyHasBeenPressed(KeyEvent.VK_M)) { 
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
         face.getRenderOptions().toggle(RenderOptions3d.Option.meshOnly);
       }
     }
-    if (pressed[KeyEvent.VK_S]) {
+    if (keyHasBeenPressed(KeyEvent.VK_S)) {
       inputDelay = 50;
       screenshot("./screenshots/"+System.currentTimeMillis()+".png");
     }
-    if (pressed[KeyEvent.VK_L]) {
+    if (keyHasBeenPressed(KeyEvent.VK_L)) {
       inputDelay = 50;
       trackLightsourceWithCamera = !trackLightsourceWithCamera;
     }
   }
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 600, "Teapot", true, false);
-    Demo3d demo = new Teapot();
+    var frame = new FeynFrame(800, 600, "Teapot", true, false);
+    var demo = new Teapot();
     frame.add("Center", demo);
     frame.setVisible(true); 
     demo.init();

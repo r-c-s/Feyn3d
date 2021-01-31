@@ -23,7 +23,7 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
 
   public void forEachWithIndex(BiConsumer<? super T, Integer> op) { 
     int i = 0;
-    for (Iterator<? extends T> it = this.iterator(); it.hasNext(); i++) {
+    for (var it = this.iterator(); it.hasNext(); i++) {
       T t = it.next();
       
       op.accept(t, i);
@@ -42,10 +42,10 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
 
   public void forEachPairWithIndex(QuadConsumer<? super T, Integer, ? super T, Integer> op) {
     int i = 0;
-    for (Iterator<? extends T> itA = iterator(); itA.hasNext(); i++) {
+    for (var itA = iterator(); itA.hasNext(); i++) {
       T a = itA.next();
       int j = 0;
-      for (Iterator<? extends T> itB = iterator(); itB.hasNext(); j++) {
+      for (var itB = iterator(); itB.hasNext(); j++) {
         T b = itB.next();
         
         if (j <= i) {
@@ -56,7 +56,7 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
         
         if (a.isDestroyed()) {
           itA.remove();
-          break;
+          break; // todo: figure out why I added this break here...
         }
         if (b.isDestroyed()) {
           itB.remove();

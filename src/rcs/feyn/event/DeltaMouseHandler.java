@@ -17,8 +17,8 @@ public class DeltaMouseHandler implements MouseMotionListener {
 
   @Override
   public void mouseMoved(MouseEvent e) {
-    Vector2d r  = new Vector2d(e.getX(), e.getY());
-    Vector2d dr = r.sub(pr);
+    var r  = new Vector2d(e.getX(), e.getY());
+    var dr = r.sub(pr);
 
     dml.deltaMouseMoved(r, dr);
     
@@ -27,8 +27,8 @@ public class DeltaMouseHandler implements MouseMotionListener {
 
   @Override
   public void mouseDragged(MouseEvent e) {
-    Vector2d r  = new Vector2d(e.getX(), e.getY());
-    Vector2d dr = r.sub(pr);
+    var r  = new Vector2d(e.getX(), e.getY());
+    var dr = r.sub(pr);
 
     dml.deltaMouseDragged(r, dr);
 

@@ -28,10 +28,8 @@ public class Shatter extends Demo3d {
 
   private Model3d[] objs;
   
-  private final Runnable[] animations = new Runnable[] { 
-      new ShatterAnimation(),
-      new TrackLightSourceWithCamera()
-  };
+  private final Runnable shatterAnimation = new ShatterAnimation();
+  private final Runnable trackLightsourceWithCamera = new TrackLightSourceWithCamera();
   
   @Override
   protected void initialize() {
@@ -73,18 +71,13 @@ public class Shatter extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    runAnimations();
-  }
-  
-  private void runAnimations() {
-    ThreadPool tp = new ThreadPool(1);
-    for (Runnable animation : animations) {
-      tp.runTask(animation);
-    }
+    trackLightsourceWithCamera.run();
+    shatterAnimation.run();
   }
   
   private class ShatterAnimation implements Runnable {
     private int i = 0;
+    
     @Override
     public void run() {
       for (Model3d model : objs) {

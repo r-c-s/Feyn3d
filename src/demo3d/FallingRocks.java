@@ -74,7 +74,7 @@ public class FallingRocks extends Demo3d {
   }
   
   private void addNewRock() {
-  	Model3d rock = Model3dFactory.dodecahedron(0.5)
+  	var rock = Model3dFactory.dodecahedron(0.5)
   			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5)))
   			.build();
   	
@@ -108,7 +108,7 @@ public class FallingRocks extends Demo3d {
     	
     	if (shard.getVelocity().equals(Vector3d.ZERO)) {
     		for (Model3dFace face : shard.getFaces()) {
-    			FeynColor newColor = face.getColor().fadeTo(0.999);
+    			var newColor = face.getColor().fadeTo(0.999);
     			if (newColor.getAlpha() < 5) {
     				shard.destroy();
     			} else {
@@ -120,8 +120,8 @@ public class FallingRocks extends Demo3d {
   }
   
   private void addNewShards(Model3d rock) {
-  	Model3d[] newShards = Model3dUtils.partition3d(rock);
-  	for (Model3d shard : newShards) {
+  	var newShards = Model3dUtils.partition3d(rock);
+  	for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
           EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
@@ -136,8 +136,8 @@ public class FallingRocks extends Demo3d {
   }
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Rain Demo", true, false);
-    Demo3d demo = new FallingRocks();
+    var frame = new FeynFrame(800, 800, "Rain Demo", true, false);
+    var demo = new FallingRocks();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

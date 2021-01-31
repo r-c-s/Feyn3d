@@ -42,9 +42,9 @@ public class Vortex extends Demo3d {
     
     wzc.setAmount(0.2);
     
-    Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
-    Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
-    Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
+    var x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
+    var y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
+    var z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
     
     FeynApp3d.getRepository().add(x);
     FeynApp3d.getRepository().add(y);
@@ -71,8 +71,8 @@ public class Vortex extends Demo3d {
   }
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Vortex", true, false); 
-    Demo3d demo = new Vortex(); 
+    var frame = new FeynFrame(800, 800, "Vortex", true, false); 
+    var demo = new Vortex(); 
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

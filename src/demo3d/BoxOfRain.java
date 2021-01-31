@@ -66,8 +66,8 @@ public class BoxOfRain extends Demo3d {
   
   private void addNewRaindrops() {
     for (int i = 0; i < 1; i++) {
-    	Vector3d position = new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5));
-    	Line3d raindrop = new Line3d(position, position.add(0, 0.1, 0));
+    	var position = new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5));
+    	var raindrop = new Line3d(position, position.add(0, 0.1, 0));
     	raindrop.setColor(FeynColor.white);
     	raindrop.setVelocity(new Vector3d(0, -0.1, 0));
     	raindrops.add(raindrop);
@@ -98,7 +98,7 @@ public class BoxOfRain extends Demo3d {
   }
   
   private void addNewWave(Line3d raindrop) {
-		Polygon3d wave = Polygon3d.regularPolygon(0.1, 10);
+		var wave = Polygon3d.regularPolygon(0.1, 10);
 		wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
 		wave.setColor(FeynColor.white.fadeTo(0.9));
 		wave.getRenderingOptions().enable(RenderOptions3d.Option.meshOnly);
@@ -107,9 +107,12 @@ public class BoxOfRain extends Demo3d {
   
   private void addNewSplash(Line3d raindrop) {
   	for (int i = 0; i < 5; i++) {
-  		Vector3d position = new Vector3d(raindrop.getA().x(), 0.01, raindrop.getA().z());
-			Point3d splash = new Point3d(position);
-			splash.setVelocity(new Vector3d(xorShift.randomDouble(-0.02, 0.02), 0.1, xorShift.randomDouble(-0.02, 0.02)));
+  		var position = new Vector3d(raindrop.getA().x(), 0.01, raindrop.getA().z());
+			var splash = new Point3d(position);
+			splash.setVelocity(
+					xorShift.randomDouble(-0.02, 0.02),
+					0.1, 
+					xorShift.randomDouble(-0.02, 0.02));
   		splash.setColor(FeynColor.white);
   		splashes.add(splash);
   	}
@@ -126,8 +129,8 @@ public class BoxOfRain extends Demo3d {
   }
 
   public static void main(String[] args) {
-    FeynFrame frame = new FeynFrame(800, 800, "Rain Demo", true, false);
-    Demo3d demo = new BoxOfRain();
+    var frame = new FeynFrame(800, 800, "Rain Demo", true, false);
+    var demo = new BoxOfRain();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

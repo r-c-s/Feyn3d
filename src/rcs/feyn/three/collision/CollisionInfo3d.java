@@ -46,7 +46,7 @@ public class CollisionInfo3d {
       return false;
     }
     
-    CollisionInfo3d that = (CollisionInfo3d) obj;
+    var that = (CollisionInfo3d) obj;
     
     return this.point.equals(that.point)
         && this.normal.equals(that.normal)

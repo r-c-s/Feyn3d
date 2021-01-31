@@ -5,12 +5,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 
 import rcs.feyn.event.DeltaMouseHandler;
 import rcs.feyn.event.DeltaMouseListener;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.utils.ArrayUtils;
 import rcs.feyn.utils.TimeUtils;
 
 public abstract class AbstractAnimationCanvas 
@@ -24,7 +22,7 @@ public abstract class AbstractAnimationCanvas
   public static final long TARGET_UPS   = 60;
   public static final long UPS_DELAY_MS = 1000 / TARGET_UPS; 
 
-  protected boolean[] pressed = new boolean[100];  
+  private boolean[] pressed = new boolean[100];  
 
   protected boolean running = true;
   protected boolean paused  = false;
@@ -110,15 +108,7 @@ public abstract class AbstractAnimationCanvas
 
   @Override
   public final void keyPressed(KeyEvent e) {
-    keyPressed(e.getKeyCode());
-  }
-
-  @Override
-  public final void keyReleased(KeyEvent e) {
-    keyReleased(e.getKeyCode());
-  }
-
-  public void keyPressed(int code) {
+    int code = e.getKeyCode();
     if (code <= pressed.length) {
       if (code == KeyEvent.VK_Q) {
         stop();
@@ -130,20 +120,16 @@ public abstract class AbstractAnimationCanvas
     }
   }
 
-  public void keyReleased(int code) {
+  @Override
+  public final void keyReleased(KeyEvent e) {
+    int code = e.getKeyCode();
     if (code <= pressed.length) {
       pressed[code] = false;
     }
   }
 
-  public int[] getKeysPressed() {
-    ArrayList<Integer> keysPressed = new ArrayList<>();
-    for (int i = 0; i < pressed.length; i++) {
-      if (pressed[i]) {
-        keysPressed.add(i);
-      }
-    } 
-    return ArrayUtils.unbox(keysPressed.toArray(new Integer[]{}));
+  public boolean keyHasBeenPressed(int key) {
+    return pressed[key];
   }
 
   @Override
