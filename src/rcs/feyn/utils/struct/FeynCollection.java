@@ -1,6 +1,5 @@
 package rcs.feyn.utils.struct;
 
-import java.util.Iterator;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -48,6 +47,7 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
       for (var itB = iterator(); itB.hasNext(); j++) {
         T b = itB.next();
         
+        // this pair has already been processed but in a different order, so skip
         if (j <= i) {
           continue;
         } 
@@ -56,7 +56,6 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
         
         if (a.isDestroyed()) {
           itA.remove();
-          break; // todo: figure out why I added this break here...
         }
         if (b.isDestroyed()) {
           itB.remove();

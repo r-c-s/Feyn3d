@@ -13,7 +13,7 @@ public class AnimationTimer implements Runnable {
 		this.interval = millis;
 	}
 
-  public void run() {
+	public void run() {
   	long now = System.currentTimeMillis();
   	if (now - last >= interval) {
   		last = now;

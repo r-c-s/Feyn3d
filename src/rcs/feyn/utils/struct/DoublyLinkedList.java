@@ -1,7 +1,6 @@
 package rcs.feyn.utils.struct;
 
 import java.util.Iterator;
-import java.util.stream.StreamSupport;
 
 public class DoublyLinkedList<T> implements Iterable<T> { 
  
@@ -31,36 +30,35 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   public DoublyLinkedList(T item) {
     add(item);
   }
-
-  public boolean isEmpty() {
-    return head == null;
-  }
-  
-  public void clear() {
-    head = null;
-    tail = null;
-    N = 0;
-  }
   
   public int size() {
     return N;
   }
 
-  public void add(T item) {
+  public boolean isEmpty() {
+    return head == null;
+  }
+  
+  public synchronized void clear() {
+    head = null;
+    tail = null;
+    N = 0;
+  }
+
+  public synchronized void add(T item) {
     if (isEmpty()) {
       Node n = new Node(item); 
       head = n;
       tail = n;
-    }
-    else {
+    } else {
       Node n = new Node(item, tail, null);
       tail.next = n;
-      tail      = n;
+      tail = n;
     }
     N++;
   }
   
-  public void addAll(DoublyLinkedList<? extends T> other) {
+  public synchronized void addAll(DoublyLinkedList<? extends T> other) {
     for (T item : other) {
       add(item);
     }
@@ -112,22 +110,15 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     return current;
   }
 
-  private Node unlink(Node n) {
-    if (--N == 0) {
-    	clear();
-    }
-    else {
-	    if (n != head && n != tail) { 
-	      n.next.prev = n.prev;
-	      n.prev.next = n.next;
-	    }
-	    if (n == head) {
-	      head = n.next; 
-	    }
-	    if (n == tail) {
-	      tail = n.prev; 
-	    }
-    }
+  private synchronized Node unlink(Node n) {
+    N--;
+    
+    if (n == head) head = n.next; 
+    else n.prev.next = n.next;
+    
+    if (n == tail) tail = n.prev;
+    else n.next.prev = n.prev;
+    
     return n;
   }
 
@@ -138,6 +129,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   
   private class LinkedListIterator implements Iterator<T> {
     private Node current = head; 
+    private Node previous = null;
     
     @Override
     public boolean hasNext() {
@@ -146,7 +138,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
     @Override
     public void remove() {
-      unlink(null == current ? tail : current.prev);  
+      unlink(previous);  
     }
 
     @Override
@@ -156,6 +148,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
       } 
       
       T item  = current.item;
+      previous = current;
       current = current.next;
       return item;
     } 
