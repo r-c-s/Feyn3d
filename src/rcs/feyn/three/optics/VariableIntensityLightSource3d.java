@@ -9,7 +9,7 @@ public class VariableIntensityLightSource3d extends ConstantLightSource3d {
 	private double intensity;
 
   public VariableIntensityLightSource3d(double intensity) {
-    this(FeynColor.white, intensity);
+    this(null, intensity);
   }
   
   public VariableIntensityLightSource3d(FeynColor color, double intensity) {
