@@ -4,7 +4,6 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.anim.Curve3d;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 
@@ -41,18 +40,6 @@ public class Vortex extends Demo3d {
     
     wzc.setAmount(0.2);
     
-    var x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
-    var y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
-    var z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
-    
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);
-    
-    x.setColor(FeynColor.red);
-    y.setColor(FeynColor.green);
-    z.setColor(FeynColor.blue);
-
     FeynApp3d.getRepository().add(curve);
     
     camera.translate(0, 0, 2);

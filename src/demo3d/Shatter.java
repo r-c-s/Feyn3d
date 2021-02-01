@@ -37,18 +37,18 @@ public class Shatter extends Demo3d {
     setBackgroundColor(FeynColor.bisque);
     
     Model3d obj = Model3dFactory
-        .icosphere(0.6, 1)
+        .dodecahedron(0.6)
         .addColor(new FeynColor(123, 234, 13, 255))
         .build();
-    
-    x.setColor(FeynColor.red);
-    y.setColor(FeynColor.green);
-    z.setColor(FeynColor.blue);
 
     objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
       FeynApp3d.getRepository().add(model);
     }
+    
+    x.setColor(FeynColor.red);
+    y.setColor(FeynColor.green);
+    z.setColor(FeynColor.blue);
     
     FeynApp3d.getRepository().add(x);
     FeynApp3d.getRepository().add(y);
@@ -80,7 +80,7 @@ public class Shatter extends Demo3d {
     @Override
     public void run() {
       for (Model3d model : objs) {
-        model.translate(model.getPosition().mul(0.005*TrigLookUp.sin(++i*0.01)));
+        model.translate(model.getPosition().mul(0.01*TrigLookUp.sin(++i*0.1)));
       }
     }
   }

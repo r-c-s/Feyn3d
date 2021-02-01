@@ -66,8 +66,8 @@ public class Plato extends Demo3d {
 
   @Override
   public void runningLoop() {
-   controlCamera();  
-   
+    controlCamera();  
+
     FeynApp3d.getDiffuseLightSource().setPosition(camera.getPosition()); 
     
     for (Model3d solid : solids) {  
