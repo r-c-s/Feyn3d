@@ -5,6 +5,7 @@ import rcs.feyn.math.linalg.Vector3d;
 
 public class ReferenceFrame3d extends Basis3d {
   
+	// reassign simply to rename
   protected final Vector3d sd = i;
   protected final Vector3d up = j;
   protected final Vector3d fw = k;

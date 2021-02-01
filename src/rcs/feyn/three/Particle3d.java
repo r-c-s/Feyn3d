@@ -226,33 +226,6 @@ public class Particle3d implements IParticle3d {
   }
 
   @Override
-  public int hashCode() {
-    int result = 17;
-    result = 31 * result + position.hashCode();
-    result = 31 * result + velocity.hashCode();
-    result = 31 * result + rf.hashCode();
-    result = 31 * result + MathUtils.hashDouble(mass);
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == this) {
-      return true;
-    }
-    if (!(obj instanceof Particle3d)) {
-      return false;
-    }
-    
-    Particle3d that = (Particle3d) obj;
-
-    return this.position.equals(that.position)
-        && this.velocity.equals(that.velocity)
-        && this.rf.equals(that.rf)
-        && this.mass == that.mass;
-  }
-
-  @Override
   public String toString() {
     return String.format("%s:[r=%s,v=%s,rf=%s]", this.getClass().getName(), position, velocity, rf);
   } 

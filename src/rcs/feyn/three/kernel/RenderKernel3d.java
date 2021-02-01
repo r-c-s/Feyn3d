@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.render.patches.Patch3d;
-import rcs.feyn.math.linalg.Matrix44;
 
 public final class RenderKernel3d {
   

@@ -1,6 +1,5 @@
 package rcs.feyn.three.collision;
 
-import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.linalg.Vector3d.ImmutableVector3d;
 
@@ -26,31 +25,6 @@ public class CollisionInfo3d {
   
   public double getOverlap() {
     return overlap;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = 17;
-    result = 31 * result + point.hashCode();
-    result = 31 * result + normal.hashCode(); 
-    result = 31 * result + MathUtils.hashDouble(overlap);
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (!(obj instanceof CollisionInfo3d)) {
-      return false;
-    }
-    
-    var that = (CollisionInfo3d) obj;
-    
-    return this.point.equals(that.point)
-        && this.normal.equals(that.normal)
-        && MathUtils.epsilonEquals(this.overlap, that.overlap);
   }
 
   @Override
