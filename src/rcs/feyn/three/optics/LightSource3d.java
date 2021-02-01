@@ -1,8 +1,6 @@
 package rcs.feyn.three.optics;
 
-import rcs.feyn.color.Colorable;
-
-public interface LightSource3d extends Colorable {
+public interface LightSource3d {
   
   public double getIntensity();
 }

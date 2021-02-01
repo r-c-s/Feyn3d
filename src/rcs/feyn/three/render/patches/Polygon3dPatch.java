@@ -60,24 +60,26 @@ public class Polygon3dPatch extends Patch3d {
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
     
+    int colorWithLighting = Pipeline3d.applyLightning(color.getRGBA());
+    
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
-      renderMesh(graphics, vpcVertices, intensity);
+      renderMesh(graphics, vpcVertices, intensity, colorWithLighting);
     } else {
       Polygon3dRenderer.render(
         graphics,
         vpcVertices, 
         intensity,
-        color.getRGBA());
+        colorWithLighting);
     }
   }
 
-  private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, double intensity) {
+  private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, double intensity, int color) {
     for (int i = 0, j = 1; i < vpcVertices.length; i++, j++, j%=vpcVertices.length) {
       Line3dRenderer.render(
           graphics, 
           vpcVertices[i], 
           vpcVertices[j], 
-          ColorUtils.mulRGBA(color.getRGBA(), options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1));
+          ColorUtils.mulRGBA(color, options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1));
     }
   }
 }

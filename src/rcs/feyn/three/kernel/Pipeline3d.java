@@ -1,6 +1,7 @@
 package rcs.feyn.three.kernel;
 
 import rcs.feyn.three.optics.DiffuseLightSource3d;
+import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.linalg.Vector4d;
@@ -78,21 +79,6 @@ public final class Pipeline3d {
     return FeynApp3d.getViewFrustum().clipToNearPlane(vertices, normals);
   }
   
-//  public static final int applyLightning(int color) {
-//    return color;
-//    applyLightiningColor(
-//        color,
-//        FeynApp3d.getDiffuseLightSource().getColor().getRGBA());
-//  }
-//  
-//  private static final int applyLightiningColor(int color, int light) {
-//    int originalAlpha = ColorUtils.getAlphaFromRGBA(color);
-//    int lightAlpha = ColorUtils.getAlphaFromRGBA(light);
-//    int blendAlpha = Math.abs(originalAlpha - lightAlpha);
-//    int blended = ColorUtils.alphaBlend(ColorUtils.setAlphaToRGBA(color, blendAlpha), light);
-//    return ColorUtils.setAlphaToRGBA(blended, originalAlpha);
-//  }
-  
   public static final double computeLightningIntensity(
       Vector3d point, Vector3d normal, boolean bothSides) {
     return computeLightningIntensity(point, normal, null, bothSides);
@@ -124,4 +110,18 @@ public final class Pipeline3d {
     
     return intensity;
   } 
+  
+  public static final int applyLightning(int color) {
+    return applyLightiningColor(
+        color,
+        FeynApp3d.getDiffuseLightSource().getColor().getRGBA());
+  }
+  
+  private static final int applyLightiningColor(int objectColor, int lightColor) {
+    int objectAlpha = ColorUtils.getAlphaFromRGBA(objectColor);
+    int lightAlpha = ColorUtils.getAlphaFromRGBA(lightColor);
+    int blendAlpha = Math.abs(objectAlpha - lightAlpha);
+    int blended = ColorUtils.alphaBlend(ColorUtils.setAlphaToRGBA(objectColor, blendAlpha), lightColor);
+    return ColorUtils.setAlphaToRGBA(blended, objectAlpha);
+  }
 }
