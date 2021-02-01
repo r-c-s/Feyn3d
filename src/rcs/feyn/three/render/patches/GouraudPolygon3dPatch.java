@@ -4,6 +4,7 @@ import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
+import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
@@ -63,14 +64,13 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
         .ndcToDeviceCoordinates(ndcVertices, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? Pipeline3d.applyLightning(color.getRGBA())
+    		? LightingUtils.applyLightning(color.getRGBA())
     		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {
       double[] intensities = new double[clippedViewVertices.length];
       for (int i = 0; i < intensities.length; i++) {
-        intensities[i] = Pipeline3d
-            .computeLightningIntensity(
+        intensities[i] = LightingUtils.computeLightningIntensity(
                 clippedViewVertices[i], 
                 clippedViewNormals[i],
                 view,

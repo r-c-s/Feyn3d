@@ -4,6 +4,7 @@ import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
+import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.Line3dRenderer;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
@@ -53,15 +54,14 @@ public class Polygon3dPatch extends Patch3d {
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-      intensity = Pipeline3d
-          .computeLightningIntensity(
+      intensity = LightingUtils.computeLightningIntensity(
             center, 
             normal, 
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? Pipeline3d.applyLightning(color.getRGBA())
+    		? LightingUtils.applyLightning(color.getRGBA())
     		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
