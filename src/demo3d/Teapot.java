@@ -48,7 +48,7 @@ public class Teapot extends Demo3d {
     
     Model3dUtils.setOptions(
         teapot, 
-        EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+        EnumSet.of(RenderOptions3d.Option.gouraudShaded),
         EnumSet.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(teapot);
@@ -59,7 +59,7 @@ public class Teapot extends Demo3d {
     var lightSource = new VariableIntensityLightSource3d(30);
     lightSource.setPosition(new Vector3d(3, 4, 5));
     FeynApp3d.setDiffuseLightSource(lightSource);
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.1)); 
   } 
 
   @Override
