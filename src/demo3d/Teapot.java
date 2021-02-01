@@ -30,7 +30,7 @@ public class Teapot extends Demo3d {
 
   private Model3d teapot = new Model3dBuilder()
   		.fromObjFile(teapotObjFilePath)
-  		.addColor(FeynColor.white)//.fade(0.5))
+  		.addColor(FeynColor.white)
   		.addTransform(Matrix44.createScaleMatrix(0.05))
   		.build();
   
@@ -120,6 +120,12 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_L)) {
       inputDelay = 50;
       trackLightsourceWithCamera = !trackLightsourceWithCamera;
+    }
+    if (keyHasBeenPressed(KeyEvent.VK_C)) {
+      inputDelay = 50;
+      for (Model3dFace face : teapot.getFaces()) {
+        face.getRenderOptions().toggle(RenderOptions3d.Option.applyLightingColor);
+      }
     }
   }
 
