@@ -56,7 +56,7 @@ public class Teapot extends Demo3d {
     camera.translate(0.5, 2, 5.5);
     camera.rotate(Vector3d.X_AXIS, -20); 
     
-    VariableIntensityLightSource3d lightSource = new VariableIntensityLightSource3d(30);
+    var lightSource = new VariableIntensityLightSource3d(30);
     lightSource.setPosition(new Vector3d(3, 4, 5));
     FeynApp3d.setDiffuseLightSource(lightSource);
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 

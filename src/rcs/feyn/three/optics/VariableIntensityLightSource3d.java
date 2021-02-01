@@ -4,6 +4,7 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
+// todo: use color
 public class VariableIntensityLightSource3d extends ConstantLightSource3d {
 
   public VariableIntensityLightSource3d(double intensity) {

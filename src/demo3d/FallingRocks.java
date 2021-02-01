@@ -9,7 +9,7 @@ import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
-import rcs.feyn.three.optics.VariableIntensityLightSource3d;
+import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dFactory;
@@ -54,7 +54,7 @@ public class FallingRocks extends Demo3d {
     FeynApp3d.getRepository().add(rocks);
     FeynApp3d.getRepository().add(shards);
     
-    VariableIntensityLightSource3d lightSource = new VariableIntensityLightSource3d(30);
+    var lightSource = new ConstantLightSource3d(30);
     lightSource.setPosition(new Vector3d(5, 5, 5));
     FeynApp3d.setDiffuseLightSource(lightSource);
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 

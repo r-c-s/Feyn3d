@@ -4,6 +4,7 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
+import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFace;
@@ -48,7 +49,7 @@ public class Plato extends Demo3d {
     camera.translate(0, 2, 6);
     camera.rotate(Vector3d.X_AXIS, -25);
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(20));
+    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(20));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     double deg = MathConsts.TWO_PI / (double) solids.length;
