@@ -41,10 +41,17 @@ public class LightingUtils {
   } 
   
   public static final int applyLightning(int color) {
-  	FeynColor lightingColor = FeynApp3d.getDiffuseLightSource().getColor();
-  	return lightingColor == null 
-  			?	color 
-  			: applyLightiningColor(color, lightingColor.getRGBA());
+  	DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
+  	if (lightSource == null) {
+  		return color;
+  	}
+  	
+  	FeynColor lightingColor = lightSource.getColor();
+  	if (lightingColor == null) {
+  		return color;
+  	}
+  	
+  	return applyLightiningColor(color, lightingColor.getRGBA());
   }
   
   private static final int applyLightiningColor(int objectColor, int lightColor) {
