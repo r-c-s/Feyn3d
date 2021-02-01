@@ -19,7 +19,6 @@ public class Polygon3d extends Primitive3d implements Colorable {
   protected Vector3d[] vertices;
 
   public Polygon3d(Vector3d[] vertices) {
-    super();
     GeoUtils3d.validatePolygon3d(vertices);
     this.vertices = vertices;
   }

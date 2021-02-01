@@ -11,8 +11,6 @@ public class Line3d extends Primitive3d {
   protected Vector3d b = new Vector3d();
 
   public Line3d(Vector3d a, Vector3d b) {
-    super();
-  
     this.a.set(a).addLocal(position);
     this.b.set(b).addLocal(position);
   }

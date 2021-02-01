@@ -8,10 +8,6 @@ public abstract class Sprite3d extends Particle3d implements Renderable3d, Feyng
   
   private boolean active = true;
 
-  public Sprite3d() {
-    super();
-  }
-
   public abstract Vector3d getCenterOfMass();
 
   public final void spin(Vector3d axis, double deg) {
