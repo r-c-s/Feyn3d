@@ -39,11 +39,13 @@ public class Line3dPatch extends Patch3d {
     
     Vector3d[] vpcVertices = Pipeline3d
         .ndcToDeviceCoordinates(ndcVertices, viewPort);
+
+    int colorWithLighting = Pipeline3d.applyLightning(color.getRGBA());
     
     Line3dRenderer.render(
         graphics,
         vpcVertices[0], 
         vpcVertices[1],
-        color.getRGBA());
+        colorWithLighting);
   }
 }

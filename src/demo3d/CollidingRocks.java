@@ -55,10 +55,10 @@ public class CollidingRocks extends Demo3d {
     FeynApp3d.getRepository().add(rocks);
     FeynApp3d.getRepository().add(shards);
     
-    var lightSource = new ConstantLightSource3d(100);
+    var lightSource = new ConstantLightSource3d();
     lightSource.setPosition(new Vector3d(0, 0, 10));
     FeynApp3d.setDiffuseLightSource(lightSource);
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5)); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
   }
 
   @Override

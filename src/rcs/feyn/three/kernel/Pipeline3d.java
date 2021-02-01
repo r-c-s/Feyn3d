@@ -2,6 +2,7 @@ package rcs.feyn.three.kernel;
 
 import rcs.feyn.three.optics.DiffuseLightSource3d;
 import rcs.feyn.color.ColorUtils;
+import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.linalg.Vector4d;
@@ -112,9 +113,10 @@ public final class Pipeline3d {
   } 
   
   public static final int applyLightning(int color) {
-    return applyLightiningColor(
-        color,
-        FeynApp3d.getDiffuseLightSource().getColor().getRGBA());
+  	FeynColor lightingColor = FeynApp3d.getDiffuseLightSource().getColor();
+  	return lightingColor == null 
+  			?	color 
+  			: applyLightiningColor(color, lightingColor.getRGBA());
   }
   
   private static final int applyLightiningColor(int objectColor, int lightColor) {
