@@ -12,6 +12,7 @@ import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -38,11 +39,11 @@ public class Rotation extends Demo3d {
   private Grid xzPlane = new Grid(2, 2, 2); 
   private Grid zyPlane = new Grid(2, 2, 2); 
 
-  private final Matrix44 xTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, 1);
-  private final Matrix44 yTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, 1);
-  private final Matrix44 zTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, 1);
-  
-  private final double ANG_VEL = 2;
+  private final double ANG_VEL = 2 * MathConsts.DEGREES_TO_RADIANS;
+
+  private final Matrix44 xTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, ANG_VEL);
+  private final Matrix44 yTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, ANG_VEL);
+  private final Matrix44 zTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, ANG_VEL);
    
   private ConstantLightSource3d lightSource; 
   
@@ -61,8 +62,8 @@ public class Rotation extends Demo3d {
     sd.translate(obj.getPosition()); 
     fw.translate(obj.getPosition()); 
     
-    xyPlane.rotate(Vector3d.X_AXIS, 90);
-    zyPlane.rotate(Vector3d.Z_AXIS, 90);
+    xyPlane.rotate(Vector3d.X_AXIS, 90 * MathConsts.DEGREES_TO_RADIANS);
+    zyPlane.rotate(Vector3d.Z_AXIS, 90 * MathConsts.DEGREES_TO_RADIANS);
     
     xyPlane.setColor(new FeynColor(255, 255, 0, 50));  
     xzPlane.setColor(new FeynColor(255, 0, 255, 50));  

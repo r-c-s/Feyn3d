@@ -13,6 +13,7 @@ import rcs.feyn.three.render.models.Model3dBuilder;
 import rcs.feyn.three.render.models.Model3dFace;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -53,7 +54,7 @@ public class Teapot extends Demo3d {
     FeynApp3d.getRepository().add(teapot);
     
     camera.translate(0.5, 2, 5.5);
-    camera.rotate(Vector3d.X_AXIS, -20); 
+    camera.rotate(Vector3d.X_AXIS, -20 * MathConsts.DEGREES_TO_RADIANS); 
     
     var lightSource = new VariableIntensityLightSource3d(new FeynColor(255, 0, 0, 100), 30);
     lightSource.setPosition(new Vector3d(3, 4, 5));

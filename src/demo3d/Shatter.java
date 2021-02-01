@@ -80,7 +80,7 @@ public class Shatter extends Demo3d {
     @Override
     public void run() {
       for (Model3d model : objs) {
-        model.translate(model.getPosition().mul(0.01*TrigLookUp.sin(++i*0.1)));
+        model.translate(model.getPosition().mul(0.01*TrigLookUp.sin(++i*0.002)));
       }
     }
   }

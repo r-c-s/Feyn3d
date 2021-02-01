@@ -7,6 +7,10 @@ import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 
+import static rcs.feyn.math.MathConsts.PI;
+import static rcs.feyn.math.MathConsts.HALF_PI;
+import static rcs.feyn.math.MathConsts.QUARTER_PI;;
+
 public class Vortex extends Demo3d { 
   
   private static final long serialVersionUID = 1L; 
@@ -19,14 +23,14 @@ public class Vortex extends Demo3d {
       (r, t) -> { 
         r = 2*(r-0.5);
         double radius = Math.sqrt(1 - r*r);
-        return new Vector3d(radius*TrigLookUp.cos(r*t*360 + t),
-                            radius*TrigLookUp.sin(r*t*360 + t),
+        return new Vector3d(radius*TrigLookUp.cos(r*t*PI + t),
+                            radius*TrigLookUp.sin(r*t*PI + t),
                             r); 
       },
       (r, t, z) -> {         
-        return new FeynColor((int)(10+TrigLookUp.cos(r*t*360 + t)*245), 
-                             (int)(10+TrigLookUp.cos(r*t*180 + t)*245), 
-                             (int)(10+TrigLookUp.cos(r*t*90 + t)*245), 
+        return new FeynColor((int)(10+TrigLookUp.cos(r*t*PI + t)*245), 
+                             (int)(10+TrigLookUp.cos(r*t*HALF_PI + t)*245), 
+                             (int)(10+TrigLookUp.cos(r*t*QUARTER_PI + t)*245), 
                              255);
       },
       0.001, 

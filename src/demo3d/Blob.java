@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
@@ -81,13 +82,13 @@ public class Blob extends Demo3d {
 
     @Override
     public void run() {
-      obj.rotate(Vector3d.Y_AXIS, 0.1);
+      obj.rotate(Vector3d.Y_AXIS, 0.01);
       
-      Function<Integer, Double> function = ++i % 2 == 0 
+      Function<Double, Double> function = ++i % 2 == 0 
       		? TrigLookUp::sin
       		: TrigLookUp::cos;
       
-      double factor = 0.005*function.apply(i);
+      double factor = 0.005*function.apply(i * MathConsts.DEGREES_TO_RADIANS);
       		
       Model3dUtils.deform(obj, factor);
     }
