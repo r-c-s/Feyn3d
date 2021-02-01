@@ -25,9 +25,7 @@ public final class RenderKernel3d {
     repository.patches()
     	.forEach(patch -> {
 	    	if (patch.getColor().isTransparent()) {
-	        synchronized(alphaBuffer) {
-	          alphaBuffer.add(patch);
-	        }
+		      alphaBuffer.add(patch);
 	      } else {
 	        patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
 	      }
