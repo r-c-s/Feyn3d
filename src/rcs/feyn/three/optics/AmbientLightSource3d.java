@@ -1,6 +1,6 @@
 package rcs.feyn.three.optics;
 
-public class AmbientLightSource3d implements LightSource3d {
+public class AmbientLightSource3d {
   
   private double intensity;
   
@@ -8,7 +8,6 @@ public class AmbientLightSource3d implements LightSource3d {
     this.intensity = intensity;
   }
 
-  @Override
   public double getIntensity() {
     return intensity;
   }
