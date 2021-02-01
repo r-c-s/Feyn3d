@@ -75,8 +75,13 @@ public class FallingRocks extends Demo3d {
   
   private void addNewRock() {
   	var rock = Model3dFactory.dodecahedron(0.5)
-  			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5)))
+  			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 15, xorShift.randomDouble(-5, 5)))
   			.build();
+  	
+  	Model3dUtils.setOptions(
+  			rock, 
+  			EnumSet.of(RenderOptions3d.Option.gouraudShaded), 
+  			EnumSet.of(RenderOptions3d.Option.cullIfBackface));
   	
   	Model3dUtils.deform(rock, 0.1);
 
@@ -87,7 +92,7 @@ public class FallingRocks extends Demo3d {
   
   private void animateRocks() {
   	rocks.forEach(rock -> {
-  		rock.spin(Vector3d.Z_AXIS, 1);
+  		rock.spin(Vector3d.Z_AXIS, 0.01);
     	rock.move();
     	if (rock.getPosY() < 0) {
     		rock.destroy();

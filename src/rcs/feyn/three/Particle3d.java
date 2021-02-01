@@ -1,6 +1,5 @@
 package rcs.feyn.three;
 
-import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -129,7 +128,7 @@ public class Particle3d implements IParticle3d {
   
   public void face(Vector3d point) {
   	Vector3d delta = position.sub(point);
-  	double degrees = MathConsts.RADIANS_TO_DEGREES*delta.angleBetween(fw);
+  	double degrees = delta.angleBetween(fw);
   	if (MathUtils.epsilonEquals(degrees, 0)) {
   		return;
   	}
@@ -213,12 +212,12 @@ public class Particle3d implements IParticle3d {
     transform(Matrix44.createScaleMatrix(scale, point));
   }
 
-  public final void rotate(Vector3d axis, double deg) {
-    rotate(position, axis, deg);
+  public final void rotate(Vector3d axis, double radians) {
+    rotate(position, axis, radians);
   }
 
-  public final void rotate(Vector3d point, Vector3d axis, double deg) {
-    transform(Matrix44.createRotateMatrix(point, axis, deg));
+  public final void rotate(Vector3d point, Vector3d axis, double radians) {
+    transform(Matrix44.createRotateMatrix(point, axis, radians));
   }
 
   public final void accelerateForward(double accel) {
@@ -229,16 +228,16 @@ public class Particle3d implements IParticle3d {
     velocity.addLocal(fw.mul(-accel));
   } 
 
-  public final void roll(double deg) {
-    rotate(fw, deg);
+  public final void roll(double radians) {
+    rotate(fw, radians);
   }
 
-  public final void pitch(double deg) {
-    rotate(sd, deg);
+  public final void pitch(double radians) {
+    rotate(sd, radians);
   }
 
-  public final void yaw(double deg) {
-    rotate(up, deg);
+  public final void yaw(double radians) {
+    rotate(up, radians);
   }
 
   @Override

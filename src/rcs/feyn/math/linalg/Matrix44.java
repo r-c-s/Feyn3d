@@ -263,11 +263,11 @@ public class Matrix44 {
           m30, m31, m32, m33);
   }
 
-  public static Matrix44 createRotateMatrix(Vector3d v, double deg) {
-    return createRotateMatrix(Vector3d.ZERO, v, deg);
+  public static Matrix44 createRotateMatrix(Vector3d v, double radians) {
+    return createRotateMatrix(Vector3d.ZERO, v, radians);
   }
 
-  public static Matrix44 createRotateMatrix(Vector3d p, Vector3d v, double deg) {    
+  public static Matrix44 createRotateMatrix(Vector3d p, Vector3d v, double radians) {    
     Vector3d u = v.normalize();
     
     double ux = u.x();
@@ -278,8 +278,8 @@ public class Matrix44 {
     double py = p.y();
     double pz = p.z();
 
-    double cos = TrigLookUp.cos(deg);
-    double sin = TrigLookUp.sin(deg);
+    double cos = TrigLookUp.cos(radians);
+    double sin = TrigLookUp.sin(radians);
     
     double K = 1-cos;
     
@@ -298,9 +298,9 @@ public class Matrix44 {
     return createXRotateMatrix(Vector3d.ZERO, deg);
   }
 
-  public static Matrix44 createXRotateMatrix(Vector3d p, double deg) {
-    double cos = TrigLookUp.cos(deg);
-    double sin = TrigLookUp.sin(deg);
+  public static Matrix44 createXRotateMatrix(Vector3d p, double radians) {
+    double cos = TrigLookUp.cos(radians);
+    double sin = TrigLookUp.sin(radians);
 
     return new Matrix44(
       1,   0,    0,                       0,
@@ -313,9 +313,9 @@ public class Matrix44 {
     return createYRotateMatrix(Vector3d.ZERO, deg);
   }
 
-  public static Matrix44 createYRotateMatrix(Vector3d p, double deg) {
-    double cos = TrigLookUp.cos(deg);
-    double sin = TrigLookUp.sin(deg);
+  public static Matrix44 createYRotateMatrix(Vector3d p, double radians) {
+    double cos = TrigLookUp.cos(radians);
+    double sin = TrigLookUp.sin(radians);
 
     return new Matrix44(
        cos, 0, sin, p.x()*(1-cos)-p.z()*sin,
@@ -324,13 +324,13 @@ public class Matrix44 {
          0, 0,   0,                       1); 
   }
   
-  public static Matrix44 createZRotateMatrix(double deg) {
-    return createZRotateMatrix(Vector3d.ZERO, deg);
+  public static Matrix44 createZRotateMatrix(double radians) {
+    return createZRotateMatrix(Vector3d.ZERO, radians);
   }
 
-  public static Matrix44 createZRotateMatrix(Vector3d p, double deg) {
-    double cos = TrigLookUp.cos(deg);
-    double sin = TrigLookUp.sin(deg);
+  public static Matrix44 createZRotateMatrix(Vector3d p, double radians) {
+    double cos = TrigLookUp.cos(radians);
+    double sin = TrigLookUp.sin(radians);
 
     return new Matrix44(
       cos, -sin, 0, p.x()*(1-cos)+p.y()*sin,
@@ -339,13 +339,13 @@ public class Matrix44 {
         0,    0, 0,                       1);  
   }
 
-  public static Matrix44 createRotateMatrix(double degx, double degy, double degz) {
-    double cosx = TrigLookUp.cos(degx);
-    double sinx = TrigLookUp.sin(degx);
-    double cosy = TrigLookUp.cos(degy);
-    double siny = TrigLookUp.sin(degy);
-    double cosz = TrigLookUp.cos(degz);
-    double sinz = TrigLookUp.sin(degz);
+  public static Matrix44 createRotateMatrix(double radiansx, double radiansy, double radiansz) {
+    double cosx = TrigLookUp.cos(radiansx);
+    double sinx = TrigLookUp.sin(radiansx);
+    double cosy = TrigLookUp.cos(radiansy);
+    double siny = TrigLookUp.sin(radiansy);
+    double cosz = TrigLookUp.cos(radiansz);
+    double sinz = TrigLookUp.sin(radiansz);
 
     return new Matrix44(
       cosy*cosz, sinx*siny*cosz-cosx*sinz, sinx*sinz+cosx*siny*cosz, 0,

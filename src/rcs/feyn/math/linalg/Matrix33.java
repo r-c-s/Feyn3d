@@ -210,16 +210,16 @@ public class Matrix33 {
           m20, m21, m22);
   }
   
-  public static Matrix33 createRotateMatrix(double deg) {
-    return createRotateMatrix(Vector2d.ZERO, deg);
+  public static Matrix33 createRotateMatrix(double radians) {
+    return createRotateMatrix(Vector2d.ZERO, radians);
   }
 
-  public static Matrix33 createRotateMatrix(Vector2d p, double deg) {
+  public static Matrix33 createRotateMatrix(Vector2d p, double radians) {
     double px = p.x();
     double py = p.y();
 
-    double cos = TrigLookUp.cos(deg);
-    double sin = TrigLookUp.sin(deg); 
+    double cos = TrigLookUp.cos(radians);
+    double sin = TrigLookUp.sin(radians); 
     
     return new Matrix33(
       cos, -sin, px*(1-cos)+py*sin,

@@ -40,7 +40,7 @@ public class ElasticCollision3d implements CollisionHandler3d<Collidable3d, Coll
     Vector3d v1 = a.getVelocity();
     Vector3d v1Normal = v1.div(s1); 
     
-    double theta = MathConsts.RADIANS_TO_DEGREES * (MathConsts.PI - v1.angleBetween(collisionNormal));
+    double theta = MathConsts.PI - v1.angleBetween(collisionNormal);
     double phi   = 90 - theta;
     
     double s1f = s1 * TrigLookUp.sin(theta);

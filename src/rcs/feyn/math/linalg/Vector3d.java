@@ -290,26 +290,33 @@ public class Vector3d implements Freezable<Vector3d> {
     return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
-  public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double deg) {
-    if (deg == 0 || deg == 360 || equals(origin) || equals(ZERO) || MathUtils.epsilonZero(axis.lengthSquared())) {
+  public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double radians) {
+    if (radians == 0 
+    		|| equals(origin) 
+    		|| equals(ZERO) 
+    		|| MathUtils.epsilonEquals(radians, MathConsts.PI) 
+    		|| MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
-    return affineTransformLocal(Matrix44.createRotateMatrix(origin, axis, deg));
+    return affineTransformLocal(Matrix44.createRotateMatrix(origin, axis, radians));
   }
 
   public Vector3d rotate(Vector3d origin, Vector3d axis, double deg) {
     return new Vector3d(this).rotateLocal(origin, axis, deg); 
   }
 
-  public Vector3d rotateLocal(Vector3d axis, double deg) {
-    if (deg == 0 || deg == 360 || equals(ZERO) || MathUtils.epsilonZero(axis.lengthSquared())) {
+  public Vector3d rotateLocal(Vector3d axis, double radians) {
+    if (radians == 0  
+    		|| equals(ZERO) 
+    		|| MathUtils.epsilonEquals(radians, MathConsts.TWO_PI)
+    		|| MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
-    return affineTransformLocal(Matrix44.createRotateMatrix(axis, deg));
+    return affineTransformLocal(Matrix44.createRotateMatrix(axis, radians));
   }
 
-  public Vector3d rotate(Vector3d axis, double deg) {
-    return new Vector3d(this).rotateLocal(axis, deg); 
+  public Vector3d rotate(Vector3d axis, double radians) {
+    return new Vector3d(this).rotateLocal(axis, radians); 
   } 
 
   @Override

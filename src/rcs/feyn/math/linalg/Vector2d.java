@@ -253,22 +253,22 @@ public class Vector2d implements Freezable<Vector2d> {
     return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
-  public Vector2d rotateLocal(Vector2d origin, double deg) {
-    if (deg == 0 || deg == 360 || equals(origin) || equals(ZERO)) {
+  public Vector2d rotateLocal(Vector2d origin, double radians) {
+    if (radians == 0 || radians == 360 || equals(origin) || equals(ZERO)) {
       return this;
     } 
-    return affineTransformLocal(Matrix33.createRotateMatrix(origin, deg));
+    return affineTransformLocal(Matrix33.createRotateMatrix(origin, radians));
   }
 
-  public Vector2d rotate(Vector2d origin, double deg) {
-    return new Vector2d(this).rotateLocal(origin, deg); 
+  public Vector2d rotate(Vector2d origin, double radians) {
+    return new Vector2d(this).rotateLocal(origin, radians); 
   }
 
-  public Vector2d rotateLocal(double deg) {
-    if (deg == 0 || deg == 360 ||equals(ZERO)) {
+  public Vector2d rotateLocal(double radians) {
+    if (radians == 0 || radians == 360 ||equals(ZERO)) {
       return this;
     }
-    return affineTransformLocal(Matrix33.createRotateMatrix(deg));
+    return affineTransformLocal(Matrix33.createRotateMatrix(radians));
   }
 
   public Vector2d rotate(double deg) {

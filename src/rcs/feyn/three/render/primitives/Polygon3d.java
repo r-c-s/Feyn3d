@@ -46,26 +46,26 @@ public class Polygon3d extends Primitive3d implements Colorable {
   }
 
   public void setOrientation(Particle3d that) {
-    double degree;
+    double radians;
     Vector3d axis;
     
     Vector3d thatUp = that.getUpVector();
     Vector3d thatSd = that.getSideVector();
     
-    degree = this.up.angleBetween(thatUp) * MathConsts.RADIANS_TO_DEGREES;
-    if (!MathUtils.epsilonZero(degree)) {
+    radians = this.up.angleBetween(thatUp);
+    if (!MathUtils.epsilonZero(radians)) {
       axis = this.up.crossProd(thatUp);
-      rotate(axis, degree);
+      rotate(axis, radians);
     }
     
-    degree = this.sd.angleBetween(thatSd) * MathConsts.RADIANS_TO_DEGREES;
-    if (MathUtils.epsilonEquals(degree, 180)) {
+    radians = this.sd.angleBetween(thatSd);
+    if (MathUtils.epsilonEquals(radians, 180)) {
       axis = this.up;
     } else {
       axis = this.sd.crossProd(thatSd);
     }
     
-    rotate(axis, degree);
+    rotate(axis, radians);
   }
 
   @Override

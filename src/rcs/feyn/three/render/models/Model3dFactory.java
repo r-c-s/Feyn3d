@@ -306,8 +306,8 @@ public class Model3dFactory {
   public static Model3dBuilder torus(double innerRadius, double outerRadius, int numI, int numJ) {
     Model3dBuilder torus = new Model3dBuilder();
 
-    double degI = MathConsts.RADIANS_TO_DEGREES * MathConsts.TWO_PI / numI;
-    double degJ = MathConsts.RADIANS_TO_DEGREES * MathConsts.TWO_PI / numJ;
+    double degI = MathConsts.TWO_PI / numI;
+    double degJ = MathConsts.TWO_PI / numJ;
     
     for (int i = 0; i < numI; i++) {
       Vector3d center = 

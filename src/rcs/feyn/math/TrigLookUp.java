@@ -34,7 +34,8 @@ public class TrigLookUp {
     } 
   }
 
-  public static final double cos(double angle) {
+  public static final double cos(double radian) {
+  	double angle = MathConsts.RADIANS_TO_DEGREES * radian;
     if (angle < 0) {
       angle = -angle;
     }
@@ -47,7 +48,8 @@ public class TrigLookUp {
     else             return -cos[(int) ((180 - angle) * inverseStep)];
   }
 
-  public static final double sin(double angle) {
+  public static final double sin(double radian) {
+  	double angle = MathConsts.RADIANS_TO_DEGREES * radian;
     if (angle < 0) {
       angle = 180 - angle;
     }
@@ -60,7 +62,7 @@ public class TrigLookUp {
     else             return  sin[(int) ((180 - angle) * inverseStep)];
   }
 
-  public static final double tan(double angle) {
-    return sin(angle) / cos(angle);
+  public static final double tan(double radian) {
+    return sin(radian) / cos(radian);
   } 
 }

@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
-import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
@@ -209,8 +208,8 @@ public class Model3dUtils {
       Vector3d[] vertices = model.getVertices().getVertices(face.getIndices());
 
       for (Vector3d vertex : vertices) {
-        double angle = vertex.sub(com).normalizeLocal().angleBetween(directionBias);
-        boolean isInDirectionBias = MathConsts.RADIANS_TO_DEGREES * angle < toleranceAngle;
+        double angleRadians = vertex.sub(com).normalizeLocal().angleBetween(directionBias);
+        boolean isInDirectionBias = angleRadians < toleranceAngle;
         if (isInDirectionBias) {
 	        double scalar = 1 + (factor * XORShift.getInstance().randomDouble(-1, 1));
 	        vertex.mulLocal(scalar);

@@ -7,7 +7,7 @@ import rcs.feyn.math.MathConsts;
 
 public class ViewFrustum3d {
   
-  public static final double FOV = 45.0;
+  public static final double FOV = 45.0 * MathConsts.DEGREES_TO_RADIANS;
   
   protected final Plane3d T = Plane3d.yzPlane(); //top
   protected final Plane3d R = Plane3d.zyPlane(); //right
@@ -54,9 +54,9 @@ public class ViewFrustum3d {
   public void setHeight(double height) {
     this.height = height;
     
-    double deg = Math.atan(height / width) * MathConsts.RADIANS_TO_DEGREES;
-    T.setNormal(Vector3d.NEG_Y_AXIS.rotate(Vector3d.X_AXIS, deg));
-    B.setNormal(Vector3d.Y_AXIS.rotate(Vector3d.NEG_X_AXIS, deg));
+    double radians = Math.atan(height / width);
+    T.setNormal(Vector3d.NEG_Y_AXIS.rotate(Vector3d.X_AXIS, radians));
+    B.setNormal(Vector3d.Y_AXIS.rotate(Vector3d.NEG_X_AXIS, radians));
   }
 
   public double getNearDistance() {
