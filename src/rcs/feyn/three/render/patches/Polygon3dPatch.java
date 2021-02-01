@@ -59,8 +59,10 @@ public class Polygon3dPatch extends Patch3d {
             normal, 
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
-    
-    int colorWithLighting = Pipeline3d.applyLightning(color.getRGBA());
+
+    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+    		? Pipeline3d.applyLightning(color.getRGBA())
+    		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
       renderMesh(graphics, vpcVertices, intensity, colorWithLighting);

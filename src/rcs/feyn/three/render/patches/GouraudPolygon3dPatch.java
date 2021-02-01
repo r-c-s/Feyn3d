@@ -62,7 +62,9 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] vpcVertices = Pipeline3d
         .ndcToDeviceCoordinates(ndcVertices, viewPort);
 
-    int colorWithLighting = Pipeline3d.applyLightning(color.getRGBA());
+    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+    		? Pipeline3d.applyLightning(color.getRGBA())
+    		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {
       double[] intensities = new double[clippedViewVertices.length];

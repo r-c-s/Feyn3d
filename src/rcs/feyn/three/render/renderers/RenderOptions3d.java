@@ -12,7 +12,8 @@ public class RenderOptions3d {
     bothSidesShaded,
     flatShaded,
     gouraudShaded,
-    meshShaded
+    meshShaded,
+    applyLightingColor
   }
 
   private Set<Option> options;
@@ -22,7 +23,8 @@ public class RenderOptions3d {
         Option.cullIfBackface,
         Option.flatShaded, 
         Option.meshShaded, 
-        Option.lighted));
+        Option.lighted,
+        Option.applyLightingColor));
   }
   
   public RenderOptions3d(RenderOptions3d options) {

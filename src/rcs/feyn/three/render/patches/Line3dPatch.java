@@ -3,6 +3,7 @@ package rcs.feyn.three.render.patches;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.render.renderers.Line3dRenderer;
+import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -40,7 +41,9 @@ public class Line3dPatch extends Patch3d {
     Vector3d[] vpcVertices = Pipeline3d
         .ndcToDeviceCoordinates(ndcVertices, viewPort);
 
-    int colorWithLighting = Pipeline3d.applyLightning(color.getRGBA());
+    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+    		? Pipeline3d.applyLightning(color.getRGBA())
+    		: color.getRGBA();
     
     Line3dRenderer.render(
         graphics,
