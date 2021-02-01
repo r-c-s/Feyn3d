@@ -153,7 +153,7 @@ public class CollidingRocks extends Demo3d {
             shard, 
             EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
             null);
-        double speed = rock.getVelocity().norm();
+        double speed = rock.getVelocity().length();
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
   			shard.setVelocity(velocity);
     		shards.add(shard);

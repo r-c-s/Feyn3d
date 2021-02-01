@@ -58,9 +58,9 @@ public class Basis3d implements Transformable3d {
     return MathUtils.epsilonEquals(y.dotProd(x), 0) 
         && MathUtils.epsilonEquals(x.dotProd(z), 0) 
         && MathUtils.epsilonEquals(z.dotProd(y), 0) 
-        && MathUtils.epsilonEquals(x.normSquared(), 1) 
-        && MathUtils.epsilonEquals(y.normSquared(), 1) 
-        && MathUtils.epsilonEquals(z.normSquared(), 1);
+        && MathUtils.epsilonEquals(x.lengthSquared(), 1) 
+        && MathUtils.epsilonEquals(y.lengthSquared(), 1) 
+        && MathUtils.epsilonEquals(z.lengthSquared(), 1);
   }
 
   @Override

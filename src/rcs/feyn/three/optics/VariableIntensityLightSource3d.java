@@ -18,7 +18,7 @@ public class VariableIntensityLightSource3d extends ConstantLightSource3d {
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal) {
     Vector3d direction = this.position.sub(position);
-    double distSquared = direction.normSquared();
+    double distSquared = direction.lengthSquared();
     
     direction.divLocal(Math.sqrt(distSquared));
     
@@ -28,7 +28,7 @@ public class VariableIntensityLightSource3d extends ConstantLightSource3d {
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal, Matrix44 view) {
     Vector3d direction = this.position.affineTransform(view).subLocal(position);
-    double distSquared = direction.normSquared();
+    double distSquared = direction.lengthSquared();
     
     direction.divLocal(Math.sqrt(distSquared));
     

@@ -198,15 +198,15 @@ public class Matrix44 {
   }
 
   public double extractScaleX() {
-    return new Vector3d(m00, m01, m02).norm();
+    return new Vector3d(m00, m01, m02).length();
   }
 
   public double extractScaleY() {
-    return new Vector3d(m10, m11, m12).norm();
+    return new Vector3d(m10, m11, m12).length();
   }
 
   public double extractScaleZ() {
-    return new Vector3d(m20, m21, m22).norm();
+    return new Vector3d(m20, m21, m22).length();
   }
 
   @Override

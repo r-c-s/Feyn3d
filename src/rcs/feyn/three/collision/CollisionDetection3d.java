@@ -56,7 +56,7 @@ public class CollisionDetection3d {
     
     Vector3d distance = posA.sub(posB);
     
-    double distNormSquared = distance.normSquared();
+    double distNormSquared = distance.lengthSquared();
     double radiusSum       = rA + rB;
     
     int orientation = a.getOrientation();

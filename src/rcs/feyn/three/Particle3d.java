@@ -111,11 +111,11 @@ public class Particle3d implements IParticle3d {
   }
 
   public final double getSpeed() {
-    return velocity.norm();
+    return velocity.length();
   }
 
   public final double getSpeedSquared() {
-    return velocity.normSquared();
+    return velocity.lengthSquared();
   }
 
   public final ReferenceFrame3d getReferenceFrame() {

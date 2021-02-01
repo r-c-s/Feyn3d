@@ -29,7 +29,7 @@ public class ElasticCollision3d implements CollisionHandler3d<Collidable3d, Coll
   }
   
   private void assumeSecondIsAtRest(Collidable3d a, Collidable3d b, Vector3d vA, Vector3d vB, Vector3d collisionNormal) {
-    double s1 = a.getVelocity().normSquared();
+    double s1 = a.getVelocity().lengthSquared();
     
     if (s1 == 0) {
       return;

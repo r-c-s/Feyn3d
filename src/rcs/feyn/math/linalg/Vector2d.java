@@ -204,11 +204,11 @@ public class Vector2d implements Freezable<Vector2d> {
     return this.x*that.y - this.y*that.x;
   }
 
-  public double norm() {
-    return Math.sqrt(normSquared());
+  public double length() {
+    return Math.sqrt(lengthSquared());
   }
 
-  public double normSquared() {
+  public double lengthSquared() {
     return this.dotProd((Vector2d) this);
   }
 
@@ -217,11 +217,11 @@ public class Vector2d implements Freezable<Vector2d> {
   }
 
   public double distanceSquared(Vector2d that) {
-    return this.sub(that).normSquared();
+    return this.sub(that).lengthSquared();
   }
 
   public Vector2d normalize() {
-    return this.div(this.norm());
+    return this.div(this.length());
   }
 
   public Vector2d normalizeLocal() {
@@ -229,7 +229,7 @@ public class Vector2d implements Freezable<Vector2d> {
       throw new IllegalArgumentException("Cannot normalize a vector of length 0.");
     }
     
-    double norm = norm();
+    double norm = length();
 
     x /= norm;
     y /= norm;
@@ -238,7 +238,7 @@ public class Vector2d implements Freezable<Vector2d> {
   } 
 
   public Vector2d proj(Vector2d that) {
-    return that.mul(this.dotProd((Vector2d) that) / that.normSquared());
+    return that.mul(this.dotProd((Vector2d) that) / that.lengthSquared());
   }
 
   public Vector2d perp(Vector2d that) {
@@ -250,7 +250,7 @@ public class Vector2d implements Freezable<Vector2d> {
   }
 
   public double angleBetween(Vector2d that) {
-    return Math.acos(this.dotProd(that) / (this.norm() * that.norm()));
+    return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
   public Vector2d rotateLocal(Vector2d origin, double deg) {

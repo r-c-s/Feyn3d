@@ -215,11 +215,11 @@ public class Vector4d implements Freezable<Vector4d> {
          + w * that.w;
   }
 
-  public double norm() {
-    return Math.sqrt(normSquared());
+  public double length() {
+    return Math.sqrt(lengthSquared());
   }
 
-  public double normSquared() {
+  public double lengthSquared() {
     return x*x + y*y + z*z + w*w;
   }
 
@@ -228,11 +228,11 @@ public class Vector4d implements Freezable<Vector4d> {
   }
 
   public double distanceSquared(Vector4d that) {
-    return sub(that).normSquared();
+    return sub(that).lengthSquared();
   }
 
   public Vector4d normalizeLocal() {
-    double normSquared = normSquared();
+    double normSquared = lengthSquared();
     
     if (MathUtils.epsilonEquals(normSquared, 1)) {
       return this;
@@ -254,7 +254,7 @@ public class Vector4d implements Freezable<Vector4d> {
   } 
 
   public Vector4d proj(Vector4d that) {
-    return that.mul(this.dotProd(that) / that.normSquared());
+    return that.mul(this.dotProd(that) / that.lengthSquared());
   }
 
   public Vector4d perp(Vector4d that) {
@@ -266,7 +266,7 @@ public class Vector4d implements Freezable<Vector4d> {
   }
 
   public double angleBetween(Vector4d that) {
-    return Math.acos(this.dotProd(that) / (this.norm() * that.norm()));
+    return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
   @Override

@@ -159,11 +159,11 @@ public class Matrix33 {
   }
 
   public double extractScaleX() {
-    return new Vector2d(m00, m01).norm();
+    return new Vector2d(m00, m01).length();
   }
 
   public double extractScaleY() {
-    return new Vector2d(m10, m11).norm();
+    return new Vector2d(m10, m11).length();
   } 
 
   @Override

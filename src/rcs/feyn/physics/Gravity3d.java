@@ -32,7 +32,7 @@ public class Gravity3d {
   public Vector3d getAccelerationAt(Vector3d point) {
     Vector3d r = position.sub(point);
     Vector3d rh = r.normalize();
-    double r2 = r.normSquared();
+    double r2 = r.lengthSquared();
     return rh.mul(K/r2);
   }
 

@@ -84,7 +84,7 @@ public class Segment3d implements Movable3d, Transformable3d {
   }
 
   public double distanceSquared(Vector3d q) {
-    return q.sub(closestPoint(q)).normSquared();
+    return q.sub(closestPoint(q)).lengthSquared();
   }
 
   @Override

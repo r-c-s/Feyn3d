@@ -236,11 +236,11 @@ public class Vector3d implements Freezable<Vector3d> {
       z * that.x, z * that.y, z * that.z);
   }
 
-  public double norm() {
-    return Math.sqrt(normSquared());
+  public double length() {
+    return Math.sqrt(lengthSquared());
   }
 
-  public double normSquared() {
+  public double lengthSquared() {
     return x*x + y*y + z*z;
   }
 
@@ -249,11 +249,11 @@ public class Vector3d implements Freezable<Vector3d> {
   }
 
   public double distanceSquared(Vector3d that) {
-    return sub(that).normSquared();
+    return sub(that).lengthSquared();
   }
 
   public Vector3d normalizeLocal() {
-    double normSquared = normSquared();
+    double normSquared = lengthSquared();
     
     if (MathUtils.epsilonEquals(normSquared, 1)) {
       return this;
@@ -275,7 +275,7 @@ public class Vector3d implements Freezable<Vector3d> {
   } 
 
   public Vector3d proj(Vector3d that) {
-    return that.mul(this.dotProd(that) / that.normSquared());
+    return that.mul(this.dotProd(that) / that.lengthSquared());
   }
 
   public Vector3d perp(Vector3d that) {
@@ -287,11 +287,11 @@ public class Vector3d implements Freezable<Vector3d> {
   }
 
   public double angleBetween(Vector3d that) {
-    return Math.acos(this.dotProd(that) / (this.norm() * that.norm()));
+    return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
   public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double deg) {
-    if (deg == 0 || deg == 360 || equals(origin) || equals(ZERO) || MathUtils.epsilonZero(axis.normSquared())) {
+    if (deg == 0 || deg == 360 || equals(origin) || equals(ZERO) || MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
     return affineTransformLocal(Matrix44.createRotateMatrix(origin, axis, deg));
@@ -302,7 +302,7 @@ public class Vector3d implements Freezable<Vector3d> {
   }
 
   public Vector3d rotateLocal(Vector3d axis, double deg) {
-    if (deg == 0 || deg == 360 || equals(ZERO) || MathUtils.epsilonZero(axis.normSquared())) {
+    if (deg == 0 || deg == 360 || equals(ZERO) || MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
     return affineTransformLocal(Matrix44.createRotateMatrix(axis, deg));
@@ -441,7 +441,7 @@ public class Vector3d implements Freezable<Vector3d> {
 
   public static boolean areColinear(Vector3d... v) {
     for (int i = 0; i < v.length-1; i++) {
-      if (!MathUtils.epsilonZero(v[i].crossProd(v[i+1]).normSquared())) {
+      if (!MathUtils.epsilonZero(v[i].crossProd(v[i+1]).lengthSquared())) {
         return false;
       }
     }
