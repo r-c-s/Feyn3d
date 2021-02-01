@@ -102,7 +102,7 @@ public class CollidingRocks extends Demo3d {
   
   private void animateRocks() {
   	rocks.forEach(rock -> {
-  		rock.spin(Vector3d.Z_AXIS, 1);
+  		rock.spin(Vector3d.Z_AXIS, 0.05);
     	rock.move();
     	
     	boolean outOfBounds = Stream.of(rock.getPosX(), rock.getPosY(), rock.getPosZ())
