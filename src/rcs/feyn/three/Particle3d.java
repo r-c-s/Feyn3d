@@ -1,6 +1,5 @@
 package rcs.feyn.three;
 
-import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 

@@ -6,7 +6,6 @@ import rcs.feyn.three.anim.Curve3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Vortex extends Demo3d { 

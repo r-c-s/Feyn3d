@@ -1,7 +1,6 @@
 package demo3d;
 
 import java.awt.event.KeyEvent;
-import java.nio.file.Paths;
 import java.util.EnumSet;
 
 import rcs.feyn.color.FeynColor;
