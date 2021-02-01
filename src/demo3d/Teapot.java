@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.awt.event.KeyEvent;
+import java.nio.file.Paths;
 import java.util.EnumSet;
 
 import rcs.feyn.color.FeynColor;
@@ -25,8 +26,7 @@ public class Teapot extends Demo3d {
     new TrigLookUp(0.01);
   }
   
-  // todo fix path
-  private String teapotObjFilePath = System.getProperty("user.dir") + "/src/demo3d/teapot.obj";
+  private String teapotObjFilePath = System.getProperty("user.dir") + "/objfiles/teapot.obj";
 
   private Model3d teapot = new Model3dBuilder()
   		.fromObjFile(teapotObjFilePath)
