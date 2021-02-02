@@ -10,6 +10,7 @@ import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.anim.TrackLightSourceWithCamera;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
+import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
@@ -65,8 +66,8 @@ public class Texture extends Demo3d {
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(1)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d()); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
     
     wzc.setAmount(0.2);
   }
