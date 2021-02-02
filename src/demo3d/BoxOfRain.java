@@ -1,11 +1,14 @@
 package demo3d;
 
+import java.util.EnumSet;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.primitives.Point3d;
 import rcs.feyn.three.render.primitives.Polygon3d;
@@ -23,7 +26,7 @@ public class BoxOfRain extends Demo3d {
   
   private XORShift xorShift = XORShift.getInstance();
   
-  private Grid ground = new Grid(10, 10, 10);
+  private Grid ground = new Grid(10, 10);
   
   private FeynCollection<Line3d> raindrops = new FeynLinkedList<>();
   private FeynCollection<Polygon3d> waves = new FeynLinkedList<>();

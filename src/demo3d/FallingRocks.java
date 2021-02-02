@@ -49,7 +49,8 @@ public class FallingRocks extends Demo3d {
     FeynApp3d.getCamera().translate(0, 4, 10);
     
     ground.setColor(FeynColor.darkOliveGreen);
-    
+
+    Model3dUtils.setOptions(ground, EnumSet.of(RenderOptions3d.Option.meshOnly), null);
     FeynApp3d.getRepository().add(ground);
     FeynApp3d.getRepository().add(rocks);
     FeynApp3d.getRepository().add(shards);

@@ -9,6 +9,10 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Grid extends Model3d {
+	
+	public Grid(double xDim, double zDim) {
+		this(xDim, zDim, 1);
+	}
 
   public Grid(double xDim, double zDim, int count) {
     double dx =  xDim / count;
