@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
@@ -11,7 +12,6 @@ import rcs.feyn.three.anim.TrackLightSourceWithCamera;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dTexturedVertices;
@@ -20,6 +20,7 @@ import rcs.feyn.three.render.primitives.Line3d;
 
 public class Texture extends Demo3d {
 
+	@Serial
   private static final long serialVersionUID = 1L;
   
   static { 

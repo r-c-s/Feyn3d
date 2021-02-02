@@ -1,5 +1,6 @@
 package demo3d;
 
+import java.io.Serial;
 import java.util.EnumSet;
 import java.util.function.BiConsumer;
 
@@ -30,6 +31,7 @@ import rcs.feyn.math.linalg.Vector3d;
 
 public class Gumballs extends Demo3d {  
 
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 

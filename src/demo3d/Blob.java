@@ -20,6 +20,8 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Blob extends Demo3d {
 
+	@Serial
+  private static final long serialVersionUID = 1L;
   
   static { 
     new TrigLookUp(0.1);

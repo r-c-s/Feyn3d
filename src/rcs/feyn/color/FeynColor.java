@@ -296,16 +296,13 @@ public final class FeynColor {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof FeynColor)) {
-      return false;
+    if (obj instanceof FeynColor that) {
+      return this.r == that.r 
+          && this.g == that.g
+          && this.b == that.b
+          && this.a == that.a;
     }
-    
-    var that = (FeynColor) obj;
-    
-    return this.r == that.r 
-        && this.g == that.g
-        && this.b == that.b
-        && this.a == that.a;
+    return false;
   }
 
   @Override

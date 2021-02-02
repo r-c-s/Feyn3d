@@ -333,15 +333,12 @@ public class Vector3d implements Freezable<Vector3d> {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Vector3d)) {
-      return false;
+    if (obj instanceof Vector3d that) {
+      return this.x == that.x
+          && this.y == that.y
+          && this.z == that.z;
     }
-    
-    Vector3d that = (Vector3d) obj; 
-
-    return this.x == that.x
-        && this.y == that.y
-        && this.z == that.z;
+    return false;
   }
 
   @Override

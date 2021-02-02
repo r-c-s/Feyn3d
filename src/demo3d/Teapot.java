@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 import java.util.EnumSet;
 
 import rcs.feyn.color.FeynColor;
@@ -19,7 +20,8 @@ import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Teapot extends Demo3d { 
-  
+
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 

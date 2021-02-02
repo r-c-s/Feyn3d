@@ -1,5 +1,7 @@
 package demo3d;
 
+import java.io.Serial;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
@@ -15,6 +17,7 @@ import rcs.feyn.three.render.primitives.Line3d;
 
 public class Shatter extends Demo3d {
 
+	@Serial
   private static final long serialVersionUID = 1L;
   
   static { 

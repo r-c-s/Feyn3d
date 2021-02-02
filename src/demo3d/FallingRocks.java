@@ -1,5 +1,6 @@
 package demo3d;
 
+import java.io.Serial;
 import java.util.EnumSet;
 
 import rcs.feyn.color.FeynColor;
@@ -20,7 +21,8 @@ import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
 
 public class FallingRocks extends Demo3d {
-  
+
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 

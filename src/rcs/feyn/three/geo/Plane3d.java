@@ -121,14 +121,11 @@ public class Plane3d implements Movable3d, Transformable3d {
     if (obj == this) {
       return true;
     }
-    if (!(obj instanceof Plane3d)) {
-      return false;
+    if (obj instanceof Plane3d that) {
+      return this.origin.equals(that.origin) &&
+             this.normal.equals(that.normal);
     }
-    
-    Plane3d that = (Plane3d) obj;
-    
-    return this.origin.equals(that.origin) &&
-           this.normal.equals(that.normal);
+    return false;
   }
 
   @Override

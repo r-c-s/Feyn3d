@@ -1,5 +1,7 @@
 package demo3d;
 
+import java.io.Serial;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.kernel.FeynApp3d;
@@ -15,6 +17,7 @@ import rcs.feyn.math.linalg.Vector3d;
 
 public class Plato extends Demo3d { 
 
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 
