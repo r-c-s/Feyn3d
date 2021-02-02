@@ -26,11 +26,6 @@ public class TexturedPolygon3dRenderer {
       Vector3d sb = viewPortCoords[i];
       Vector3d sc = viewPortCoords[i+1];
       
-      double za = sa.z();
-      double zb = sb.z();
-      double zc = sc.z();
-      double zd = (za+zb+zc)/3;
-      
       double xa = sa.x();
       double xb = sb.x();
       double xc = sc.x();
@@ -40,6 +35,11 @@ public class TexturedPolygon3dRenderer {
       double yb = sb.y();
       double yc = sc.y();
       double yd = (ya+yb+yc)/3; 
+      
+      double za = sa.z();
+      double zb = sb.z();
+      double zc = sc.z();
+      double zd = (za+zb+zc)/3;
       
       double u1 = xb - xa;
       double v1 = xc - xa;
@@ -58,9 +58,10 @@ public class TexturedPolygon3dRenderer {
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
       
-      int truexmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(xa, xb, xc), 0));
-      int truexmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(xa, xb, xc), gw));
-      
+      int truexmin = MathUtils.roundToInt(MathUtils.max(xa, xb, xc));
+      int truexmax = MathUtils.roundToInt(MathUtils.min(xa, xb, xc));
+
+    	double xExtent = truexmax - truexmin;
       double yExtent = ymax - ymin;
 
       for (int y = ymin; y <= ymax; y++) {
@@ -91,8 +92,6 @@ public class TexturedPolygon3dRenderer {
 
       	double yprc = (y - ymin) / yExtent;
       	int ydata = MathUtils.roundToInt(yprc * (tdh - 1));
-      	
-      	double xExtent = truexmax - truexmin;
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
         	double xprc = (x - truexmin) / xExtent;
