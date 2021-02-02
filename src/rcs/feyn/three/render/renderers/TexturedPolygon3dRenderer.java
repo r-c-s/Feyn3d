@@ -59,7 +59,7 @@ public class TexturedPolygon3dRenderer {
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
       
       int truexmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(xa, xb, xc), 0));
-      int truexmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(xa, xb, xc), gh));
+      int truexmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(xa, xb, xc), gw));
       
       double yExtent = ymax - ymin;
 
@@ -95,7 +95,7 @@ public class TexturedPolygon3dRenderer {
       	double xExtent = truexmax - truexmin;
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
-        	double xprc = Math.min(1, Math.max(0, (x - truexmin) / xExtent));
+        	double xprc = (x - truexmin) / xExtent;
         	int xdata = MathUtils.roundToInt(xprc * (tdw - 1));
         	
           int source = textureData.getPixel(xdata, ydata);
