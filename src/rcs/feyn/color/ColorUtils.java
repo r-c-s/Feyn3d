@@ -33,7 +33,7 @@ public final class ColorUtils {
     int A = (a << 24) & 0xFF000000;
     int R = (r << 16) & 0x00FF0000;
     int G = (g <<  8) & 0x0000FF00;
-    int B =  b & 0x000000FF;
+    int B =  b        & 0x000000FF;
     
     return A | R | G | B;
   }

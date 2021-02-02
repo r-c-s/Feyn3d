@@ -16,11 +16,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
   
   protected Vector3d[] normals;
 
-  public GouraudPolygon3dPatch(
-      Vector3d[] vertices, 
-      Vector3d[] normals, 
-      FeynColor color,
-      RenderOptions3d options) {
+  public GouraudPolygon3dPatch(Vector3d[] vertices, Vector3d[] normals, FeynColor color, RenderOptions3d options) {
     super(vertices, color, options);
     this.normals = normals;
   }

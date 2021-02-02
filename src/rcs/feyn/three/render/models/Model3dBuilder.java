@@ -11,6 +11,7 @@ import rcs.feyn.three.collision.BoundingObject3d;
 import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.collision.models.ComplexCollidableModel3d;
 import rcs.feyn.color.FeynColor;
+import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.utils.ArrayUtils;
@@ -30,6 +31,8 @@ public final class Model3dBuilder {
   
   protected BoundingObject3d outerBoundingObject = null;
   protected ArrayList<BoundingObject3d> innerBoundingObjects = new ArrayList<>();
+
+  protected Raster textureData = null;
 
   public Model3dBuilder() {} 
 
@@ -165,6 +168,11 @@ public final class Model3dBuilder {
     }
     return this;
   }
+  
+  public Model3dBuilder setTextureData(Raster textureData) {
+  	this.textureData = textureData;
+  	return this;
+  }
 
   private void validate() {
     if (vertices.size() < 3) {
@@ -185,9 +193,11 @@ public final class Model3dBuilder {
         : ArrayUtils.unbox(masses.toArray(new Double[normals.size()]));
     
     Model3dVertices vs;
-    if (n.length > 0) {
+    if (textureData != null) {
+    	vs = new Model3dTexturedVertices(v, textureData);
+    } else if (n.length > 0) {
       vs = new Model3dGouraudVertices(v, n, m);
-    } else {
+  	} else  {
       vs = new Model3dVertices(v, m);
     }
      

@@ -17,7 +17,7 @@ public class Model3dTexturedVertices extends Model3dVertices {
   @Override
   public Polygon3dPatch makePatch(Model3dFace face) {
     return new TexturedPolygon3dPatch(
-        getVertices(face.getIndices()), 
+        getVertices(face.getIndices()),
         data,
         face.getRenderOptions());
   }

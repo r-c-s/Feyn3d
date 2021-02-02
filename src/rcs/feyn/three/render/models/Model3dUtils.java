@@ -1,7 +1,6 @@
 package rcs.feyn.three.render.models;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.XORShift;
@@ -30,16 +28,17 @@ public class Model3dUtils {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    byte[] bytes = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
-    int[] ints = new int[bytes.length];
-    for (int i = 0; i < ints.length-3; i+=4) {
-      int a = 255; //bytes[i] & 0xFF;
-      int r = bytes[i+1] & 0xFF;
-      int g = bytes[i+2] & 0xFF;
-      int b = bytes[i+3] & 0xFF;
-      ints[i] = ColorUtils.getRGBA(r, g, b, a);
+    int w = bufferedImage.getWidth();
+    int h = bufferedImage.getHeight();
+    
+    int[] ints = new int[w * h];
+    
+    for (int x = 0; x < w; x++) {
+    	for (int y = 0; y < h; y++) {
+        ints[x*w + y] = bufferedImage.getRGB(x, y);
+    	}
     }
-    return new Raster(ints, bufferedImage.getWidth(), bufferedImage.getHeight());
+    return new Raster(ints, w, h);
   }
   
   public static Model3d getRenderableSphere(CollidableModel3d model) {

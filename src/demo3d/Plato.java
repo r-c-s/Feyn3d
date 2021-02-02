@@ -20,7 +20,7 @@ public class Plato extends Demo3d {
   static { 
     new TrigLookUp(0.1);
   }
-
+  
   private Model3d tetrahedron  = Model3dFactory.tetrahedron (1).addColor(FeynColor.randomColor()).build();
   private Model3d octahedron   = Model3dFactory.octahedron  (1).addColor(FeynColor.randomColor()).build();
   private Model3d hexahedron   = Model3dFactory.hexahedron  (1).addColor(FeynColor.randomColor()).build();

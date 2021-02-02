@@ -40,17 +40,7 @@ public class Polygon3dPatch extends Patch3d {
       return;
     }
 
-    Vector3d[] viewVertices = Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, view); 
-    
-    Vector3d[] clippedVertices = Pipeline3d
-        .clipViewSpaceCoordinates(viewVertices); 
-    
-    Vector3d[] ndcVertices = Pipeline3d
-        .viewToNormalizedDeviceCoordinates(clippedVertices, projection);
-    
-    Vector3d[] vpcVertices = Pipeline3d
-        .ndcToDeviceCoordinates(ndcVertices, viewPort);
+    Vector3d[] vpcVertices = getViewPointCoordinateVertices(view, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
@@ -83,5 +73,19 @@ public class Polygon3dPatch extends Patch3d {
           vpcVertices[j], 
           ColorUtils.mulRGBA(color, options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1));
     }
+  }
+  
+  protected Vector3d[] getViewPointCoordinateVertices(Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
+  	Vector3d[] viewVertices = Pipeline3d
+        .worldToViewSpaceCoordinates(vertices, view); 
+    
+    Vector3d[] clippedVertices = Pipeline3d
+        .clipViewSpaceCoordinates(viewVertices); 
+    
+    Vector3d[] ndcVertices = Pipeline3d
+        .viewToNormalizedDeviceCoordinates(clippedVertices, projection);
+    
+    return Pipeline3d
+        .ndcToDeviceCoordinates(ndcVertices, viewPort);
   }
 }
