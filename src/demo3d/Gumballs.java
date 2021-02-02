@@ -163,7 +163,7 @@ public class Gumballs extends Demo3d {
       
       sphere.rotate( 
           axis, 
-          (-d.length() * 180) / (MathConsts.TWO_PI * ((BoundingSphere3d) sphere.getOuterBoundingObject()).getRadius()));
+          (-d.length() * MathConsts.HALF_PI) / (MathConsts.TWO_PI * ((BoundingSphere3d) sphere.getOuterBoundingObject()).getRadius()));
     });
   } 
   

@@ -1,6 +1,6 @@
 package demo3d;
 
-import java.util.EnumSet;
+import java.io.Serial;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -8,7 +8,6 @@ import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.primitives.Point3d;
 import rcs.feyn.three.render.primitives.Polygon3d;
@@ -17,7 +16,8 @@ import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
 
 public class BoxOfRain extends Demo3d {
-  
+
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 

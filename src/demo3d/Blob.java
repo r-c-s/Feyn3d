@@ -1,5 +1,6 @@
 package demo3d;
 
+import java.io.Serial;
 import java.util.EnumSet;
 import java.util.function.Function;
 
@@ -19,7 +20,6 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Blob extends Demo3d {
 
-  private static final long serialVersionUID = 1L;
   
   static { 
     new TrigLookUp(0.1);

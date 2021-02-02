@@ -9,10 +9,13 @@ import rcs.feyn.math.linalg.Vector3d;
 
 import static rcs.feyn.math.MathConsts.PI;
 import static rcs.feyn.math.MathConsts.HALF_PI;
-import static rcs.feyn.math.MathConsts.QUARTER_PI;;
+import static rcs.feyn.math.MathConsts.QUARTER_PI;
+
+import java.io.Serial;;
 
 public class Vortex extends Demo3d { 
-  
+
+	@Serial
   private static final long serialVersionUID = 1L; 
   
   static { 
