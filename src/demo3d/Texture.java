@@ -1,15 +1,19 @@
 package demo3d;
 
+import java.awt.event.KeyEvent;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.three.anim.TrackLightSourceWithCamera;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
+import rcs.feyn.three.render.models.Model3dTexturedVertices;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 
@@ -20,20 +24,29 @@ public class Texture extends Demo3d {
   static { 
     new TrigLookUp(0.1);
   }
-  
+
+	String[] textureFiles = {
+			System.getProperty("user.dir") + "/textures/texture.jpg",
+			System.getProperty("user.dir") + "/textures/texture2.jpg",
+			System.getProperty("user.dir") + "/textures/texture3.jpg",
+			System.getProperty("user.dir") + "/textures/texture4.jpg",
+			System.getProperty("user.dir") + "/textures/texture5.jpg",
+			System.getProperty("user.dir") + "/textures/texture6.jpg",
+			System.getProperty("user.dir") + "/textures/texture7.jpg",
+			System.getProperty("user.dir") + "/textures/texture8.jpg"
+	};
+	
   private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
-  
-  private String textureFile = System.getProperty("user.dir") + "/textures/texture.jpg";
-  private Raster textureData = Model3dUtils.getImageData(textureFile);
 
   private final Model3d obj = Model3dFactory
       .icosphere(0.6, 1)
-      .setTextureData(textureData)
+      .setTextureData(nextTexture())
       .build();
   
   private final Runnable objAnimation = new Animation();
+  private final Runnable TrackLightSourceWithCamera = new TrackLightSourceWithCamera();
   
   @Override
   protected void initialize() {
@@ -52,7 +65,7 @@ public class Texture extends Demo3d {
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
+    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(1)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);
@@ -66,9 +79,30 @@ public class Texture extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    FeynApp3d.getDiffuseLightSource().setPosition(camera.getPosition()); 
+    handleInput();
+    TrackLightSourceWithCamera.run();
     objAnimation.run();
   }  
+
+  int inputDelay = 20;
+  public void handleInput() {
+    if (inputDelay > 0) {
+      inputDelay--;
+      return;
+    } else {
+      inputDelay = 0;
+    }
+     
+    if (keyHasBeenPressed(KeyEvent.VK_C)) {
+      inputDelay = 20;
+      ((Model3dTexturedVertices) obj.getVertices()).setTextureData(nextTexture());
+    }
+  }
+  
+  int i = 0;
+  public Raster nextTexture() {
+		return Model3dUtils.getImageData(textureFiles[i++ % textureFiles.length]);
+  }
   
   private class Animation implements Runnable {
     @Override

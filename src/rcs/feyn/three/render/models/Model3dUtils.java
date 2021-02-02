@@ -35,7 +35,7 @@ public class Model3dUtils {
     
     for (int x = 0; x < w; x++) {
     	for (int y = 0; y < h; y++) {
-        ints[x*w + y] = bufferedImage.getRGB(x, y);
+        ints[y*w + x] = bufferedImage.getRGB(x, y);
     	}
     }
     return new Raster(ints, w, h);
