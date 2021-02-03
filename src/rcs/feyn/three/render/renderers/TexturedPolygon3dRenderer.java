@@ -58,8 +58,8 @@ public class TexturedPolygon3dRenderer {
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
       
-      int truexmin = MathUtils.roundToInt(MathUtils.max(xa, xb, xc));
-      int truexmax = MathUtils.roundToInt(MathUtils.min(xa, xb, xc));
+      int truexmin = MathUtils.roundToInt(MathUtils.min(xa, xb, xc));
+      int truexmax = MathUtils.roundToInt(MathUtils.max(xa, xb, xc));
 
     	double xExtent = truexmax - truexmin;
       double yExtent = ymax - ymin;
