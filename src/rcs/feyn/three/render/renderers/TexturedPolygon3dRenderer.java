@@ -94,7 +94,7 @@ public class TexturedPolygon3dRenderer {
       	int ydata = MathUtils.roundToInt(yprc * (tdh - 1));
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
-        	double xprc = (x - truexmin) / xExtent;
+        	double xprc = (x - truexmin) / (xmin-xd);
         	int xdata = MathUtils.roundToInt(xprc * (tdw - 1));
         	
           int source = textureData.getPixel(xdata, ydata);
