@@ -284,13 +284,16 @@ public class Vector4d implements Freezable<Vector4d> {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Vector4d that) {
-      return this.x == that.x
-          && this.y == that.y
-          && this.z == that.z
-          && this.w == that.w;
+    if (!(obj instanceof Vector4d)) {
+      return false;
     }
-    return false;
+    
+    var that = (Vector4d) obj;
+
+    return this.x == that.x
+        && this.y == that.y
+        && this.z == that.z
+        && this.w == that.w;
   }
 
   @Override

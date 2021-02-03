@@ -100,11 +100,14 @@ public class Segment3d implements Movable3d, Transformable3d {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Segment3d that) {
-      return this.a.equals(that.a) && 
-             this.b.equals(that.b);
-    }    
-    return false;
+    if (!(obj instanceof Segment3d)) {
+      return false;
+    }  
+    
+    var that = (Segment3d) obj;
+    
+    return this.a.equals(that.a) && 
+           this.b.equals(that.b);
   }
 
   @Override

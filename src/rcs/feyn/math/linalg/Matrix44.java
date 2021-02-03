@@ -236,14 +236,17 @@ public class Matrix44 {
     if (this == obj) {
       return true;
     }
-    if (obj instanceof Matrix44 that) {
-      return 
-          this.m00 == that.m00 && this.m01 == that.m01 && this.m02 == that.m02 && this.m03 == that.m03 &&
-          this.m10 == that.m10 && this.m11 == that.m11 && this.m12 == that.m12 && this.m13 == that.m13 &&
-          this.m20 == that.m20 && this.m21 == that.m21 && this.m22 == that.m22 && this.m23 == that.m23 &&
-          this.m30 == that.m30 && this.m31 == that.m31 && this.m32 == that.m32 && this.m33 == that.m33;
+    if (!(obj instanceof Matrix44)) {
+      return false;
     }
-    return false;
+    
+    var that = (Matrix44) obj;
+
+    return 
+        this.m00 == that.m00 && this.m01 == that.m01 && this.m02 == that.m02 && this.m03 == that.m03 &&
+        this.m10 == that.m10 && this.m11 == that.m11 && this.m12 == that.m12 && this.m13 == that.m13 &&
+        this.m20 == that.m20 && this.m21 == that.m21 && this.m22 == that.m22 && this.m23 == that.m23 &&
+        this.m30 == that.m30 && this.m31 == that.m31 && this.m32 == that.m32 && this.m33 == that.m33;
   }
 
   @Override

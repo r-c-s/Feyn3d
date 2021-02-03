@@ -186,13 +186,16 @@ public class Matrix33 {
     if (this == obj) {
       return true;
     }
-    if (obj instanceof Matrix33 that) {
-      return
-          this.m00 == that.m00 && this.m01 == that.m01 && this.m02 == that.m02 &&
-          this.m10 == that.m10 && this.m11 == that.m11 && this.m12 == that.m12 &&
-          this.m20 == that.m20 && this.m21 == that.m21 && this.m22 == that.m22;
+    if (!(obj instanceof Matrix33)) {
+      return false;
     }
-    return false;
+    
+    var that = (Matrix33) obj;
+    
+    return
+        this.m00 == that.m00 && this.m01 == that.m01 && this.m02 == that.m02 &&
+        this.m10 == that.m10 && this.m11 == that.m11 && this.m12 == that.m12 &&
+        this.m20 == that.m20 && this.m21 == that.m21 && this.m22 == that.m22;
   }
 
   @Override

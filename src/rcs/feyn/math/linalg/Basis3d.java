@@ -84,12 +84,15 @@ public class Basis3d implements Transformable3d {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Basis3d that) {
-      return this.i.equals(that.i) &&
-             this.j.equals(that.j) &&
-             this.k.equals(that.k);
+    if (!(obj instanceof Basis3d)) {
+      return false;
     } 
-    return false;
+    
+    var that = (Basis3d) obj;
+
+    return this.i.equals(that.i) &&
+           this.j.equals(that.j) &&
+           this.k.equals(that.k);
   }
 
   @Override

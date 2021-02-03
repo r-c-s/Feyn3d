@@ -64,11 +64,11 @@ public class BoundingBox3d extends BoundingObject3d {
 
   @Override
   public CollisionInfo3d computeCollision(BoundingObject3d bo) {
-    if (bo instanceof BoundingSphere3d bs) {
-      return CollisionDetection3d.computeCollision(this, bs);
+    if (bo instanceof BoundingSphere3d) {
+      return CollisionDetection3d.computeCollision(this, (BoundingSphere3d) bo);
     }
-    if (bo instanceof BoundingBox3d bb) { 
-      return CollisionDetection3d.computeCollision(this, bb);
+    if (bo instanceof BoundingBox3d) { 
+      return CollisionDetection3d.computeCollision(this, (BoundingBox3d) bo);
     }
     throw new UnsupportedOperationException();
   } 

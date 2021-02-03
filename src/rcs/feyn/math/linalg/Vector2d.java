@@ -288,11 +288,14 @@ public class Vector2d implements Freezable<Vector2d> {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Vector2d that) {
-      return MathUtils.epsilonEquals(this.x, that.x)
-          && MathUtils.epsilonEquals(this.y, that.y);
+    if (!(obj instanceof Vector2d)) {
+      return false;
     }
-    return false;
+    
+    var that = (Vector2d) obj;
+    
+    return MathUtils.epsilonEquals(this.x, that.x)
+        && MathUtils.epsilonEquals(this.y, that.y);
   }
 
   @Override

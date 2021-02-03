@@ -20,7 +20,7 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Blob extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L;
   
   static { 
@@ -90,7 +90,7 @@ public class Blob extends Demo3d {
       		? TrigLookUp::sin
       		: TrigLookUp::cos;
       
-      double factor = 0.005*function.apply(i * MathConsts.DEGREES_TO_RADIANS);
+      double factor = 0.005 * function.apply(i * MathConsts.DEGREES_TO_RADIANS);
       		
       Model3dUtils.deform(obj, factor);
     }

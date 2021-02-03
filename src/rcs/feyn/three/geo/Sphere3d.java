@@ -65,11 +65,14 @@ public class Sphere3d implements Movable3d, Transformable3d {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Sphere3d that) {
-      return this.point.equals(that.point) &&
-             this.radius == that.radius;
-    }
-    return false;    
+    if (!(obj instanceof Sphere3d)) {
+      return false;  
+    }  
+    
+    var that = (Sphere3d) obj;
+
+    return this.point.equals(that.point) &&
+           this.radius == that.radius;
   }
 
   @Override 

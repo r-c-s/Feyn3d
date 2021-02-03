@@ -109,11 +109,14 @@ public class Line3d implements Movable3d, Transformable3d {
     if (obj == this) {
       return true;
     }
-    if (obj instanceof Line3d that) {
-      return this.origin.equals(that.origin) && 
-             this.normal.equals(that.normal);
+    if (!(obj instanceof Line3d)) {
+      return false;
     }
-    return false;
+    
+    var that = (Line3d) obj;
+
+    return this.origin.equals(that.origin) && 
+           this.normal.equals(that.normal);
   }
 
   @Override
