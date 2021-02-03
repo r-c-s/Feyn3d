@@ -1,7 +1,7 @@
 package rcs.feyn.color;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.XORShift;
+import rcs.feyn.utils.XORShift;
 
 public final class FeynColor {
   

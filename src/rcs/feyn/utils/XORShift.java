@@ -1,4 +1,4 @@
-package rcs.feyn.math;
+package rcs.feyn.utils;
 
 public final class XORShift {
   

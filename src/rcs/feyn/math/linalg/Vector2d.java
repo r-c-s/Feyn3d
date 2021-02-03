@@ -1,9 +1,9 @@
 package rcs.feyn.math.linalg;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.XORShift;
 import rcs.feyn.utils.Freezable;
 import rcs.feyn.utils.ImmutableModificationException;
+import rcs.feyn.utils.XORShift;
 import rcs.feyn.math.MathConsts;
 
 public class Vector2d implements Freezable<Vector2d> {

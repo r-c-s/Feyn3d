@@ -22,11 +22,11 @@ import rcs.feyn.three.render.models.Model3dFactory;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynArray;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.XORShift;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Gumballs extends Demo3d {  
