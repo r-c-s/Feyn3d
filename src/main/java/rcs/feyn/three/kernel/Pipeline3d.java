@@ -85,16 +85,6 @@ public final class Pipeline3d {
     return FeynApp3d.getViewFrustum().clipToNearPlane(vertices, normals);
   }
 
-  private static Vector3d[] ndcToDeviceCoordinates(Vector3d[] vertices, Matrix44 viewPort) {
-    int size = vertices.length;
-    
-    Vector3d[] vpc = new Vector3d[size];
-    for (int i = 0; i < size; i++) {
-      vpc[i] = vertices[i].affineTransform(viewPort);
-    }
-    return vpc;
-  }
-
   private static Vector3d[] viewToNormalizedDeviceCoordinates(Vector3d[] vertices, Matrix44 projection) {
     int size = vertices.length;
     
@@ -112,5 +102,15 @@ public final class Pipeline3d {
       ndc[i] = v3;
     }
     return ndc;
+  }
+
+  private static Vector3d[] ndcToDeviceCoordinates(Vector3d[] vertices, Matrix44 viewPort) {
+    int size = vertices.length;
+    
+    Vector3d[] vpc = new Vector3d[size];
+    for (int i = 0; i < size; i++) {
+      vpc[i] = vertices[i].affineTransform(viewPort);
+    }
+    return vpc;
   }
 }
