@@ -57,12 +57,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     }
     size++;
   }
-  
-  public synchronized void addAll(DoublyLinkedList<? extends T> other) {
-    for (T item : other) {
-      add(item);
-    }
-  }
 
   public boolean contains(T item) {
     return null != get(item);
