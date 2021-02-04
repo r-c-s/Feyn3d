@@ -14,7 +14,7 @@ public class DoubleLinkedListTest {
     // Act
     target.add("Hello world!");
     
-    // Asert
+    // Assert
     assertThat(target.isEmpty()).isFalse();
     assertThat(target.size()).isEqualTo(1);
     assertThat(target.contains("Hello world!")).isTrue();
@@ -30,7 +30,7 @@ public class DoubleLinkedListTest {
     // Act
     String actual = target.removeFirst();
     
-    // Asert
+    // Assert
     assertThat(target.size()).isEqualTo(1);
     assertThat(target.contains("1")).isFalse();
     assertThat(actual).isEqualTo("1");
@@ -46,7 +46,7 @@ public class DoubleLinkedListTest {
     // Act
     String actual = target.removeLast();
     
-    // Asert
+    // Assert
     assertThat(target.size()).isEqualTo(1);
     assertThat(target.contains("2")).isFalse();
     assertThat(actual).isEqualTo("2");

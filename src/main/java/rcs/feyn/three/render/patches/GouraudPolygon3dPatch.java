@@ -36,28 +36,18 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
             GeoUtils3d.getNormal(vertices))) {
       return;
     }
-
-    Vector3d[][] viewVerticesNormals = Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, normals, view);
-
-    Vector3d[] viewVertices = viewVerticesNormals[0];
-    Vector3d[] viewNormals = viewVerticesNormals[1];
     
-    Vector3d[][] clippedViewVerticesNormals = Pipeline3d
-        .clipViewSpaceCoordinates(viewVertices, viewNormals);
-    
-    Vector3d[] clippedViewVertices = clippedViewVerticesNormals[0];
-    Vector3d[] clippedViewNormals = clippedViewVerticesNormals[1];
+    Vector3d[][] viewSpaceCoordinates = Pipeline3d
+        .getViewSpaceCoordinates(vertices, normals, view);
+    Vector3d[] clippedViewVertices = viewSpaceCoordinates[0];
+    Vector3d[] clippedViewNormals = viewSpaceCoordinates[1];
     
     if (clippedViewVertices.length < 3) {
       return;
     }
     
-    Vector3d[] ndcVertices = Pipeline3d
-        .viewToNormalizedDeviceCoordinates(clippedViewVertices, projection);
-    
-    Vector3d[] vpcVertices = Pipeline3d
-        .ndcToDeviceCoordinates(ndcVertices, viewPort);
+    Vector3d[] deviceCoordinates = Pipeline3d
+        .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
     		? LightingUtils.applyLightning(color.getRGBA())
@@ -75,13 +65,13 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
       
       Polygon3dRenderer.render(
           graphics,
-          vpcVertices, 
+          deviceCoordinates, 
           intensities,
           colorWithLighting);
     } else {
       Polygon3dRenderer.render(
           graphics, 
-          vpcVertices, 
+          deviceCoordinates, 
           1, 
           colorWithLighting);
     }

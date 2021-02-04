@@ -26,21 +26,13 @@ public class Line3dPatch extends Patch3d {
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] viewVertices = Pipeline3d
-        .worldToViewSpaceCoordinates(new Vector3d[]{ a, b }, view);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d.getViewSpaceCoordinates(new Vector3d[] {a, b}, view);
     
-    Vector3d[] clippedVertices = Pipeline3d
-        .clipViewSpaceCoordinates(viewVertices);
-    
-    if (clippedVertices.length < 2) {
+    if (viewSpaceCoordinates.length < 2) {
       return;
     }
     
-    Vector3d[] ndcVertices = Pipeline3d
-        .viewToNormalizedDeviceCoordinates(clippedVertices, projection); 
-    
-    Vector3d[] vpcVertices = Pipeline3d
-        .ndcToDeviceCoordinates(ndcVertices, viewPort);
+    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
     		? LightingUtils.applyLightning(color.getRGBA())
@@ -48,8 +40,8 @@ public class Line3dPatch extends Patch3d {
     
     Line3dRenderer.render(
         graphics,
-        vpcVertices[0], 
-        vpcVertices[1],
+        deviceCoordinates[0], 
+        deviceCoordinates[1],
         colorWithLighting);
   }
 }

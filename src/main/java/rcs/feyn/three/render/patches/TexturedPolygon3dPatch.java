@@ -3,6 +3,7 @@ package rcs.feyn.three.render.patches;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
@@ -33,8 +34,9 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal)) {
       return;
     }
-
-    Vector3d[] vpcVertices = getViewPointCoordinateVertices(view, projection, viewPort);
+    
+    Vector3d[] viewSpaceCoordinates = Pipeline3d.getViewSpaceCoordinates(vertices, view);
+    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
@@ -46,7 +48,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     
     TexturedPolygon3dRenderer.render(
       graphics,
-      vpcVertices, 
+      deviceCoordinates, 
       intensity,
       textureData);
   }
