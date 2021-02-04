@@ -26,7 +26,7 @@ public class Line3dPatch extends Patch3d {
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getViewSpaceCoordinates(new Vector3d[] {a, b}, view);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(new Vector3d[] {a, b}, view);
     
     if (viewSpaceCoordinates.length < 2) {
       return;

@@ -40,7 +40,7 @@ public class Polygon3dPatch extends Patch3d {
       return;
     }
 
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getViewSpaceCoordinates(vertices, view);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(vertices, view);
     Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;

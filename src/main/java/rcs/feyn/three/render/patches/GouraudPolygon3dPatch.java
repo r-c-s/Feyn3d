@@ -38,7 +38,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     }
     
     Vector3d[][] viewSpaceCoordinates = Pipeline3d
-        .getViewSpaceCoordinates(vertices, normals, view);
+        .getClippedViewSpaceCoordinates(vertices, normals, view);
     Vector3d[] clippedViewVertices = viewSpaceCoordinates[0];
     Vector3d[] clippedViewNormals = viewSpaceCoordinates[1];
     

@@ -10,7 +10,7 @@ public final class Pipeline3d {
     throw new AssertionError();
   }
   
-  public static Vector3d[] getViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
+  public static Vector3d[] getClippedViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
     Vector3d[] viewVertices = Pipeline3d
         .worldToViewSpaceCoordinates(vertices, view);
     
@@ -18,7 +18,7 @@ public final class Pipeline3d {
         .clipViewSpaceCoordinates(viewVertices);
   }
   
-  public static Vector3d[][] getViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals, Matrix44 view) {
+  public static Vector3d[][] getClippedViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals, Matrix44 view) {
     Vector3d[][] viewVerticesAndNormals = Pipeline3d
         .worldToViewSpaceCoordinates(vertices, normals, view);
     
