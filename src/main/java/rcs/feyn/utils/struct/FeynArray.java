@@ -56,7 +56,8 @@ public class FeynArray<T extends FeyngGarbageCollectable> extends FeynCollection
 
     @Override
     public void remove() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException(
+          "Use " + FeynLinkedList.class.getName() + " for removal capability");
     } 
   }
 }
