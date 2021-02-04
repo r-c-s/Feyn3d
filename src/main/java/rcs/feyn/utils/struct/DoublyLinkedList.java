@@ -81,8 +81,9 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
   public T removeFirst() {
     if (!isEmpty()) {
+      T item = head.item;
       unlink(head);
-      return head.item;
+      return item;
     }
     else {
       return null;
@@ -91,8 +92,9 @@ public class DoublyLinkedList<T> implements Iterable<T> {
 
   public T removeLast() {
     if (!isEmpty()) {
+      T item = tail.item;
       unlink(tail);
-      return tail.item;
+      return item;
     }
     else {
       return null;

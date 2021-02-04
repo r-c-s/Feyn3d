@@ -19,4 +19,36 @@ public class DoubleLinkedListTest {
     assertThat(target.size()).isEqualTo(1);
     assertThat(target.contains("Hello world!")).isTrue();
   }
+  
+  @Test
+  public void testRemoveFirst() {
+    // Arrange
+    DoublyLinkedList<String> target = new DoublyLinkedList<>();
+    target.add("1");
+    target.add("2");
+    
+    // Act
+    String actual = target.removeFirst();
+    
+    // Asert
+    assertThat(target.size()).isEqualTo(1);
+    assertThat(target.contains("1")).isFalse();
+    assertThat(actual).isEqualTo("1");
+  }
+  
+  @Test
+  public void testRemoveLast() {
+    // Arrange
+    DoublyLinkedList<String> target = new DoublyLinkedList<>();
+    target.add("1");
+    target.add("2");
+    
+    // Act
+    String actual = target.removeLast();
+    
+    // Asert
+    assertThat(target.size()).isEqualTo(1);
+    assertThat(target.contains("2")).isFalse();
+    assertThat(actual).isEqualTo("2");
+  }
 }
