@@ -1,7 +1,7 @@
 package rcs.feyn.three.render.primitives;
 
-import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
+import rcs.feyn.three.render.patches.Point3dPatch;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Point3d extends Primitive3d {
@@ -19,7 +19,7 @@ public class Point3d extends Primitive3d {
   public synchronized Patch3d[] getRenderablePatches() {
   	Vector3d pos = new Vector3d(position);
     return new Patch3d[] { 
-        new Line3dPatch(pos, pos, color) 
+        new Point3dPatch(pos, color) 
     };
   }
 }
