@@ -7,7 +7,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   private Node head;
   private Node tail;
   
-  private int N = 0;
+  private int size = 0;
 
   private class Node {
     T item;
@@ -32,7 +32,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   }
   
   public int size() {
-    return N;
+    return size;
   }
 
   public boolean isEmpty() {
@@ -42,7 +42,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   public synchronized void clear() {
     head = null;
     tail = null;
-    N = 0;
+    size = 0;
   }
 
   public synchronized void add(T item) {
@@ -55,7 +55,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
       tail.next = n;
       tail = n;
     }
-    N++;
+    size++;
   }
   
   public synchronized void addAll(DoublyLinkedList<? extends T> other) {
@@ -113,7 +113,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   }
 
   private synchronized Node unlink(Node n) {
-    N--;
+    size--;
     
     if (n == head) {
     	head = n.next;
