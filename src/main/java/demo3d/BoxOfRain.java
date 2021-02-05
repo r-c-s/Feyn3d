@@ -27,6 +27,7 @@ public class BoxOfRain extends Demo3d {
   
   private XORShift xorShift = XORShift.getInstance();
   
+  // todo: implement checking collision against a Plane3d
   private Grid ground = new Grid(10, 10);
   
   private FeynCollection<Line3d> raindrops = new FeynLinkedList<>();
