@@ -46,6 +46,9 @@ public class DoublyLinkedList<T> implements Iterable<T> {
   }
 
   public synchronized void add(T item) {
+    if (item == null) {
+      throw new NullPointerException("Nulls are not allowed");
+    }
     if (isEmpty()) {
       Node n = new Node(item); 
       head = n;
