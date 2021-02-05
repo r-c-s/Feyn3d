@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class DoubleLinkedListTest {
   
   @Test
-  public void testAdd() {
+  void testAdd() {
     // Arrange
     DoublyLinkedList<String> target = new DoublyLinkedList<>();
     
@@ -21,7 +21,7 @@ public class DoubleLinkedListTest {
   }
   
   @Test
-  public void testRemoveFirst() {
+  void testRemoveFirst() {
     // Arrange
     DoublyLinkedList<String> target = new DoublyLinkedList<>();
     target.add("1");
@@ -37,7 +37,7 @@ public class DoubleLinkedListTest {
   }
   
   @Test
-  public void testRemoveLast() {
+  void testRemoveLast() {
     // Arrange
     DoublyLinkedList<String> target = new DoublyLinkedList<>();
     target.add("1");
