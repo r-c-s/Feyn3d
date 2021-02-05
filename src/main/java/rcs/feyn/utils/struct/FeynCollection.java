@@ -12,6 +12,10 @@ public abstract class FeynCollection<T extends FeyngGarbageCollectable> implemen
   public abstract void clear();
 
   public abstract int  size();
+  
+  public boolean isEmpty() {
+    return size() == 0;
+  }
 
   @Override
   public void forEach(Consumer<? super T> op) {
