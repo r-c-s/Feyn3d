@@ -108,7 +108,7 @@ public class Gumballs extends Demo3d {
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
 
-    camera.translate(0, 0, 3);
+    camera.translate(0, 0, 2.5);
     FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d());
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
