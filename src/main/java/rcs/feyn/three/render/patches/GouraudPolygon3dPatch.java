@@ -50,7 +50,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightning(color.getRGBA())
+    		? LightingUtils.applyLightsourceColorTo(color.getRGBA())
     		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {

@@ -52,7 +52,7 @@ public class Polygon3dPatch extends Patch3d {
     }
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightning(color.getRGBA())
+    		? LightingUtils.applyLightsourceColorTo(color.getRGBA())
     		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {

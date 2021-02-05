@@ -40,25 +40,21 @@ public class LightingUtils {
     return intensity;
   } 
   
-  public static final int applyLightning(int color) {
+  public static final int applyLightsourceColorTo(int objectColor) {
   	DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
   	if (lightSource == null) {
-  		return color;
+  		return objectColor;
   	}
   	
-  	FeynColor lightingColor = lightSource.getColor();
-  	if (lightingColor == null) {
-  		return color;
+  	FeynColor lightColor = lightSource.getColor();
+  	if (lightColor == null) {
+  		return objectColor;
   	}
-  	
-  	return applyLightiningColor(color, lightingColor.getRGBA());
-  }
-  
-  private static final int applyLightiningColor(int objectColor, int lightColor) {
+ 
     int objectAlpha = ColorUtils.getAlphaFromRGBA(objectColor);
-    int lightAlpha = ColorUtils.getAlphaFromRGBA(lightColor);
+    int lightAlpha = ColorUtils.getAlphaFromRGBA(lightColor.getRGBA());
     int blendAlpha = Math.abs(objectAlpha - lightAlpha);
-    int blended = ColorUtils.alphaBlend(ColorUtils.setAlphaToRGBA(objectColor, blendAlpha), lightColor);
+    int blended = ColorUtils.alphaBlend(ColorUtils.setAlphaToRGBA(objectColor, blendAlpha), lightColor.getRGBA());
     return ColorUtils.setAlphaToRGBA(blended, objectAlpha);
   }
 }
