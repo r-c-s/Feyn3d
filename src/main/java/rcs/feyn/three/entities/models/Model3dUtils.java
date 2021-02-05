@@ -44,7 +44,7 @@ public class Model3dUtils {
   public static Model3d getRenderableSphere(CollidableModel3d model) {
     BoundingSphere3d sphere = ((BoundingSphere3d)model.getOuterBoundingObject());
     return Model3dFactory.icosphere(sphere.getRadius(), 1)
-        .addColor(new FeynColor(FeynColor.white, 100))
+        .setColor(new FeynColor(FeynColor.white, 100))
         .setPosition(sphere.getPosition().add(model.getCenter()))
         .build();
   }

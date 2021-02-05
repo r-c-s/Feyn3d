@@ -24,11 +24,11 @@ public class Plato extends Demo3d {
     new TrigLookUp(0.1);
   }
   
-  private Model3d tetrahedron  = Model3dFactory.tetrahedron (1).addColor(FeynColor.randomColor()).build();
-  private Model3d octahedron   = Model3dFactory.octahedron  (1).addColor(FeynColor.randomColor()).build();
-  private Model3d hexahedron   = Model3dFactory.hexahedron  (1).addColor(FeynColor.randomColor()).build();
-  private Model3d icosahedron  = Model3dFactory.icosahedron (1).addColor(FeynColor.randomColor()).build();
-  private Model3d dodecahedron = Model3dFactory.dodecahedron(1).addColor(FeynColor.randomColor()).build();
+  private Model3d tetrahedron  = Model3dFactory.tetrahedron (1).setColor(FeynColor.randomColor()).build();
+  private Model3d octahedron   = Model3dFactory.octahedron  (1).setColor(FeynColor.randomColor()).build();
+  private Model3d hexahedron   = Model3dFactory.hexahedron  (1).setColor(FeynColor.randomColor()).build();
+  private Model3d icosahedron  = Model3dFactory.icosahedron (1).setColor(FeynColor.randomColor()).build();
+  private Model3d dodecahedron = Model3dFactory.dodecahedron(1).setColor(FeynColor.randomColor()).build();
   
   private Model3d[] solids = new Model3d[] {
     tetrahedron,

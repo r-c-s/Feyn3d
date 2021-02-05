@@ -134,10 +134,10 @@ public final class Model3dBuilder {
   }
 
   public Model3dBuilder addColor(int r, int g, int b, int a) {
-    return addColor(new FeynColor(r, g, b, a));
+    return setColor(new FeynColor(r, g, b, a));
   }
 
-  public Model3dBuilder addColor(FeynColor color) {
+  public Model3dBuilder setColor(FeynColor color) {
     this.colors.add(color);
     return this;
   }

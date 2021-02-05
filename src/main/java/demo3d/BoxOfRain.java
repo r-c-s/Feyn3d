@@ -120,7 +120,7 @@ public class BoxOfRain extends Demo3d {
 			var splash = Model3dFactory.cube(0.03)
 			    .setPosition(position)
 			    .setVelocity(velocity)
-			    .addColor(FeynColor.white)
+			    .setColor(FeynColor.white)
 			    .build();
 			
   		splashes.add(splash);

@@ -34,7 +34,7 @@ public class Blob extends Demo3d {
 
   private final Model3d obj = Model3dFactory
       .icosphere(0.6, 2)
-      .addColor(FeynColor.darkSeaGreen)
+      .setColor(FeynColor.darkSeaGreen)
       .build();
   
   private final Runnable blobAnimation = new BlobAnimation();

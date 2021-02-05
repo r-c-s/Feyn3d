@@ -32,7 +32,7 @@ public class Teapot extends Demo3d {
 
   private Model3d teapot = new Model3dBuilder()
   		.fromObjFile(teapotObjFilePath)
-  		.addColor(FeynColor.white)
+  		.setColor(FeynColor.white)
   		.addTransform(Matrices.create3dScaleMatrix(0.05))
   		.build();
   

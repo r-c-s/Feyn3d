@@ -41,7 +41,7 @@ public class Shatter extends Demo3d {
     
     Model3d obj = Model3dFactory
         .dodecahedron(0.6)
-        .addColor(new FeynColor(123, 234, 13, 255))
+        .setColor(new FeynColor(123, 234, 13, 255))
         .build();
 
     objs = Model3dUtils.partition3d(obj, 1);

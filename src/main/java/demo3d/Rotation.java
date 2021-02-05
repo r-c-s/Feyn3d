@@ -28,7 +28,7 @@ public class Rotation extends Demo3d {
     new TrigLookUp(0.1);
   }
   
-  private Model3d obj = Model3dFactory.dodecahedron(0.25).addColor(FeynColor.white).build();
+  private Model3d obj = Model3dFactory.dodecahedron(0.25).setColor(FeynColor.white).build();
   
   private Line3d up = new Line3d(Vector3d.ZERO, obj.getUpVector());
   private Line3d sd = new Line3d(Vector3d.ZERO, obj.getSideVector());
