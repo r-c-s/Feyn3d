@@ -20,7 +20,7 @@ public class GeoUtils3d {
       return;
     }
     if (size <  3) {
-      throw new IllegalArgumentException("Error: polygon3d must have 3 or more vertices.");
+      throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
     }
     
     Vector3d first = v[0]
@@ -36,10 +36,10 @@ public class GeoUtils3d {
       
       double dotProd = current.dotProd(first);
       if (dotProd < 0) {
-        throw new IllegalArgumentException("Error: polygon3d cannot be concave.");
+        throw new IllegalArgumentException("Polygon3d cannot be concave.");
       }
       if (dotProd < COPLANAR_ERROR_THRESHOLD) {
-        throw new IllegalArgumentException("Error: polygon3d must be coplanar.");
+        throw new IllegalArgumentException("Polygon3d must be coplanar.");
       }
     }
   }
@@ -48,7 +48,7 @@ public class GeoUtils3d {
     int size = v.length; 
     
     if (size < 3) {
-      throw new IllegalArgumentException("Error: polygon3d must have 3 or more vertices.");
+      throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
     } 
     
     int numTriangles = size - 2;
