@@ -89,15 +89,16 @@ public class Model3dUtils {
     Model3d[] parts = new Model3d[faces.length];
     
     for (int i = 0; i < faces.length; i++) {
-      int[] indices = faces[i].getIndices();
-      int[] adjustedIndices = new int[indices.length];
+      Model3dFace face = faces[i];
       
+      int[] indices = face.getIndices();
+      int[] adjustedIndices = new int[indices.length];
       for (int j = 0; j < indices.length; j++) {
         adjustedIndices[j] = j;
       }
       
       Model3dFace partFaces = new Model3dFace(adjustedIndices, faces[i].getColor());
-      Vector3d[] partVertices = model.getVertices().getVertices(indices);
+      Vector3d[] partVertices = getVertices(model.getVertices(), face);
 
       Vector3d com = GeoUtils3d.getCenter(partVertices);
       
@@ -144,22 +145,23 @@ public class Model3dUtils {
     Model3d[] parts = new Model3d[faces.length];
     
     for (int i = 0; i < faces.length; i++) {
+      Model3dFace face = faces[i];
       
-      int[] indices = faces[i].getIndices();
+      int[] indices = face.getIndices();
       int len = indices.length;
-      
       int[] adjustedIndices = new int[len];
       for (int j = 0; j < len; j++) {
         adjustedIndices[j] = j;
       }
       
-      Vector3d[] modelVertices = model.getVertices().getVertices(indices);
+      Vector3d[] modelVertices = getVertices(model.getVertices(), face);
       Vector3d[] partVertices = new Vector3d[len + 1];
       Model3dFace[] partFaces = new Model3dFace[len + 1];
       partVertices[len] = model.getCenter();
       for (int k = 0; k < len; k++) {
         partVertices[k] = modelVertices[k];
       }
+      
       Vector3d com = GeoUtils3d.getCenter(partVertices);
       for (Vector3d vertex : partVertices) {
         vertex.subLocal(com);
@@ -189,7 +191,7 @@ public class Model3dUtils {
     Vector3d com = model.getCenter();
     
     for (Model3dFace face : model.getFaces()) {
-      Vector3d[] vertices = model.getVertices().getVertices(face.getIndices());
+      Vector3d[] vertices = getVertices(model.getVertices(), face);
       
       for (Vector3d vertex : vertices) {
         double scalar = 1 + (factor * XORShift.getInstance().randomDouble(-1, 1));
@@ -204,7 +206,7 @@ public class Model3dUtils {
     Vector3d com = model.getCenter();
     
     for (Model3dFace face : model.getFaces()) {
-      Vector3d[] vertices = model.getVertices().getVertices(face.getIndices());
+      Vector3d[] vertices = getVertices(model.getVertices(), face);
 
       for (Vector3d vertex : vertices) {
         double angleRadians = vertex.sub(com).normalizeLocal().angleBetween(directionBias);
@@ -226,5 +228,15 @@ public class Model3dUtils {
       if (disable != null)
         disable.forEach(opt -> face.getRenderOptions().disable(opt));
     }
+  }
+  
+  public static Vector3d[] getVertices(Model3dVertices vertices, Model3dFace face) {
+    int[] indices = face.getIndices();
+    Vector3d[] allVertices = vertices.getVertices();
+    Vector3d[] patchVertices = new Vector3d[indices.length];
+    for (int i = 0; i < indices.length; i++) {
+      patchVertices[i] = new Vector3d(allVertices[indices[i]]);
+    }
+    return patchVertices;
   }
 }

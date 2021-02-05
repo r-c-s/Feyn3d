@@ -69,7 +69,7 @@ public class Model3d extends Sprite3d implements Renderable3d {
     Patch3d[] patches = new Patch3d[size]; 
     synchronized(this) {
       for (int i = 0; i < size; i++) {
-        patches[i] = vertices.makePatch(faces[i]);
+        patches[i] = faces[i].makePatch(vertices);
       }
     }
     return patches;

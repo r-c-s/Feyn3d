@@ -1,28 +1,26 @@
 package rcs.feyn.three.render.models;
 
 import rcs.feyn.gfx.Raster;
-import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.patches.TexturedPolygon3dPatch;
 
-public class Model3dTexturedVertices extends Model3dVertices {
+public class Model3dTexturedFace extends Model3dFace {
   
   private Raster textureData;
 
-  public Model3dTexturedVertices(Vector3d[] vertices, Raster textureData) {
-    super(vertices);
+  public Model3dTexturedFace(int[] indices, Raster textureData) {
+    super(indices, null);
     setTextureData(textureData);
   }
   
   public void setTextureData(Raster textureData) {
-  	this.textureData = textureData;
+    this.textureData = textureData;
   }
-  
-  @Override
-  public Polygon3dPatch makePatch(Model3dFace face) {
+
+  public Polygon3dPatch makePatch(Model3dVertices vertices) {
     return new TexturedPolygon3dPatch(
-        getVertices(face.getIndices()),
+        getVertices(vertices.getVertices(), indices), 
         textureData,
-        face.getRenderOptions());
+        options);
   }
 }

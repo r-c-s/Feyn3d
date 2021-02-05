@@ -14,7 +14,7 @@ import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.models.Model3d;
 import rcs.feyn.three.render.models.Model3dFactory;
-import rcs.feyn.three.render.models.Model3dTexturedVertices;
+import rcs.feyn.three.render.models.Model3dTexturedFace;
 import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.primitives.Line3d;
 
@@ -97,7 +97,9 @@ public class Texture extends Demo3d {
      
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 20;
-      ((Model3dTexturedVertices) obj.getVertices()).setTextureData(nextTexture());
+      for (var face : obj.getFaces()) {
+        ((Model3dTexturedFace) face).setTextureData(nextTexture());
+      }
     }
   }
   

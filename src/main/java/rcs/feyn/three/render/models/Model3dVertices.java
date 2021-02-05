@@ -3,7 +3,6 @@ package rcs.feyn.three.render.models;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.geo.Movable3d;
 import rcs.feyn.three.geo.Transformable3d;
-import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.physics.PhysicsUtils;
@@ -29,14 +28,6 @@ public class Model3dVertices implements Movable3d, Transformable3d {
   protected Vector3d[] getVertices() {
     return vertices;
   }
-
-  public synchronized Vector3d[] getVertices(int[] indices) {
-    Vector3d[] vertices = new Vector3d[indices.length];
-    for (int i = 0; i < indices.length; i++) {
-      vertices[i] = new Vector3d(this.vertices[indices[i]]);
-    }
-    return vertices;
-  }
   
   public synchronized void setVertices(Vector3d[] vertices, int[] indices) {
     for (int i = 0; i < indices.length; i++) {
@@ -46,13 +37,6 @@ public class Model3dVertices implements Movable3d, Transformable3d {
 
   public double[] getMasses() {
     return masses;
-  }
-
-  public Polygon3dPatch makePatch(Model3dFace face) {
-    return new Polygon3dPatch(
-        getVertices(face.getIndices()), 
-        face.getColor(),
-        face.getRenderOptions());
   }
 
   @Override

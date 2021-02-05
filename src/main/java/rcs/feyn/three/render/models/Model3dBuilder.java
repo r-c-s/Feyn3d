@@ -193,9 +193,7 @@ public final class Model3dBuilder {
         : ArrayUtils.unbox(masses.toArray(new Double[normals.size()]));
     
     Model3dVertices vs;
-    if (textureData != null) {
-    	vs = new Model3dTexturedVertices(v, textureData);
-    } else if (n.length > 0) {
+    if (n.length > 0) {
       vs = new Model3dGouraudVertices(v, n, m);
   	} else  {
       vs = new Model3dVertices(v, m);
@@ -209,7 +207,9 @@ public final class Model3dBuilder {
                   ? colors.get(colors.size()-1) 
                   : FeynColor.randomColor());
           
-      f[i] = new Model3dFace(ArrayUtils.unbox(faces.get(i)), color);
+      f[i] = textureData != null 
+          ? new Model3dTexturedFace(ArrayUtils.unbox(faces.get(i)), textureData)
+          : new Model3dFace(ArrayUtils.unbox(faces.get(i)), color);
     }
     
     Model3d model;
