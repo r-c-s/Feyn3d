@@ -23,14 +23,14 @@ public class ReferenceFrame3d extends Basis3d {
   }
 
   public Vector3d getSideVector() {
-    return new Vector3d(i);
+    return new Vector3d(sd);
   }
 
   public Vector3d getUpVector() {
-    return new Vector3d(j);
+    return new Vector3d(up);
   }
 
   public Vector3d getForwardVector() {
-    return new Vector3d(k);
+    return new Vector3d(fw);
   }
 }
