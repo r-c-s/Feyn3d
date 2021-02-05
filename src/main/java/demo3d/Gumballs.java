@@ -142,7 +142,7 @@ public class Gumballs extends Demo3d {
     spheres.forEachWithIndex((sphere, i) -> {
       Vector3d d = sphere.getPosition().subLocal(delta[i]);
       Vector3d axis = d.crossProd(camera.getUpVector());
-      double radians = (-d.length() * MathConsts.HALF_PI) 
+      double radians = (-d.length() * MathConsts.PI) 
           / (MathConsts.TWO_PI * ((BoundingSphere3d) sphere.getOuterBoundingObject()).getRadius());
       sphere.rotate(axis, radians);
     });
