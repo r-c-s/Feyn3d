@@ -1,7 +1,7 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
-import rcs.feyn.three.render.Sprite3d;
 import rcs.feyn.three.render.Renderable3d;
+import rcs.feyn.three.entities.Sprite3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;

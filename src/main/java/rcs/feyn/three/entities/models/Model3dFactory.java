@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;

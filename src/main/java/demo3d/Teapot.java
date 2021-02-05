@@ -6,13 +6,13 @@ import java.util.EnumSet;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.three.entities.models.Model3d;
+import rcs.feyn.three.entities.models.Model3dBuilder;
+import rcs.feyn.three.entities.models.Model3dFace;
+import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
-import rcs.feyn.three.render.models.Model3d;
-import rcs.feyn.three.render.models.Model3dBuilder;
-import rcs.feyn.three.render.models.Model3dFace;
-import rcs.feyn.three.render.models.Model3dUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;

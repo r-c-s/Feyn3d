@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;

@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
 import rcs.feyn.color.AbstractColorable;
 import rcs.feyn.color.FeynColor;

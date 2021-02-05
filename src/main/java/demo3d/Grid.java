@@ -1,8 +1,8 @@
 package demo3d;
 
-import rcs.feyn.three.render.models.Model3d;
-import rcs.feyn.three.render.models.Model3dFace;
-import rcs.feyn.three.render.models.Model3dVertices;
+import rcs.feyn.three.entities.models.Model3d;
+import rcs.feyn.three.entities.models.Model3dFace;
+import rcs.feyn.three.entities.models.Model3dVertices;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;

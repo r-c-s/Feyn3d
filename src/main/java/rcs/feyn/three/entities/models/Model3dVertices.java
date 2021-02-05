@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.geo.Movable3d;

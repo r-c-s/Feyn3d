@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.models;
+package rcs.feyn.three.entities.models;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

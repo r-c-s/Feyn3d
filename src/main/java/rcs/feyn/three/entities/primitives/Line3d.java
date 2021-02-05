@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.primitives;
+package rcs.feyn.three.entities.primitives;
 
 import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
