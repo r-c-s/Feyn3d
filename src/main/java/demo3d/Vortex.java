@@ -31,9 +31,9 @@ public class Vortex extends Demo3d {
                             r); 
       },
       (r, t, z) -> {         
-        return new FeynColor((int)(10+TrigLookUp.cos(r*t*PI + t)*245), 
-                             (int)(10+TrigLookUp.cos(r*t*HALF_PI + t)*245), 
-                             (int)(10+TrigLookUp.cos(r*t*QUARTER_PI + t)*245), 
+        return new FeynColor((int)(TrigLookUp.cos(r*t*PI + t)*255), 
+                             (int)(TrigLookUp.cos(r*t*HALF_PI + t)*255), 
+                             (int)(TrigLookUp.cos(r*t*QUARTER_PI + t)*255), 
                              255);
       },
       0.001, 
