@@ -3,7 +3,6 @@ package demo3d;
 import java.io.Serial;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 import rcs.feyn.color.FeynColor;
@@ -11,8 +10,9 @@ import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
-import rcs.feyn.three.collision.CollisionDetection3d;
+import rcs.feyn.three.collision.CollisionHandler3d;
 import rcs.feyn.three.collision.CollisionInfo3d;
+import rcs.feyn.three.collision.CollisionUtils3d;
 import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
@@ -42,6 +42,8 @@ public class CollidingRocks extends Demo3d {
   private FeynCollection<Model3d> shards = new FeynLinkedList<>();
   
   private AnimationTimer addRockTimer = new AnimationTimer(this::addNewRocks, 1000);
+  
+  private RockCollisionHandler rockCollisionHandler = new RockCollisionHandler();
   
   public CollidingRocks() {
     super();
@@ -75,7 +77,7 @@ public class CollidingRocks extends Demo3d {
     addRockTimer.run();
     animateRocks();
     animateShards();
-    rocks.forEachPair(rockCollisionHandler);
+    CollisionUtils3d.forEachCollision(rocks, rockCollisionHandler);
   }
   
   private void addNewRocks() {
@@ -135,37 +137,31 @@ public class CollidingRocks extends Demo3d {
     });
   }
   
-  private final BiConsumer<CollidableModel3d, CollidableModel3d> rockCollisionHandler = new BiConsumer<CollidableModel3d, CollidableModel3d>() {
+  private class RockCollisionHandler implements CollisionHandler3d<CollidableModel3d, CollidableModel3d> {
 
     @Override
-    public void accept(CollidableModel3d t, CollidableModel3d u) { 
-      CollisionInfo3d ci1 = CollisionDetection3d.computeCollision(t, u);
-
-      if (ci1 == null) {
-        return;
-      }
-      
+    public void handleCollision(CollidableModel3d t, CollidableModel3d u, CollisionInfo3d ci) {
       t.destroy();
       u.destroy();
 
       addNewShards(t);
       addNewShards(u);
     }
-    
+
     private void addNewShards(Model3d rock) {
-    	var newShards = Model3dUtils.partition3d(rock);
-    	for (var shard : newShards) {
+      var newShards = Model3dUtils.partition3d(rock);
+      for (var shard : newShards) {
         Model3dUtils.setOptions(
             shard, 
             Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
             Set.of());
         double speed = rock.getVelocity().length();
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
-  			shard.setVelocity(velocity);
-    		shards.add(shard);
-    	}
+        shard.setVelocity(velocity);
+        shards.add(shard);
+      }
     }
-  };
+  }
 
   public static void main(String[] args) {
     var frame = new FeynFrame(1000, 800, "Rain Demo", true, false);

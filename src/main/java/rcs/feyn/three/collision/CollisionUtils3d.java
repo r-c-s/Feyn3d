@@ -1,6 +1,10 @@
 package rcs.feyn.three.collision;
 
+import java.util.function.Consumer;
+
 import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.utils.struct.FeynCollection;
+import rcs.feyn.utils.struct.FeynGarbageCollectable;
 
 public class CollisionUtils3d { 
   
@@ -8,10 +12,57 @@ public class CollisionUtils3d {
   
   public static final void fixOverlap(Collidable3d a, Collidable3d b, CollisionInfo3d ci) {
     Vector3d collisionNormal = ci.getNormal();  
-    double   overlap         = ci.getOverlap();
+    double overlap = ci.getOverlap();
     
     a.translate(collisionNormal.mul( OVERLAP_CORRECTION * overlap));
     b.translate(collisionNormal.mul(-OVERLAP_CORRECTION * overlap)); 
+  }
+  
+  public static <T extends Collidable3d & FeynGarbageCollectable, U extends Collidable3d> void forEachCollision(
+      FeynCollection<T> collection, 
+      U object, 
+      CollisionHandler3d<T, U> collisionHandler,
+      Consumer<T> onNoncollision) {
+    
+    collection.forEach(item -> {
+      CollisionInfo3d ci = CollisionDetection3d.computeCollision(item, object);
+      if (ci != null) {
+        collisionHandler.handleCollision(item, object, ci);
+      } else {
+        onNoncollision.accept(item);
+      }
+    });
+  }
+  
+  public static <T extends Collidable3d & FeynGarbageCollectable> void forEachCollision(
+      FeynCollection<T> collection, 
+      CollisionHandler3d<T, T> collisionHandler) {
+    
+    collection.forEachPair((a, b) -> {
+      CollisionInfo3d ci = CollisionDetection3d.computeCollision(a, b);
+      if (ci != null) {
+        collisionHandler.handleCollision(a, b, ci);
+      }
+    });
+  }
+  
+  public static <T extends Collidable3d & FeynGarbageCollectable> void forEachCollision(
+      FeynCollection<T> collectionA, 
+      FeynCollection<T> collectionB, 
+      CollisionHandler3d<T, T> collisionHandler) {
+    
+    collectionA.forEachWithIndex((a, i) -> {
+      collectionB.forEachWithIndex((b, j) -> {
+        // this pair has already been processed but in a different order, so skip
+        if (j <= i) {
+          return;
+        }
+        CollisionInfo3d ci = CollisionDetection3d.computeCollision(a, b);
+        if (ci != null) {
+          collisionHandler.handleCollision(a, b, ci);
+        }
+      });
+    });
   }
 }
 

@@ -2,7 +2,6 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
-import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -125,26 +124,21 @@ public class Gumballs extends Demo3d {
   public void runningLoop() { 
     controlCamera(); 
 
+    // saves old position in order to figure out how much the ball needs to spin later
     spheres.forEachWithIndex((sphere, i) -> {   
       delta[i] = sphere.getPosition();
-      
-      CollisionInfo3d ci = CollisionDetection3d.computeCollision(sphere, cube);
-      if (ci != null) { 
-        gumballWithCubeCollisionHandler.handleCollision(sphere, cube, ci);
-      } else {
-        sphere.accelerate(camera.getUpVector().mul(-0.0015));
-      }
-
       sphere.move();
     }); 
-    
-    spheres.forEachPair((sphereA, sphereB) -> {
-      CollisionInfo3d ci = CollisionDetection3d.computeCollision(sphereA, sphereB);
-      if (ci != null) { 
-        gumballWithGumballCollisionHandler.handleCollision(sphereA, sphereB, ci);
-      }
-    });
 
+    // check for collisions
+    CollisionUtils3d.forEachCollision(
+        spheres, 
+        cube, 
+        gumballWithCubeCollisionHandler,
+        sphere -> sphere.accelerate(camera.getUpVector().mul(-0.0015)));
+    CollisionUtils3d.forEachCollision(spheres, gumballWithGumballCollisionHandler);
+
+    // figure out how much the ball needs to spin
     spheres.forEachWithIndex((sphere, i) -> {
       Vector3d d = sphere.getPosition().subLocal(delta[i]);
       Vector3d axis = d.crossProd(camera.getUpVector());
