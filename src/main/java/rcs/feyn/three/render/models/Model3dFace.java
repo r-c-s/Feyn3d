@@ -17,15 +17,6 @@ public class Model3dFace extends AbstractColorable {
     super(color);
     this.indices = indices;
   }
-  
-  public void inverse() {
-    int len = indices.length;
-    int[] reversed = new int[len];
-    for (int i = 0; i < len; i++) {
-      reversed[i] = indices[len - 1 - i];
-    }
-    indices = reversed;
-  }
 
   public int[] getIndices() {
     return indices.clone();
@@ -33,10 +24,6 @@ public class Model3dFace extends AbstractColorable {
 
   public RenderOptions3d getRenderOptions() {
     return options;
-  }
-  
-  public void setRenderOptions(RenderOptions3d options) {
-    this.options = options;
   }
 
   public Polygon3dPatch makePatch(Model3dGouraudVertices vertices) {
