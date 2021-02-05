@@ -38,7 +38,7 @@ public abstract class AbstractAnimationCanvas
         try {
           Thread.sleep(FPS_DELAY_MS - duration);
         }
-        catch (final Exception e) { }
+        catch (Exception e) { }
       }
     }
   });
@@ -51,7 +51,7 @@ public abstract class AbstractAnimationCanvas
         try {
           Thread.sleep(UPS_DELAY_MS - duration);
         }
-        catch (final Exception e) { }
+        catch (Exception e) { }
       }
     }
     System.exit(0);
