@@ -25,10 +25,10 @@ public class Vortex extends Demo3d {
   private Curve3d curve = new Curve3d(
       (r, t) -> { 
         r = 2*(r-0.5);
-        double radius = Math.sqrt(1 - r*r);
-        return new Vector3d(radius*TrigLookUp.cos(r*t*PI + t),
-                            radius*TrigLookUp.sin(r*t*PI + t),
-                            r); 
+        double radius = Math.sqrt(1 - r*r*r);
+        return new Vector3d(-radius*TrigLookUp.cos(r*t*PI + t),
+                            -radius*TrigLookUp.sin(r*t*PI + t),
+                            -r); 
       },
       (r, t, z) -> {         
         return new FeynColor((int)(TrigLookUp.cos(r*t*PI + t)*255), 
@@ -49,7 +49,7 @@ public class Vortex extends Demo3d {
     
     FeynApp3d.getRepository().add(curve);
     
-    camera.translate(0, 0, 2);
+    camera.translate(0, 0, 3);
   }
   
   @Override
