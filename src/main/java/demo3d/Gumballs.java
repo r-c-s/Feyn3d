@@ -2,6 +2,7 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 import rcs.feyn.color.FeynColor;
@@ -83,8 +84,8 @@ public class Gumballs extends Demo3d {
 
       Model3dUtils.setOptions(
           sphere,
-          EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.cullIfBackface), 
-          null);
+          Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.cullIfBackface), 
+          Set.of());
 
       spheres.add(sphere);
     }

@@ -2,6 +2,7 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
@@ -95,7 +96,10 @@ public class CollidingRocks extends Demo3d {
   			.setOuterBoundingObject(new BoundingSphere3d(0.5))
   			.build();
   	
-  	Model3dUtils.setOptions(rock, EnumSet.of(RenderOptions3d.Option.gouraudShaded), EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+  	Model3dUtils.setOptions(
+  	    rock, 
+  	    EnumSet.of(RenderOptions3d.Option.gouraudShaded), 
+  	    EnumSet.of(RenderOptions3d.Option.cullIfBackface));
   	
   	Model3dUtils.deform(rock, 0.1);
   	rock.setColor(FeynColor.rosyBrown);
@@ -153,8 +157,8 @@ public class CollidingRocks extends Demo3d {
     	for (var shard : newShards) {
         Model3dUtils.setOptions(
             shard, 
-            EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
-            null);
+            Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+            Set.of());
         double speed = rock.getVelocity().length();
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
   			shard.setVelocity(velocity);

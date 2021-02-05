@@ -2,6 +2,7 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.Function;
 
 import rcs.feyn.color.FeynColor;
@@ -46,8 +47,8 @@ public class Blob extends Demo3d {
     
     Model3dUtils.setOptions(
         obj, 
-        EnumSet.of(RenderOptions3d.Option.gouraudShaded), 
-        EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of(RenderOptions3d.Option.gouraudShaded), 
+        Set.of(RenderOptions3d.Option.cullIfBackface));
     
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);

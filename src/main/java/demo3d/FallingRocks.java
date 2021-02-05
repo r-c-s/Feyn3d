@@ -1,7 +1,7 @@
 package demo3d;
 
 import java.io.Serial;
-import java.util.EnumSet;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -52,7 +52,11 @@ public class FallingRocks extends Demo3d {
     
     ground.setColor(FeynColor.darkOliveGreen);
 
-    Model3dUtils.setOptions(ground, EnumSet.of(RenderOptions3d.Option.meshOnly), null);
+    Model3dUtils.setOptions(
+        ground, 
+        Set.of(RenderOptions3d.Option.meshOnly), 
+        Set.of());
+    
     FeynApp3d.getRepository().add(ground);
     FeynApp3d.getRepository().add(rocks);
     FeynApp3d.getRepository().add(shards);
@@ -83,8 +87,8 @@ public class FallingRocks extends Demo3d {
   	
   	Model3dUtils.setOptions(
   			rock, 
-  			EnumSet.of(RenderOptions3d.Option.gouraudShaded), 
-  			EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+  			Set.of(RenderOptions3d.Option.gouraudShaded), 
+  			Set.of(RenderOptions3d.Option.cullIfBackface));
   	
   	Model3dUtils.deform(rock, 0.1);
 
@@ -132,8 +136,8 @@ public class FallingRocks extends Demo3d {
   	for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
-          EnumSet.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
-          null);
+          Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+          Set.of());
   		shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
 			shard.setVelocity(
 					xorShift.randomDouble(-0.05, 0.05), 

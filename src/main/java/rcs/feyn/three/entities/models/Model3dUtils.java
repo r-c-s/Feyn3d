@@ -223,10 +223,8 @@ public class Model3dUtils {
   
   public static void setOptions(Model3d model, Set<RenderOptions3d.Option> enable, Set<RenderOptions3d.Option> disable) {
     for (Model3dFace face : model.getFaces()) {
-      if (enable != null) 
-        enable.forEach(opt -> face.getRenderOptions().enable(opt));
-      if (disable != null)
-        disable.forEach(opt -> face.getRenderOptions().disable(opt));
+      enable.forEach(opt -> face.getRenderOptions().enable(opt));
+      disable.forEach(opt -> face.getRenderOptions().disable(opt));
     }
   }
   

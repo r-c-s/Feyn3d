@@ -2,7 +2,7 @@ package demo3d;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
-import java.util.EnumSet;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -17,7 +17,6 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrices;
-import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Teapot extends Demo3d { 
@@ -51,8 +50,8 @@ public class Teapot extends Demo3d {
     
     Model3dUtils.setOptions(
         teapot, 
-        EnumSet.of(RenderOptions3d.Option.gouraudShaded),
-        EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of(RenderOptions3d.Option.gouraudShaded),
+        Set.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(teapot);
     
