@@ -19,7 +19,7 @@ public class Model3dTexturedFace extends Model3dFace {
 
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
     return new TexturedPolygon3dPatch(
-        getVertices(vertices.getVertices(), indices), 
+        getVertices(vertices.getVertices()), 
         textureData,
         options);
   }

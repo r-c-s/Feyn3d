@@ -28,20 +28,20 @@ public class Model3dFace extends AbstractColorable {
 
   public Polygon3dPatch makePatch(Model3dGouraudVertices vertices) {
     return new GouraudPolygon3dPatch(
-        getVertices(vertices.getVertices(), indices), 
-        getVertices(vertices.getNormals(), indices), 
+        getVertices(vertices.getVertices()), 
+        getVertices(vertices.getNormals()), 
         color,
         options);
   }
 
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
     return new Polygon3dPatch(
-        getVertices(vertices.getVertices(), indices), 
+        getVertices(vertices.getVertices()), 
         color,
         options);
   }
 
-  protected synchronized Vector3d[] getVertices(Vector3d[] vertices, int[] indices) {
+  protected synchronized Vector3d[] getVertices(Vector3d[] vertices) {
     Vector3d[] patchVertices = new Vector3d[indices.length];
     for (int i = 0; i < indices.length; i++) {
       patchVertices[i] = new Vector3d(vertices[indices[i]]);
