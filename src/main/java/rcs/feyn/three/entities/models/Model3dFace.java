@@ -26,19 +26,19 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
-  public Polygon3dPatch makePatch(Model3dGouraudVertices vertices) {
-    return new GouraudPolygon3dPatch(
-        getVertices(vertices.getVertices()), 
-        getVertices(vertices.getNormals()), 
-        color,
-        options);
-  }
-
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
-    return new Polygon3dPatch(
-        getVertices(vertices.getVertices()), 
-        color,
-        options);
+    if (vertices instanceof Model3dGouraudVertices) {
+      return new GouraudPolygon3dPatch(
+          getVertices(vertices.getVertices()), 
+          getVertices(((Model3dGouraudVertices)vertices).getNormals()), 
+          color,
+          options);
+    } else {
+      return new Polygon3dPatch(
+          getVertices(vertices.getVertices()), 
+          color,
+          options);
+    }
   }
 
   protected synchronized Vector3d[] getVertices(Vector3d[] vertices) {
