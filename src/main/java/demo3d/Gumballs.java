@@ -3,7 +3,6 @@ package demo3d;
 import java.io.Serial;
 import java.util.EnumSet;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -51,6 +50,14 @@ public class Gumballs extends Demo3d {
   private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS); 
+
+  private final double energyFactor = 0.5;
+  
+  private final GumballWithCubeCollisionHandler gumballWithCubeCollisionHandler = 
+      new GumballWithCubeCollisionHandler(energyFactor);
+  
+  private final GumballWithGumballCollisionHandler gumballWithGumballCollisionHandler = 
+      new GumballWithGumballCollisionHandler(energyFactor, gumballWithCubeCollisionHandler);
   
   @Override
   protected void initialize() {
@@ -80,12 +87,7 @@ public class Gumballs extends Demo3d {
            xor.randomDouble(-0.02, 0.02)));
       
       sphere.setColor(FeynColor.randomColor());
-      sphere.setMass(radius); 
-
-      Model3dUtils.setOptions(
-          sphere,
-          Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.cullIfBackface), 
-          Set.of());
+      sphere.setMass(radius);
 
       spheres.add(sphere);
     }
@@ -117,40 +119,18 @@ public class Gumballs extends Demo3d {
     controlCamera();
   }
   
-  private final double energyFactor = 0.8;
-  
-  private final CollisionHandler3d<Collidable3d, Collidable3d> ec = new InelasticCollision3d(energyFactor);
-  
-  private void bounce(CollidableModel3d sphere, CollisionInfo3d ci) {
-    if (ci == null) {
-      return;
-    } 
-    
-    Vector3d normal = ci.getNormal();
-    double overlap = ci.getOverlap(); 
-   
-    sphere.translate(normal.mul(overlap));
-    
-    double dotProd = normal.dotProd(sphere.getVelocity());
-    
-    if (dotProd < 0) {
-      sphere.accelerate(normal.mul(dotProd).mul(-1.0-energyFactor)); 
-    } 
-  }
-  
-  Vector3d[] delta = new Vector3d[NUM_BALLS]; 
+  private final Vector3d[] delta = new Vector3d[NUM_BALLS]; 
 
   @Override
   public void runningLoop() { 
     controlCamera(); 
-    
+
     spheres.forEachWithIndex((sphere, i) -> {   
       delta[i] = sphere.getPosition();
       
       CollisionInfo3d ci = CollisionDetection3d.computeCollision(sphere, cube);
-      
       if (ci != null) { 
-        bounce(sphere, ci);
+        gumballWithCubeCollisionHandler.handleCollision(sphere, cube, ci);
       } else {
         sphere.accelerate(camera.getUpVector().mul(-0.0015));
       }
@@ -158,45 +138,77 @@ public class Gumballs extends Demo3d {
       sphere.move();
     }); 
     
-    spheres.forEachPair(ch);
+    spheres.forEachPair((sphereA, sphereB) -> {
+      CollisionInfo3d ci = CollisionDetection3d.computeCollision(sphereA, sphereB);
+      if (ci != null) { 
+        gumballWithGumballCollisionHandler.handleCollision(sphereA, sphereB, ci);
+      }
+    });
 
-    spheres.forEachWithIndex((sphere, i) -> { 
+    spheres.forEachWithIndex((sphere, i) -> {
       Vector3d d = sphere.getPosition().subLocal(delta[i]);
       Vector3d axis = d.crossProd(camera.getUpVector());
-      
-      sphere.rotate( 
-          axis, 
-          (-d.length() * MathConsts.HALF_PI) / (MathConsts.TWO_PI * ((BoundingSphere3d) sphere.getOuterBoundingObject()).getRadius()));
+      double radians = (-d.length() * MathConsts.HALF_PI) 
+          / (MathConsts.TWO_PI * ((BoundingSphere3d) sphere.getOuterBoundingObject()).getRadius());
+      sphere.rotate(axis, radians);
     });
-  } 
+  }  
   
-  private final BiConsumer<CollidableModel3d, CollidableModel3d> ch = new BiConsumer<CollidableModel3d, CollidableModel3d>() {
+  private class GumballWithCubeCollisionHandler implements CollisionHandler3d<CollidableModel3d, CollidableModel3d> {
+    
+    private final double energyFactor;
+
+    public GumballWithCubeCollisionHandler(double energyFactor) {
+      this.energyFactor = energyFactor;
+    }
 
     @Override
-    public void accept(CollidableModel3d t, CollidableModel3d u) { 
-      CollisionInfo3d ci1 = CollisionDetection3d.computeCollision(t, u);
-
-      if (ci1 == null) {
-        return;
-      } 
+    public void handleCollision(CollidableModel3d sphere, CollidableModel3d cube, CollisionInfo3d ci) {
+      Vector3d normal = ci.getNormal();
+      double overlap = ci.getOverlap(); 
+     
+      sphere.translate(normal.mul(overlap));
       
-      CollisionUtils3d.fixOverlap(t, u, ci1);
+      double dotProd = normal.dotProd(sphere.getVelocity());
       
-      CollisionInfo3d cia = CollisionDetection3d.computeCollision(t, cube);
-      if (cia != null) {
-        bounce(t, cia);
-        u.translate(cia.getNormal().mul(cia.getOverlap()));
+      if (dotProd < 0) {
+        sphere.accelerate(normal.mul(dotProd).mul(-1.0-energyFactor)); 
       }
-      
-      CollisionInfo3d cib = CollisionDetection3d.computeCollision(u, cube);
-      if (cib != null) {
-        bounce(u, cib);
-        t.translate(cib.getNormal().mul(cib.getOverlap()));
-      }
-      
-      ec.handleCollision(t, u, ci1); 
     }
-  };
+  }
+  
+  private class GumballWithGumballCollisionHandler implements CollisionHandler3d<CollidableModel3d, CollidableModel3d> {
+    
+    private final CollisionHandler3d<Collidable3d, Collidable3d> ec;
+
+    private final GumballWithCubeCollisionHandler gumballWithCubeCollisionHandler;
+
+    public GumballWithGumballCollisionHandler(
+        double energyFactor, 
+        GumballWithCubeCollisionHandler gumballWithCubeCollisionHandler) {
+      this.ec = new InelasticCollision3d(energyFactor);
+      this.gumballWithCubeCollisionHandler = gumballWithCubeCollisionHandler;
+    }
+
+    @Override
+    public void handleCollision(CollidableModel3d sphereA, CollidableModel3d sphereB, CollisionInfo3d ci) {
+      CollisionUtils3d.fixOverlap(sphereA, sphereB, ci);   
+      
+      CollisionInfo3d cia = CollisionDetection3d.computeCollision(sphereA, cube);
+      if (cia != null) {
+        gumballWithCubeCollisionHandler.handleCollision(sphereA, cube, cia);
+        sphereB.translate(cia.getNormal().mul(cia.getOverlap()));
+      }
+      
+      CollisionInfo3d cib = CollisionDetection3d.computeCollision(sphereB, cube);
+      if (cib != null) {
+        gumballWithCubeCollisionHandler.handleCollision(sphereB, cube, cib);
+        sphereA.translate(cib.getNormal().mul(cib.getOverlap()));
+      }
+      
+      ec.handleCollision(sphereA, sphereB, ci); 
+    }
+  }
 
   public static void main(String[] args) {
     var frame = new FeynFrame(800, 800, "Gumballs", true, false);
