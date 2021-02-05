@@ -6,8 +6,9 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.three.entities.models.Model3d;
+import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.primitives.Line3d;
-import rcs.feyn.three.entities.primitives.Point3d;
 import rcs.feyn.three.entities.primitives.Polygon3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
@@ -30,7 +31,7 @@ public class BoxOfRain extends Demo3d {
   
   private FeynCollection<Line3d> raindrops = new FeynLinkedList<>();
   private FeynCollection<Polygon3d> waves = new FeynLinkedList<>();
-  private FeynCollection<Point3d> splashes = new FeynLinkedList<>();
+  private FeynCollection<Model3d> splashes = new FeynLinkedList<>();
   
   public BoxOfRain() {
     super();
@@ -111,12 +112,17 @@ public class BoxOfRain extends Demo3d {
   private void addNewSplash(Line3d raindrop) {
   	for (int i = 0; i < 5; i++) {
   		var position = new Vector3d(raindrop.getA().x(), 0.01, raindrop.getA().z());
-			var splash = new Point3d(position);
-			splash.setVelocity(
-					xorShift.randomDouble(-0.02, 0.02),
-					0.1, 
-					xorShift.randomDouble(-0.02, 0.02));
-  		splash.setColor(FeynColor.white);
+  		var velocity = new Vector3d(
+          xorShift.randomDouble(-0.02, 0.02),
+          0.1, 
+          xorShift.randomDouble(-0.02, 0.02));
+  		
+			var splash = Model3dFactory.cube(0.03)
+			    .setPosition(position)
+			    .setVelocity(velocity)
+			    .addColor(FeynColor.white)
+			    .build();
+			
   		splashes.add(splash);
   	}
   }
