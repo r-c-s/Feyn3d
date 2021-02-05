@@ -15,6 +15,7 @@ import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
+import rcs.feyn.math.linalg.Matrices;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
@@ -43,9 +44,9 @@ public class Rotation extends Demo3d {
 
   private final double ANG_VEL = 2 * MathConsts.DEGREES_TO_RADIANS;
 
-  private final Matrix44 xTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, ANG_VEL);
-  private final Matrix44 yTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, ANG_VEL);
-  private final Matrix44 zTransform = Matrix44.createRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, ANG_VEL);
+  private final Matrix44 xTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, ANG_VEL);
+  private final Matrix44 yTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, ANG_VEL);
+  private final Matrix44 zTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, ANG_VEL);
    
   private ConstantLightSource3d lightSource; 
   
@@ -121,7 +122,7 @@ public class Rotation extends Demo3d {
      
     if (keyHasBeenPressed(KeyEvent.VK_X)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getSideVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getSideVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(xTransform); 
       }
@@ -129,7 +130,7 @@ public class Rotation extends Demo3d {
 
     if (keyHasBeenPressed(KeyEvent.VK_Y)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getUpVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getUpVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(yTransform); 
       }
@@ -137,7 +138,7 @@ public class Rotation extends Demo3d {
 
     if (keyHasBeenPressed(KeyEvent.VK_Z)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrix44.createRotateMatrix(position, obj.getForwardVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getForwardVector(), ANG_VEL)); 
       } else {
         transform.mulLocal(zTransform); 
       }

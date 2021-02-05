@@ -16,6 +16,7 @@ import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.TrigLookUp;
+import rcs.feyn.math.linalg.Matrices;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
@@ -33,7 +34,7 @@ public class Teapot extends Demo3d {
   private Model3d teapot = new Model3dBuilder()
   		.fromObjFile(teapotObjFilePath)
   		.addColor(FeynColor.white)
-  		.addTransform(Matrix44.createScaleMatrix(0.05))
+  		.addTransform(Matrices.create3dScaleMatrix(0.05))
   		.build();
   
   private boolean trackLightsourceWithCamera = false;

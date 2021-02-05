@@ -1,6 +1,7 @@
 package rcs.feyn.three;
 
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.linalg.Matrices;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
@@ -209,7 +210,7 @@ public class Particle3d implements IParticle3d {
   }
 
   public final void scale(Vector3d point, double scale) {
-    transform(Matrix44.createScaleMatrix(scale, point));
+    transform(Matrices.create3dScaleMatrix(scale, point));
   }
 
   public final void rotate(Vector3d axis, double radians) {
@@ -217,7 +218,7 @@ public class Particle3d implements IParticle3d {
   }
 
   public final void rotate(Vector3d point, Vector3d axis, double radians) {
-    transform(Matrix44.createRotateMatrix(point, axis, radians));
+    transform(Matrices.create3dRotateMatrix(point, axis, radians));
   }
 
   public final void accelerateForward(double accel) {
