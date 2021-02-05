@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 import rcs.feyn.utils.QuadConsumer;
 
-public abstract class FeynCollection<T extends FeyngGarbageCollectable> implements Iterable<T> { 
+public abstract class FeynCollection<T extends FeynGarbageCollectable> implements Iterable<T> { 
 
   public abstract void add(T t);
 

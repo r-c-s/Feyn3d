@@ -1,6 +1,6 @@
 package rcs.feyn.utils.struct;
 
-public interface FeyngGarbageCollectable {
+public interface FeynGarbageCollectable {
   
   public void destroy();
   

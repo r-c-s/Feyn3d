@@ -2,7 +2,7 @@ package rcs.feyn.utils.struct;
 
 import java.util.Iterator;
 
-public class FeynArray<T extends FeyngGarbageCollectable> extends FeynCollection<T> {
+public class FeynArray<T extends FeynGarbageCollectable> extends FeynCollection<T> {
 
   private T[] array;
   
@@ -21,7 +21,7 @@ public class FeynArray<T extends FeyngGarbageCollectable> extends FeynCollection
   
   @SuppressWarnings("unchecked")
   public void clear() {
-    array = (T[]) new FeyngGarbageCollectable[capacity];
+    array = (T[]) new FeynGarbageCollectable[capacity];
     count = 0;
   }
 

@@ -2,10 +2,10 @@ package rcs.feyn.three.entities;
 
 import rcs.feyn.three.Particle3d;
 import rcs.feyn.three.render.Renderable3d;
-import rcs.feyn.utils.struct.FeyngGarbageCollectable;
+import rcs.feyn.utils.struct.FeynGarbageCollectable;
 import rcs.feyn.math.linalg.Vector3d;
 
-public abstract class Sprite3d extends Particle3d implements Renderable3d, FeyngGarbageCollectable {
+public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynGarbageCollectable {
   
   private boolean active = true;
 

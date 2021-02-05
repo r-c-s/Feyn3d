@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import rcs.feyn.utils.struct.DoublyLinkedList;
 
-public class FeynLinkedList<T extends FeyngGarbageCollectable> extends FeynCollection<T> {
+public class FeynLinkedList<T extends FeynGarbageCollectable> extends FeynCollection<T> {
   
   private final DoublyLinkedList<T> linkedList;
   
