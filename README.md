@@ -4,11 +4,11 @@ A polygon-based 3D graphics engine in Java
 
 ### Motivation
 
-Named after Richard Feynman for his quote:
+Named after Richard Feynman, the famous physicist, for his quote:
 
 *"What I cannot create, I do not understand; know how to solve every problem that has been solved."*
 
-In other words, Feyn is an educational tool. It serves as a medium through which I learn not only about graphics and math, but also about virtually about every universal programming aspect, which has been proven to be easily transferable to other domains.
+In other words, Feyn is an educational tool. It proudly reinvents the wheel. It serves as a medium through which I learn not only about graphics and math, but also about virtually about every universal programming aspect, which has been proven to be easily transferable to other domains.
 
 ### Examples
 
