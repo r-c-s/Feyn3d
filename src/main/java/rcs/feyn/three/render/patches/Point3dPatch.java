@@ -34,7 +34,7 @@ public class Point3dPatch extends Patch3d {
     Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightsourceColorTo(color.getRGBA())
+    		? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)
     		: color.getRGBA();
     
     Point3dRenderer.render(

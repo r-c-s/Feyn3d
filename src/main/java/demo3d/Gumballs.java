@@ -2,6 +2,7 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;

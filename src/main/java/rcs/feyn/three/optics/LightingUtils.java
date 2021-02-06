@@ -52,10 +52,10 @@ public class LightingUtils {
     }
     
     double intensity = lightSource.getIntensityAt(position, normal);
-    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), intensity);
+    return applyLightsourceColorTo(objectColor, intensity);
   }
   
-  public static final int applyLightsourceColorTo(int objectColor) {
+  public static final int applyLightsourceColorTo(int objectColor, double intensity) {
     DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
     if (lightSource == null) {
       return objectColor;
@@ -66,6 +66,6 @@ public class LightingUtils {
       return objectColor;
     }
  
-    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), 1);
+    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), intensity);
   }
 }

@@ -4,6 +4,8 @@ import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.optics.LightingUtils;
 
 public class GouraudPolygon3dRenderer {
 
@@ -12,6 +14,8 @@ public class GouraudPolygon3dRenderer {
     if (size < 3) {
       return;
     }
+    
+    double ambientLightIntensity = FeynApp3d.getAmbientLight().getIntensity();
     
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
@@ -102,8 +106,10 @@ public class GouraudPolygon3dRenderer {
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
-          // this doesn't work so well, need to take into account diffuse light source better
-          int source = ColorUtils.mulRGBA(color, shadeFactor);
+          int source = LightingUtils.applyLightsourceColorTo(
+              ColorUtils.mulRGBA(color, shadeFactor), 
+              shadeFactor - ambientLightIntensity);
+          
           graphics.putPixel(x, y, invZ, source); 
         } 
       } 
