@@ -53,7 +53,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {
       double[] intensities = new double[clippedViewVertices.length];
       for (int i = 0; i < intensities.length; i++) {
-        intensities[i] = LightingUtils.computeLightningIntensity(
+        intensities[i] = LightingUtils.computeLightingIntensity(
                 clippedViewVertices[i], 
                 clippedViewNormals[i],
                 view,

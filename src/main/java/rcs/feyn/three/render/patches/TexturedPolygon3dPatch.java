@@ -40,7 +40,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-      intensity = LightingUtils.computeLightningIntensity(
+      intensity = LightingUtils.computeLightingIntensity(
             center, 
             normal, 
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
