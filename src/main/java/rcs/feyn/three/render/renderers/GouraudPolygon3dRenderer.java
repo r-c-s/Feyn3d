@@ -1,12 +1,13 @@
 package rcs.feyn.three.render.renderers;
 
+import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 
-public class Polygon3dRenderer {
+public class GouraudPolygon3dRenderer {
 
-  public static void render(Graphics3d graphics, Vector3d[] viewPortCoords, int color) {
+  public static void render(Graphics3d graphics, Vector3d[] viewPortCoords, double[] intensities, int color) {
     int size = viewPortCoords.length;
     if (size < 3) {
       return;
@@ -52,6 +53,17 @@ public class Polygon3dRenderer {
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
       
+      double A = Math.abs(cc) / 2; 
+      double fa = intensities[0] / A; 
+      double fb = intensities[i] / A; 
+      double fc = intensities[i+1] / A; 
+      double ak0 = yc*(xb-xc)-xc*(yb-yc);
+      double ak1 = yb-yc;
+      double ak2 = xb-xc;          
+      double bk0 = yc*(xa-xc)-xc*(ya-yc);
+      double bk1 = ya-yc;
+      double bk2 = xa-xc;
+        
       for (int y = ymin; y <= ymax; y++) {
         double ximin = Integer.MIN_VALUE;
         double xjmin = Integer.MIN_VALUE;
@@ -76,10 +88,23 @@ public class Polygon3dRenderer {
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
         int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), gw));
 
+        double aMin = 0.5 * Math.abs(ak0 + xmin*ak1 - y*ak2); 
+        double bMin = 0.5 * Math.abs(bk0 + xmin*bk1 - y*bk2);
+        double shadeMin = fa*(aMin) + fb*(bMin) + fc*(A - aMin - bMin);
+        
+        double aMax = 0.5 * Math.abs(ak0 + xmax*ak1 - y*ak2); 
+        double bMax = 0.5 * Math.abs(bk0 + xmax*bk1 - y*bk2);
+        double shadeMax = fa*(aMax) + fb*(bMax) + fc*(A - aMax - bMax);
+        
+        double dShadeFactorDx = (shadeMax-shadeMin) / (xmax-xmin);
+        double shadeFactor = shadeMin + (1-aMin/A)*dShadeFactorDx + (xmin-xmin)*dShadeFactorDx;
+
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         
-        for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
-          graphics.putPixel(x, y, invZ, color); 
+        for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
+          // this doesn't work so well, need to take into account diffuse light source better
+          int source = ColorUtils.mulRGBA(color, shadeFactor);
+          graphics.putPixel(x, y, invZ, source); 
         } 
       } 
     }

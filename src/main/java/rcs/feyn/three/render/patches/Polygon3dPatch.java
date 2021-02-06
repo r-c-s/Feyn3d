@@ -57,14 +57,14 @@ public class Polygon3dPatch extends Patch3d {
     } else {
       finalColor = color.getRGBA();
     }
+    finalColor = ColorUtils.mulRGBA(finalColor, intensity);
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
       renderMesh(graphics, deviceCoordinates, intensity, finalColor);
     } else {
       Polygon3dRenderer.render(
         graphics,
-        deviceCoordinates, 
-        intensity,
+        deviceCoordinates,
         finalColor);
     }
   }

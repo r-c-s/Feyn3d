@@ -7,6 +7,7 @@ import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
+import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
@@ -66,7 +67,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
         finalColor = color.getRGBA();
       }
       
-      Polygon3dRenderer.render(
+      GouraudPolygon3dRenderer.render(
           graphics,
           deviceCoordinates, 
           intensities,
@@ -74,8 +75,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     } else {
       Polygon3dRenderer.render(
           graphics, 
-          deviceCoordinates, 
-          1, 
+          deviceCoordinates,
           color.getRGBA());
     }
   }
