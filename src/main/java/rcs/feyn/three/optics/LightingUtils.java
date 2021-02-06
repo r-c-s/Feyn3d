@@ -8,12 +8,12 @@ import rcs.feyn.three.kernel.FeynApp3d;
 
 public class LightingUtils {
   
-  public static final double computeLightningIntensity(
+  public static final double computeLightingIntensity(
       Vector3d point, Vector3d normal, boolean bothSides) {
-    return computeLightningIntensity(point, normal, null, bothSides);
+    return computeLightingIntensity(point, normal, null, bothSides);
   } 
 
-  public static final double computeLightningIntensity(
+  public static final double computeLightingIntensity(
       Vector3d point, Vector3d normal, Matrix44 view, boolean bothSides) {
     double ambient = FeynApp3d.getAmbientLight().getIntensity();
     double intensity = ambient;
