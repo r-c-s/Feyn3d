@@ -9,13 +9,21 @@ import rcs.feyn.three.optics.LightingUtils;
 
 public class GouraudPolygon3dRenderer {
 
-  public static void render(Graphics3d graphics, Vector3d[] viewPortCoords, double[] intensities, int color) {
+  public static void render(
+      Graphics3d graphics, 
+      Vector3d[] viewPortCoords, 
+      double[] intensities,
+      int color,
+      boolean applyLightingColor) {
     int size = viewPortCoords.length;
     if (size < 3) {
       return;
     }
     
-    double ambientLightIntensity = FeynApp3d.getAmbientLight().getIntensity();
+    double ambientLightIntensity = 0;
+    if (applyLightingColor) {
+      ambientLightIntensity = FeynApp3d.getAmbientLight().getIntensity();
+    }
     
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
@@ -106,9 +114,12 @@ public class GouraudPolygon3dRenderer {
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
-          int source = LightingUtils.applyLightsourceColorTo(
-              ColorUtils.mulRGBA(color, shadeFactor), 
-              shadeFactor - ambientLightIntensity);
+          int source = ColorUtils.mulRGBA(color, shadeFactor);
+          if (applyLightingColor) {
+            source = LightingUtils.applyLightsourceColorTo(
+                source, 
+                shadeFactor - ambientLightIntensity);
+          }
           
           graphics.putPixel(x, y, invZ, source); 
         } 

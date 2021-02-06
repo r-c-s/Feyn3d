@@ -60,13 +60,12 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
       
-      // todo: apply lighting color correctly
-      
       GouraudPolygon3dRenderer.render(
           graphics,
           deviceCoordinates, 
           intensities,
-          color.getRGBA());
+          color.getRGBA(),
+          options.isEnabled(RenderOptions3d.Option.applyLightingColor));
     } else {
       Polygon3dRenderer.render(
           graphics, 
