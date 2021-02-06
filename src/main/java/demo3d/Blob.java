@@ -60,7 +60,7 @@ public class Blob extends Demo3d {
 
     camera.translate(0, 0, 2);
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
+    FeynApp3d.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);
@@ -74,7 +74,7 @@ public class Blob extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    FeynApp3d.getDiffuseLightSource().setPosition(camera.getPosition()); 
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     blobAnimation.run();
   }  
   

@@ -51,7 +51,7 @@ public class Plato extends Demo3d {
     camera.translate(0, 2, 6);
     camera.rotate(Vector3d.X_AXIS, -25 * MathConsts.DEGREES_TO_RADIANS);
     
-    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(1));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.8));
     
     double deg = MathConsts.TWO_PI / (double) solids.length;
@@ -71,7 +71,7 @@ public class Plato extends Demo3d {
   public void runningLoop() {
     controlCamera();  
 
-    FeynApp3d.getDiffuseLightSource().setPosition(camera.getPosition()); 
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     
     for (Model3d solid : solids) {  
       solid.rotate(Vector3d.Y_AXIS, 2 * MathConsts.DEGREES_TO_RADIANS); 

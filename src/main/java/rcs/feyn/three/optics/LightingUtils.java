@@ -18,15 +18,15 @@ public class LightingUtils {
     double ambient = FeynApp3d.getAmbientLight().getIntensity();
     double intensity = ambient;
     
-    DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
+    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
     
-    if (lightSource != null) {
+    for (int i = 0; i < lightSources.length; i++) {
       double diffuse;
       
       if (view != null) {
-        diffuse = lightSource.getIntensityAt(point, normal, view);
+        diffuse = lightSources[i].getIntensityAt(point, normal, view);
       } else {
-        diffuse = lightSource.getIntensityAt(point, normal);
+        diffuse = lightSources[i].getIntensityAt(point, normal);
       }
       
       if (bothSides) {
@@ -41,31 +41,24 @@ public class LightingUtils {
   } 
   
   public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, Matrix44 view, int objectColor) {
-    DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
-    if (lightSource == null) {
-      return objectColor;
+    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    int color = objectColor;
+    for (int i = 0; i < lightSources.length; i++) {
+      double intensity = lightSources[i].getIntensityAt(position, normal);
+      color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), intensity);
     }
-    
-    FeynColor lightColor = lightSource.getColor();
-    if (lightColor == null) {
-      return objectColor;
-    }
-    
-    double intensity = lightSource.getIntensityAt(position, normal);
-    return applyLightsourceColorTo(objectColor, intensity);
+    return color;
   }
   
+  /*
+   * Doesn't work as expected
+   */
   public static final int applyLightsourceColorTo(int objectColor, double intensity) {
-    DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
-    if (lightSource == null) {
-      return objectColor;
+    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    int color = objectColor;
+    for (int i = 0; i < lightSources.length; i++) {
+      color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), intensity);
     }
-    
-    FeynColor lightColor = lightSource.getColor();
-    if (lightColor == null) {
-      return objectColor;
-    }
- 
-    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), intensity);
+    return color;
   }
 }

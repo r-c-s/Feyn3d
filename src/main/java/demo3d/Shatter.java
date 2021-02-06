@@ -6,7 +6,6 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.three.anim.TrackLightSourceWithCamera;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
@@ -31,7 +30,6 @@ public class Shatter extends Demo3d {
   private Model3d[] objs;
   
   private final Runnable shatterAnimation = new ShatterAnimation();
-  private final Runnable trackLightsourceWithCamera = new TrackLightSourceWithCamera();
   
   @Override
   protected void initialize() {
@@ -59,7 +57,7 @@ public class Shatter extends Demo3d {
 
     camera.translate(0, 0, 2);
     
-    FeynApp3d.setDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
+    FeynApp3d.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);
@@ -73,7 +71,7 @@ public class Shatter extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    trackLightsourceWithCamera.run();
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     shatterAnimation.run();
   }
   

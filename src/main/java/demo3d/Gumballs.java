@@ -2,7 +2,6 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.EnumSet;
-import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -110,7 +109,7 @@ public class Gumballs extends Demo3d {
     z.setColor(FeynColor.blue);
 
     camera.translate(0, 0, 2.5);
-    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.8));
   }
 

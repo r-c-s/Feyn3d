@@ -63,7 +63,7 @@ public class FallingRocks extends Demo3d {
     
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(new Vector3d(5, 5, 5));
-    FeynApp3d.setDiffuseLightSource(lightSource);
+    FeynApp3d.addDiffuseLightSource(lightSource);
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
   }
 

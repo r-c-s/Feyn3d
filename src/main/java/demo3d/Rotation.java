@@ -100,7 +100,7 @@ public class Rotation extends Demo3d {
     camera.translate(0, 0, 2.5);
     
     lightSource = new ConstantLightSource3d(1);  
-    FeynApp3d.setDiffuseLightSource(lightSource); 
+    FeynApp3d.addDiffuseLightSource(lightSource); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);

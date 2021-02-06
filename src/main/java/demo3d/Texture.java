@@ -8,7 +8,6 @@ import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.three.anim.TrackLightSourceWithCamera;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
@@ -48,7 +47,6 @@ public class Texture extends Demo3d {
       .build();
   
   private final Runnable objAnimation = new Animation();
-  private final Runnable TrackLightSourceWithCamera = new TrackLightSourceWithCamera();
   
   @Override
   protected void initialize() {
@@ -67,7 +65,7 @@ public class Texture extends Demo3d {
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(1)); 
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
     
     wzc.setAmount(0.2);
@@ -82,7 +80,7 @@ public class Texture extends Demo3d {
   public void runningLoop() {
     controlCamera();
     handleInput();
-    TrackLightSourceWithCamera.run();
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     objAnimation.run();
   }  
 

@@ -5,6 +5,10 @@ import rcs.feyn.three.optics.DiffuseLightSource3d;
 import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewFrustum3d;
 import rcs.feyn.three.view.ViewUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
@@ -21,7 +25,7 @@ public class FeynApp3d {
   
   private static final Camera3d camera = new Camera3d();
   
-  private static DiffuseLightSource3d lightSource = null;
+  private static List<DiffuseLightSource3d> lightSources = new ArrayList<>();
   private static AmbientLightSource3d ambientLight = new AmbientLightSource3d(1);
 
   public static ViewFrustum3d getViewFrustum() {
@@ -63,12 +67,12 @@ public class FeynApp3d {
     return ViewUtils.getViewPortMatrix(viewFrustum);
   }
 
-  public static DiffuseLightSource3d getDiffuseLightSource() {
-    return lightSource;
+  public static DiffuseLightSource3d[] getDiffuseLightSources() {
+    return lightSources.toArray(DiffuseLightSource3d[]::new);
   }
 
-  public static void setDiffuseLightSource(DiffuseLightSource3d ls) {
-    lightSource = ls;
+  public static void addDiffuseLightSource(DiffuseLightSource3d ls) {
+    lightSources.add(ls);
   }
 
   public static AmbientLightSource3d getAmbientLight() {
