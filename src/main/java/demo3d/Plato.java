@@ -52,7 +52,7 @@ public class Plato extends Demo3d {
     camera.rotate(Vector3d.X_AXIS, -25 * MathConsts.DEGREES_TO_RADIANS);
     
     FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d());
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.8));
     
     double deg = MathConsts.TWO_PI / (double) solids.length;
     

@@ -85,4 +85,12 @@ public final class ColorUtils {
             MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb0) + getBlueFromRGBA(rgb1) ))), 
             getAlphaFromRGBA(rgb0));
   }
+  
+  public static int blendColors(int a, int b, double factor) {
+    int aAlpha = getAlphaFromRGBA(a);
+    int bAlpha = getAlphaFromRGBA(b);
+    int blendAlpha = Math.abs(aAlpha - bAlpha);
+    int blended = alphaBlend(setAlphaToRGBA(a, blendAlpha), mulRGBA(b, factor));
+    return setAlphaToRGBA(blended, aAlpha);
+  }
 }

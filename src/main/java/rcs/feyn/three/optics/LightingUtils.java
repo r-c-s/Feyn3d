@@ -34,27 +34,39 @@ public class LightingUtils {
       } else {
         diffuse = Math.max(0, diffuse);
       }
-      intensity += (1-ambient) * diffuse;
+      intensity += (ambient) * diffuse;
     }
     
     return intensity;
   } 
   
-  public static final int applyLightsourceColorTo(int objectColor) {
-  	DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
-  	if (lightSource == null) {
-  		return objectColor;
-  	}
-  	
-  	FeynColor lightColor = lightSource.getColor();
-  	if (lightColor == null) {
-  		return objectColor;
-  	}
+  public static final int applyLightsourceColorTo(Vector3d point, Vector3d normal, int objectColor) {
+    DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
+    if (lightSource == null) {
+      return objectColor;
+    }
+    
+    FeynColor lightColor = lightSource.getColor();
+    if (lightColor == null) {
+      return objectColor;
+    }
+    
+    double dotProd = lightSource.getPosition().sub(point).normalizeLocal().dotProd(normal);
  
-    int objectAlpha = ColorUtils.getAlphaFromRGBA(objectColor);
-    int lightAlpha = ColorUtils.getAlphaFromRGBA(lightColor.getRGBA());
-    int blendAlpha = Math.abs(objectAlpha - lightAlpha);
-    int blended = ColorUtils.alphaBlend(ColorUtils.setAlphaToRGBA(objectColor, blendAlpha), lightColor.getRGBA());
-    return ColorUtils.setAlphaToRGBA(blended, objectAlpha);
+    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), dotProd);
+  }
+  
+  public static final int applyLightsourceColorTo(int objectColor) {
+    DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
+    if (lightSource == null) {
+      return objectColor;
+    }
+    
+    FeynColor lightColor = lightSource.getColor();
+    if (lightColor == null) {
+      return objectColor;
+    }
+ 
+    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), 1);
   }
 }

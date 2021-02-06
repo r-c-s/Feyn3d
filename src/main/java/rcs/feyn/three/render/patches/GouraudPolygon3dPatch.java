@@ -48,10 +48,6 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     
     Vector3d[] deviceCoordinates = Pipeline3d
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
-
-    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightsourceColorTo(color.getRGBA())
-    		: color.getRGBA();
     
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {
       double[] intensities = new double[clippedViewVertices.length];
@@ -63,17 +59,24 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
       
+      int finalColor;
+      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+        finalColor = LightingUtils.applyLightsourceColorTo(color.getRGBA());
+      } else {
+        finalColor = color.getRGBA();
+      }
+      
       Polygon3dRenderer.render(
           graphics,
           deviceCoordinates, 
           intensities,
-          colorWithLighting);
+          finalColor);
     } else {
       Polygon3dRenderer.render(
           graphics, 
           deviceCoordinates, 
           1, 
-          colorWithLighting);
+          color.getRGBA());
     }
   }
 }

@@ -51,18 +51,21 @@ public class Polygon3dPatch extends Patch3d {
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
 
-    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightsourceColorTo(color.getRGBA())
-    		: color.getRGBA();
+    int finalColor;
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+      finalColor = LightingUtils.applyLightsourceColorTo(center, normal, color.getRGBA());
+    } else {
+      finalColor = color.getRGBA();
+    }
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
-      renderMesh(graphics, deviceCoordinates, intensity, colorWithLighting);
+      renderMesh(graphics, deviceCoordinates, intensity, finalColor);
     } else {
       Polygon3dRenderer.render(
         graphics,
         deviceCoordinates, 
         intensity,
-        colorWithLighting);
+        finalColor);
     }
   }
 

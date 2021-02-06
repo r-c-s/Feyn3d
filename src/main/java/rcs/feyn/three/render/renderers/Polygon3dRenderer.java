@@ -4,6 +4,7 @@ import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.kernel.FeynApp3d;
 
 public class Polygon3dRenderer {
   
@@ -114,7 +115,7 @@ public class Polygon3dRenderer {
           
           double aMax = 0.5 * Math.abs(ak0 + xmax*ak1 - y*ak2); 
           double bMax = 0.5 * Math.abs(bk0 + xmax*bk1 - y*bk2);
-          double shadeMax = fa*(aMax) + fb*(bMax) + fc*(A - aMax - bMax); 
+          double shadeMax = fa*(aMax) + fb*(bMax) + fc*(A - aMax - bMax);
           
           dShadeFactorDx = (shadeMax-shadeMin) / (xmax-xmin);
           shadeFactor = shadeMin + (1-aMin/A)*dShadeFactorDx + (xmin-xmin)*dShadeFactorDx;
@@ -125,7 +126,8 @@ public class Polygon3dRenderer {
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
           int source = color;
           if (gouraud) {
-            source = ColorUtils.mulRGBA(color, shadeFactor);
+            // this doesn't work so well, need to take into accout diffuse light source better
+            source = ColorUtils.mulRGBA(source, shadeFactor);
           }
           graphics.putPixel(x, y, invZ, source); 
         } 
