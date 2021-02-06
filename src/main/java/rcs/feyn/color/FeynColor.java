@@ -167,7 +167,7 @@ public final class FeynColor {
   private int g;
   private int b;
   private int a;
-  
+
   private int rgba;
 
   public FeynColor(FeynColor color) {

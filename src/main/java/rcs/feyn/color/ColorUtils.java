@@ -69,6 +69,22 @@ public final class ColorUtils {
   public static int setBlueToRGBA(int rgba, int b) {
     return  b | (0xFFFFFF00 & rgba);
   }
+  
+  public static final int brighten(int rgb, double factor) {
+    int r = getRedFromRGBA(rgb);
+    int g = getGreenFromRGBA(rgb);
+    int b = getBlueFromRGBA(rgb);
+    
+    int max = MathUtils.max(r, g, b);
+    
+    int diff = 255 - max;
+    
+    return getRGBA(
+        MathUtils.min(255, MathUtils.roundToInt(r + diff * factor)), 
+        MathUtils.min(255, MathUtils.roundToInt(g + diff * factor)), 
+        MathUtils.min(255, MathUtils.roundToInt(b + diff * factor)), 
+        getAlphaFromRGBA(rgb));
+  }
 
   public static final int mulRGBA(int rgb, double factor) {
     return getRGBA(
@@ -80,17 +96,22 @@ public final class ColorUtils {
 
   public static final int addRGBA(int rgb0, int rgb1) {
     return getRGBA(
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgb0) + getRedFromRGBA(rgb1)  ))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgb0) + getRedFromRGBA(rgb1)))), 
             MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgb0) + getGreenFromRGBA(rgb1)))), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb0) + getBlueFromRGBA(rgb1) ))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb0) + getBlueFromRGBA(rgb1)))), 
             getAlphaFromRGBA(rgb0));
   }
   
   public static int blendColors(int a, int b, double factor) {
-    int aAlpha = getAlphaFromRGBA(a);
-    int bAlpha = getAlphaFromRGBA(b);
-    int blendAlpha = Math.abs(aAlpha - bAlpha);
-    int blended = alphaBlend(setAlphaToRGBA(a, blendAlpha), mulRGBA(b, factor));
-    return setAlphaToRGBA(blended, aAlpha);
+    if (factor < 0) {
+      factor = 0;
+    } 
+    if (factor > 1) {
+      factor = 1;
+    }
+    int blended = alphaBlend(
+        setAlphaToRGBA(a, MathUtils.roundToInt((1-factor)*255)), 
+        setAlphaToRGBA(b, MathUtils.roundToInt(factor*255)));
+    return setAlphaToRGBA(blended, getAlphaFromRGBA(a));
   }
 }

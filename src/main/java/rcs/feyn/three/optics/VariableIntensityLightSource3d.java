@@ -6,34 +6,25 @@ import rcs.feyn.math.linalg.Vector3d;
 
 public class VariableIntensityLightSource3d extends ConstantLightSource3d {
 	
-	private double intensity;
-
   public VariableIntensityLightSource3d(double intensity) {
-    this(null, intensity);
+    this(intensity, null);
   }
   
-  public VariableIntensityLightSource3d(FeynColor color, double intensity) {
-    super(color);
-    this.intensity = intensity;
+  public VariableIntensityLightSource3d(double intensity, FeynColor color) {
+    super(intensity, color);
   }
 
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal) {
     Vector3d direction = this.position.sub(position);
     double distSquared = direction.lengthSquared();
-    
-    direction.divLocal(Math.sqrt(distSquared));
-    
-    return intensity * direction.dotProd(normal.normalize()) / distSquared;
+    return intensity * direction.divLocal(Math.sqrt(distSquared)).dotProd(normal) / distSquared;
   } 
 
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal, Matrix44 view) {
     Vector3d direction = this.position.affineTransform(view).subLocal(position);
-    double distSquared = direction.lengthSquared();
-    
-    direction.divLocal(Math.sqrt(distSquared));
-    
-    return intensity * direction.dotProd(normal.normalize()) / distSquared;
+    double distSquared = direction.lengthSquared();    
+    return intensity * direction.divLocal(Math.sqrt(distSquared)).dotProd(normal) / distSquared;
   } 
 }

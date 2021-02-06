@@ -9,19 +9,21 @@ import rcs.feyn.math.linalg.Vector3d;
 public class ConstantLightSource3d extends Particle3d implements Colorable, DiffuseLightSource3d {
   
   protected FeynColor color;
+  protected double intensity;
   
-  public ConstantLightSource3d() {
-  	this(null);
+  public ConstantLightSource3d(double intensity) {
+  	this(intensity, null);
   }
 
-  public ConstantLightSource3d(FeynColor color) {
+  public ConstantLightSource3d(double intensity, FeynColor color) {
+    this.intensity = intensity;
     this.color = color;
   }
 
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal) {
   	double alpha = color == null ? 255 : color.getAlpha();
-    return this.position
+    return intensity * this.position
         .sub(position)
         .normalizeLocal()
         .dotProd(normal.normalize().mul(alpha / 255.0));
@@ -30,7 +32,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal, Matrix44 view) {
   	double alpha = color == null ? 255 : color.getAlpha();
-    return this.position
+    return intensity * this.position
         .affineTransform(view)
         .subLocal(position)
         .normalizeLocal()

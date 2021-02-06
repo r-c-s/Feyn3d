@@ -60,18 +60,13 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
       
-      int finalColor;
-      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-        finalColor = LightingUtils.applyLightsourceColorTo(color.getRGBA());
-      } else {
-        finalColor = color.getRGBA();
-      }
+      // todo: apply lighting color correctly
       
       GouraudPolygon3dRenderer.render(
           graphics,
           deviceCoordinates, 
           intensities,
-          finalColor);
+          color.getRGBA());
     } else {
       Polygon3dRenderer.render(
           graphics, 

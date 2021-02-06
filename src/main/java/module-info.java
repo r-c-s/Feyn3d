@@ -19,6 +19,7 @@ module feyn3d {
     exports rcs.feyn.three.optics;
     exports rcs.feyn.three.entities;
     exports rcs.feyn.three.entities.models;
+    exports rcs.feyn.three.render;
     exports rcs.feyn.three.render.patches;
     exports rcs.feyn.three.entities.primitives;
     exports rcs.feyn.three.render.renderers;

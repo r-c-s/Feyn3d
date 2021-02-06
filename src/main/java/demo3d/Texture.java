@@ -67,7 +67,7 @@ public class Texture extends Demo3d {
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d()); 
+    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(1)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
     
     wzc.setAmount(0.2);

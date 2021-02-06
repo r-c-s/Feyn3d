@@ -34,13 +34,13 @@ public class LightingUtils {
       } else {
         diffuse = Math.max(0, diffuse);
       }
-      intensity += (ambient) * diffuse;
+      intensity += diffuse;
     }
     
     return intensity;
   } 
   
-  public static final int applyLightsourceColorTo(Vector3d point, Vector3d normal, int objectColor) {
+  public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, Matrix44 view, int objectColor) {
     DiffuseLightSource3d lightSource = FeynApp3d.getDiffuseLightSource();
     if (lightSource == null) {
       return objectColor;
@@ -51,9 +51,8 @@ public class LightingUtils {
       return objectColor;
     }
     
-    double dotProd = lightSource.getPosition().sub(point).normalizeLocal().dotProd(normal);
- 
-    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), dotProd);
+    double intensity = lightSource.getIntensityAt(position, normal);
+    return ColorUtils.blendColors(objectColor, lightColor.getRGBA(), intensity);
   }
   
   public static final int applyLightsourceColorTo(int objectColor) {
