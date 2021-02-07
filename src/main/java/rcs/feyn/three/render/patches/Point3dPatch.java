@@ -13,8 +13,8 @@ public class Point3dPatch extends Patch3d {
   
   protected Vector3d point;
 
-  public Point3dPatch(Vector3d point, FeynColor color) {
-    super(color);
+  public Point3dPatch(Vector3d point, FeynColor color, RenderOptions3d options) {
+    super(color, options);
     this.point = point;
   }
 

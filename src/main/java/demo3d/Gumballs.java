@@ -1,7 +1,6 @@
 package demo3d;
 
 import java.io.Serial;
-import java.util.EnumSet;
 import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
@@ -96,11 +95,16 @@ public class Gumballs extends Demo3d {
     cube.getOuterBoundingObject().inverse();
     Model3dUtils.setOptions(
         cube,
-        EnumSet.of(RenderOptions3d.Option.meshOnly), 
-        EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of(RenderOptions3d.Option.meshOnly), 
+        Set.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(cube);
-    FeynApp3d.getRepository().add(spheres);  
+    FeynApp3d.getRepository().add(spheres);
+
+    x.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
+    y.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
+    z.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
+    
     FeynApp3d.getRepository().add(x);
     FeynApp3d.getRepository().add(y);
     FeynApp3d.getRepository().add(z);   
@@ -110,8 +114,8 @@ public class Gumballs extends Demo3d {
     z.setColor(FeynColor.blue);
 
     camera.translate(0, 0, 2.5);
-    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.8));
+    FeynApp3d.setDiffuseLightSource(new ConstantLightSource3d(0.4, new FeynColor(255, 0, 0)));
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
 
   @Override

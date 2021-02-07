@@ -63,7 +63,7 @@ public class Line3d extends Primitive3d {
   @Override
   public synchronized Patch3d[] getRenderablePatches() {
     return new Patch3d[] { 
-        new Line3dPatch(new Vector3d(a), new Vector3d(b), color) 
+        new Line3dPatch(new Vector3d(a), new Vector3d(b), color, options) 
     };
   }
 }

@@ -24,10 +24,6 @@ public abstract class Patch3d extends AbstractColorable {
   };
 
   protected RenderOptions3d options;
-  
-  public Patch3d(FeynColor color) {
-    this(color, RenderOptions3d.defaults());
-  }
 
   public Patch3d(FeynColor color, RenderOptions3d options) {
     super(color); 
