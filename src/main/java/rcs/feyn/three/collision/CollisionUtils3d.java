@@ -8,6 +8,7 @@ import rcs.feyn.utils.struct.FeynGarbageCollectable;
 
 public class CollisionUtils3d { 
   
+  // slightly more than half so objects are not touching
   public static final double OVERLAP_CORRECTION = 0.51;
   
   public static final void fixOverlap(Collidable3d a, Collidable3d b, CollisionInfo3d ci) {
