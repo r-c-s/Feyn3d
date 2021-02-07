@@ -1,7 +1,6 @@
 package rcs.feyn.three.optics;
 
 import rcs.feyn.color.ColorUtils;
-import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
@@ -34,30 +33,48 @@ public class LightingUtils {
       } else {
         diffuse = Math.max(0, diffuse);
       }
+      
       intensity += diffuse;
     }
     
     return intensity;
   } 
   
+  public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, int objectColor) {
+    return applyLightsourceColorTo(position, normal, null, objectColor);
+  }
+  
   public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, Matrix44 view, int objectColor) {
     DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
     int color = objectColor;
     for (int i = 0; i < lightSources.length; i++) {
-      double intensity = lightSources[i].getIntensityAt(position, normal);
+      double intensity;
+      
+      if (view != null) {
+        intensity = lightSources[i].getIntensityAt(position, normal, view);
+      } else {
+        intensity = lightSources[i].getIntensityAt(position, normal);
+      }
+      
       color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), intensity);
     }
     return color;
   }
   
-  /*
-   * Doesn't work as expected
-   */
   public static final int applyLightsourceColorTo(int objectColor, double intensity) {
     DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
     int color = objectColor;
     for (int i = 0; i < lightSources.length; i++) {
       color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), intensity);
+    }
+    return color;
+  }
+  
+  public static final int applyLightsourceColorTo(int objectColor, double[] diffuseIntensities) {
+    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    int color = objectColor;
+    for (int i = 0; i < diffuseIntensities.length; i++) {
+      color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), diffuseIntensities[i]);
     }
     return color;
   }

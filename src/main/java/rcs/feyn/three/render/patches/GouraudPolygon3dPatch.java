@@ -4,6 +4,7 @@ import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
+import rcs.feyn.three.optics.DiffuseLightSource3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
@@ -51,7 +52,9 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
     
     if (options.isEnabled(RenderOptions3d.Option.lighted)) {
-      double[] intensities = new double[clippedViewVertices.length];
+      int numVerticesAndNormals = clippedViewVertices.length;
+      
+      double[] intensities = new double[numVerticesAndNormals];
       for (int i = 0; i < intensities.length; i++) {
         intensities[i] = LightingUtils.computeLightingIntensity(
                 clippedViewVertices[i], 
@@ -60,12 +63,26 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
       
+      int[] colors = new int[numVerticesAndNormals];
+      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+        for (int i = 0; i < numVerticesAndNormals; i++) {
+          colors[i] = LightingUtils.applyLightsourceColorTo(
+              clippedViewVertices[i], 
+              clippedViewNormals[i], 
+              view, 
+              color.getRGBA());
+        }
+      } else {
+        for (int i = 0; i < colors.length; i++) {
+          colors[i] = color.getRGBA();
+        }
+      }
+      
       GouraudPolygon3dRenderer.render(
           graphics,
           deviceCoordinates, 
           intensities,
-          color.getRGBA(),
-          options.isEnabled(RenderOptions3d.Option.applyLightingColor));
+          colors);
     } else {
       Polygon3dRenderer.render(
           graphics, 

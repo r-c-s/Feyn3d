@@ -53,7 +53,7 @@ public class Polygon3dPatch extends Patch3d {
 
     int finalColor = ColorUtils.mulRGBA(color.getRGBA(), intensity);
     if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-      finalColor = LightingUtils.applyLightsourceColorTo(center, normal, view, finalColor);
+      finalColor = LightingUtils.applyLightsourceColorTo(center, normal, finalColor);
     } 
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
@@ -67,12 +67,13 @@ public class Polygon3dPatch extends Patch3d {
   }
 
   private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, double intensity, int color) {
+    intensity = options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1;
     for (int i = 0, j = 1; i < vpcVertices.length; i++, j++, j%=vpcVertices.length) {
       Line3dRenderer.render(
           graphics, 
           vpcVertices[i], 
           vpcVertices[j], 
-          ColorUtils.mulRGBA(color, options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1));
+          ColorUtils.mulRGBA(color, intensity));
     }
   }
 }
