@@ -79,11 +79,6 @@ public class Gumballs extends Demo3d {
            xor.randomDouble(-0.5, 0.5), 
            xor.randomDouble(-0.5, 0.5), 
            xor.randomDouble(-0.5, 0.5)));
-     
-      sphere.setVelocity(new Vector3d(
-           xor.randomDouble(-0.02, 0.02), 
-           xor.randomDouble(-0.02, 0.02), 
-           xor.randomDouble(-0.02, 0.02)));
       
       sphere.setColor(FeynColor.randomColor());
       sphere.setMass(radius);
@@ -141,9 +136,10 @@ public class Gumballs extends Demo3d {
         cube, 
         gumballWithCubeCollisionHandler,
         sphere -> sphere.accelerate(camera.getUpVector().mul(-0.0015)));
+    
     CollisionUtils3d.forEachCollision(spheres, gumballWithGumballCollisionHandler);
 
-    // figure out how much the ball needs to spin
+    // figure out how much the ball needs to spin, given deltas
     spheres.forEachWithIndex((sphere, i) -> {
       Vector3d d = sphere.getPosition().subLocal(delta[i]);
       Vector3d axis = d.crossProd(camera.getUpVector());
