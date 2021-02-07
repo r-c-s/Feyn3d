@@ -73,13 +73,4 @@ public class LightingUtils {
     }
     return color;
   }
-  
-  public static final int applyLightsourceColorTo(int objectColor, double[] diffuseIntensities) {
-    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
-    int color = objectColor;
-    for (int i = 0; i < diffuseIntensities.length; i++) {
-      color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), diffuseIntensities[i]);
-    }
-    return color;
-  }
 }

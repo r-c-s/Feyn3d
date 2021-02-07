@@ -63,7 +63,7 @@ public class Teapot extends Demo3d {
     lightSourceRed.setPosition(new Vector3d( 5, 4, 5));
     lightSourceGreen.setPosition(new Vector3d(-5, 4, 5));
     FeynApp3d.addDiffuseLightSource(lightSourceRed);
-    FeynApp3d.addDiffuseLightSource(lightSourceGreen);
+    //FeynApp3d.addDiffuseLightSource(lightSourceGreen);
     
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2)); 
   } 
