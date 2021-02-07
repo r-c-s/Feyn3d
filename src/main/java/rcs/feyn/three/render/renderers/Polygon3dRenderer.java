@@ -15,24 +15,20 @@ public class Polygon3dRenderer {
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
     
-    for (int i = 1; i < size-1; i++) { 
-      Vector3d sa = viewPortCoords[0];
-      Vector3d sb = viewPortCoords[i];
-      Vector3d sc = viewPortCoords[i+1];
-      
-      double za = sa.z();
-      double zb = sb.z();
-      double zc = sc.z();
+    RenderUtils.triangulate(viewPortCoords, (va, vb, vc) -> {
+      double za = va.z();
+      double zb = vb.z();
+      double zc = vc.z();
       double zd = (za+zb+zc)/3;
       
-      double xa = sa.x();
-      double xb = sb.x();
-      double xc = sc.x();
+      double xa = va.x();
+      double xb = vb.x();
+      double xc = vc.x();
       double xd = (xa+xb+xc)/3;
       
-      double ya = sa.y();
-      double yb = sb.y();
-      double yc = sc.y();
+      double ya = va.y();
+      double yb = vb.y();
+      double yc = vc.y();
       double yd = (ya+yb+yc)/3; 
       
       double u1 = xb - xa;
@@ -82,6 +78,6 @@ public class Polygon3dRenderer {
           graphics.putPixel(x, y, invZ, color); 
         } 
       } 
-    }
+    });
   }
 }

@@ -15,37 +15,31 @@ public class GouraudPolygon3dRenderer {
       double[] intensities,
       int color,
       boolean applyLightingColor) {
+    
     int size = viewPortCoords.length;
     if (size < 3) {
       return;
     }
     
-    double ambientLightIntensity = 0;
-    if (applyLightingColor) {
-      ambientLightIntensity = FeynApp3d.getAmbientLight().getIntensity();
-    }
+    double ambientLightIntensity = FeynApp3d.getAmbientLight().getIntensity();
     
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
     
-    for (int i = 1; i < size-1; i++) { 
-      Vector3d sa = viewPortCoords[0];
-      Vector3d sb = viewPortCoords[i];
-      Vector3d sc = viewPortCoords[i+1];
-      
-      double za = sa.z();
-      double zb = sb.z();
-      double zc = sc.z();
+    RenderUtils.triangulateWithIndex(viewPortCoords, (va, vb, vc, ia, ib, ic) -> {
+      double za = va.z();
+      double zb = vb.z();
+      double zc = vc.z();
       double zd = (za+zb+zc)/3;
       
-      double xa = sa.x();
-      double xb = sb.x();
-      double xc = sc.x();
+      double xa = va.x();
+      double xb = vb.x();
+      double xc = vc.x();
       double xd = (xa+xb+xc)/3;
       
-      double ya = sa.y();
-      double yb = sb.y();
-      double yc = sc.y();
+      double ya = va.y();
+      double yb = vb.y();
+      double yc = vc.y();
       double yd = (ya+yb+yc)/3; 
       
       double u1 = xb - xa;
@@ -66,9 +60,9 @@ public class GouraudPolygon3dRenderer {
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
       
       double A = Math.abs(cc) / 2; 
-      double fa = intensities[0] / A; 
-      double fb = intensities[i] / A; 
-      double fc = intensities[i+1] / A; 
+      double fa = intensities[ia] / A; 
+      double fb = intensities[ib] / A; 
+      double fc = intensities[ic] / A; 
       double ak0 = yc*(xb-xc)-xc*(yb-yc);
       double ak1 = yb-yc;
       double ak2 = xb-xc;          
@@ -124,6 +118,6 @@ public class GouraudPolygon3dRenderer {
           graphics.putPixel(x, y, invZ, source); 
         } 
       } 
-    }
+    });
   }
 }
