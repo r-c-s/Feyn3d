@@ -1,5 +1,7 @@
 package rcs.feyn.three.render.renderers;
 
+import java.util.Arrays;
+
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
@@ -7,6 +9,20 @@ import rcs.feyn.three.gfx.Graphics3d;
 
 public class GouraudPolygon3dRenderer {
 
+  public static void render(
+      Graphics3d graphics, 
+      Vector3d[] viewPortCoords, 
+      double[] intensities,
+      int color) {
+    int[] colors = new int[intensities.length];
+    Arrays.fill(colors, color);
+    render(graphics, viewPortCoords, intensities, colors);
+  }
+
+  
+  /**
+   * DOES NOT WORK
+   */
   public static void render(
       Graphics3d graphics, 
       Vector3d[] viewPortCoords, 
@@ -26,10 +42,10 @@ public class GouraudPolygon3dRenderer {
       Vector3d sb = viewPortCoords[i];
       Vector3d sc = viewPortCoords[i+1];
       
-      // needs now to interpolate colors
-      int colorA = colors[0];
-      int colorB = colors[i];
-      int colorC = colors[i+1];
+      // needs now to interpolate colors in order to support multiple light sources
+      // int colorA = colors[0];
+      // int colorB = colors[i];
+      // int colorC = colors[i+1];
       
       double za = sa.z();
       double zb = sb.z();
@@ -112,7 +128,7 @@ public class GouraudPolygon3dRenderer {
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
-          int source = ColorUtils.mulRGBA(colors[2], shadeFactor);
+          int source = ColorUtils.mulRGBA(colors[0], shadeFactor);
           
           graphics.putPixel(x, y, invZ, source); 
         } 

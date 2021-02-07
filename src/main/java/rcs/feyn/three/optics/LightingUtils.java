@@ -1,6 +1,7 @@
 package rcs.feyn.three.optics;
 
 import rcs.feyn.color.ColorUtils;
+import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.kernel.FeynApp3d;
@@ -56,7 +57,10 @@ public class LightingUtils {
         intensity = lightSources[i].getIntensityAt(position, normal);
       }
       
-      color = ColorUtils.blendColors(color, lightSources[i].getColor().getRGBA(), intensity);
+      FeynColor lsColor = lightSources[i].getColor();
+      if (lsColor != null) {
+        color = ColorUtils.blendColors(color, lsColor.getRGBA(), intensity);
+      }
     }
     return color;
   }

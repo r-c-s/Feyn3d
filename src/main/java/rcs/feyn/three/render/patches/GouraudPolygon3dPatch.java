@@ -10,6 +10,9 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
+
+import java.util.Arrays;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -63,8 +66,8 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
       
-      int[] colors = new int[numVerticesAndNormals];
       if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+        int[] colors = new int[numVerticesAndNormals];
         for (int i = 0; i < numVerticesAndNormals; i++) {
           colors[i] = LightingUtils.applyLightsourceColorTo(
               clippedViewVertices[i], 
@@ -72,17 +75,19 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
               view, 
               color.getRGBA());
         }
+        
+        GouraudPolygon3dRenderer.render(
+            graphics,
+            deviceCoordinates, 
+            intensities,
+            colors);
       } else {
-        for (int i = 0; i < colors.length; i++) {
-          colors[i] = color.getRGBA();
-        }
+        GouraudPolygon3dRenderer.render(
+            graphics,
+            deviceCoordinates, 
+            intensities,
+            color.getRGBA());
       }
-      
-      GouraudPolygon3dRenderer.render(
-          graphics,
-          deviceCoordinates, 
-          intensities,
-          colors);
     } else {
       Polygon3dRenderer.render(
           graphics, 
