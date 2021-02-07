@@ -6,13 +6,19 @@ import rcs.feyn.utils.TriConsumer;
 
 public class RenderUtils {
   
-  public static void triangulate(Vector3d[] vertices, TriConsumer<Vector3d, Vector3d, Vector3d> consumer) {
+  public static void triangulate(
+      Vector3d[] vertices, 
+      TriConsumer<Vector3d, Vector3d, Vector3d> consumer) {
+    
     triangulateWithIndex(vertices, (va, vb, vc, a, b, c) -> {
       consumer.accept(va, vb, vc);
     });
   }  
   
-  public static void triangulateWithIndex(Vector3d[] vertices, HexaConsumer<Vector3d, Vector3d, Vector3d, Integer, Integer, Integer> consumer) {
+  public static void triangulateWithIndex(
+      Vector3d[] vertices, 
+      HexaConsumer<Vector3d, Vector3d, Vector3d, Integer, Integer, Integer> consumer) {
+    
     for (int i = 1; i < vertices.length-1; i++) { 
       int ia = 0;
       int ib = i;
