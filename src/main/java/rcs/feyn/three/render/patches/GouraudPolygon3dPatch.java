@@ -14,6 +14,7 @@ import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -70,11 +71,14 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
       if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
         int[] colors = new int[numVerticesAndNormals];
         for (int i = 0; i < numVerticesAndNormals; i++) {
+          
+          colors[i] = ColorUtils.mulRGBA(color.getRGBA(), intensities[i]);
+          
           colors[i] = LightingUtils.applyLightsourceColorTo(
               clippedViewVertices[i], 
               clippedViewNormals[i], 
               view, 
-              color.getRGBA());
+              colors[i]);
         }
         
         GouraudPolygon3dRenderer.render(

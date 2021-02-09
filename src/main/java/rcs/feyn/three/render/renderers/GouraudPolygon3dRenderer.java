@@ -141,9 +141,9 @@ public class GouraudPolygon3dRenderer {
       Vector3d sc = viewPortCoords[i+1];
       
       // needs now to interpolate colors in order to support multiple colored light sources
-      int colorA = colors[0];
-      int colorB = colors[i];
-      int colorC = colors[i+1];
+      FeynColor colorA = new FeynColor(colors[0]);
+      FeynColor colorB = new FeynColor(colors[i]);
+      FeynColor colorC = new FeynColor(colors[i+1]);
       
       double za = sa.z();
       double zb = sb.z();
@@ -227,24 +227,46 @@ public class GouraudPolygon3dRenderer {
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
 
-          double da = MathUtils.squared(x-xa) + MathUtils.squared(y-ya);
-          double db = MathUtils.squared(x-xb) + MathUtils.squared(y-yb);
-          double dc = MathUtils.squared(x-xc) + MathUtils.squared(y-yc);
-
-          double prcA = (db + dc) / (2 * (da + db + dc));
-          double prcB = (da + dc) / (2 * (da + db + dc));
-          double prcC = (da + db) / (2 * (da + db + dc));
-
-          int clrA = ColorUtils.mulRGBA(colorA, prcA);
-          int clrB = ColorUtils.mulRGBA(colorB, prcB);
-          int clrC = ColorUtils.mulRGBA(colorC, prcC);
+          double[] t = cartesian2barycentric(x, y, sa, sb, sc);
           
-          int avgColor = ColorUtils.addRGBA(clrA, ColorUtils.addRGBA(clrB, clrC));
+          int color = new FeynColor(
+              MathUtils.roundToInt(colorA.getRed() * t[0] + colorB.getRed() * t[1] + colorC.getRed() * t[2]),
+              MathUtils.roundToInt(colorA.getGreen() * t[0] + colorB.getGreen() * t[1] + colorC.getGreen() * t[2]),
+              MathUtils.roundToInt(colorA.getBlue() * t[0] + colorB.getBlue() * t[1] + colorC.getBlue() * t[2])
+              
+              ).getRGBA();
           
-          int source = ColorUtils.mulRGBA(avgColor, shadeFactor);
-          graphics.putPixel(x, y, invZ, source); 
+          graphics.putPixel(x, y, invZ, color); 
         } 
       } 
     }
+  }
+  
+  static double[] cartesian2barycentric(int x, int y, Vector3d a, Vector3d b, Vector3d c) {
+    
+    double x1 = a.x();
+    double x2 = b.x();
+    double x3 = c.x();
+    double y1 = a.y();
+    double y2 = b.y();
+    double y3 = c.y();
+    
+    double y2y3 = y2 - y3;
+    double x3x2 = x3 - x2;
+    double x1x3 = x1 - x3;
+    double y1y3 = y1 - y3;
+    double y3y1 = y3 - y1;
+    double xx3  = x  - x3;
+    double yy3  = y  - y3;
+    
+    double d = y2y3 * x1x3 + x3x2 * y1y3;
+    double lambda1 = (y2y3 * xx3 + x3x2 * yy3) / d;
+    double lambda2 = (y3y1 * xx3 + x1x3 * yy3) / d;
+    
+    return new double[] {
+      lambda1,
+      lambda2,
+      1 - lambda1 - lambda2
+    };
   }
 }

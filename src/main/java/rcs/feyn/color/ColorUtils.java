@@ -69,22 +69,6 @@ public final class ColorUtils {
   public static int setBlueToRGBA(int rgba, int b) {
     return  b | (0xFFFFFF00 & rgba);
   }
-  
-  public static final int brighten(int rgb, double factor) {
-    int r = getRedFromRGBA(rgb);
-    int g = getGreenFromRGBA(rgb);
-    int b = getBlueFromRGBA(rgb);
-    
-    int max = MathUtils.max(r, g, b);
-    
-    int diff = 255 - max;
-    
-    return getRGBA(
-        MathUtils.min(255, MathUtils.roundToInt(r + diff * factor)), 
-        MathUtils.min(255, MathUtils.roundToInt(g + diff * factor)), 
-        MathUtils.min(255, MathUtils.roundToInt(b + diff * factor)), 
-        getAlphaFromRGBA(rgb));
-  }
 
   public static final int mulRGBA(int rgb, double factor) {
     return getRGBA(
@@ -92,6 +76,14 @@ public final class ColorUtils {
             MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgb) * factor))), 
             MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb) * factor))), 
             getAlphaFromRGBA(rgb));
+  }
+
+  public static final int mulAlpha(int rgb, double factor) {
+    return getRGBA(
+            getRedFromRGBA(rgb), 
+            getGreenFromRGBA(rgb), 
+            getBlueFromRGBA(rgb), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getAlphaFromRGBA(rgb) * factor))));
   }
 
   public static final int addRGBA(int rgb0, int rgb1) {
