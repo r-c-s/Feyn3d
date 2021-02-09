@@ -12,6 +12,7 @@ import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;

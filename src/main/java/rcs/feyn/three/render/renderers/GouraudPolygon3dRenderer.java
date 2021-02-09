@@ -1,6 +1,7 @@
 package rcs.feyn.three.render.renderers;
 
 import rcs.feyn.color.ColorUtils;
+import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
@@ -140,9 +141,9 @@ public class GouraudPolygon3dRenderer {
       Vector3d sc = viewPortCoords[i+1];
       
       // needs now to interpolate colors in order to support multiple colored light sources
-      // int colorA = colors[0];
-      // int colorB = colors[i];
-      // int colorC = colors[i+1];
+      int colorA = colors[0];
+      int colorB = colors[i];
+      int colorC = colors[i+1];
       
       double za = sa.z();
       double zb = sb.z();
@@ -225,11 +226,22 @@ public class GouraudPolygon3dRenderer {
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
-          int source = ColorUtils.mulRGBA(colors[0], shadeFactor);
-            source = LightingUtils.applyLightsourceColorTo(
-                source, 
-                shadeFactor - ambientLightIntensity);
+
+          double da = MathUtils.squared(x-xa) + MathUtils.squared(y-ya);
+          double db = MathUtils.squared(x-xb) + MathUtils.squared(y-yb);
+          double dc = MathUtils.squared(x-xc) + MathUtils.squared(y-yc);
+
+          double prcA = (db + dc) / (2 * (da + db + dc));
+          double prcB = (da + dc) / (2 * (da + db + dc));
+          double prcC = (da + db) / (2 * (da + db + dc));
+
+          int clrA = ColorUtils.mulRGBA(colorA, prcA);
+          int clrB = ColorUtils.mulRGBA(colorB, prcB);
+          int clrC = ColorUtils.mulRGBA(colorC, prcC);
           
+          int avgColor = ColorUtils.addRGBA(clrA, ColorUtils.addRGBA(clrB, clrC));
+          
+          int source = ColorUtils.mulRGBA(avgColor, shadeFactor);
           graphics.putPixel(x, y, invZ, source); 
         } 
       } 
