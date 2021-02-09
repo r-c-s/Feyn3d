@@ -26,6 +26,11 @@ The "Hello World" of computer graphics, the Utah Teapot, composed of 530 vertex-
 #### Transparent
 ![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430877045326.png)
 
+#### Colored by multiple light sources
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/Feyn3d/screenshots/1612903780613.png)
+
+<br>
+
 A little more complex one: a mini-Cooper with 44436 vertex-normal pairs and 79759 faces.
 
 #### Gouraud-shaded
