@@ -13,8 +13,8 @@ public class Line3dPatch extends Patch3d {
   
   protected Vector3d a, b;
 
-  public Line3dPatch(Vector3d a, Vector3d b, FeynColor color) {
-    super(color);
+  public Line3dPatch(Vector3d a, Vector3d b, FeynColor color, RenderOptions3d options) {
+    super(color, options);
     this.a = a;
     this.b = b;
   }

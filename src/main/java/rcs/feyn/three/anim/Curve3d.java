@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import rcs.feyn.three.entities.Sprite3d;
 import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
+import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.TriFunction;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;
@@ -68,7 +69,7 @@ public class Curve3d extends Sprite3d {
       
       FeynColor color = colorFunction.apply(r, t, 0.0);
       
-      patches[i++] = new Line3dPatch(a, b, color);
+      patches[i++] = new Line3dPatch(a, b, color, RenderOptions3d.defaults());
     }
     
     return patches;

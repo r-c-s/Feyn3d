@@ -4,15 +4,11 @@ import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
-import rcs.feyn.three.optics.DiffuseLightSource3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
@@ -67,32 +63,24 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
                 view,
                 options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
       }
-      
-      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-        int[] colors = new int[numVerticesAndNormals];
-        for (int i = 0; i < numVerticesAndNormals; i++) {
-          
-          colors[i] = ColorUtils.mulRGBA(color.getRGBA(), intensities[i]);
-          
+
+      int[] colors = new int[numVerticesAndNormals];
+      for (int i = 0; i < numVerticesAndNormals; i++) {
+        colors[i] = ColorUtils.mulRGBA(color.getRGBA(), intensities[i]);
+        if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
           colors[i] = LightingUtils.applyLightsourceColorTo(
               clippedViewVertices[i], 
               clippedViewNormals[i], 
               view, 
               colors[i]);
         }
-        
-        GouraudPolygon3dRenderer.render(
-            graphics,
-            deviceCoordinates, 
-            intensities,
-            colors);
-      } else {
-        GouraudPolygon3dRenderer.render(
-            graphics,
-            deviceCoordinates, 
-            intensities,
-            color.getRGBA());
       }
+
+      GouraudPolygon3dRenderer.render(
+          graphics,
+          deviceCoordinates, 
+          intensities,
+          colors);
     } else {
       Polygon3dRenderer.render(
           graphics, 
