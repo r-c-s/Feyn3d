@@ -95,8 +95,9 @@ public class Texture extends Demo3d {
      
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 20;
+      Raster nextTexture = nextTexture();
       for (var face : obj.getFaces()) {
-        ((Model3dTexturedFace) face).setTextureData(nextTexture());
+        ((Model3dTexturedFace) face).setTextureData(nextTexture);
       }
     }
   }
