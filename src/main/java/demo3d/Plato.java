@@ -3,10 +3,12 @@ package demo3d;
 import java.io.Serial;
 
 import rcs.feyn.color.FeynColor;
+import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
+import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -24,11 +26,27 @@ public class Plato extends Demo3d {
     new TrigLookUp(0.1);
   }
   
-  private Model3d tetrahedron  = Model3dFactory.tetrahedron (1).setColor(FeynColor.randomColor()).build();
-  private Model3d octahedron   = Model3dFactory.octahedron  (1).setColor(FeynColor.randomColor()).build();
-  private Model3d hexahedron   = Model3dFactory.hexahedron  (1).setColor(FeynColor.randomColor()).build();
-  private Model3d icosahedron  = Model3dFactory.icosahedron (1).setColor(FeynColor.randomColor()).build();
-  private Model3d dodecahedron = Model3dFactory.dodecahedron(1).setColor(FeynColor.randomColor()).build();
+  private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
+  
+  private Model3d tetrahedron = Model3dFactory.tetrahedron(1)
+      .setTextureData(texture)
+      .build();
+  
+  private Model3d octahedron = Model3dFactory.octahedron(1)
+      .setTextureData(texture)
+      .build();
+  
+  private Model3d hexahedron = Model3dFactory.hexahedron(1)
+      .setTextureData(texture)
+      .build();
+  
+  private Model3d icosahedron  = Model3dFactory.icosahedron (1)
+      .setTextureData(texture)
+      .build();
+  
+  private Model3d dodecahedron = Model3dFactory.dodecahedron(1)
+      .setTextureData(texture)
+      .build();
   
   private Model3d[] solids = new Model3d[] {
     tetrahedron,

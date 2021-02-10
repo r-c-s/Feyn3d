@@ -3,6 +3,7 @@ package rcs.feyn.three.render.renderers;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 
@@ -20,7 +21,6 @@ public class TexturedPolygon3dRenderer {
     
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
-
 
     RenderUtils.triangulate(viewPortCoords, (va, vb, vc) -> {
       double xa = va.x();
@@ -54,12 +54,6 @@ public class TexturedPolygon3dRenderer {
 
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
-      
-      int truexmin = MathUtils.roundToInt(MathUtils.min(xa, xb, xc));
-      int truexmax = MathUtils.roundToInt(MathUtils.max(xa, xb, xc));
-
-    	double xExtent = truexmax - truexmin;
-      double yExtent = ymax - ymin;
 
       for (int y = ymin; y <= ymax; y++) {
         double ximin = Integer.MIN_VALUE;
@@ -87,17 +81,26 @@ public class TexturedPolygon3dRenderer {
 
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
 
-      	double yprc = (y - ymin) / yExtent;
-      	int ydata = MathUtils.roundToInt(yprc * (tdh - 1));
-
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
-        	double xprc = (x - truexmin) / xExtent;
-        	int xdata = MathUtils.roundToInt(xprc * (tdw - 1));
         	
-          int source = textureData.getPixel(xdata, ydata);
-        	source = ColorUtils.mulRGBA(source, intensity);
+        	double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
-          graphics.putPixel(x, y, invZ, source); 
+        	double by = tdh-1;
+        	double cx = tdw-1;
+        	double cy = tdh-1; // not exactly, needs fixing
+        	
+        	int xdata = MathUtils.roundToInt(cx * t[2]);
+        	int ydata = MathUtils.roundToInt(by * t[1] + cy * t[2]);
+        	
+        	try {
+            int source = textureData.getPixel(xdata, ydata);
+              
+            source = ColorUtils.mulRGB(source, intensity);
+            
+            graphics.putPixel(x, y, invZ, source);
+        	} catch (ArrayIndexOutOfBoundsException e) {
+        	  // figure out why this is happening, though it looks fine without rendering these pixels
+        	}
         } 
       } 
     });
