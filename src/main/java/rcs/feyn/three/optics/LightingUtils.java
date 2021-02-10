@@ -69,7 +69,10 @@ public class LightingUtils {
     DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
     int color = objectColor;
     for (int i = 0; i < lightSources.length; i++) {
-      color = ColorUtils.blendRGB(color, lightSources[i].getColor().getRGBA(), intensity);
+      FeynColor lsColor = lightSources[i].getColor();
+      if (lsColor != null) {
+        color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
+      }
     }
     return color;
   }
