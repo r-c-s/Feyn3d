@@ -167,12 +167,29 @@ public class Model3dUtils {
         vertex.subLocal(com);
       }
 
-      Model3dFace modelFace = new Model3dFace(adjustedIndices, faces[i].getColor());
-      partFaces[len] = modelFace;
-      for (int l = 0; l < len; l++) {
-        partFaces[l] = new Model3dFace(
-            new int[] { (1+l)%len, l, len }, 
+      if (faces[i] instanceof Model3dTexturedFace) {
+        partFaces[len] = new Model3dTexturedFace(
+            adjustedIndices, 
+            ((Model3dTexturedFace) faces[i]).getTextureData());
+      } else {
+        partFaces[len] = new Model3dFace(
+            adjustedIndices, 
             faces[i].getColor());
+      }
+      
+      for (int l = 0; l < len; l++) {
+        Model3dFace currFace = faces[i];
+        int[] idxs = new int[] { (1+l)%len, l, len };
+        
+        if (face instanceof Model3dTexturedFace) {
+          partFaces[l] = new Model3dTexturedFace(
+              idxs, 
+              ((Model3dTexturedFace) face).getTextureData());
+        } else {
+          partFaces[l] = new Model3dFace(
+              idxs, 
+              currFace.getColor());
+        }
       }
 
       Model3d part = new Model3d(

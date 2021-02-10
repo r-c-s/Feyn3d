@@ -4,12 +4,15 @@ import java.io.Serial;
 import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
+import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
+import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
@@ -28,6 +31,8 @@ public class FallingRocks extends Demo3d {
   static { 
     new TrigLookUp(0.1);
   }
+
+  private Raster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
   
   private XORShift xorShift = XORShift.getInstance();
   
@@ -82,6 +87,7 @@ public class FallingRocks extends Demo3d {
   
   private void addNewRock() {
   	var rock = Model3dFactory.dodecahedron(0.5)
+  	    .setTextureData(rockTexture)
   			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 15, xorShift.randomDouble(-5, 5)))
   			.build();
   	
@@ -120,11 +126,11 @@ public class FallingRocks extends Demo3d {
     	
     	if (shard.getVelocity().equals(Vector3d.ZERO)) {
     		for (Model3dFace face : shard.getFaces()) {
-    			var newColor = face.getColor().fadeTo(0.999);
-    			if (newColor.getAlpha() < 5) {
+    		  Model3dTexturedFace tFace = (Model3dTexturedFace) face;
+    			int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
+          tFace.setAlpha(newAlpha);
+    			if (newAlpha < 5) {
     				shard.destroy();
-    			} else {
-    				face.setColor(newColor);
     			}
     		}
     	}

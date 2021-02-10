@@ -3,13 +3,18 @@ package rcs.feyn.three.render.renderers;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 
 public class TexturedPolygon3dRenderer {
   
-  public static void render(Graphics3d graphics, Vector3d[] viewPortCoords, double intensity, Raster textureData) {
+  public static void render(
+      Graphics3d graphics, 
+      Vector3d[] viewPortCoords, 
+      double intensity, 
+      Raster textureData, 
+      int alpha) {
+    
     int size = viewPortCoords.length;
     
     if (size < 3) {
@@ -92,15 +97,17 @@ public class TexturedPolygon3dRenderer {
         	int xdata = MathUtils.roundToInt(cx * t[2]);
         	int ydata = MathUtils.roundToInt(by * t[1] + cy * t[2]);
         	
+        	int source;
         	try {
-            int source = textureData.getPixel(xdata, ydata);
-              
-            source = ColorUtils.mulRGB(source, intensity);
-            
-            graphics.putPixel(x, y, invZ, source);
+            source = textureData.getPixel(xdata, ydata);
         	} catch (ArrayIndexOutOfBoundsException e) {
-        	  // figure out why this is happening, though it looks fine without rendering these pixels
+        	  // need to figure out why this is happening
+            source = textureData.getPixel(tdw - 1, tdh - 1);
         	}
+
+          source = ColorUtils.mulRGB(source, intensity);
+          source = ColorUtils.setAlphaToRGBA(source, alpha);
+          graphics.putPixel(x, y, invZ, source);
         } 
       } 
     });

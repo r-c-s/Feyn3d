@@ -3,6 +3,7 @@ package demo3d;
 import java.io.Serial;
 
 import rcs.feyn.color.FeynColor;
+import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
@@ -21,7 +22,9 @@ public class Shatter extends Demo3d {
   
   static { 
     new TrigLookUp(0.1);
-  }
+  }  
+  
+  private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture5.jpg");
   
   private Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
@@ -39,7 +42,7 @@ public class Shatter extends Demo3d {
     
     Model3d obj = Model3dFactory
         .dodecahedron(0.6)
-        .setColor(new FeynColor(123, 234, 13, 255))
+        .setTextureData(texture)
         .build();
 
     objs = Model3dUtils.partition3d(obj, 1);
