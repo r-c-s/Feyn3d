@@ -39,20 +39,9 @@ public class GouraudPolygon3dRenderer {
       double zc = vc.z();
       double zd = (za+zb+zc)/3;
 
-      int car = ColorUtils.getRedFromRGBA(colors[ia]);
-      int cag = ColorUtils.getGreenFromRGBA(colors[ia]);
-      int cab = ColorUtils.getBlueFromRGBA(colors[ia]);
-      int caa = ColorUtils.getAlphaFromRGBA(colors[ia]);
-
-      int cbr = ColorUtils.getRedFromRGBA(colors[ib]);
-      int cbg = ColorUtils.getGreenFromRGBA(colors[ib]);
-      int cbb = ColorUtils.getBlueFromRGBA(colors[ib]);
-      int cba = ColorUtils.getAlphaFromRGBA(colors[ib]);
-
-      int ccr = ColorUtils.getRedFromRGBA(colors[ic]);
-      int ccg = ColorUtils.getGreenFromRGBA(colors[ic]);
-      int ccb = ColorUtils.getBlueFromRGBA(colors[ic]);
-      int cca = ColorUtils.getAlphaFromRGBA(colors[ic]);
+      int colorA = colors[ia];
+      int colorB = colors[ib];
+      int colorC = colors[ic];
       
       double u1 = xb - xa;
       double v1 = xc - xa;
@@ -100,12 +89,12 @@ public class GouraudPolygon3dRenderer {
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
 
           double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
-          
-          int color = new FeynColor(
-              MathUtils.roundToInt(car * t[0] + cbr * t[1] + ccr * t[2]),
-              MathUtils.roundToInt(cag * t[0] + cbg * t[1] + ccg * t[2]),
-              MathUtils.roundToInt(cab * t[0] + cbb * t[1] + ccb * t[2]),
-              MathUtils.roundToInt(caa * t[0] + cba * t[1] + cca * t[2])).getRGBA();
+
+          int color = ColorUtils.addRGBA(
+              ColorUtils.mulRGBA(colorA, t[0]),
+              ColorUtils.addRGBA(
+                  ColorUtils.mulRGBA(colorB, t[1]),
+                  ColorUtils.mulRGBA(colorC, t[2])));
           
           graphics.putPixel(x, y, invZ, color); 
         } 

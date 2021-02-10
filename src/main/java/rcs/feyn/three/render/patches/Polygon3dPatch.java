@@ -51,7 +51,7 @@ public class Polygon3dPatch extends Patch3d {
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
 
-    int finalColor = ColorUtils.mulRGBA(color.getRGBA(), intensity);
+    int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
     if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
       finalColor = LightingUtils.applyLightsourceColorTo(center, normal, finalColor);
     } 

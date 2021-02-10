@@ -70,28 +70,28 @@ public final class ColorUtils {
     return  b | (0xFFFFFF00 & rgba);
   }
 
-  public static final int mulRGBA(int rgb, double factor) {
+  public static final int mulRGB(int rgba, double factor) {
     return getRGBA(
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgb) * factor))), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgb) * factor))), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb) * factor))), 
-            getAlphaFromRGBA(rgb));
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgba) * factor))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgba) * factor))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgba) * factor))),
+            getAlphaFromRGBA(rgba));
   }
 
-  public static final int mulAlpha(int rgb, double factor) {
+  public static final int mulRGBA(int rgba, double factor) {
     return getRGBA(
-            getRedFromRGBA(rgb), 
-            getGreenFromRGBA(rgb), 
-            getBlueFromRGBA(rgb), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getAlphaFromRGBA(rgb) * factor))));
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgba) * factor))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgba) * factor))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgba) * factor))),
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getAlphaFromRGBA(rgba) * factor))));
   }
 
-  public static final int addRGBA(int rgb0, int rgb1) {
+  public static final int addRGBA(int rgba0, int rgba1) {
     return getRGBA(
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgb0) + getRedFromRGBA(rgb1)))), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgb0) + getGreenFromRGBA(rgb1)))), 
-            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgb0) + getBlueFromRGBA(rgb1)))), 
-            getAlphaFromRGBA(rgb0));
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getRedFromRGBA(rgba0) + getRedFromRGBA(rgba1)))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getGreenFromRGBA(rgba0) + getGreenFromRGBA(rgba1)))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getBlueFromRGBA(rgba0) + getBlueFromRGBA(rgba1)))), 
+            MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getAlphaFromRGBA(rgba0) + getAlphaFromRGBA(rgba1)))));
   }
   
   public static int blendColors(int a, int b, double factor) {

@@ -66,7 +66,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
 
       int[] colors = new int[numVerticesAndNormals];
       for (int i = 0; i < numVerticesAndNormals; i++) {
-        colors[i] = ColorUtils.mulRGBA(color.getRGBA(), intensities[i]);
+        colors[i] = ColorUtils.mulRGB(color.getRGBA(), intensities[i]);
         if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
           colors[i] = LightingUtils.applyLightsourceColorTo(
               clippedViewVertices[i], 

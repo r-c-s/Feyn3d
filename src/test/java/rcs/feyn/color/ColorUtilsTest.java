@@ -43,28 +43,40 @@ public class ColorUtilsTest {
   }
   
   @Test
+  void testGetAlphaFromRGBA() {
+    // Arrange
+    FeynColor color = new FeynColor(1, 2, 3, 4);
+    
+    // Act
+    int alpha = ColorUtils.getAlphaFromRGBA(color.getRGBA());
+    
+    // Assert    
+    assertThat(alpha).isEqualTo(color.getAlpha());
+  }
+  
+  @Test
   void testMulRGBA() {
     // Arrange
-    FeynColor color = new FeynColor(1, 2, 3);
+    FeynColor color = new FeynColor(1, 2, 3, 4);
     
     // Act
     int result = ColorUtils.mulRGBA(color.getRGBA(), 5);
     
     // Assert    
-    assertThat(result).isEqualTo(new FeynColor(5, 10, 15).getRGBA());
+    assertThat(result).isEqualTo(new FeynColor(5, 10, 15, 20).getRGBA());
   }
   
   @Test
   void testAddRGBA() {
     // Arrange
-    FeynColor colorA = new FeynColor(1, 2, 3);
-    FeynColor colorB = new FeynColor(4, 5, 6);
+    FeynColor colorA = new FeynColor(1, 2, 3, 4);
+    FeynColor colorB = new FeynColor(5, 6, 7, 8);
     
     // Act
     int result = ColorUtils.addRGBA(colorA.getRGBA(), colorB.getRGBA());
     
     // Assert    
-    assertThat(result).isEqualTo(new FeynColor(5, 7, 9).getRGBA());
+    assertThat(result).isEqualTo(new FeynColor(6, 8, 10, 12).getRGBA());
   }
 
 }
