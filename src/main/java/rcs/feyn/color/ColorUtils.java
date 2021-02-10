@@ -94,7 +94,7 @@ public final class ColorUtils {
             MathUtils.min(255, MathUtils.max(0, MathUtils.roundToInt(getAlphaFromRGBA(rgba0) + getAlphaFromRGBA(rgba1)))));
   }
   
-  public static int blendColors(int a, int b, double factor) {
+  public static int blendRGB(int a, int b, double factor) {
     if (factor < 0) {
       factor = 0;
     } 
@@ -102,8 +102,8 @@ public final class ColorUtils {
       factor = 1;
     }
     int blended = alphaBlend(
-        setAlphaToRGBA(a, MathUtils.roundToInt((1-factor)*255)), 
-        setAlphaToRGBA(b, MathUtils.roundToInt(factor*255)));
+        setAlphaToRGBA(a, MathUtils.roundToInt((1 - factor) * 255)), 
+        setAlphaToRGBA(b, MathUtils.roundToInt(     factor  * 255)));
     return setAlphaToRGBA(blended, getAlphaFromRGBA(a));
   }
 }
