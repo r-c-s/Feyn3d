@@ -55,21 +55,37 @@ public class GouraudTexturedPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] deviceCoordinates = Pipeline3d
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
     
-    int numVerticesAndNormals = clippedViewVertices.length;
-    double[] intensities = new double[numVerticesAndNormals];
-    for (int i = 0; i < numVerticesAndNormals; i++) {
-      intensities[i] = LightingUtils.computeLightingIntensity(
-              clippedViewVertices[i], 
-              clippedViewNormals[i],
-              view,
-              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
-    }
     
-    TexturedPolygon3dRenderer.render(
-      graphics,
-      deviceCoordinates, 
-      intensities,
-      textureData,
-      alpha);
+    
+    if (options.isEnabled(RenderOptions3d.Option.gouraudShaded)) {
+      int numVerticesAndNormals = clippedViewVertices.length;
+      double[] intensities = new double[numVerticesAndNormals];
+      for (int i = 0; i < numVerticesAndNormals; i++) {
+        intensities[i] = LightingUtils.computeLightingIntensity(
+                clippedViewVertices[i], 
+                clippedViewNormals[i],
+                view,
+                options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
+      }
+
+      TexturedPolygon3dRenderer.render(
+        graphics,
+        deviceCoordinates, 
+        intensities,
+        textureData,
+        alpha);
+    } else {
+      double intensity = LightingUtils.computeLightingIntensity(
+          center, 
+          normal, 
+          options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
+      
+      TexturedPolygon3dRenderer.render(
+        graphics,
+        deviceCoordinates, 
+        intensity,
+        textureData,
+        alpha);
+    }
   }
 }

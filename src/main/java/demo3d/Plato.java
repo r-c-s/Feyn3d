@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.io.Serial;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
@@ -26,7 +27,7 @@ public class Plato extends Demo3d {
     new TrigLookUp(0.1);
   }
   
-  private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
+  private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/marbletexture.jpg");
   
   private Model3d tetrahedron = Model3dFactory.tetrahedron(1)
       .setTextureData(texture)
@@ -69,8 +70,8 @@ public class Plato extends Demo3d {
     camera.translate(0, 2, 6);
     camera.rotate(Vector3d.X_AXIS, -25 * MathConsts.DEGREES_TO_RADIANS);
     
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1));
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.8));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(0.5));
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
     
     double deg = MathConsts.TWO_PI / (double) solids.length;
     
@@ -93,6 +94,10 @@ public class Plato extends Demo3d {
     
     for (Model3d solid : solids) {  
       solid.rotate(Vector3d.Y_AXIS, 2 * MathConsts.DEGREES_TO_RADIANS); 
+      Model3dUtils.setOptions(
+          solid, 
+          Set.of(), 
+          Set.of(RenderOptions3d.Option.gouraudShaded)); 
     }
   }
 
