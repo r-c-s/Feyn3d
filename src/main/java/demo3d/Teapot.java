@@ -36,8 +36,6 @@ public class Teapot extends Demo3d {
   		.addTransform(Matrices.create3dScaleMatrix(0.05))
   		.build();
   
-  private boolean trackLightsourceWithCamera = false;
-
   public Teapot() { }
 
   @Override
@@ -72,9 +70,6 @@ public class Teapot extends Demo3d {
   public void runningLoop() {
     controlCamera();  
     handleInput();
-    if (trackLightsourceWithCamera) {
-      FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition());
-    }
   }
 
   @Override
@@ -122,10 +117,6 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_S)) {
       inputDelay = 50;
       screenshot("./screenshots/"+System.currentTimeMillis()+".png");
-    }
-    if (keyHasBeenPressed(KeyEvent.VK_L)) {
-      inputDelay = 50;
-      trackLightsourceWithCamera = !trackLightsourceWithCamera;
     }
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 50;

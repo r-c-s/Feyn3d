@@ -8,7 +8,6 @@ import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
-import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
