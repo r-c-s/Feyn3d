@@ -7,7 +7,6 @@ public class RenderOptions3d {
   
   public enum Option {
     meshOnly,
-    lighted,
     cullIfBackface,
     bothSidesShaded,
     flatShaded,
@@ -22,8 +21,7 @@ public class RenderOptions3d {
     return new RenderOptions3d(EnumSet.<Option>of(
         Option.cullIfBackface,
         Option.flatShaded, 
-        Option.meshShaded, 
-        Option.lighted,
+        Option.meshShaded,
         Option.applyLightingColor));
   }
   

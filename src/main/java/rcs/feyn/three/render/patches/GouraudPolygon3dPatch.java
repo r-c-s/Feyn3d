@@ -51,40 +51,33 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     
     Vector3d[] deviceCoordinates = Pipeline3d
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
+  
+    int numVerticesAndNormals = clippedViewVertices.length;
     
-    if (options.isEnabled(RenderOptions3d.Option.lighted)) {
-      int numVerticesAndNormals = clippedViewVertices.length;
-      
-      double[] intensities = new double[numVerticesAndNormals];
-      for (int i = 0; i < intensities.length; i++) {
-        intensities[i] = LightingUtils.computeLightingIntensity(
-                clippedViewVertices[i], 
-                clippedViewNormals[i],
-                view,
-                options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
-      }
-
-      int[] colors = new int[numVerticesAndNormals];
-      for (int i = 0; i < numVerticesAndNormals; i++) {
-        colors[i] = ColorUtils.mulRGB(color.getRGBA(), intensities[i]);
-        if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-          colors[i] = LightingUtils.applyLightsourceColorTo(
+    double[] intensities = new double[numVerticesAndNormals];
+    for (int i = 0; i < intensities.length; i++) {
+      intensities[i] = LightingUtils.computeLightingIntensity(
               clippedViewVertices[i], 
-              clippedViewNormals[i], 
-              view, 
-              colors[i]);
-        }
-      }
-
-      GouraudPolygon3dRenderer.render(
-          graphics,
-          deviceCoordinates,
-          colors);
-    } else {
-      Polygon3dRenderer.render(
-          graphics, 
-          deviceCoordinates,
-          color.getRGBA());
+              clippedViewNormals[i],
+              view,
+              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
     }
+
+    int[] colors = new int[numVerticesAndNormals];
+    for (int i = 0; i < numVerticesAndNormals; i++) {
+      colors[i] = ColorUtils.mulRGB(color.getRGBA(), intensities[i]);
+      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+        colors[i] = LightingUtils.applyLightsourceColorTo(
+            clippedViewVertices[i], 
+            clippedViewNormals[i], 
+            view, 
+            colors[i]);
+      }
+    }
+
+    GouraudPolygon3dRenderer.render(
+        graphics,
+        deviceCoordinates,
+        colors);
   }
 }
