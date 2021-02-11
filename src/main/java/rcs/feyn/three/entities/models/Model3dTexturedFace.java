@@ -1,6 +1,7 @@
 package rcs.feyn.three.entities.models;
 
 import rcs.feyn.gfx.Raster;
+import rcs.feyn.three.render.patches.GouraudTexturedPolygon3dPatch;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.patches.TexturedPolygon3dPatch;
 
@@ -36,10 +37,19 @@ public class Model3dTexturedFace extends Model3dFace {
   }
 
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
-    return new TexturedPolygon3dPatch(
-        getVertices(vertices.getVertices()), 
-        textureData,
-        alpha,
-        options);
+    if (vertices instanceof Model3dGouraudVertices) {
+      return new GouraudTexturedPolygon3dPatch(
+          getVertices(vertices.getVertices()), 
+          getVertices(((Model3dGouraudVertices) vertices).getNormals()),
+          textureData,
+          alpha,
+          options);
+    } else {
+      return new TexturedPolygon3dPatch(
+          getVertices(vertices.getVertices()), 
+          textureData,
+          alpha,
+          options);
+    }
   }
 }

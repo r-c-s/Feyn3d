@@ -13,13 +13,21 @@ import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class TexturedPolygon3dPatch extends Polygon3dPatch {
-  
+public class GouraudTexturedPolygon3dPatch extends Polygon3dPatch {
+
+  protected Vector3d[] normals;
   private Raster textureData;
   private int alpha;
 
-  public TexturedPolygon3dPatch(Vector3d[] vertices, Raster data, int alpha, RenderOptions3d options) {
+  public GouraudTexturedPolygon3dPatch(
+      Vector3d[] vertices, 
+      Vector3d[] normals,
+      Raster data, 
+      int alpha, 
+      RenderOptions3d options) {
+    
     super(vertices, FeynColor.white, options);
+    this.normals = normals;
     this.textureData = data;
     this.alpha = alpha;
   } 
@@ -35,21 +43,32 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       return;
     }
     
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(vertices, view);
-    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
-
-    double intensity = 1.0;
-    if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-      intensity = LightingUtils.computeLightingIntensity(
-            center, 
-            normal, 
-            options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
+    Vector3d[][] viewSpaceCoordinates = Pipeline3d
+        .getClippedViewSpaceCoordinates(vertices, normals, view);
+    Vector3d[] clippedViewVertices = viewSpaceCoordinates[0];
+    Vector3d[] clippedViewNormals = viewSpaceCoordinates[1];
+    
+    if (clippedViewVertices.length < 3) {
+      return;
+    }
+    
+    Vector3d[] deviceCoordinates = Pipeline3d
+        .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
+    
+    int numVerticesAndNormals = clippedViewVertices.length;
+    double[] intensities = new double[numVerticesAndNormals];
+    for (int i = 0; i < numVerticesAndNormals; i++) {
+      intensities[i] = LightingUtils.computeLightingIntensity(
+              clippedViewVertices[i], 
+              clippedViewNormals[i],
+              view,
+              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
     }
     
     TexturedPolygon3dRenderer.render(
       graphics,
       deviceCoordinates, 
-      intensity,
+      intensities,
       textureData,
       alpha);
   }

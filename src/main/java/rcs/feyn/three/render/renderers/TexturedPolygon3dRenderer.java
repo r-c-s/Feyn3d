@@ -15,11 +15,23 @@ public class TexturedPolygon3dRenderer {
       Raster textureData, 
       int alpha) {
     
+    render(graphics, viewPortCoords, new double[] { intensity }, textureData, alpha);
+  }
+  
+  public static void render(
+      Graphics3d graphics, 
+      Vector3d[] viewPortCoords, 
+      double[] intensities, 
+      Raster textureData, 
+      int alpha) {
+    
     int size = viewPortCoords.length;
     
     if (size < 3) {
       return;
     }
+    
+    boolean gouraud = intensities.length > 1;
     
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
@@ -27,7 +39,8 @@ public class TexturedPolygon3dRenderer {
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
 
-    RenderUtils.triangulate(viewPortCoords, (va, vb, vc) -> {
+    RenderUtils.triangulateWithIndex(viewPortCoords, (va, vb, vc, ia, ib, ic) -> {
+      
       double xa = va.x();
       double xb = vb.x();
       double xc = vc.x();
@@ -59,6 +72,23 @@ public class TexturedPolygon3dRenderer {
 
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
+      
+      double A   = 0; 
+      double fa  = 0; double fb  = 0; double fc  = 0; 
+      double ak0 = 0; double ak1 = 0; double ak2 = 0; 
+      double bk0 = 0; double bk1 = 0; double bk2 = 0; 
+      if (gouraud) {  
+        A = Math.abs(cc) / 2;   
+        fa = intensities[ia] / A;  
+        fb = intensities[ib] / A;  
+        fc = intensities[ic] / A;  
+        ak0 = yc*(xb-xc)-xc*(yb-yc);  
+        ak1 = yb-yc;  
+        ak2 = xb-xc;            
+        bk0 = yc*(xa-xc)-xc*(ya-yc);  
+        bk1 = ya-yc;  
+        bk2 = xa-xc;  
+      } 
 
       for (int y = ymin; y <= ymax; y++) {
         double ximin = Integer.MIN_VALUE;
@@ -83,10 +113,25 @@ public class TexturedPolygon3dRenderer {
         
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
         int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), gw));
+        
+        double dShadeFactorDx = 0;  
+        double shadeFactor = 0;   
+        if (gouraud) {  
+          double aMin = 0.5 * Math.abs(ak0 + xmin*ak1 - y*ak2);   
+          double bMin = 0.5 * Math.abs(bk0 + xmin*bk1 - y*bk2); 
+          double shadeMin = fa*(aMin) + fb*(bMin) + fc*(A - aMin - bMin); 
+
+          double aMax = 0.5 * Math.abs(ak0 + xmax*ak1 - y*ak2);   
+          double bMax = 0.5 * Math.abs(bk0 + xmax*bk1 - y*bk2); 
+          double shadeMax = fa*(aMax) + fb*(bMax) + fc*(A - aMax - bMax); 
+
+          dShadeFactorDx = (shadeMax-shadeMin) / (xmax-xmin); 
+          shadeFactor = shadeMin + (1-aMin/A)*dShadeFactorDx + (xmin-xmin)*dShadeFactorDx;  
+        }
 
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
 
-        for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
+        for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
         	
         	double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
@@ -104,8 +149,13 @@ public class TexturedPolygon3dRenderer {
         	  // need to figure out why this is happening
             source = textureData.getPixel(tdw - 1, tdh - 1);
         	}
+        	
+        	if (gouraud) {
+            source = ColorUtils.mulRGB(source, shadeFactor);
+        	} else {
+            source = ColorUtils.mulRGB(source, intensities[0]);
+        	}
 
-          source = ColorUtils.mulRGB(source, intensity);
           source = ColorUtils.setAlphaToRGBA(source, alpha);
           graphics.putPixel(x, y, invZ, source);
         } 
