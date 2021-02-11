@@ -301,8 +301,8 @@ public class Vector3d implements Freezable<Vector3d> {
     return affineTransformLocal(Matrices.create3dRotateMatrix(origin, axis, radians));
   }
 
-  public Vector3d rotate(Vector3d origin, Vector3d axis, double deg) {
-    return new Vector3d(this).rotateLocal(origin, axis, deg); 
+  public Vector3d rotate(Vector3d origin, Vector3d axis, double radians) {
+    return new Vector3d(this).rotateLocal(origin, axis, radians); 
   }
 
   public Vector3d rotateLocal(Vector3d axis, double radians) {
@@ -430,12 +430,12 @@ public class Vector3d implements Freezable<Vector3d> {
     }
 
     @Override
-    public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double deg) {
+    public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double radians) {
       throw new ImmutableModificationException(this);
     }
 
     @Override
-    public Vector3d rotateLocal(Vector3d axis, double deg) {
+    public Vector3d rotateLocal(Vector3d axis, double radians) {
       throw new ImmutableModificationException(this);
     }
   }
