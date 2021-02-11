@@ -78,8 +78,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
 
       GouraudPolygon3dRenderer.render(
           graphics,
-          deviceCoordinates, 
-          intensities,
+          deviceCoordinates,
           colors);
     } else {
       Polygon3dRenderer.render(

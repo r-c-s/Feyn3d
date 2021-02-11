@@ -9,8 +9,7 @@ public class GouraudPolygon3dRenderer {
 
   public static void render(
       Graphics3d graphics, 
-      Vector3d[] viewPortCoords, 
-      double[] intensities,
+      Vector3d[] viewPortCoords,
       int[] colors) {
     
     int size = viewPortCoords.length;
