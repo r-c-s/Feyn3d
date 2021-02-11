@@ -135,9 +135,9 @@ public class TexturedPolygon3dRenderer {
         	
         	double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
-        	double by = tdh-1;
-        	double cx = tdw-1;
-        	double cy = tdh-1; // not exactly, needs fixing
+        	double by = tdh - 1;
+        	double cx = tdw - 1;
+        	double cy = tdh / 2;
         	
         	int xdata = MathUtils.roundToInt(cx * t[2]);
         	int ydata = MathUtils.roundToInt(by * t[1] + cy * t[2]);
