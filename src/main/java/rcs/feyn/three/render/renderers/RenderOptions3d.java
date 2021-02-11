@@ -22,7 +22,8 @@ public class RenderOptions3d {
         Option.cullIfBackface,
         Option.flatShaded, 
         Option.meshShaded,
-        Option.applyLightingColor));
+        Option.applyLightingColor,
+        Option.gouraudShaded));
   }
   
   public RenderOptions3d(RenderOptions3d options) {
