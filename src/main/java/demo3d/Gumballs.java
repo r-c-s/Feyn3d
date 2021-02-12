@@ -25,7 +25,6 @@ import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynArray;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Gumballs extends Demo3d {  
@@ -33,11 +32,7 @@ public class Gumballs extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1L; 
   
-  static { 
-    new TrigLookUp(0.1);
-  }
-  
-  private static final int NUM_BALLS = 100;
+  private static final int NUM_BALLS = 0;
 
   private FeynCollection<CollidableModel3d> spheres = new FeynArray<>(NUM_BALLS); 
  
@@ -83,6 +78,11 @@ public class Gumballs extends Demo3d {
       sphere.setColor(FeynColor.randomColor());
       sphere.setMass(radius);
 
+      Model3dUtils.setOptions(
+          sphere, 
+          Set.of(RenderOptions3d.Option.flatShaded, RenderOptions3d.Option.applyLightingColor), 
+          Set.of());
+
       spheres.add(sphere);
     }
 
@@ -90,7 +90,7 @@ public class Gumballs extends Demo3d {
     cube.getOuterBoundingObject().inverse();
     Model3dUtils.setOptions(
         cube,
-        Set.of(RenderOptions3d.Option.meshOnly), 
+        Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.applyLightingColor), 
         Set.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(cube);
@@ -100,16 +100,16 @@ public class Gumballs extends Demo3d {
     y.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
     z.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
     
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);   
-    
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
+    
+    FeynApp3d.getRepository().add(x);
+    FeynApp3d.getRepository().add(y);
+    FeynApp3d.getRepository().add(z);   
 
     camera.translate(0, 0, 2.5);
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(0.4, new FeynColor(255, 0, 0)));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1, new FeynColor(255, 0, 0)));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
 
@@ -123,6 +123,7 @@ public class Gumballs extends Demo3d {
   @Override
   public void runningLoop() { 
     controlCamera(); 
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition());
 
     // saves old position in order to figure out how much the ball needs to spin later
     spheres.forEachWithIndex((sphere, i) -> {   

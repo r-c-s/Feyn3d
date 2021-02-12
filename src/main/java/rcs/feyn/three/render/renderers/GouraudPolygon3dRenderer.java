@@ -31,10 +31,6 @@ public class GouraudPolygon3dRenderer {
       double zb = vb.z();
       double zc = vc.z();
       double zd = (za+zb+zc)/3;
-
-      int colorA = colors[ia];
-      int colorB = colors[ib];
-      int colorC = colors[ic];
       
       double u1 = xb - xa;
       double v1 = xc - xa;
@@ -84,10 +80,10 @@ public class GouraudPolygon3dRenderer {
           Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
 
           int color = ColorUtils.addRGBA(
-              ColorUtils.mulRGBA(colorA, t.x()),
+              ColorUtils.mulRGBA(colors[ia], t.x()),
               ColorUtils.addRGBA(
-                  ColorUtils.mulRGBA(colorB, t.y()),
-                  ColorUtils.mulRGBA(colorC, t.z())));
+                  ColorUtils.mulRGBA(colors[ib], t.y()),
+                  ColorUtils.mulRGBA(colors[ic], t.z())));
           
           graphics.putPixel(x, y, invZ, color); 
         } 

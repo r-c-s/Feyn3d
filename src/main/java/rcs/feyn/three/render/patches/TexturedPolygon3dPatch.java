@@ -6,6 +6,9 @@ import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
+
+import java.util.Optional;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
@@ -57,11 +60,25 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
             normal, 
             options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
     }
+   
+    int[] colors = null;
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+      colors = new int[viewSpaceCoordinates.length];
+      for (int i = 0; i < colors.length; i++) {
+        if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+          colors[i] = LightingUtils.applyLightsourceColorTo(
+              vertices[i], 
+              normal,
+              colors[i]);
+        }
+      }
+    }
     
     TexturedPolygon3dRenderer.render(
       graphics,
-      deviceCoordinates, 
+      deviceCoordinates,
       intensity,
+      Optional.ofNullable(colors),
       textureData,
       alpha, 
       zoom);

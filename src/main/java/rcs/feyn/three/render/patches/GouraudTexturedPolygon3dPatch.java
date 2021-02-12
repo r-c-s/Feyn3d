@@ -6,6 +6,9 @@ import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
+
+import java.util.Optional;
+
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -54,6 +57,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
         .getDeviceCoordinates(viewVertices, projection, viewPort);
     
     int numVerticesAndNormals = viewVertices.length;
+    
     double[] intensities = new double[numVerticesAndNormals];
     for (int i = 0; i < numVerticesAndNormals; i++) {
       intensities[i] = LightingUtils.computeLightingIntensity(
@@ -63,10 +67,24 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
               options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
     }
 
+    int[] colors = null;
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+      colors = new int[numVerticesAndNormals];
+      for (int i = 0; i < numVerticesAndNormals; i++) {
+        if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+          colors[i] = LightingUtils.applyLightsourceColorTo(
+              vertices[i], 
+              normals[i],
+              colors[i]);
+        }
+      }
+    }
+
     TexturedPolygon3dRenderer.render(
       graphics,
       deviceCoordinates, 
       intensities,
+      Optional.ofNullable(colors),
       textureData,
       alpha,
       zoom);

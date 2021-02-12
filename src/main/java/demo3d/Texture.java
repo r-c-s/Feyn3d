@@ -2,6 +2,7 @@ package demo3d;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
@@ -54,6 +55,11 @@ public class Texture extends Demo3d {
     
     setBackgroundColor(FeynColor.darkGray);
     
+    Model3dUtils.setOptions(
+        obj, 
+        Set.of(), 
+        Set.of());
+    
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
@@ -65,7 +71,7 @@ public class Texture extends Demo3d {
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1)); 
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1, FeynColor.red)); 
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.1);

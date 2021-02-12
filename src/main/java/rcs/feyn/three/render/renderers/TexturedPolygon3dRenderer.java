@@ -1,10 +1,13 @@
 package rcs.feyn.three.render.renderers;
 
+import java.util.Optional;
+
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.kernel.FeynApp3d;
 
 public class TexturedPolygon3dRenderer {
   
@@ -12,22 +15,26 @@ public class TexturedPolygon3dRenderer {
       Graphics3d graphics, 
       Vector3d[] viewPortCoords, 
       double intensity, 
+      Optional<int[]> colors,
       Raster textureData, 
       int alpha, 
       double zoom) {
     
-    render(graphics, viewPortCoords, new double[] { intensity }, textureData, alpha, zoom);
+    render(graphics, viewPortCoords, new double[] { intensity }, colors, textureData, alpha, zoom);
   }
   
   public static void render(
       Graphics3d graphics, 
       Vector3d[] viewPortCoords, 
       double[] intensities, 
+      Optional<int[]> colors,
       Raster textureData, 
       int alpha,
       double zoom) {
     
     boolean gouraud = intensities.length > 1;
+    
+    boolean interpolateColor = colors.isPresent();
     
     int screenW = graphics.getRaster().getWidth();
     int screenH = graphics.getRaster().getHeight(); 
@@ -151,8 +158,27 @@ public class TexturedPolygon3dRenderer {
         	} else {
             source = ColorUtils.mulRGB(source, intensities[0]);
         	}
+        	
+        	if (interpolateColor) {
+        	  int[] colorz = colors.get();
+        	  
+            int interpolatedColor = ColorUtils.addRGBA(
+                ColorUtils.mulRGBA(colorz[ia], t.x()),
+                ColorUtils.addRGBA(
+                    ColorUtils.mulRGBA(colorz[ib], t.y()),
+                    ColorUtils.mulRGBA(colorz[ic], t.z())));
+            
+            source = ColorUtils.blendRGB(
+                source, 
+                interpolatedColor, 
+                // shadeFactor comes from intensities[], which take into account
+                // the ambient light, so it must be subtracted here
+                // very ugly, needs a better solution
+                shadeFactor - FeynApp3d.getAmbientLight().getIntensity());
+        	}
 
           source = ColorUtils.setAlphaToRGBA(source, alpha);
+          
           graphics.putPixel(x, y, invZ, source);
         } 
       } 
