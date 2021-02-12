@@ -25,10 +25,6 @@ public class TexturedPolygon3dRenderer {
       Raster textureData, 
       int alpha) {
     
-    if (viewPortCoords.length < 3) {
-      return;
-    }
-    
     boolean gouraud = intensities.length > 1;
     
     int gw = (int) graphics.getRaster().getWidth();

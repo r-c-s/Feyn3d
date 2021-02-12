@@ -12,10 +12,6 @@ public class GouraudPolygon3dRenderer {
       Vector3d[] viewPortCoords,
       int[] colors) {
     
-    if (viewPortCoords.length < 3) {
-      return;
-    }
-    
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
     
