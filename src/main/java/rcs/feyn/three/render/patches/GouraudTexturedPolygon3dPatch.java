@@ -19,8 +19,9 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       Vector3d[] normals,
       Raster data, 
       int alpha, 
+      double zoom,
       RenderOptions3d options) {
-    super(vertices, data, alpha, options);
+    super(vertices, data, alpha, zoom, options);
     this.normals = normals;
   } 
 
@@ -67,6 +68,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       deviceCoordinates, 
       intensities,
       textureData,
-      alpha);
+      alpha,
+      zoom);
   }
 }

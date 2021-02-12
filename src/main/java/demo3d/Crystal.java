@@ -15,10 +15,10 @@ import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
-import rcs.feyn.three.optics.VariableIntensityLightSource3d;
+import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 
-public class Blob extends Demo3d {
+public class Crystal extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -34,6 +34,10 @@ public class Blob extends Demo3d {
   private final Model3d obj = Model3dFactory
       .icosphere(0.6, 2)
       .setColor(FeynColor.darkSeaGreen)
+      .setTextureData(
+          Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/crystaltexture.jpg"),
+          255,
+          2.5)
       .build();
   
   private final Runnable blobAnimation = new BlobAnimation();
@@ -42,7 +46,7 @@ public class Blob extends Demo3d {
   protected void initialize() {
     super.initialize(); 
     
-    setBackgroundColor(FeynColor.bisque);
+    setBackgroundColor(FeynColor.aliceBlue);
     
     Model3dUtils.setOptions(
         obj, 
@@ -60,9 +64,10 @@ public class Blob extends Demo3d {
 
     camera.translate(0, 0, 2);
     
-    FeynApp3d.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
-    
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1)); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.4));
+
+    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     wzc.setAmount(0.2);
   }
 
@@ -74,7 +79,6 @@ public class Blob extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     blobAnimation.run();
   }  
   
@@ -97,8 +101,8 @@ public class Blob extends Demo3d {
   }
 
   public static void main(String[] args) {
-    var frame = new FeynFrame(800, 800, "Blob Demo", true, false);
-    var demo = new Blob();
+    var frame = new FeynFrame(800, 800, "Crystal Demo", true, false);
+    var demo = new Crystal();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

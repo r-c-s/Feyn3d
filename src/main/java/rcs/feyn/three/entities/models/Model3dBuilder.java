@@ -33,6 +33,8 @@ public final class Model3dBuilder {
   protected ArrayList<BoundingObject3d> innerBoundingObjects = new ArrayList<>();
 
   protected Raster textureData = null;
+  protected int textureAlpha = 255;
+  protected double textureZoom = 1;
 
   public Model3dBuilder() {} 
 
@@ -170,8 +172,15 @@ public final class Model3dBuilder {
   }
   
   public Model3dBuilder setTextureData(Raster textureData) {
-  	this.textureData = textureData;
-  	return this;
+    this.textureData = textureData;
+    return this;
+  }
+  
+  public Model3dBuilder setTextureData(Raster textureData, int textureAlpha, double textureZoom) {
+    this.textureData = textureData;
+    this.textureAlpha = textureAlpha;
+    this.textureZoom = textureZoom;
+    return this;
   }
 
   private void validate() {
@@ -208,7 +217,7 @@ public final class Model3dBuilder {
                   : FeynColor.randomColor());
           
       f[i] = textureData != null 
-          ? new Model3dTexturedFace(ArrayUtils.unbox(faces.get(i)), textureData)
+          ? new Model3dTexturedFace(ArrayUtils.unbox(faces.get(i)), textureData, textureAlpha, textureZoom)
           : new Model3dFace(ArrayUtils.unbox(faces.get(i)), color);
     }
     

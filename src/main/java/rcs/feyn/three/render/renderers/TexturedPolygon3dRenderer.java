@@ -13,9 +13,10 @@ public class TexturedPolygon3dRenderer {
       Vector3d[] viewPortCoords, 
       double intensity, 
       Raster textureData, 
-      int alpha) {
+      int alpha, 
+      double zoom) {
     
-    render(graphics, viewPortCoords, new double[] { intensity }, textureData, alpha);
+    render(graphics, viewPortCoords, new double[] { intensity }, textureData, alpha, zoom);
   }
   
   public static void render(
@@ -23,7 +24,8 @@ public class TexturedPolygon3dRenderer {
       Vector3d[] viewPortCoords, 
       double[] intensities, 
       Raster textureData, 
-      int alpha) {
+      int alpha,
+      double zoom) {
     
     boolean gouraud = intensities.length > 1;
     
@@ -129,9 +131,9 @@ public class TexturedPolygon3dRenderer {
         	
         	Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
-        	double by = tdh - 1;
-        	double cx = tdw - 1;
-        	double cy = tdh / 2;
+        	double by = (tdh - 1) / zoom;
+        	double cx = (tdw - 1) / zoom;
+        	double cy = (tdh / 2) / zoom;
         	
         	int xdata = MathUtils.roundToInt(cx * t.z());
         	int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());

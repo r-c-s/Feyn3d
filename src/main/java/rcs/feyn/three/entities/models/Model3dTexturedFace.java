@@ -9,15 +9,17 @@ public class Model3dTexturedFace extends Model3dFace {
   
   private Raster textureData;
   private int alpha;
+  private double zoom;
 
   public Model3dTexturedFace(int[] indices, Raster textureData) {
-    this(indices, textureData, 255);
+    this(indices, textureData, 255, 1);
   }
 
-  public Model3dTexturedFace(int[] indices, Raster textureData, int alpha) {
+  public Model3dTexturedFace(int[] indices, Raster textureData, int alpha, double zoom) {
     super(indices, null);
     setTextureData(textureData);
     setAlpha(alpha);
+    this.zoom = zoom;
   }
   
   public Raster getTextureData() {
@@ -43,12 +45,14 @@ public class Model3dTexturedFace extends Model3dFace {
           getVertices(((Model3dGouraudVertices) vertices).getNormals()),
           textureData,
           alpha,
+          zoom,
           options);
     } else {
       return new TexturedPolygon3dPatch(
           getVertices(vertices.getVertices()), 
           textureData,
           alpha,
+          zoom,
           options);
     }
   }

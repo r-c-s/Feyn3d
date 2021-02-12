@@ -15,11 +15,18 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
   
   protected Raster textureData;
   protected int alpha;
+  protected double zoom;
 
-  public TexturedPolygon3dPatch(Vector3d[] vertices, Raster data, int alpha, RenderOptions3d options) {
+  public TexturedPolygon3dPatch(
+      Vector3d[] vertices, 
+      Raster data, 
+      int alpha, 
+      double zoom, 
+      RenderOptions3d options) {
     super(vertices, FeynColor.white, options);
     this.textureData = data;
     this.alpha = alpha;
+    this.zoom = zoom;
   } 
 
   @Override
@@ -56,6 +63,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       deviceCoordinates, 
       intensity,
       textureData,
-      alpha);
+      alpha, 
+      zoom);
   }
 }
