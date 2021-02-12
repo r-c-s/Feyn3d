@@ -132,4 +132,105 @@ public class GeoUtils3d {
   public static final int getNumberOfSidesOfCircle(double radius, double error) {
     return (int) Math.ceil(MathConsts.TWO_PI / Math.acos(2 * MathUtils.squared(1 - error / radius) - 1));
   }
+  
+  public static final Vector3d[] clipToPlane(Plane3d plane, Vector3d[] vertices) {
+    int size = vertices.length;
+    
+    double[] signedDistances = new double[size];
+    int numberVisible = 0;
+    for (int i = 0; i < size; i++) {
+      signedDistances[i] = plane.signedDistance(vertices[i]);
+      numberVisible += signedDistances[i] > 0 ? 1 : 0;
+    }
+    
+    if (numberVisible == 0) {
+      return new Vector3d[]{};
+    }
+    if (numberVisible == size) {
+      return vertices;
+    }
+    
+    int clippedSize = 2 + (size == 2 ? 0 : numberVisible);    
+    Vector3d[] clipped = new Vector3d[clippedSize];
+    for (int i = 0, j = 1, k = 0; i < size; i++, j++, j%=size) {
+      double sda = signedDistances[i];
+      double sdb = signedDistances[j];
+      
+      if (sda < 0 && sdb < 0) {
+        continue;
+      }
+      
+      Vector3d a = vertices[i];
+      Vector3d b = vertices[j];
+      
+      if (sda > 0) {
+        clipped[k++] = a;
+        if (sdb < 0 && size > 2) { 
+          clipped[k++] = fastIntersection(a, b, sda, sdb);
+        }
+      } else if (sdb > 0) {
+        clipped[k++] = fastIntersection(a, b, sda, sdb);
+      }
+    }
+    return clipped;
+  } 
+
+  public static final Vector3d[][] clipToPlane(Plane3d plane, Vector3d[] vertices, Vector3d[] normals) {    
+    int size = vertices.length;
+    
+    double[] signedDistances = new double[size];
+    int numberVisible = 0;
+    for (int i = 0; i < size; i++) {
+      signedDistances[i] = plane.signedDistance(vertices[i]);
+      numberVisible += signedDistances[i] > 0 ? 1 : 0;
+    }
+    
+    if (numberVisible == 0) {
+      return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
+    }
+    if (numberVisible == size) {
+      return new Vector3d[][]{ vertices, normals };
+    }
+
+    int clippedSize = 2 + (size == 2 ? 0 : numberVisible);  
+    Vector3d[] clippedv = new Vector3d[clippedSize];
+    Vector3d[] clippedn = new Vector3d[clippedSize];
+    for (int i = 0, j = 1, k = 0; i < size; i++, j++, j%=size) {
+      double sda = signedDistances[i];
+      double sdb = signedDistances[j];
+      
+      if (sda < 0 && sdb < 0) {
+        continue;
+      }
+      
+      Vector3d va = vertices[i];
+      Vector3d vb = vertices[j];
+
+      Vector3d na = normals[i];
+      Vector3d nb = normals[j];
+      
+      if (sda > 0) {
+        clippedv[k  ] = va;
+        clippedn[k++] = na;
+        if (sdb < 0 && size > 2) { 
+          clippedv[k  ] = fastIntersection(va, vb, sda, sdb);
+          clippedn[k++] = interpolateNormal(na, nb, sda, sdb); 
+        }
+      } else if (sdb > 0) {
+        clippedv[k  ] = fastIntersection(va, vb, sda, sdb);
+        clippedn[k++] = interpolateNormal(na, nb, sda, sdb);
+      }
+    }
+    return new Vector3d[][]{ clippedv, clippedn };
+  }
+
+  private static final Vector3d interpolateNormal(Vector3d a, Vector3d b, double sda, double sdb) {
+    sda = Math.abs(sda);
+    sdb = Math.abs(sdb); 
+    return a.mul(sdb/(sda+sdb)).addLocal(b.mul(sda/(sda+sdb))).normalizeLocal();
+  }
+
+  private static final Vector3d fastIntersection(Vector3d a, Vector3d b, double sda, double sdb) {
+    return a.add(b.sub(a).mul(sda/(sda-sdb)));
+  }
 }
