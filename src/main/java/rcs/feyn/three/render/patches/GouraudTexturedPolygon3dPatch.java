@@ -39,23 +39,25 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     }
     
     Vector3d[][] viewSpaceCoordinates = Pipeline3d
-        .getClippedViewSpaceCoordinates(vertices, normals, view);
-    Vector3d[] clippedViewVertices = viewSpaceCoordinates[0];
-    Vector3d[] clippedViewNormals = viewSpaceCoordinates[1];
+        .toViewSpaceCoordinates(vertices, normals, view);
+    Vector3d[] viewVertices = viewSpaceCoordinates[0];
+    Vector3d[] viewNormals = viewSpaceCoordinates[1];
     
-    if (clippedViewVertices.length < 3) {
+    if (viewVertices.length < 3) {
       return;
     }
+
+    // can't clip textured polygons
     
     Vector3d[] deviceCoordinates = Pipeline3d
-        .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
+        .getDeviceCoordinates(viewVertices, projection, viewPort);
     
-    int numVerticesAndNormals = clippedViewVertices.length;
+    int numVerticesAndNormals = viewVertices.length;
     double[] intensities = new double[numVerticesAndNormals];
     for (int i = 0; i < numVerticesAndNormals; i++) {
       intensities[i] = LightingUtils.computeLightingIntensity(
-              clippedViewVertices[i], 
-              clippedViewNormals[i],
+              viewVertices[i], 
+              viewNormals[i],
               view,
               options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
     }

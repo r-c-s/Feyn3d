@@ -25,13 +25,14 @@ public class Point3dPatch extends Patch3d {
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(new Vector3d[] {point}, view);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d.toViewSpaceCoordinates(new Vector3d[] {point}, view);
+    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d.clipViewSpaceCoordinates(viewSpaceCoordinates);
     
     if (viewSpaceCoordinates.length == 0) {
       return;
     }
     
-    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
+    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
     		? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)

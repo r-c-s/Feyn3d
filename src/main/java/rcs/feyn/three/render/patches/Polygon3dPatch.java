@@ -36,8 +36,14 @@ public class Polygon3dPatch extends Patch3d {
       return;
     }
 
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(vertices, view);
-    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d
+        .toViewSpaceCoordinates(vertices, view);
+
+    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
+        .clipViewSpaceCoordinates(viewSpaceCoordinates);
+
+    Vector3d[] deviceCoordinates = Pipeline3d
+        .getDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {

@@ -34,9 +34,14 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     if (cullIfBackface(center, normal)) {
       return;
     }
+
+    Vector3d[] viewSpaceCoordinates = Pipeline3d
+        .toViewSpaceCoordinates(vertices, view);
     
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.getClippedViewSpaceCoordinates(vertices, view);
-    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
+    // can't clip textured polygons
+
+    Vector3d[] deviceCoordinates = Pipeline3d
+        .getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {

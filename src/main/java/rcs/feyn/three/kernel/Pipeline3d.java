@@ -10,20 +10,28 @@ public final class Pipeline3d {
     throw new AssertionError();
   }
   
-  public static Vector3d[] getClippedViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
-    Vector3d[] viewVertices = Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, view);
-    
+  public static Vector3d[] toViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
     return Pipeline3d
-        .clipViewSpaceCoordinates(viewVertices);
+        .worldToViewSpaceCoordinates(vertices, view);
   }
   
-  public static Vector3d[][] getClippedViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals, Matrix44 view) {
-    Vector3d[][] viewVerticesAndNormals = Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, normals, view);
-    
+  public static Vector3d[][] toViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals, Matrix44 view) {
     return Pipeline3d
-        .clipViewSpaceCoordinates(viewVerticesAndNormals[0], viewVerticesAndNormals[1]);
+        .worldToViewSpaceCoordinates(vertices, normals, view);
+  }
+
+  public static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
+    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
+      return new Vector3d[]{};
+    }
+    return FeynApp3d.getViewFrustum().clipToFrustum(vertices);
+  }
+
+  public static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
+    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
+      return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
+    }
+    return FeynApp3d.getViewFrustum().clipToFrustum(vertices, normals);
   }
   
   public static Vector3d[] getDeviceCoordinates(Vector3d[] vertices, Matrix44 projection, Matrix44 viewPort) {
@@ -69,20 +77,6 @@ public final class Pipeline3d {
     }
     
     return new Vector3d[][]{ transformedVertices, transformedNormals };
-  }
-
-  private static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
-    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
-      return new Vector3d[]{};
-    }
-    return FeynApp3d.getViewFrustum().clipToFrustum(vertices);
-  }
-
-  private static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
-    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
-      return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
-    }
-    return FeynApp3d.getViewFrustum().clipToFrustum(vertices, normals);
   }
 
   private static Vector3d[] viewToNormalizedDeviceCoordinates(Vector3d[] vertices, Matrix44 projection) {

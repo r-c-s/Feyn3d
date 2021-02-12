@@ -27,8 +27,8 @@ public class TexturedPolygon3dRenderer {
     
     boolean gouraud = intensities.length > 1;
     
-    int gw = (int) graphics.getRaster().getWidth();
-    int gh = (int) graphics.getRaster().getHeight(); 
+    int screenW = graphics.getRaster().getWidth();
+    int screenH = graphics.getRaster().getHeight(); 
     
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
@@ -65,7 +65,7 @@ public class TexturedPolygon3dRenderer {
       double dZdy = -bb/cc;
 
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
-      int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
+      int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), screenH));
       
       double A   = 0; 
       double fa  = 0; double fb  = 0; double fc  = 0; 
@@ -106,7 +106,7 @@ public class TexturedPolygon3dRenderer {
         }
         
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
-        int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), gw));
+        int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), screenW));
         
         double dShadeFactorDx = 0;  
         double shadeFactor = 0;   
