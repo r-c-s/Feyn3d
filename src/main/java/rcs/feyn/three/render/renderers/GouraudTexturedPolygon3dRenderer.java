@@ -9,12 +9,12 @@ import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 
-public class TexturedPolygon3dRenderer {
+public class GouraudTexturedPolygon3dRenderer {
   
   public static void render(
       Graphics3d graphics, 
       Vector3d[] viewPortCoords, 
-      double intensity, 
+      double[] intensities, 
       Optional<int[]> colors,
       Raster textureData, 
       int alpha,
@@ -61,6 +61,17 @@ public class TexturedPolygon3dRenderer {
 
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), screenH));
+      
+      double A = Math.abs(cc) / 2;   
+      double fa = intensities[ia] / A;  
+      double fb = intensities[ib] / A;  
+      double fc = intensities[ic] / A;  
+      double ak0 = yc*(xb-xc)-xc*(yb-yc);  
+      double ak1 = yb-yc;  
+      double ak2 = xb-xc;            
+      double bk0 = yc*(xa-xc)-xc*(ya-yc);  
+      double bk1 = ya-yc;  
+      double bk2 = xa-xc;  
 
       for (int y = ymin; y <= ymax; y++) {
         double ximin = Integer.MIN_VALUE;
@@ -85,10 +96,21 @@ public class TexturedPolygon3dRenderer {
         
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
         int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), screenW));
+        
+        double aMin = 0.5 * Math.abs(ak0 + xmin*ak1 - y*ak2);   
+        double bMin = 0.5 * Math.abs(bk0 + xmin*bk1 - y*bk2); 
+        double shadeMin = fa*(aMin) + fb*(bMin) + fc*(A - aMin - bMin); 
+
+        double aMax = 0.5 * Math.abs(ak0 + xmax*ak1 - y*ak2);   
+        double bMax = 0.5 * Math.abs(bk0 + xmax*bk1 - y*bk2); 
+        double shadeMax = fa*(aMax) + fb*(bMax) + fc*(A - aMax - bMax); 
+
+        double dShadeFactorDx = (shadeMax-shadeMin) / (xmax-xmin); 
+        double shadeFactor = shadeMin + (1-aMin/A)*dShadeFactorDx + (xmin-xmin)*dShadeFactorDx;
 
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
 
-        for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
+        for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
         	
         	Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
@@ -107,7 +129,7 @@ public class TexturedPolygon3dRenderer {
             source = textureData.getPixel(tdw - 1, tdh - 1);
         	}
         	
-          source = ColorUtils.mulRGB(source, intensity);
+          source = ColorUtils.mulRGB(source, shadeFactor);
         	
         	if (interpolateColor) {
         	  int[] colorz = colors.get();
@@ -121,10 +143,10 @@ public class TexturedPolygon3dRenderer {
             source = ColorUtils.blendRGB(
                 source, 
                 interpolatedColor, 
-                // intensity takes into account
+                // shadeFactor comes from intensities[], which take into account
                 // the ambient light, so it must be subtracted here
                 // very ugly, needs a better solution
-                intensity - FeynApp3d.getAmbientLight().getIntensity());
+                shadeFactor - FeynApp3d.getAmbientLight().getIntensity());
         	}
 
           source = ColorUtils.setAlphaToRGBA(source, alpha);

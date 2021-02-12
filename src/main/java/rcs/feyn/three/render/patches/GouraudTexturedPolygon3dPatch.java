@@ -4,8 +4,8 @@ import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
+import rcs.feyn.three.render.renderers.GouraudTexturedPolygon3dRenderer;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
-import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
 
 import java.util.Optional;
 
@@ -80,7 +80,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       }
     }
 
-    TexturedPolygon3dRenderer.render(
+    GouraudTexturedPolygon3dRenderer.render(
       graphics,
       deviceCoordinates, 
       intensities,

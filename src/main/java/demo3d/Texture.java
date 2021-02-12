@@ -2,7 +2,6 @@ package demo3d;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
-import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
@@ -54,11 +53,6 @@ public class Texture extends Demo3d {
     super.initialize(); 
     
     setBackgroundColor(FeynColor.darkGray);
-    
-    Model3dUtils.setOptions(
-        obj, 
-        Set.of(), 
-        Set.of());
     
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
