@@ -75,14 +75,14 @@ public final class Pipeline3d {
     if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
       return new Vector3d[]{};
     }
-    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices);
+    return FeynApp3d.getViewFrustum().clipToFrustum(vertices);
   }
 
   private static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
     if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
       return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
     }
-    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices, normals);
+    return FeynApp3d.getViewFrustum().clipToFrustum(vertices, normals);
   }
 
   private static Vector3d[] viewToNormalizedDeviceCoordinates(Vector3d[] vertices, Matrix44 projection) {

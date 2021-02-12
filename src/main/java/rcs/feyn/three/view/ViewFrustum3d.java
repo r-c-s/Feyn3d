@@ -9,10 +9,10 @@ public class ViewFrustum3d {
   
   public static final double FOV = 45.0 * MathConsts.DEGREES_TO_RADIANS;
   
-  protected final Plane3d T = Plane3d.yzPlane(); //top
-  protected final Plane3d R = Plane3d.zyPlane(); //right
-  protected final Plane3d B = Plane3d.zxPlane(); //bottom
   protected final Plane3d L = Plane3d.xzPlane(); //left
+  protected final Plane3d R = Plane3d.zyPlane(); //right
+  protected final Plane3d T = Plane3d.yzPlane(); //top
+  protected final Plane3d B = Plane3d.zxPlane(); //bottom
   protected final Plane3d N = Plane3d.yxPlane(); //near
   protected final Plane3d F = Plane3d.xyPlane(); //far 
 
@@ -26,7 +26,7 @@ public class ViewFrustum3d {
     setHeight(height);
     setNearDistance(nearDist);
     setFarDistance(farDist);
-    
+
     L.setNormal(Vector3d.X_AXIS.rotate(Vector3d.Y_AXIS, FOV));
     R.setNormal(Vector3d.NEG_X_AXIS.rotate(Vector3d.NEG_Y_AXIS, FOV));
   }
@@ -53,7 +53,7 @@ public class ViewFrustum3d {
 
   public void setHeight(double height) {
     this.height = height;
-    
+
     double radians = Math.atan(height / width);
     T.setNormal(Vector3d.NEG_Y_AXIS.rotate(Vector3d.X_AXIS, radians));
     B.setNormal(Vector3d.Y_AXIS.rotate(Vector3d.NEG_X_AXIS, radians));
@@ -151,7 +151,7 @@ public class ViewFrustum3d {
       numberVisible += signedDistances[i] > 0 ? 1 : 0;
     }
     
-    if (numberVisible ==    0) {
+    if (numberVisible == 0) {
       return new Vector3d[]{};
     }
     if (numberVisible == size) {
