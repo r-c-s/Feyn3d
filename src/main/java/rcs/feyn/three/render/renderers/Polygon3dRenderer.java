@@ -12,8 +12,8 @@ public class Polygon3dRenderer {
       return;
     }
     
-    int gw = (int) graphics.getRaster().getWidth();
-    int gh = (int) graphics.getRaster().getHeight(); 
+    int screenW = graphics.getRaster().getWidth();
+    int screenH = graphics.getRaster().getHeight(); 
     
     RenderUtils.triangulate(viewPortCoords, (va, vb, vc) -> {
       double za = va.z();
@@ -46,7 +46,7 @@ public class Polygon3dRenderer {
       double dZdy = -bb/cc;
        
       int ymin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ya, yb, yc), 0));
-      int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), gh));
+      int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), screenH));
       
       for (int y = ymin; y <= ymax; y++) {
         double ximin = Integer.MIN_VALUE;
@@ -70,7 +70,7 @@ public class Polygon3dRenderer {
         }
         
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
-        int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), gw));
+        int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), screenW));
 
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
         

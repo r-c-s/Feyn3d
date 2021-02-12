@@ -89,6 +89,14 @@ public class ViewFrustum3d {
     }
     return false;
   }
+  
+  public Vector3d[] clipToNearPlane(Vector3d[] vertices) {  
+    return clipToPlane(N, vertices);  
+  } 
+
+  public Vector3d[][] clipToNearPlane(Vector3d[] vertices, Vector3d[] normals) {  
+    return clipToPlane(N, vertices, normals); 
+  }
 
   public Vector3d[] clipToFrustum(Vector3d[] vertices) {
     for (int i = 0; i < planes.length && vertices.length > 0; i++) {

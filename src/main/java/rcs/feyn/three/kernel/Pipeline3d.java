@@ -11,49 +11,31 @@ public final class Pipeline3d {
   }
   
   public static Vector3d[] toViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
-    return Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, view);
+    return worldToViewSpaceCoordinates(vertices, view);
   }
   
   public static Vector3d[][] toViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals, Matrix44 view) {
-    return Pipeline3d
-        .worldToViewSpaceCoordinates(vertices, normals, view);
+    return worldToViewSpaceCoordinates(vertices, normals, view);
   }
 
   public static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
     if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
       return new Vector3d[]{};
     }
-    return FeynApp3d.getViewFrustum().clipToFrustum(vertices);
+    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices);
   }
 
   public static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
     if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
       return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
     }
-    return FeynApp3d.getViewFrustum().clipToFrustum(vertices, normals);
+    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices, normals);
   }
   
   public static Vector3d[] getDeviceCoordinates(Vector3d[] vertices, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] ndcVertices = Pipeline3d
-        .viewToNormalizedDeviceCoordinates(vertices, projection);
-    
-    return Pipeline3d
-        .ndcToDeviceCoordinates(ndcVertices, viewPort);
+    Vector3d[] ndcVertices = viewToNormalizedDeviceCoordinates(vertices, projection);
+    return ndcToDeviceCoordinates(ndcVertices, viewPort);
   }
-
-//private static Vector3d[] viewSpaceToWorldCoordinates(Vector3d[] vertices, Matrix44 view) {
-//  int size = vertices.length;
-//  
-//  Matrix44 inverse = view.inverse();
-//  
-//  Vector3d[] transformed = new Vector3d[size];
-//  for (int i = 0; i < size; i++) {
-//    transformed[i] = vertices[i].affineTransform(inverse);
-//  }
-//
-//  return transformed;
-//}
 
   private static Vector3d[] worldToViewSpaceCoordinates(Vector3d[] vertices, Matrix44 view) {
     int size = vertices.length;
