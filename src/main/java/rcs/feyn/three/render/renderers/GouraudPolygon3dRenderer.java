@@ -12,8 +12,7 @@ public class GouraudPolygon3dRenderer {
       Vector3d[] viewPortCoords,
       int[] colors) {
     
-    int size = viewPortCoords.length;
-    if (size < 3) {
+    if (viewPortCoords.length < 3) {
       return;
     }
     

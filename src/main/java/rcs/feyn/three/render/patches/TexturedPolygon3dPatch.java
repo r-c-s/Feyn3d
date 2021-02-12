@@ -15,8 +15,8 @@ import rcs.feyn.math.linalg.Vector3d;
 
 public class TexturedPolygon3dPatch extends Polygon3dPatch {
   
-  private Raster textureData;
-  private int alpha;
+  protected Raster textureData;
+  protected int alpha;
 
   public TexturedPolygon3dPatch(Vector3d[] vertices, Raster data, int alpha, RenderOptions3d options) {
     super(vertices, FeynColor.white, options);
@@ -26,12 +26,14 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
 
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
+    if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
+      super.render(graphics, view, projection, viewPort);
+      return;
+    }
+      
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    
-    if (!options.isEnabled(RenderOptions3d.Option.meshOnly)
-      && options.isEnabled(RenderOptions3d.Option.cullIfBackface)
-      && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal)) {
+    if (cullIfBackface(center, normal)) {
       return;
     }
     

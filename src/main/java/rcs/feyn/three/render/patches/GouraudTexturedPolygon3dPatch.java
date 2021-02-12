@@ -2,22 +2,17 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
-import rcs.feyn.three.view.ViewUtils;
-import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
-public class GouraudTexturedPolygon3dPatch extends Polygon3dPatch {
+public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
 
   protected Vector3d[] normals;
-  private Raster textureData;
-  private int alpha;
 
   public GouraudTexturedPolygon3dPatch(
       Vector3d[] vertices, 
@@ -25,21 +20,21 @@ public class GouraudTexturedPolygon3dPatch extends Polygon3dPatch {
       Raster data, 
       int alpha, 
       RenderOptions3d options) {
-    
-    super(vertices, FeynColor.white, options);
+    super(vertices, data, alpha, options);
     this.normals = normals;
-    this.textureData = data;
-    this.alpha = alpha;
   } 
 
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
+    if (!options.isEnabled(RenderOptions3d.Option.gouraudShaded) 
+        || options.isEnabled(RenderOptions3d.Option.meshOnly)) {
+      super.render(graphics, view, projection, viewPort);
+      return;
+    }
+    
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    
-    if (!options.isEnabled(RenderOptions3d.Option.meshOnly)
-      && options.isEnabled(RenderOptions3d.Option.cullIfBackface)
-      && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal)) {
+    if (cullIfBackface(center, normal)) {
       return;
     }
     
@@ -55,37 +50,21 @@ public class GouraudTexturedPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] deviceCoordinates = Pipeline3d
         .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
     
-    
-    
-    if (options.isEnabled(RenderOptions3d.Option.gouraudShaded)) {
-      int numVerticesAndNormals = clippedViewVertices.length;
-      double[] intensities = new double[numVerticesAndNormals];
-      for (int i = 0; i < numVerticesAndNormals; i++) {
-        intensities[i] = LightingUtils.computeLightingIntensity(
-                clippedViewVertices[i], 
-                clippedViewNormals[i],
-                view,
-                options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
-      }
-
-      TexturedPolygon3dRenderer.render(
-        graphics,
-        deviceCoordinates, 
-        intensities,
-        textureData,
-        alpha);
-    } else {
-      double intensity = LightingUtils.computeLightingIntensity(
-          center, 
-          normal, 
-          options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
-      
-      TexturedPolygon3dRenderer.render(
-        graphics,
-        deviceCoordinates, 
-        intensity,
-        textureData,
-        alpha);
+    int numVerticesAndNormals = clippedViewVertices.length;
+    double[] intensities = new double[numVerticesAndNormals];
+    for (int i = 0; i < numVerticesAndNormals; i++) {
+      intensities[i] = LightingUtils.computeLightingIntensity(
+              clippedViewVertices[i], 
+              clippedViewNormals[i],
+              view,
+              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
     }
+
+    TexturedPolygon3dRenderer.render(
+      graphics,
+      deviceCoordinates, 
+      intensities,
+      textureData,
+      alpha);
   }
 }

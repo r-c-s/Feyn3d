@@ -2,11 +2,9 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
-import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 
 import rcs.feyn.color.ColorUtils;
@@ -31,11 +29,9 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
       return;
     }
     
-    if (options.isEnabled(RenderOptions3d.Option.cullIfBackface) && 
-        ViewUtils.isBackFace(
-            FeynApp3d.getCamera().getPosition(), 
-            GeoUtils3d.getCenter(vertices), 
-            GeoUtils3d.getNormal(vertices))) {
+    Vector3d center = getCenter();
+    Vector3d normal = GeoUtils3d.getNormal(vertices);
+    if (cullIfBackface(center, normal)) {
       return;
     }
     

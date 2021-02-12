@@ -32,11 +32,7 @@ public class Polygon3dPatch extends Patch3d {
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    
-    if (!options.isEnabled(RenderOptions3d.Option.meshOnly)
-      && options.isEnabled(RenderOptions3d.Option.cullIfBackface) 
-      && !color.isTransparent()
-      && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal)) {
+    if (cullIfBackface(center, normal)) {
       return;
     }
 
@@ -75,5 +71,12 @@ public class Polygon3dPatch extends Patch3d {
           vpcVertices[j], 
           ColorUtils.mulRGBA(color, intensity));
     }
+  }
+  
+  protected boolean cullIfBackface(Vector3d center, Vector3d normal) {
+    return !options.isEnabled(RenderOptions3d.Option.meshOnly)
+        && options.isEnabled(RenderOptions3d.Option.cullIfBackface) 
+        && !color.isTransparent()
+        && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal);
   }
 }

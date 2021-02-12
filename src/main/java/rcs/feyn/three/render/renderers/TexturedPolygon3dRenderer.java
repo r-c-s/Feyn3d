@@ -25,9 +25,7 @@ public class TexturedPolygon3dRenderer {
       Raster textureData, 
       int alpha) {
     
-    int size = viewPortCoords.length;
-    
-    if (size < 3) {
+    if (viewPortCoords.length < 3) {
       return;
     }
     
