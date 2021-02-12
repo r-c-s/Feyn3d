@@ -2,12 +2,10 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
-import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;

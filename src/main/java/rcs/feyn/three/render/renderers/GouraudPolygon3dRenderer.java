@@ -81,13 +81,13 @@ public class GouraudPolygon3dRenderer {
         
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
 
-          double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
+          Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
 
           int color = ColorUtils.addRGBA(
-              ColorUtils.mulRGBA(colorA, t[0]),
+              ColorUtils.mulRGBA(colorA, t.x()),
               ColorUtils.addRGBA(
-                  ColorUtils.mulRGBA(colorB, t[1]),
-                  ColorUtils.mulRGBA(colorC, t[2])));
+                  ColorUtils.mulRGBA(colorB, t.y()),
+                  ColorUtils.mulRGBA(colorC, t.z())));
           
           graphics.putPixel(x, y, invZ, color); 
         } 

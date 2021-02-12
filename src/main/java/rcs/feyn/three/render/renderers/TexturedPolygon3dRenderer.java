@@ -127,14 +127,14 @@ public class TexturedPolygon3dRenderer {
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
         	
-        	double[] t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
+        	Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         	
         	double by = tdh - 1;
         	double cx = tdw - 1;
         	double cy = tdh / 2;
         	
-        	int xdata = MathUtils.roundToInt(cx * t[2]);
-        	int ydata = MathUtils.roundToInt(by * t[1] + cy * t[2]);
+        	int xdata = MathUtils.roundToInt(cx * t.z());
+        	int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
         	
         	int source;
         	try {

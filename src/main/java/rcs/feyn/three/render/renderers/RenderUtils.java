@@ -30,7 +30,7 @@ public class RenderUtils {
     }    
   }
   
-  public static double[] cartesianToBarycentric(int x, int y, Vector3d a, Vector3d b, Vector3d c) {
+  public static Vector3d cartesianToBarycentric(int x, int y, Vector3d a, Vector3d b, Vector3d c) {
     double x1 = a.x();
     double x2 = b.x();
     double x3 = c.x();
@@ -50,10 +50,9 @@ public class RenderUtils {
     double lambda1 = (y2y3 * xx3 + x3x2 * yy3) / d;
     double lambda2 = (y3y1 * xx3 + x1x3 * yy3) / d;
     
-    return new double[] {
+    return new Vector3d(
       lambda1,
       lambda2,
-      1 - lambda1 - lambda2
-    };
+      1 - lambda1 - lambda2);
   }
 }
