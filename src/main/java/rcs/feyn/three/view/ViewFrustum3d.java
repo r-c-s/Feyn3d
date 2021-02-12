@@ -90,41 +90,6 @@ public class ViewFrustum3d {
     return false;
   }
 
-  public boolean containsAtLeastOne(Vector3d... vertices) {
-    for (Vector3d vertex : vertices) {
-      if (contains(vertex)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public boolean containsAll(Vector3d... vertices) {
-    for (Vector3d vertex : vertices) {
-      if (!contains(vertex)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public boolean contains(Vector3d vertex) {
-    for (Plane3d plane : planes) {
-      if (plane.signedDistance(vertex) < 0) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public Vector3d[] clipToNearPlane(Vector3d[] vertices) {
-    return clipToPlane(N, vertices);
-  }
-
-  public Vector3d[][] clipToNearPlane(Vector3d[] vertices, Vector3d[] normals) {
-    return clipToPlane(N, vertices, normals);
-  }
-
   public Vector3d[] clipToFrustum(Vector3d[] vertices) {
     for (int i = 0; i < planes.length && vertices.length > 0; i++) {
       vertices = clipToPlane(planes[i], vertices);
@@ -133,12 +98,14 @@ public class ViewFrustum3d {
   }
 
   public Vector3d[][] clipToFrustum(Vector3d[] vertices, Vector3d[] normals) {
+    Vector3d[] clippedVertices = vertices;
+    Vector3d[] clippedNormals = normals;
     for (int i = 0; i < planes.length && vertices.length > 0; i++) {
-      Vector3d[][] vn = clipToPlane(planes[i], vertices, normals);
-      vertices = vn[0];
-      normals  = vn[1];
+      Vector3d[][] vn = clipToPlane(planes[i], clippedVertices, clippedNormals);
+      clippedVertices = vn[0];
+      clippedNormals = vn[1];
     }
-    return new Vector3d[][]{ vertices, normals };
+    return new Vector3d[][]{ clippedVertices, clippedNormals };
   } 
 
   private static final Vector3d[] clipToPlane(Plane3d plane, Vector3d[] vertices) {
