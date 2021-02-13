@@ -33,10 +33,10 @@ public abstract class Patch3d extends AbstractColorable {
   public final RenderOptions3d getRenderOptions() {
     return options;
   }
-
-  public final void setRenderOptions(RenderOptions3d options) {
-    this.options = options;
-  } 
+  
+  public boolean isTransparent() {
+    return color.isTransparent();
+  }
 
   protected abstract Vector3d getCenter();
 

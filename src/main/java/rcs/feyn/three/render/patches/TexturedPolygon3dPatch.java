@@ -31,6 +31,11 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     this.alpha = alpha;
     this.zoom = zoom;
   } 
+  
+  @Override
+  public final boolean isTransparent() {
+    return alpha < 255;
+  }
 
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
