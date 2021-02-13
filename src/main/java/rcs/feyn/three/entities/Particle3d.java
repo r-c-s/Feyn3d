@@ -1,4 +1,4 @@
-package rcs.feyn.three;
+package rcs.feyn.three.entities;
 
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Matrices;

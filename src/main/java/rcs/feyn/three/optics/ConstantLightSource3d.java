@@ -1,10 +1,10 @@
 package rcs.feyn.three.optics;
 
-import rcs.feyn.three.Particle3d;
 import rcs.feyn.color.Colorable;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.three.entities.Particle3d;
 
 public class ConstantLightSource3d extends Particle3d implements Colorable, DiffuseLightSource3d {
   

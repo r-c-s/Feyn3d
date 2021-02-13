@@ -1,4 +1,4 @@
-package rcs.feyn.three;
+package rcs.feyn.three.entities;
 
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.geo.Movable3d;
