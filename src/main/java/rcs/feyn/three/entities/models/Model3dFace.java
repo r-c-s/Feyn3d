@@ -26,11 +26,12 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
+  // TODO: cache patch
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
     if (vertices instanceof Model3dGouraudVertices) {
       return new GouraudPolygon3dPatch(
           getVertices(vertices.getVertices()), 
-          getVertices(((Model3dGouraudVertices)vertices).getNormals()), 
+          getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           color,
           options);
     } else {
