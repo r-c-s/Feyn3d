@@ -18,9 +18,7 @@ public abstract class Patch3d extends AbstractColorable {
     double thisDepth = a.getCenter().distanceSquared(cameraPos);
     double thatDepth = b.getCenter().distanceSquared(cameraPos);
     
-    return thisDepth < thatDepth ?  1 
-         : thisDepth > thatDepth ? -1
-         : 0;
+    return Double.compare(thisDepth, thatDepth);
   };
 
   protected RenderOptions3d options;
