@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.collision.CollisionHandler3d;

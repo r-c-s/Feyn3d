@@ -7,7 +7,6 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
