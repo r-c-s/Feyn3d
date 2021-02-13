@@ -1,7 +1,5 @@
 package rcs.feyn.three.gfx;
 
-import rcs.feyn.gfx.Raster;
-
 public class Graphics3dSynchronized extends Graphics3d {
 
   protected boolean updating = false;

@@ -13,8 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.gfx.Raster;
 
 public abstract class DoubleBufferedCanvas extends JComponent {
    

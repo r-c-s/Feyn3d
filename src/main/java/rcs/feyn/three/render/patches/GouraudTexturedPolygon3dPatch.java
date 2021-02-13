@@ -2,6 +2,7 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.Pipeline3d;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.renderers.GouraudTexturedPolygon3dRenderer;
@@ -10,7 +11,6 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import java.util.Optional;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 

@@ -3,10 +3,10 @@ package rcs.feyn.three.render.renderers;
 import java.util.Optional;
 
 import rcs.feyn.color.ColorUtils;
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 
 public class TexturedPolygon3dRenderer {

@@ -1,6 +1,6 @@
 package rcs.feyn.three.entities.models;
 
-import rcs.feyn.gfx.Raster;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.render.patches.GouraudTexturedPolygon3dPatch;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.patches.TexturedPolygon3dPatch;

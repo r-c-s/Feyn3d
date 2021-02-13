@@ -1,9 +1,9 @@
 package rcs.feyn.three.gui;
 
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.AbstractAnimationCanvas;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Graphics3dSynchronized;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 
 public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {

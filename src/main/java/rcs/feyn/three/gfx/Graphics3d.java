@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.gfx.Raster;
 
 public class Graphics3d {
 

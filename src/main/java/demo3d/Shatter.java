@@ -4,7 +4,6 @@ import java.io.Serial;
 import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
@@ -12,6 +11,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;

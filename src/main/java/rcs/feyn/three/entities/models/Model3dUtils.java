@@ -10,12 +10,12 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.collision.models.ComplexCollidableModel3d;
 import rcs.feyn.three.geo.GeoUtils3d;
+import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 
