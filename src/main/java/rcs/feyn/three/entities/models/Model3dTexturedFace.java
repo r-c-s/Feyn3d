@@ -10,7 +10,7 @@ public class Model3dTexturedFace extends Model3dFace {
   private Raster textureData;
   private int alpha;
   private double zoom;
-
+  
   public Model3dTexturedFace(int[] indices, Raster textureData) {
     this(indices, textureData, 255, 1);
   }
@@ -39,21 +39,31 @@ public class Model3dTexturedFace extends Model3dFace {
   }
 
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
+    if (matchesLastPatch(vertices)) {
+      return lastPatch;
+    }
+    
+    lastVertices = getVertices(vertices.getVertices());
+    
+    Polygon3dPatch newPatch;
+    
     if (vertices instanceof Model3dGouraudVertices) {
-      return new GouraudTexturedPolygon3dPatch(
-          getVertices(vertices.getVertices()), 
-          getVertices(((Model3dGouraudVertices) vertices).getNormals()),
+      newPatch = new GouraudTexturedPolygon3dPatch(
+          lastVertices, 
+          lastNormals = getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           textureData,
           alpha,
           zoom,
           options);
     } else {
-      return new TexturedPolygon3dPatch(
-          getVertices(vertices.getVertices()), 
+      newPatch = new TexturedPolygon3dPatch(
+          lastVertices, 
           textureData,
           alpha,
           zoom,
           options);
     }
+    
+    return lastPatch = newPatch;
   }
 }

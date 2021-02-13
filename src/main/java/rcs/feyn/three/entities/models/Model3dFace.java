@@ -12,6 +12,10 @@ public class Model3dFace extends AbstractColorable {
   protected RenderOptions3d options = RenderOptions3d.defaults();
   
   protected int[] indices;
+  
+  protected Vector3d[] lastVertices;
+  protected Vector3d[] lastNormals;
+  protected Polygon3dPatch lastPatch;
 
   public Model3dFace(int[] indices, FeynColor color) {
     super(color);
@@ -26,20 +30,43 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
-  // TODO: this is a performance bottleneck
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
-    if (vertices instanceof Model3dGouraudVertices) {
-      return new GouraudPolygon3dPatch(
-          getVertices(vertices.getVertices()), 
-          getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
+    if (matchesLastPatch(vertices)) {
+      return lastPatch;
+    }
+    
+    lastVertices = getVertices(vertices.getVertices());
+    
+    Polygon3dPatch newPatch;
+    
+    if (vertices instanceof Model3dGouraudVertices) {      
+      newPatch = new GouraudPolygon3dPatch(
+          lastVertices, 
+          lastNormals = getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           color,
           options);
     } else {
-      return new Polygon3dPatch(
-          getVertices(vertices.getVertices()), 
+      newPatch = new Polygon3dPatch(
+          lastVertices, 
           color,
           options);
     }
+    
+    return lastPatch = newPatch;
+  }
+  
+  protected synchronized boolean matchesLastPatch(Model3dVertices vertices) {
+    // assumes that normals only change if vertices changed
+    if (lastVertices == null || lastPatch == null) {
+      return false;
+    }
+    Vector3d[] newVertices = vertices.getVertices();
+    for (int i = 0; i < indices.length; i++) {
+      if (!newVertices[indices[i]].equals(lastVertices[i])) {
+        return false;
+      }
+    }
+    return true;
   }
 
   protected synchronized Vector3d[] getVertices(Vector3d[] vertices) {
