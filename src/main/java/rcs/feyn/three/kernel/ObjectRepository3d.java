@@ -34,8 +34,10 @@ public class ObjectRepository3d {
   }
   
 	public Stream<Patch3d> patches() {
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
-		    .flatMap(listOfObjects -> StreamSupport.stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
+		return StreamSupport
+		    .stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
+		    .flatMap(listOfObjects -> StreamSupport
+		        .stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
 		    .map(Renderable3d::getRenderablePatches)
 		    .flatMap(Stream::of);
   }
