@@ -26,7 +26,7 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
-  // TODO: cache patch
+  // TODO: this is a performance bottleneck
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
     if (vertices instanceof Model3dGouraudVertices) {
       return new GouraudPolygon3dPatch(
