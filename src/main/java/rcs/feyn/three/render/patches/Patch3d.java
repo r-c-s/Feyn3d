@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.color.AbstractColorable;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;

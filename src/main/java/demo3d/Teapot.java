@@ -14,7 +14,7 @@ import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.Matrices;
 import rcs.feyn.math.Vector3d;

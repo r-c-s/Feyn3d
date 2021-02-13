@@ -10,7 +10,7 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.entities.primitives.Polygon3d;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;

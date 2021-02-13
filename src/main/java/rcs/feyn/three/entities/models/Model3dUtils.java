@@ -16,7 +16,7 @@ import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.collision.models.ComplexCollidableModel3d;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 
 public class Model3dUtils {

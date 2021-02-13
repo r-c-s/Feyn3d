@@ -15,7 +15,7 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 
 public class Shatter extends Demo3d {
 

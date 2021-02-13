@@ -2,9 +2,9 @@ package rcs.feyn.three.entities.primitives;
 
 import rcs.feyn.three.entities.Particle3d;
 import rcs.feyn.three.geo.GeoUtils3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.color.Colorable;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Matrix44;

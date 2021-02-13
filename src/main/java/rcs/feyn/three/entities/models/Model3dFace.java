@@ -3,9 +3,9 @@ package rcs.feyn.three.entities.models;
 import rcs.feyn.color.AbstractColorable;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Vector3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.patches.GouraudPolygon3dPatch;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Model3dFace extends AbstractColorable {
   

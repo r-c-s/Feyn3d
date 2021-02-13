@@ -16,7 +16,7 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.AnimationTimer;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;

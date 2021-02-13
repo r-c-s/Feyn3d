@@ -3,9 +3,9 @@ package rcs.feyn.three.anim;
 import java.util.function.BiFunction;
 
 import rcs.feyn.three.entities.Sprite3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.TriFunction;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;

@@ -1,4 +1,4 @@
-package rcs.feyn.three.render.renderers;
+package rcs.feyn.three.render;
 
 import java.util.EnumSet;
 import java.util.Set;

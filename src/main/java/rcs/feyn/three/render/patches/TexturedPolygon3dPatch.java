@@ -5,7 +5,7 @@ import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
 
 import java.util.Optional;
