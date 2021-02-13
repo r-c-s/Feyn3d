@@ -2,7 +2,7 @@ package rcs.feyn.color;
 
 public class AbstractColorable implements Colorable {
   
-  protected FeynColor color = FeynColor.black;
+  protected FeynColor color;
 
   public AbstractColorable(FeynColor color) {
     setColor(color);
