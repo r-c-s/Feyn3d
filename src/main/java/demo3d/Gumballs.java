@@ -32,7 +32,7 @@ public class Gumballs extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1L; 
   
-  private static final int NUM_BALLS = 0;
+  private static final int NUM_BALLS = 100;
 
   private FeynCollection<CollidableModel3d> spheres = new FeynArray<>(NUM_BALLS); 
  
@@ -81,7 +81,7 @@ public class Gumballs extends Demo3d {
       Model3dUtils.setOptions(
           sphere, 
           Set.of(RenderOptions3d.Option.flatShaded, RenderOptions3d.Option.applyLightingColor), 
-          Set.of());
+          Set.of(RenderOptions3d.Option.gouraudShaded));
 
       spheres.add(sphere);
     }
@@ -90,7 +90,7 @@ public class Gumballs extends Demo3d {
     cube.getOuterBoundingObject().inverse();
     Model3dUtils.setOptions(
         cube,
-        Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.applyLightingColor), 
+        Set.of(RenderOptions3d.Option.meshOnly), 
         Set.of(RenderOptions3d.Option.cullIfBackface));
     
     FeynApp3d.getRepository().add(cube);
@@ -109,7 +109,7 @@ public class Gumballs extends Demo3d {
     FeynApp3d.getRepository().add(z);   
 
     camera.translate(0, 0, 2.5);
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1, new FeynColor(255, 0, 0)));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
     FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.5));
   }
 
@@ -122,8 +122,7 @@ public class Gumballs extends Demo3d {
 
   @Override
   public void runningLoop() { 
-    controlCamera(); 
-    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition());
+    controlCamera();
 
     // saves old position in order to figure out how much the ball needs to spin later
     spheres.forEachWithIndex((sphere, i) -> {   

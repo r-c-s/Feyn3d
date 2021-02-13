@@ -9,6 +9,7 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 import java.util.Optional;
 
+import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -68,15 +69,14 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     }
 
     int[] colors = null;
-    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+        && LightingUtils.hasColoredLightsources()) {
       colors = new int[numVerticesAndNormals];
       for (int i = 0; i < numVerticesAndNormals; i++) {
-        if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-          colors[i] = LightingUtils.applyLightsourceColorTo(
-              vertices[i], 
-              normals[i],
-              colors[i]);
-        }
+        colors[i] = LightingUtils.applyLightsourceColorTo(
+            vertices[i], 
+            normals[i],
+            FeynColor.black.getRGBA());
       }
     }
 

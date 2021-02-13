@@ -46,12 +46,12 @@ public class Crystal extends Demo3d {
   protected void initialize() {
     super.initialize(); 
     
-    setBackgroundColor(FeynColor.aliceBlue);
+    setBackgroundColor(FeynColor.black);
     
     Model3dUtils.setOptions(
         obj, 
         Set.of(RenderOptions3d.Option.gouraudShaded), 
-        Set.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of());
     
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);

@@ -1,5 +1,9 @@
 package rcs.feyn.three.optics;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.function.Predicate;
+
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.linalg.Matrix44;
@@ -75,5 +79,11 @@ public class LightingUtils {
       }
     }
     return color;
+  }
+  
+  public static final boolean hasColoredLightsources() {
+    return Arrays.stream(FeynApp3d.getDiffuseLightSources())
+        .map(DiffuseLightSource3d::getColor)
+        .anyMatch(Predicate.not(Objects::isNull));
   }
 }

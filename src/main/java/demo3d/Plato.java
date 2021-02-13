@@ -79,10 +79,10 @@ public class Plato extends Demo3d {
       Model3d solid = solids[i];
       FeynApp3d.getRepository().add(solid); 
       solid.translate(Vector3d.fromSpherical(3, i*deg, 0));
-      for (Model3dFace face : solid.getFaces()) { 
-        face.getRenderOptions().enable(RenderOptions3d.Option.gouraudShaded);
-        face.getRenderOptions().disable(RenderOptions3d.Option.cullIfBackface);
-      }
+      Model3dUtils.setOptions(
+          solid, 
+          Set.of(RenderOptions3d.Option.flatShaded), 
+          Set.of(RenderOptions3d.Option.applyLightingColor, RenderOptions3d.Option.gouraudShaded));
     }
   } 
 

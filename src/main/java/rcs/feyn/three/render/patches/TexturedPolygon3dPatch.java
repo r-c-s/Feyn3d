@@ -62,7 +62,8 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     }
    
     int[] colors = null;
-    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+        && LightingUtils.hasColoredLightsources()) {
       colors = new int[viewSpaceCoordinates.length];
       for (int i = 0; i < colors.length; i++) {
         if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {

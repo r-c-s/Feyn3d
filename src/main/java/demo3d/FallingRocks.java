@@ -93,8 +93,8 @@ public class FallingRocks extends Demo3d {
   	
   	Model3dUtils.setOptions(
   			rock, 
-  			Set.of(RenderOptions3d.Option.gouraudShaded), 
-  			Set.of(RenderOptions3d.Option.cullIfBackface));
+  			Set.of(RenderOptions3d.Option.flatShaded), 
+  			Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.applyLightingColor));
   	
   	Model3dUtils.deform(rock, 0.1);
 

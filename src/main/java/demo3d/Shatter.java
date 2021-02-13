@@ -1,6 +1,7 @@
 package demo3d;
 
 import java.io.Serial;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
@@ -14,6 +15,7 @@ import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
+import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Shatter extends Demo3d {
 
@@ -48,6 +50,10 @@ public class Shatter extends Demo3d {
     objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
       FeynApp3d.getRepository().add(model);
+      Model3dUtils.setOptions(
+          model, 
+          Set.of(RenderOptions3d.Option.flatShaded), 
+          Set.of(RenderOptions3d.Option.applyLightingColor, RenderOptions3d.Option.gouraudShaded));
     }
     
     x.setColor(FeynColor.red);
