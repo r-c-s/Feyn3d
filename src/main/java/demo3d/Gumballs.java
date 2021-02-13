@@ -20,12 +20,13 @@ import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynArray;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.Vector3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Gumballs extends Demo3d {  
 
@@ -80,8 +81,8 @@ public class Gumballs extends Demo3d {
 
       Model3dUtils.setOptions(
           sphere, 
-          Set.of(RenderOptions3d.Option.flatShaded, RenderOptions3d.Option.applyLightingColor), 
-          Set.of(RenderOptions3d.Option.gouraudShaded));
+          Set.of(flatShaded, applyLightingColor), 
+          Set.of(gouraudShaded));
 
       spheres.add(sphere);
     }
@@ -90,15 +91,15 @@ public class Gumballs extends Demo3d {
     cube.getOuterBoundingObject().inverse();
     Model3dUtils.setOptions(
         cube,
-        Set.of(RenderOptions3d.Option.meshOnly), 
-        Set.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of(meshOnly), 
+        Set.of(cullIfBackface));
     
     FeynApp3d.getRepository().add(cube);
     FeynApp3d.getRepository().add(spheres);
 
-    x.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
-    y.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
-    z.getRenderOptions().disable(RenderOptions3d.Option.applyLightingColor);
+    x.getRenderOptions().disable(applyLightingColor);
+    y.getRenderOptions().disable(applyLightingColor);
+    z.getRenderOptions().disable(applyLightingColor);
     
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);

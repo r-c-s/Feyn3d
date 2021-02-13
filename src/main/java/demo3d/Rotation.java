@@ -12,11 +12,12 @@ import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.Matrices;
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Rotation extends Demo3d {
 
@@ -73,8 +74,8 @@ public class Rotation extends Demo3d {
     
     obj.setColor(FeynColor.white);
     for (Model3dFace face : obj.getFaces()) {
-      face.getRenderOptions().enable(RenderOptions3d.Option.cullIfBackface);
-      face.getRenderOptions().enable(RenderOptions3d.Option.gouraudShaded);
+      face.getRenderOptions().enable(cullIfBackface);
+      face.getRenderOptions().enable(gouraudShaded);
     }
     
     up.setColor(FeynColor.green);

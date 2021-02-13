@@ -15,7 +15,8 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Shatter extends Demo3d {
 
@@ -48,8 +49,8 @@ public class Shatter extends Demo3d {
       FeynApp3d.getRepository().add(model);
       Model3dUtils.setOptions(
           model, 
-          Set.of(RenderOptions3d.Option.flatShaded), 
-          Set.of(RenderOptions3d.Option.applyLightingColor, RenderOptions3d.Option.gouraudShaded));
+          Set.of(flatShaded), 
+          Set.of(applyLightingColor, gouraudShaded));
     }
     
     x.setColor(FeynColor.red);

@@ -20,11 +20,12 @@ import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.AnimationTimer;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class CollidingRocks extends Demo3d {
 
@@ -95,8 +96,8 @@ public class CollidingRocks extends Demo3d {
   	
   	Model3dUtils.setOptions(
   	    rock, 
-  	    EnumSet.of(RenderOptions3d.Option.gouraudShaded), 
-  	    EnumSet.of(RenderOptions3d.Option.cullIfBackface));
+  	    EnumSet.of(gouraudShaded), 
+  	    EnumSet.of(cullIfBackface));
   	
   	Model3dUtils.deform(rock, 0.1);
   	rock.setColor(FeynColor.rosyBrown);
@@ -148,7 +149,7 @@ public class CollidingRocks extends Demo3d {
       for (var shard : newShards) {
         Model3dUtils.setOptions(
             shard, 
-            Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+            Set.of(gouraudShaded, bothSidesShaded), 
             Set.of());
         double speed = rock.getVelocity().length();
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);

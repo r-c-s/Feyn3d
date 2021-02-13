@@ -16,11 +16,12 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.AnimationTimer;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class FallingRocks extends Demo3d {
 
@@ -54,7 +55,7 @@ public class FallingRocks extends Demo3d {
 
     Model3dUtils.setOptions(
         ground, 
-        Set.of(RenderOptions3d.Option.meshOnly), 
+        Set.of(meshOnly), 
         Set.of());
     
     FeynApp3d.getRepository().add(ground);
@@ -88,8 +89,8 @@ public class FallingRocks extends Demo3d {
   	
   	Model3dUtils.setOptions(
   			rock, 
-  			Set.of(RenderOptions3d.Option.flatShaded), 
-  			Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.applyLightingColor));
+  			Set.of(flatShaded), 
+  			Set.of(gouraudShaded, applyLightingColor));
   	
   	Model3dUtils.deform(rock, 0.1);
 
@@ -137,7 +138,7 @@ public class FallingRocks extends Demo3d {
   	for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
-          Set.of(RenderOptions3d.Option.gouraudShaded, RenderOptions3d.Option.bothSidesShaded), 
+          Set.of(gouraudShaded, bothSidesShaded), 
           Set.of());
   		shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
 			shard.setVelocity(

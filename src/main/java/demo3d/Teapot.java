@@ -14,10 +14,11 @@ import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.Matrices;
 import rcs.feyn.math.Vector3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Teapot extends Demo3d { 
 
@@ -48,8 +49,8 @@ public class Teapot extends Demo3d {
     
     Model3dUtils.setOptions(
         teapot, 
-        Set.of(RenderOptions3d.Option.gouraudShaded),
-        Set.of(RenderOptions3d.Option.cullIfBackface));
+        Set.of(gouraudShaded),
+        Set.of(cullIfBackface));
     
     FeynApp3d.getRepository().add(teapot);
     
@@ -90,7 +91,7 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_G)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
-        face.getRenderOptions().toggle(RenderOptions3d.Option.gouraudShaded);
+        face.getRenderOptions().toggle(gouraudShaded);
       }
     }
     if (keyHasBeenPressed(KeyEvent.VK_A)) {
@@ -99,17 +100,17 @@ public class Teapot extends Demo3d {
         Model3dTexturedFace texturedFace = (Model3dTexturedFace) face;
         if (texturedFace.getAlpha() == 255) {
           texturedFace.setAlpha(200);
-          face.getRenderOptions().disable(RenderOptions3d.Option.cullIfBackface);
+          face.getRenderOptions().disable(cullIfBackface);
         } else {
           texturedFace.setAlpha(255);
-          face.getRenderOptions().enable(RenderOptions3d.Option.cullIfBackface);
+          face.getRenderOptions().enable(cullIfBackface);
         }
       }
     }
     if (keyHasBeenPressed(KeyEvent.VK_M)) { 
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
-        face.getRenderOptions().toggle(RenderOptions3d.Option.meshOnly);
+        face.getRenderOptions().toggle(meshOnly);
       }
     }
     if (keyHasBeenPressed(KeyEvent.VK_S)) {
@@ -119,7 +120,7 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
-        face.getRenderOptions().toggle(RenderOptions3d.Option.applyLightingColor);
+        face.getRenderOptions().toggle(applyLightingColor);
       }
     }
   }

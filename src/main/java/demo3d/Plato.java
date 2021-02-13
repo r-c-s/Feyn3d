@@ -12,9 +12,10 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.Vector3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Plato extends Demo3d { 
 
@@ -76,8 +77,8 @@ public class Plato extends Demo3d {
       solid.translate(Vector3d.fromSpherical(3, i*deg, 0));
       Model3dUtils.setOptions(
           solid, 
-          Set.of(RenderOptions3d.Option.flatShaded), 
-          Set.of(RenderOptions3d.Option.gouraudShaded));
+          Set.of(flatShaded), 
+          Set.of(gouraudShaded));
     }
   } 
 
@@ -92,7 +93,7 @@ public class Plato extends Demo3d {
       Model3dUtils.setOptions(
           solid, 
           Set.of(), 
-          Set.of(RenderOptions3d.Option.gouraudShaded)); 
+          Set.of(gouraudShaded)); 
     }
   }
 

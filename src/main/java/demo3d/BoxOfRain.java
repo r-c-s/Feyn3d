@@ -10,10 +10,11 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.entities.primitives.Polygon3d;
 import rcs.feyn.three.kernel.FeynApp3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class BoxOfRain extends Demo3d {
 
@@ -101,7 +102,7 @@ public class BoxOfRain extends Demo3d {
 		var wave = Polygon3d.regularPolygon(0.1, 10);
 		wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
 		wave.setColor(FeynColor.white.fadeTo(0.9));
-		wave.getRenderingOptions().enable(RenderOptions3d.Option.meshOnly);
+		wave.getRenderingOptions().enable(meshOnly);
 		waves.add(wave);
   }
   

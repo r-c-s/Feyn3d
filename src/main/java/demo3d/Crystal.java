@@ -12,7 +12,8 @@ import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.RenderOptions3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Crystal extends Demo3d {
 
@@ -35,7 +36,7 @@ public class Crystal extends Demo3d {
     
     Model3dUtils.setOptions(
         crystal, 
-        Set.of(RenderOptions3d.Option.gouraudShaded), 
+        Set.of(gouraudShaded), 
         Set.of());
 
     FeynApp3d.getRepository().add(crystal);
