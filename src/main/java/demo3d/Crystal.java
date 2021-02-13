@@ -29,7 +29,6 @@ public class Crystal extends Demo3d {
 
   private final Model3d obj = Model3dFactory
       .icosphere(0.6, 2)
-      .setColor(FeynColor.darkSeaGreen)
       .setTextureData(
           Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/crystaltexture.jpg"),
           255,
