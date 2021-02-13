@@ -19,7 +19,7 @@ public class Point3dPatch extends Patch3d {
   }
 
   @Override
-  protected Vector3d getCenter() {
+  public Vector3d getCenter() {
     return point;
   }
 

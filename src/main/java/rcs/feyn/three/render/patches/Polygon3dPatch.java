@@ -24,7 +24,7 @@ public class Polygon3dPatch extends Patch3d {
   } 
 
   @Override
-  protected final Vector3d getCenter() {
+  public final Vector3d getCenter() {
     return GeoUtils3d.getCenter(vertices);
   }
   

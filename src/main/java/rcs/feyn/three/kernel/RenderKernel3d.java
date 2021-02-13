@@ -1,13 +1,23 @@
 package rcs.feyn.three.kernel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.render.patches.Patch3d;
 
 public final class RenderKernel3d {
+
+  private static final Comparator<Patch3d> DEPTH_COMPARATOR = (a, b) -> {
+    Vector3d cameraPos = FeynApp3d.getView().getCamera().getPosition();
+    
+    double thisDepth = a.getCenter().distanceSquared(cameraPos);
+    double thatDepth = b.getCenter().distanceSquared(cameraPos);
+    
+    return Double.compare(thisDepth, thatDepth);
+  };
   
   private final Collection<Patch3d> alphaBuffer = new ArrayList<>();
   
@@ -33,21 +43,17 @@ public final class RenderKernel3d {
 	      }
 	    });
     
-    Patch3d[] alphaObjs = alphaBuffer.toArray(new Patch3d[alphaBuffer.size()]);
-    
     try {
-      Arrays.sort(alphaObjs, Patch3d.DEPTH_COMPARATOR);
+      alphaBuffer.stream()
+          .sorted(DEPTH_COMPARATOR)
+          .forEach(patch -> patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix));
     } catch (IllegalArgumentException e) {
       // this error happens once in a while due to unpredictable 
-      // floating-point arithmetic; safe to ignore
+      // comparison of doubles (floating-point arithmetic); safe to ignore
       if (!e.getMessage().equals("Comparison method violates its general contract!")) {
         throw e;
       }
     }
-    
-    for (Patch3d patch : alphaObjs) {
-      patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
-    } 
      
     alphaBuffer.clear();
   }

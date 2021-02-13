@@ -20,7 +20,7 @@ public class Line3dPatch extends Patch3d {
   }
 
   @Override
-  protected Vector3d getCenter() {
+  public Vector3d getCenter() {
     return a.midPoint(b);
   }
 
