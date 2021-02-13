@@ -32,10 +32,6 @@ public class CollidingRocks extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1L; 
   
-  static { 
-    new TrigLookUp(0.1);
-  }
-  
   private XORShift xorShift = XORShift.getInstance();
   
   private FeynCollection<CollidableModel3d> rocks = new FeynLinkedList<>();

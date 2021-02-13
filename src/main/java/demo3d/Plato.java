@@ -7,7 +7,6 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.entities.models.Model3d;
-import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
@@ -15,17 +14,12 @@ import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class Plato extends Demo3d { 
 
 	@Serial
   private static final long serialVersionUID = 1L; 
-  
-  static { 
-    new TrigLookUp(0.1);
-  }
   
   private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/marbletexture.jpg");
   

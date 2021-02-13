@@ -14,7 +14,6 @@ import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrices;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
@@ -23,11 +22,7 @@ public class Rotation extends Demo3d {
 
 	@Serial
   private static final long serialVersionUID = 1L; 
-  
-  static { 
-    new TrigLookUp(0.1);
-  }
-  
+	
   private Model3d obj = Model3dFactory.dodecahedron(0.25).setColor(FeynColor.white).build();
   
   private Line3d up = new Line3d(Vector3d.ZERO, obj.getUpVector());

@@ -2,12 +2,10 @@ package demo3d;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
-import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gfx.Raster;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
@@ -17,16 +15,11 @@ import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
-import rcs.feyn.three.render.renderers.RenderOptions3d;
 
 public class Texture extends Demo3d {
 
 	@Serial
   private static final long serialVersionUID = 1L;
-  
-  static { 
-    new TrigLookUp(0.1);
-  }
 
 	String[] textureFiles = {
 			System.getProperty("user.dir") + "/textures/texture.jpg",

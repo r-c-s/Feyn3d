@@ -22,12 +22,8 @@ import rcs.feyn.math.linalg.Vector3d;
 public class Teapot extends Demo3d { 
 
 	@Serial
-  private static final long serialVersionUID = 1L; 
-  
-  static { 
-    new TrigLookUp(0.01);
-  }
-  
+  private static final long serialVersionUID = 1;
+	
   private String teapotObjFilePath = System.getProperty("user.dir") + "/objfiles/teapot.obj";
 
   private Model3d teapot = new Model3dBuilder()

@@ -4,7 +4,6 @@ import java.io.Serial;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
@@ -19,11 +18,7 @@ import rcs.feyn.utils.struct.FeynLinkedList;
 public class BoxOfRain extends Demo3d {
 
 	@Serial
-  private static final long serialVersionUID = 1L; 
-  
-  static { 
-    new TrigLookUp(0.1);
-  }
+  private static final long serialVersionUID = 1L;
   
   private XORShift xorShift = XORShift.getInstance();
   

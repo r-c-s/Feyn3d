@@ -18,10 +18,6 @@ public class Vortex extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1L; 
   
-  static { 
-    new TrigLookUp(0.1);
-  }
-  
   private Curve3d curve = new Curve3d(
       (r, t) -> { 
         r = 2*(r-0.5);

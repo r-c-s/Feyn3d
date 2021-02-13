@@ -27,10 +27,6 @@ public class FallingRocks extends Demo3d {
 
 	@Serial
   private static final long serialVersionUID = 1L; 
-  
-  static { 
-    new TrigLookUp(0.1);
-  }
 
   private Raster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
   

@@ -22,10 +22,6 @@ public class Shatter extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1L;
   
-  static { 
-    new TrigLookUp(0.1);
-  }  
-  
   private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture5.jpg");
   
   private Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);

@@ -9,23 +9,26 @@ import rcs.feyn.three.view.ViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Matrix44;
 import rcs.feyn.math.linalg.Vector3d;
 
 public class FeynApp3d {
+  
+  static { 
+    new TrigLookUp(0.1);
+  }
  
-  private static final ViewFrustum3d viewFrustum =
-      new ViewFrustum3d(0, 0,  0.01, 1000);
+  private static final ViewFrustum3d viewFrustum = new ViewFrustum3d(0, 0,  0.01, 1000);
   
-  private static final ObjectRepository3d repository =
-      new ObjectRepository3d();
+  private static final ObjectRepository3d repository = new ObjectRepository3d();
   
-  private static final RenderKernel3d renderKernel =
-      new RenderKernel3d(repository);
+  private static final RenderKernel3d renderKernel = new RenderKernel3d(repository);
   
   private static final Camera3d camera = new Camera3d();
   
   private static List<DiffuseLightSource3d> lightSources = new ArrayList<>();
+  
   private static AmbientLightSource3d ambientLight = new AmbientLightSource3d(1);
 
   public static ViewFrustum3d getViewFrustum() {

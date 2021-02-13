@@ -23,10 +23,6 @@ public class Crystal extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L;
   
-  static { 
-    new TrigLookUp(0.1);
-  }
-  
   private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
