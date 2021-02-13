@@ -2,17 +2,13 @@ package demo3d;
 
 import java.io.Serial;
 import java.util.Set;
-import java.util.function.Function;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
-import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -22,13 +18,9 @@ public class Crystal extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L;
-  
-  private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
-  private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
-  private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
 
   private final Model3d obj = Model3dFactory
-      .icosphere(0.6, 2)
+      .icosphere(1, 2)
       .setTextureData(
           Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/crystaltexture.jpg"),
           255,
@@ -47,20 +39,13 @@ public class Crystal extends Demo3d {
         obj, 
         Set.of(RenderOptions3d.Option.gouraudShaded), 
         Set.of());
-    
-    x.setColor(FeynColor.red);
-    y.setColor(FeynColor.green);
-    z.setColor(FeynColor.blue);
 
     FeynApp3d.getRepository().add(obj);
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);
 
-    camera.translate(0, 0, 2);
+    camera.translate(0, 0, 3);
     
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.4));
+    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1.2)); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
 
     FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     wzc.setAmount(0.2);
@@ -83,15 +68,8 @@ public class Crystal extends Demo3d {
 
     @Override
     public void run() {
-      obj.rotate(Vector3d.Y_AXIS, 0.01);
-      
-      Function<Double, Double> function = ++i % 2 == 0 
-      		? TrigLookUp::sin
-      		: TrigLookUp::cos;
-      
-      double factor = 0.005 * function.apply(i * MathConsts.DEGREES_TO_RADIANS);
-      		
-      Model3dUtils.deform(obj, factor);
+      obj.rotate(Vector3d.Y_AXIS, 0.005);      		
+      Model3dUtils.deform(obj, 0.005);
     }
   }
 
