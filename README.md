@@ -1,6 +1,6 @@
 ## Feyn
 
-A polygon-based 3D graphics engine in Java
+A polygon-based real-time 3D graphics engine in Java
 
 ### Motivation
 
@@ -32,22 +32,4 @@ The "Hello World" of computer graphics, the Utah Teapot, composed of 530 vertex-
 #### Lit by multiple colored light sources
 ![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1613182577701.png)
 
-<br>
-
-A little more complex one: a mini-Cooper with 44436 vertex-normal pairs and 79759 faces.
-
-#### Gouraud-shaded
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430876695149.png)
-
-#### Flat-shaded
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430876765616.png)
-
-#### Mesh
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430876698716.png)
-
-#### Transparent
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430876716462.png)
-
-<br>
-
-Coordinate data of the above models were taken from http://people.sc.fsu.edu/~jburkardt/data/obj/obj.html.
+Coordinates taken from http://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
