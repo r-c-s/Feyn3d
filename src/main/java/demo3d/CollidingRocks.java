@@ -50,7 +50,7 @@ public class CollidingRocks extends Demo3d {
     
     super.setBackgroundColor(FeynColor.black);
     
-    FeynApp3d.getCamera().translate(0, 0, 10);
+    camera.translate(0, 0, 10);
     
     FeynApp3d.getRepository().add(rocks);
     FeynApp3d.getRepository().add(shards);

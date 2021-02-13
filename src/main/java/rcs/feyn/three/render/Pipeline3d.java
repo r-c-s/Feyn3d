@@ -4,6 +4,7 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.math.Vector4d;
 import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.view.ViewFrustum3d;
 
 public final class Pipeline3d {  
   
@@ -20,17 +21,19 @@ public final class Pipeline3d {
   }
 
   public static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
-    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
+    ViewFrustum3d viewFrustum = FeynApp3d.getView().getViewFrustum();
+    if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[]{};
     }
-    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices);
+    return viewFrustum.clipToNearPlane(vertices);
   }
 
   public static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
-    if (FeynApp3d.getViewFrustum().triviallyNotVisible(vertices)) {
+    ViewFrustum3d viewFrustum = FeynApp3d.getView().getViewFrustum();
+    if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
     }
-    return FeynApp3d.getViewFrustum().clipToNearPlane(vertices, normals);
+    return viewFrustum.clipToNearPlane(vertices, normals);
   }
   
   public static Vector3d[] getDeviceCoordinates(Vector3d[] vertices, Matrix44 projection, Matrix44 viewPort) {

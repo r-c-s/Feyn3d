@@ -13,7 +13,7 @@ import rcs.feyn.math.Vector3d;
 public abstract class Patch3d extends AbstractColorable { 
   
   public static final Comparator<Patch3d> DEPTH_COMPARATOR = (a, b) -> {
-    Vector3d cameraPos = FeynApp3d.getCamera().getPosition();
+    Vector3d cameraPos = FeynApp3d.getView().getCamera().getPosition();
     
     double thisDepth = a.getCenter().distanceSquared(cameraPos);
     double thatDepth = b.getCenter().distanceSquared(cameraPos);

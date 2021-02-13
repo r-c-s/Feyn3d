@@ -48,7 +48,7 @@ public class FallingRocks extends Demo3d {
     
     super.setBackgroundColor(FeynColor.white);
     
-    FeynApp3d.getCamera().translate(0, 4, 10);
+    camera.translate(0, 4, 10);
     
     ground.setColor(FeynColor.darkOliveGreen);
 

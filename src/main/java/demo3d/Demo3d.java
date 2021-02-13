@@ -14,7 +14,7 @@ public class Demo3d extends AnimationCanvas3d {
 	@Serial
   private static final long serialVersionUID = 1L;
   
-  protected Camera3d camera = FeynApp3d.getCamera();
+  protected Camera3d camera = FeynApp3d.getView().getCamera();
   protected DragRotateObject drc = new DragRotateObject(camera, Vector3d.ZERO, 0.005);
   protected WheelZoomCamera  wzc = new WheelZoomCamera(camera, 10);
 

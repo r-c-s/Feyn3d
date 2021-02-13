@@ -83,6 +83,6 @@ public class Polygon3dPatch extends Patch3d {
     return !options.isEnabled(RenderOptions3d.Option.meshOnly)
         && options.isEnabled(RenderOptions3d.Option.cullIfBackface) 
         && !color.isTransparent()
-        && ViewUtils.isBackFace(FeynApp3d.getCamera().getPosition(), center, normal);
+        && ViewUtils.isBackFace(FeynApp3d.getView().getCamera().getPosition(), center, normal);
   }
 }

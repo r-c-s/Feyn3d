@@ -25,11 +25,11 @@ public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
 
   @Override
   protected void setWidth(int width) {
-      FeynApp3d.getViewFrustum().setWidth(width);
+      FeynApp3d.getView().getViewFrustum().setWidth(width);
   }
 
   @Override
   protected void setHeight(int height) {
-      FeynApp3d.getViewFrustum().setHeight(height);
+      FeynApp3d.getView().getViewFrustum().setHeight(height);
   }
 }

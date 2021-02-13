@@ -39,7 +39,7 @@ public class BoxOfRain extends Demo3d {
     
     super.setBackgroundColor(FeynColor.black);
     
-    FeynApp3d.getCamera().translate(0, 4, 10);
+    camera.translate(0, 4, 10);
     
     ground.setColor(FeynColor.blueViolet);
     
