@@ -19,7 +19,7 @@ public class Crystal extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L;
 
-  private final Model3d obj = Model3dFactory
+  private final Model3d crystal = Model3dFactory
       .icosphere(1, 2)
       .setTextureData(
           Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/crystaltexture.jpg"),
@@ -34,11 +34,11 @@ public class Crystal extends Demo3d {
     setBackgroundColor(FeynColor.black);
     
     Model3dUtils.setOptions(
-        obj, 
+        crystal, 
         Set.of(RenderOptions3d.Option.gouraudShaded), 
         Set.of());
 
-    FeynApp3d.getRepository().add(obj);
+    FeynApp3d.getRepository().add(crystal);
 
     camera.translate(0, 0, 3);
     
@@ -57,8 +57,8 @@ public class Crystal extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    obj.rotate(Vector3d.Y_AXIS, 0.005);         
-    Model3dUtils.deform(obj, 0.005);
+    crystal.rotate(Vector3d.Y_AXIS, 0.005);         
+    Model3dUtils.deform(crystal, 0.005);
   }
 
   public static void main(String[] args) {
