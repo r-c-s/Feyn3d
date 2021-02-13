@@ -11,6 +11,7 @@ public class Model3dTexturedFace extends Model3dFace {
   private int alpha;
   private double zoom;
   
+  private Raster lastTextureDate;
   private int lastAlpha;
   
   public Model3dTexturedFace(int[] indices, Raster textureData) {
@@ -29,6 +30,7 @@ public class Model3dTexturedFace extends Model3dFace {
   }
   
   public void setTextureData(Raster textureData) {
+    this.lastTextureDate = textureData;
     this.textureData = textureData;
   }
   
@@ -72,6 +74,8 @@ public class Model3dTexturedFace extends Model3dFace {
   
   @Override
   protected boolean matchesLastPatch(Model3dVertices vertices) {
-    return alpha == lastAlpha && super.matchesLastPatch(vertices);
+    return textureData == lastTextureDate 
+        && alpha == lastAlpha 
+        && super.matchesLastPatch(vertices);
   }
 }
