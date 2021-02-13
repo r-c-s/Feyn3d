@@ -1,7 +1,7 @@
 package rcs.feyn.three.geo;
 
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Segment3d implements Movable3d, Transformable3d {
   

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.math.MathConsts;
 

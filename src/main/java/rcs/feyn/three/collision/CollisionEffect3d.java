@@ -1,7 +1,7 @@
 package rcs.feyn.three.collision;
 
-import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.math.linalg.Vector3d.ImmutableVector3d;
+import rcs.feyn.math.Vector3d;
+import rcs.feyn.math.Vector3d.ImmutableVector3d;
 
 public class CollisionEffect3d {
   

@@ -1,7 +1,7 @@
 package rcs.feyn.three.render.renderers;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 
 public class Polygon3dRenderer {

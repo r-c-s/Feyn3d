@@ -4,10 +4,10 @@ import java.io.Serial;
 
 import rcs.feyn.event.DragRotateObject;
 import rcs.feyn.event.WheelZoomCamera;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gui.AnimationCanvas3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.view.Camera3d;
-import rcs.feyn.math.linalg.Vector3d;
 
 public class Demo3d extends AnimationCanvas3d { 
 

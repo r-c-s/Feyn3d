@@ -1,8 +1,8 @@
 package rcs.feyn.three.geo;
 
-import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.Vector3d;
 
 public class GeoUtils3d {
   

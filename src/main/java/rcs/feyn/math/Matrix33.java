@@ -1,7 +1,4 @@
-package rcs.feyn.math.linalg;
-
-import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.MathUtils;
+package rcs.feyn.math;
 
 public class Matrix33 { 
   

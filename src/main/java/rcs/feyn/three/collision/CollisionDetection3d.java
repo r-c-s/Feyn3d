@@ -1,6 +1,6 @@
 package rcs.feyn.three.collision;
 
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.geo.Plane3d;
 
 public class CollisionDetection3d {

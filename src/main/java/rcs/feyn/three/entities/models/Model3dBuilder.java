@@ -12,8 +12,8 @@ import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.collision.models.ComplexCollidableModel3d;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.utils.ArrayUtils;
 import rcs.feyn.utils.StringUtils;
 

@@ -4,8 +4,8 @@ import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.entities.Sprite3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Model3d extends Sprite3d implements Renderable3d {
   

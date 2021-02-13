@@ -1,7 +1,7 @@
 package rcs.feyn.three.collision;
 
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.math.MathConsts;
 
 public class ElasticCollision3d implements CollisionHandler3d<Collidable3d, Collidable3d> {

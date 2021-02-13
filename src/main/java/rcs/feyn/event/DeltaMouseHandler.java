@@ -3,7 +3,7 @@ package rcs.feyn.event;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import rcs.feyn.math.linalg.Vector2d;
+import rcs.feyn.math.Vector2d;
 
 public class DeltaMouseHandler implements MouseMotionListener {
 

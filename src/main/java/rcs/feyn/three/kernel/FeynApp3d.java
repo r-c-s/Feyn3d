@@ -9,9 +9,9 @@ import rcs.feyn.three.view.ViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public class FeynApp3d {
   

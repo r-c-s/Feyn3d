@@ -1,9 +1,9 @@
 package rcs.feyn.three.entities.primitives;
 
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.render.patches.Line3dPatch;
 import rcs.feyn.three.render.patches.Patch3d;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
 
 public class Line3d extends Primitive3d {
   

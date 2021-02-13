@@ -3,8 +3,8 @@ package rcs.feyn.three.entities.models;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.geo.Movable3d;
 import rcs.feyn.three.geo.Transformable3d;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.physics.PhysicsUtils;
 
 public class Model3dVertices implements Movable3d, Transformable3d {

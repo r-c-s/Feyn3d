@@ -10,7 +10,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.collision.models.CollidableModel3d;
 import rcs.feyn.three.collision.models.ComplexCollidableModel3d;

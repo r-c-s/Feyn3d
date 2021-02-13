@@ -1,6 +1,6 @@
 package rcs.feyn.physics;
 
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public final class PhysicsUtils {
 

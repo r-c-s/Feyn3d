@@ -25,7 +25,7 @@ import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynArray;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public class Gumballs extends Demo3d {  
 

@@ -11,8 +11,8 @@ import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Polygon3dPatch extends Patch3d {
   

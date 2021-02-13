@@ -7,8 +7,8 @@ import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.color.AbstractColorable;
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public abstract class Patch3d extends AbstractColorable { 
   

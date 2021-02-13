@@ -1,6 +1,5 @@
-package rcs.feyn.math.linalg;
+package rcs.feyn.math;
 
-import rcs.feyn.math.MathUtils;
 import rcs.feyn.three.geo.Transformable3d;
 
 

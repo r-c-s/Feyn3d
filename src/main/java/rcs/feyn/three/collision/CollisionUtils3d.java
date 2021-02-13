@@ -2,7 +2,7 @@ package rcs.feyn.three.collision;
 
 import java.util.function.Consumer;
 
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynGarbageCollectable;
 

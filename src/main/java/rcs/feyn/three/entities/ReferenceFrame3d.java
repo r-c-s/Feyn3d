@@ -1,7 +1,7 @@
 package rcs.feyn.three.entities;
 
-import rcs.feyn.math.linalg.Basis3d;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Basis3d;
+import rcs.feyn.math.Vector3d;
 
 public class ReferenceFrame3d extends Basis3d {
   

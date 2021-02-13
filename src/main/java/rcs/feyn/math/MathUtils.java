@@ -1,6 +1,5 @@
 package rcs.feyn.math;
 
-import rcs.feyn.math.linalg.Vector3d;
 import rcs.feyn.math.MathConsts;
 
 public final class MathUtils {

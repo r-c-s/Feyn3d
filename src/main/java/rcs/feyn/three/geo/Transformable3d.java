@@ -1,6 +1,6 @@
 package rcs.feyn.three.geo;
 
-import rcs.feyn.math.linalg.Matrix44;
+import rcs.feyn.math.Matrix44;
 
 public interface Transformable3d {
   

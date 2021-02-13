@@ -1,7 +1,7 @@
 package rcs.feyn.event;
 
-import rcs.feyn.math.linalg.Vector2d;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector2d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.entities.Particle3d;
 
 public class DragRotateObject implements DeltaMouseListener {

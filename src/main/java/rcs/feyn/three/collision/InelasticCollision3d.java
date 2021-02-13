@@ -1,7 +1,7 @@
 package rcs.feyn.three.collision;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public class InelasticCollision3d extends ElasticCollision3d {
   

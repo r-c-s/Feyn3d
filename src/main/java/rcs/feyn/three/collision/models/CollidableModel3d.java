@@ -1,7 +1,7 @@
 package rcs.feyn.three.collision.models;
 
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.collision.BoundingObject3d;
 import rcs.feyn.three.collision.Collidable3d;
 import rcs.feyn.three.entities.models.Model3d;

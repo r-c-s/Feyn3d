@@ -1,6 +1,4 @@
-package rcs.feyn.math.linalg;
-
-import rcs.feyn.math.TrigLookUp;
+package rcs.feyn.math;
 
 public class Matrices {
   

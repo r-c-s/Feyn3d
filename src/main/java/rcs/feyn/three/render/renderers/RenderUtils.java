@@ -1,6 +1,6 @@
 package rcs.feyn.three.render.renderers;
 
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.utils.HexaConsumer;
 import rcs.feyn.utils.TriConsumer;
 

@@ -1,6 +1,6 @@
 package rcs.feyn.event;
 
-import rcs.feyn.math.linalg.Vector2d;
+import rcs.feyn.math.Vector2d;
 
 public interface DeltaMouseListener {
 

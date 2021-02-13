@@ -14,7 +14,7 @@ import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public class Plato extends Demo3d { 
 

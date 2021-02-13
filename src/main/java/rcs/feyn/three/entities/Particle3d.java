@@ -1,9 +1,9 @@
 package rcs.feyn.three.entities;
 
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.linalg.Matrices;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrices;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Particle3d implements IParticle3d {
   

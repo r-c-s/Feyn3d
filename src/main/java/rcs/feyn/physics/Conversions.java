@@ -1,8 +1,8 @@
 package rcs.feyn.physics;
 
 import rcs.feyn.gui.AbstractAnimationCanvas;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.kernel.FeynEnvironment;
-import rcs.feyn.math.linalg.Vector3d;
 
 public final class Conversions {
 

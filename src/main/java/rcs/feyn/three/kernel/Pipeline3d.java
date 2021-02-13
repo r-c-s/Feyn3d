@@ -1,8 +1,8 @@
 package rcs.feyn.three.kernel;
 
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
-import rcs.feyn.math.linalg.Vector4d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
+import rcs.feyn.math.Vector4d;
 
 public final class Pipeline3d {  
   

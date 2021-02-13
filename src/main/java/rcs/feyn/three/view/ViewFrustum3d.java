@@ -1,7 +1,7 @@
 package rcs.feyn.three.view;
 
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.geo.Plane3d;
 import rcs.feyn.math.MathConsts;

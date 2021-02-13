@@ -14,9 +14,9 @@ import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.math.MathConsts;
-import rcs.feyn.math.linalg.Matrices;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrices;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Rotation extends Demo3d {
 

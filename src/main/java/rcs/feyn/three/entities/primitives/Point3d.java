@@ -1,8 +1,8 @@
 package rcs.feyn.three.entities.primitives;
 
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.three.render.patches.Point3dPatch;
-import rcs.feyn.math.linalg.Vector3d;
 
 public class Point3d extends Primitive3d {
 	

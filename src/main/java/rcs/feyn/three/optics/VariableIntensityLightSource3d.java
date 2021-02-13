@@ -1,8 +1,8 @@
 package rcs.feyn.three.optics;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class VariableIntensityLightSource3d extends ConstantLightSource3d {
 	

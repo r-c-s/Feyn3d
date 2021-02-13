@@ -5,7 +5,7 @@ import rcs.feyn.physics.Conversions;
 import rcs.feyn.physics.Gravity1d;
 import rcs.feyn.physics.PhysicsConsts;
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 public class FeynEnvironment {
 

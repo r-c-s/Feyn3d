@@ -11,8 +11,8 @@ import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
 import java.util.Optional;
 
 import rcs.feyn.color.FeynColor;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class TexturedPolygon3dPatch extends Polygon3dPatch {
   

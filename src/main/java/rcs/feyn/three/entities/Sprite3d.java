@@ -1,8 +1,8 @@
 package rcs.feyn.three.entities;
 
+import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.utils.struct.FeynGarbageCollectable;
-import rcs.feyn.math.linalg.Vector3d;
 
 public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynGarbageCollectable {
   

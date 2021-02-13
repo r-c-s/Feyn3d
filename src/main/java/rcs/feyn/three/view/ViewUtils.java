@@ -1,7 +1,7 @@
 package rcs.feyn.three.view;
 
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class ViewUtils {
 

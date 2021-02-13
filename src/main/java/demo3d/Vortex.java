@@ -5,7 +5,7 @@ import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.anim.Curve3d;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.math.TrigLookUp;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Vector3d;
 
 import static rcs.feyn.math.MathConsts.PI;
 import static rcs.feyn.math.MathConsts.HALF_PI;

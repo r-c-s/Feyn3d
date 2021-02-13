@@ -9,8 +9,8 @@ import rcs.feyn.three.render.renderers.RenderOptions3d;
 import rcs.feyn.utils.TriFunction;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;
-import rcs.feyn.math.linalg.Matrix44;
-import rcs.feyn.math.linalg.Vector3d;
+import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector3d;
 
 public class Curve3d extends Sprite3d { 
   
