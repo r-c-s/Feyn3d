@@ -27,8 +27,6 @@ public class Crystal extends Demo3d {
           2.5)
       .build();
   
-  private final Runnable blobAnimation = new BlobAnimation();
-  
   @Override
   protected void initialize() {
     super.initialize(); 
@@ -59,18 +57,8 @@ public class Crystal extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    blobAnimation.run();
-  }  
-  
-  private class BlobAnimation implements Runnable {
-    
-    private int i = 0;
-
-    @Override
-    public void run() {
-      obj.rotate(Vector3d.Y_AXIS, 0.005);      		
-      Model3dUtils.deform(obj, 0.005);
-    }
+    obj.rotate(Vector3d.Y_AXIS, 0.005);         
+    Model3dUtils.deform(obj, 0.005);
   }
 
   public static void main(String[] args) {
