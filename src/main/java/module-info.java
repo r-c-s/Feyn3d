@@ -3,13 +3,10 @@ module feyn3d {
 
     exports rcs.feyn.color;
     exports rcs.feyn.event;
-    exports rcs.feyn.gfx;
     exports rcs.feyn.gui;
     exports rcs.feyn.math;
-    exports rcs.feyn.math.linalg;
     exports rcs.feyn.physics;
     exports rcs.feyn.utils.struct;
-    exports rcs.feyn.three;
     exports rcs.feyn.three.anim;
     exports rcs.feyn.three.collision;
     exports rcs.feyn.three.collision.models;
