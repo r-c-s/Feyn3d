@@ -9,6 +9,7 @@ import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dBuilder;
 import rcs.feyn.three.entities.models.Model3dFace;
+import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.kernel.FeynApp3d;
 import rcs.feyn.three.optics.AmbientLightSource3d;
@@ -30,6 +31,10 @@ public class Teapot extends Demo3d {
   		.fromObjFile(teapotObjFilePath)
   		.setColor(FeynColor.white)
   		.addTransform(Matrices.create3dScaleMatrix(0.05))
+  		.setTextureData(Model3dUtils.getImageData(
+  		    System.getProperty("user.dir") + "/textures/porcelaintexture.jpg"),
+  		    255, 
+  		    1)
   		.build();
   
   public Teapot() { }
@@ -49,7 +54,7 @@ public class Teapot extends Demo3d {
     
     FeynApp3d.getRepository().add(teapot);
     
-    camera.translate(0.5, 2, 5.5);
+    camera.translate(0.5, 3, 7);
     camera.rotate(Vector3d.X_AXIS, -20 * MathConsts.DEGREES_TO_RADIANS); 
 
     var lightSourceRed = new VariableIntensityLightSource3d(10, new FeynColor(255, 0, 0));
@@ -59,7 +64,7 @@ public class Teapot extends Demo3d {
     FeynApp3d.addDiffuseLightSource(lightSourceRed);
     FeynApp3d.addDiffuseLightSource(lightSourceGreen);
     
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2)); 
+    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.1)); 
   } 
 
   @Override
@@ -91,16 +96,14 @@ public class Teapot extends Demo3d {
     }
     if (keyHasBeenPressed(KeyEvent.VK_A)) {
       inputDelay = 50;
-      FeynColor color = teapot.getFaces()[0].getColor();
-      if (color.isTransparent()) {
-        teapot.setColor(color.opaque());
-        for (Model3dFace face : teapot.getFaces()) {
-          face.getRenderOptions().enable(RenderOptions3d.Option.cullIfBackface);
-        }
-      } else {
-        teapot.setColor(color.fadeTo(0.5));
-        for (Model3dFace face : teapot.getFaces()) {
+      for (Model3dFace face : teapot.getFaces()) {
+        Model3dTexturedFace texturedFace = (Model3dTexturedFace) face;
+        if (texturedFace.getAlpha() == 255) {
+          texturedFace.setAlpha(200);
           face.getRenderOptions().disable(RenderOptions3d.Option.cullIfBackface);
+        } else {
+          texturedFace.setAlpha(255);
+          face.getRenderOptions().enable(RenderOptions3d.Option.cullIfBackface);
         }
       }
     }

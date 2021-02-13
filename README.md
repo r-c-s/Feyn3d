@@ -26,8 +26,11 @@ The "Hello World" of computer graphics, the Utah Teapot, composed of 530 vertex-
 #### Transparent
 ![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1430877045326.png)
 
-#### Colored by multiple light sources
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1612903780613.png)
+#### Textured
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1613182580709.png)
+
+#### Lit by multiple colored light sources
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1613182580709.png)
 
 <br>
 
