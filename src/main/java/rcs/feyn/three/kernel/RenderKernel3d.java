@@ -34,7 +34,16 @@ public final class RenderKernel3d {
 	    });
     
     Patch3d[] alphaObjs = alphaBuffer.toArray(new Patch3d[alphaBuffer.size()]);
-    Arrays.sort(alphaObjs, Patch3d.DEPTH_COMPARATOR);
+    
+    try {
+      Arrays.sort(alphaObjs, Patch3d.DEPTH_COMPARATOR);
+    } catch (IllegalArgumentException e) {
+      // this error happens once in a while due to unpredictable 
+      // floating-point arithmetic; safe to ignore
+      if (!e.getMessage().equals("Comparison method violates its general contract!")) {
+        throw e;
+      }
+    }
     
     for (Patch3d patch : alphaObjs) {
       patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
