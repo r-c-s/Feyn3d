@@ -77,7 +77,7 @@ public class Plato extends Demo3d {
       Model3dUtils.setOptions(
           solid, 
           Set.of(RenderOptions3d.Option.flatShaded), 
-          Set.of(RenderOptions3d.Option.applyLightingColor, RenderOptions3d.Option.gouraudShaded));
+          Set.of(RenderOptions3d.Option.gouraudShaded));
     }
   } 
 
