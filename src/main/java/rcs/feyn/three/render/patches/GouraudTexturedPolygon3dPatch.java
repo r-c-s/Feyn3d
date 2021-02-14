@@ -51,7 +51,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     // can't clip textured polygons
     
     Vector3d[] deviceCoordinates = Pipeline3d
-        .getDeviceCoordinates(viewVertices, projection, viewPort);
+        .toDeviceCoordinates(viewVertices, projection, viewPort);
     
     int numVerticesAndNormals = viewVertices.length;
     

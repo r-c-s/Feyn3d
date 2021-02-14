@@ -36,7 +36,7 @@ public final class Pipeline3d {
     return viewFrustum.clipToNearPlane(vertices, normals);
   }
   
-  public static Vector3d[] getDeviceCoordinates(Vector3d[] vertices, Matrix44 projection, Matrix44 viewPort) {
+  public static Vector3d[] toDeviceCoordinates(Vector3d[] vertices, Matrix44 projection, Matrix44 viewPort) {
     Vector3d[] ndcVertices = viewToNormalizedDeviceCoordinates(vertices, projection);
     return ndcToDeviceCoordinates(ndcVertices, viewPort);
   }

@@ -33,7 +33,7 @@ public class Line3dPatch extends Patch3d {
       return;
     }
     
-    Vector3d[] deviceCoordinates = Pipeline3d.getDeviceCoordinates(clippedSpaceCoordinates, projection, viewPort);
+    Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(clippedSpaceCoordinates, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
     		? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)

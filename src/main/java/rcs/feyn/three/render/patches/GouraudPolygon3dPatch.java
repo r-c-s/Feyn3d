@@ -54,7 +54,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     }
     
     Vector3d[] deviceCoordinates = Pipeline3d
-        .getDeviceCoordinates(clippedViewVertices, projection, viewPort);
+        .toDeviceCoordinates(clippedViewVertices, projection, viewPort);
   
     int numVerticesAndNormals = clippedViewVertices.length;
     

@@ -43,7 +43,7 @@ public class Polygon3dPatch extends Patch3d {
         .clipViewSpaceCoordinates(viewSpaceCoordinates);
 
     Vector3d[] deviceCoordinates = Pipeline3d
-        .getDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
+        .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {

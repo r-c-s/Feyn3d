@@ -56,7 +56,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     // can't clip textured polygons
 
     Vector3d[] deviceCoordinates = Pipeline3d
-        .getDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
+        .toDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
     if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
