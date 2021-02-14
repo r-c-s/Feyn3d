@@ -13,7 +13,7 @@ public class Model3d extends Sprite3d implements Renderable3d {
   protected Model3dVertices vertices;
   
   private Model3dVertices lastSnapshot;
-  private boolean changedSinceLastSnapshot;
+  private boolean changedSinceLastSnapshot = true;
   
   protected Model3d() { }
 
