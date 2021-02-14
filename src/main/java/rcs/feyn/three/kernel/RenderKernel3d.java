@@ -16,7 +16,11 @@ public final class RenderKernel3d {
     double thisDepth = a.getCenter().distanceSquared(cameraPos);
     double thatDepth = b.getCenter().distanceSquared(cameraPos);
     
-    return Double.compare(thisDepth, thatDepth);
+    return thisDepth < thatDepth 
+        ?  1
+        : thisDepth > thatDepth 
+            ? -1 
+            : 0;
   };
   
   private final Collection<Patch3d> alphaBuffer = new ArrayList<>();
