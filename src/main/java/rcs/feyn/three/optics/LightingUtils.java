@@ -8,7 +8,7 @@ import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 
 public class LightingUtils {
   
@@ -19,10 +19,10 @@ public class LightingUtils {
 
   public static final double computeLightingIntensity(
       Vector3d point, Vector3d normal, Matrix44 view, boolean bothSides) {
-    double ambient = FeynApp3d.getAmbientLight().getIntensity();
+    double ambient = FeynRuntime.getAmbientLight().getIntensity();
     double intensity = ambient;
     
-    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     
     for (int i = 0; i < lightSources.length; i++) {
       double diffuse;
@@ -50,7 +50,7 @@ public class LightingUtils {
   }
   
   public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, Matrix44 view, int objectColor) {
-    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     int color = objectColor;
     for (int i = 0; i < lightSources.length; i++) {
       double intensity;
@@ -70,7 +70,7 @@ public class LightingUtils {
   }
   
   public static final int applyLightsourceColorTo(int objectColor, double intensity) {
-    DiffuseLightSource3d[] lightSources = FeynApp3d.getDiffuseLightSources();
+    DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     int color = objectColor;
     for (int i = 0; i < lightSources.length; i++) {
       FeynColor lsColor = lightSources[i].getColor();
@@ -82,7 +82,7 @@ public class LightingUtils {
   }
   
   public static final boolean hasColoredLightsources() {
-    return Arrays.stream(FeynApp3d.getDiffuseLightSources())
+    return Arrays.stream(FeynRuntime.getDiffuseLightSources())
         .map(DiffuseLightSource3d::getColor)
         .anyMatch(Predicate.not(Objects::isNull));
   }

@@ -17,7 +17,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.utils.AnimationTimer;
@@ -53,13 +53,13 @@ public class CollidingRocks extends Demo3d {
     
     camera.translate(0, 0, 10);
     
-    FeynApp3d.getRepository().add(rocks);
-    FeynApp3d.getRepository().add(shards);
+    FeynRuntime.getRepository().add(rocks);
+    FeynRuntime.getRepository().add(shards);
     
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(new Vector3d(0, 0, 10));
-    FeynApp3d.addDiffuseLightSource(lightSource);
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynRuntime.addDiffuseLightSource(lightSource);
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
   }
 
   @Override

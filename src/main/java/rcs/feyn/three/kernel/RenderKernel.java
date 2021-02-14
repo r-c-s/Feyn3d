@@ -8,10 +8,10 @@ import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.render.patches.Patch3d;
 
-public final class RenderKernel3d {
+public final class RenderKernel {
 
   private static final Comparator<Patch3d> DEPTH_COMPARATOR = (a, b) -> {
-    Vector3d cameraPos = FeynApp3d.getView().getCamera().getPosition();
+    Vector3d cameraPos = FeynRuntime.getView().getCamera().getPosition();
     
     double thisDepth = a.getCenter().distanceSquared(cameraPos);
     double thatDepth = b.getCenter().distanceSquared(cameraPos);
@@ -25,14 +25,14 @@ public final class RenderKernel3d {
   
   private final Collection<Patch3d> alphaBuffer = new ArrayList<>();
   
-  private final ObjectRepository3d repository;
+  private final ObjectRepository repository;
 
-  public RenderKernel3d(ObjectRepository3d repository) {
+  public RenderKernel(ObjectRepository repository) {
     this.repository = repository;
   }
 
   public void renderAll(Graphics3d graphics) {
-    View view = FeynApp3d.getView();
+    View view = FeynRuntime.getView();
     
     var viewMatrix = view.getViewSpaceMatrix();
     var projMatrix = view.getPerspectiveProjectionMatrix();

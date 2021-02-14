@@ -4,14 +4,14 @@ import rcs.feyn.gui.AbstractAnimationCanvas;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Graphics3dSynchronized;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 
 public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
   
   private static final long serialVersionUID = 1L;
 
   static {
-    new FeynApp3d();
+    new FeynRuntime();
   }
 
   public AnimationCanvas3d() {
@@ -20,16 +20,16 @@ public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
 
   @Override
   protected final void render(Graphics3d graphics) {
-    FeynApp3d.getRenderKernel().renderAll((Graphics3d) graphics); 
+    FeynRuntime.getRenderKernel().renderAll((Graphics3d) graphics); 
   }
 
   @Override
   protected void setWidth(int width) {
-      FeynApp3d.getView().getViewFrustum().setWidth(width);
+      FeynRuntime.getView().getViewFrustum().setWidth(width);
   }
 
   @Override
   protected void setHeight(int height) {
-      FeynApp3d.getView().getViewFrustum().setHeight(height);
+      FeynRuntime.getView().getViewFrustum().setHeight(height);
   }
 }

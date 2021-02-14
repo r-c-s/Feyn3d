@@ -13,7 +13,7 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.utils.AnimationTimer;
@@ -58,14 +58,14 @@ public class FallingRocks extends Demo3d {
         Set.of(meshOnly), 
         Set.of());
     
-    FeynApp3d.getRepository().add(ground);
-    FeynApp3d.getRepository().add(rocks);
-    FeynApp3d.getRepository().add(shards);
+    FeynRuntime.getRepository().add(ground);
+    FeynRuntime.getRepository().add(rocks);
+    FeynRuntime.getRepository().add(shards);
     
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(new Vector3d(5, 5, 5));
-    FeynApp3d.addDiffuseLightSource(lightSource);
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynRuntime.addDiffuseLightSource(lightSource);
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
   }
 
   @Override

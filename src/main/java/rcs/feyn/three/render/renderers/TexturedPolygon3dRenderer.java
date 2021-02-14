@@ -7,7 +7,7 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 
 public class TexturedPolygon3dRenderer {
   
@@ -124,7 +124,7 @@ public class TexturedPolygon3dRenderer {
                 // intensity takes into account
                 // the ambient light, so it must be subtracted here
                 // very ugly, needs a better solution
-                intensity - FeynApp3d.getAmbientLight().getIntensity());
+                intensity - FeynRuntime.getAmbientLight().getIntensity());
         	}
 
           source = ColorUtils.setAlphaToRGBA(source, alpha);

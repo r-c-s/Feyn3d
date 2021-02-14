@@ -3,7 +3,7 @@ package demo3d;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.anim.Curve3d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.math.TrigLookUp;
 import rcs.feyn.math.Vector3d;
 
@@ -43,7 +43,7 @@ public class Vortex extends Demo3d {
     
     wzc.setAmount(0.2);
     
-    FeynApp3d.getRepository().add(curve);
+    FeynRuntime.getRepository().add(curve);
     
     camera.translate(0, 0, 3);
   }

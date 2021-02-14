@@ -8,7 +8,7 @@ import java.util.List;
 
 import rcs.feyn.math.TrigLookUp;
 
-public class FeynApp3d {
+public class FeynRuntime {
   
   static { 
     new TrigLookUp(0.1);
@@ -16,9 +16,9 @@ public class FeynApp3d {
   
   private static final View view = new View();
   
-  private static final ObjectRepository3d repository = new ObjectRepository3d();
+  private static final ObjectRepository repository = new ObjectRepository();
   
-  private static final RenderKernel3d renderKernel = new RenderKernel3d(repository);
+  private static final RenderKernel renderKernel = new RenderKernel(repository);
   
   private static List<DiffuseLightSource3d> lightSources = new ArrayList<>();
   
@@ -28,11 +28,11 @@ public class FeynApp3d {
     return view;
   }
   
-  public static RenderKernel3d getRenderKernel() {
+  public static RenderKernel getRenderKernel() {
     return renderKernel;
   }
   
-  public static ObjectRepository3d getRepository() {
+  public static ObjectRepository getRepository() {
     return repository;
   }
 

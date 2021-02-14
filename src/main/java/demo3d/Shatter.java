@@ -12,7 +12,7 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 
@@ -46,7 +46,7 @@ public class Shatter extends Demo3d {
 
     objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
-      FeynApp3d.getRepository().add(model);
+      FeynRuntime.getRepository().add(model);
       Model3dUtils.setOptions(
           model, 
           Set.of(flatShaded), 
@@ -57,14 +57,14 @@ public class Shatter extends Demo3d {
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
     
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);
+    FeynRuntime.getRepository().add(x);
+    FeynRuntime.getRepository().add(y);
+    FeynRuntime.getRepository().add(z);
 
     camera.translate(0, 0, 2);
     
-    FeynApp3d.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);
   }
@@ -77,7 +77,7 @@ public class Shatter extends Demo3d {
   @Override
   public void runningLoop() {
     controlCamera();
-    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
+    FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     shatterAnimation.run();
   }
   

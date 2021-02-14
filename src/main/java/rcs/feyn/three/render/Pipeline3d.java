@@ -3,7 +3,7 @@ package rcs.feyn.three.render;
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.math.Vector4d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.view.ViewFrustum3d;
 
 public final class Pipeline3d {  
@@ -33,7 +33,7 @@ public final class Pipeline3d {
   }
 
   public static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
-    ViewFrustum3d viewFrustum = FeynApp3d.getView().getViewFrustum();
+    ViewFrustum3d viewFrustum = FeynRuntime.getView().getViewFrustum();
     if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[]{};
     }
@@ -41,7 +41,7 @@ public final class Pipeline3d {
   }
 
   public static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
-    ViewFrustum3d viewFrustum = FeynApp3d.getView().getViewFrustum();
+    ViewFrustum3d viewFrustum = FeynRuntime.getView().getViewFrustum();
     if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
     }

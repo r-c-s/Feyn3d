@@ -12,7 +12,7 @@ import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 
@@ -53,15 +53,15 @@ public class Texture extends Demo3d {
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
 
-    FeynApp3d.getRepository().add(obj);
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);
+    FeynRuntime.getRepository().add(obj);
+    FeynRuntime.getRepository().add(x);
+    FeynRuntime.getRepository().add(y);
+    FeynRuntime.getRepository().add(z);
 
     camera.translate(0, 0, 1.5);
     
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.1);
   }
@@ -75,7 +75,7 @@ public class Texture extends Demo3d {
   public void runningLoop() {
     controlCamera();
     handleInput();
-    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
+    FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     objAnimation.run();
   }  
 

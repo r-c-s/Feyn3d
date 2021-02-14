@@ -9,7 +9,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.entities.primitives.Polygon3d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.utils.XORShift;
 import rcs.feyn.utils.struct.FeynCollection;
 import rcs.feyn.utils.struct.FeynLinkedList;
@@ -44,10 +44,10 @@ public class BoxOfRain extends Demo3d {
     
     ground.setColor(FeynColor.blueViolet);
     
-    FeynApp3d.getRepository().add(ground);
-    FeynApp3d.getRepository().add(raindrops);
-    FeynApp3d.getRepository().add(waves);
-    FeynApp3d.getRepository().add(splashes);
+    FeynRuntime.getRepository().add(ground);
+    FeynRuntime.getRepository().add(raindrops);
+    FeynRuntime.getRepository().add(waves);
+    FeynRuntime.getRepository().add(splashes);
   }
 
   @Override

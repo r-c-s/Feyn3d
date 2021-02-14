@@ -9,7 +9,7 @@ import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 
@@ -39,14 +39,14 @@ public class Crystal extends Demo3d {
         Set.of(gouraudShaded), 
         Set.of());
 
-    FeynApp3d.getRepository().add(crystal);
+    FeynRuntime.getRepository().add(crystal);
 
     camera.translate(0, 0, 3);
     
-    FeynApp3d.addDiffuseLightSource(new ConstantLightSource3d(1.2)); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1.2)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
 
-    FeynApp3d.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
+    FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     wzc.setAmount(0.2);
   }
 

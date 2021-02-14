@@ -9,7 +9,7 @@ import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.utils.struct.DoublyLinkedList;
 
-public class ObjectRepository3d {
+public class ObjectRepository {
 
   private final DoublyLinkedList<Renderable3d>
     singleObjects = new DoublyLinkedList<>();

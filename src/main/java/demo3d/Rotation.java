@@ -9,7 +9,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.primitives.Line3d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
 import rcs.feyn.math.MathConsts;
@@ -82,22 +82,22 @@ public class Rotation extends Demo3d {
     sd.setColor(FeynColor.red);
     fw.setColor(FeynColor.blue);
 
-    FeynApp3d.getRepository().add(obj);
-    FeynApp3d.getRepository().add(xyPlane);
-    FeynApp3d.getRepository().add(xzPlane);
-    FeynApp3d.getRepository().add(zyPlane);
-    FeynApp3d.getRepository().add(x);
-    FeynApp3d.getRepository().add(y);
-    FeynApp3d.getRepository().add(z);
-    FeynApp3d.getRepository().add(up);
-    FeynApp3d.getRepository().add(sd);
-    FeynApp3d.getRepository().add(fw);
+    FeynRuntime.getRepository().add(obj);
+    FeynRuntime.getRepository().add(xyPlane);
+    FeynRuntime.getRepository().add(xzPlane);
+    FeynRuntime.getRepository().add(zyPlane);
+    FeynRuntime.getRepository().add(x);
+    FeynRuntime.getRepository().add(y);
+    FeynRuntime.getRepository().add(z);
+    FeynRuntime.getRepository().add(up);
+    FeynRuntime.getRepository().add(sd);
+    FeynRuntime.getRepository().add(fw);
 
     camera.translate(0, 0, 2.5);
     
     lightSource = new ConstantLightSource3d(1);  
-    FeynApp3d.addDiffuseLightSource(lightSource); 
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.addDiffuseLightSource(lightSource); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
     
     wzc.setAmount(0.2);
   }

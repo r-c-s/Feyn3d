@@ -2,7 +2,7 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
@@ -83,6 +83,6 @@ public class Polygon3dPatch extends Patch3d {
     return !options.isEnabled(RenderOptions3d.Option.meshOnly)
         && options.isEnabled(RenderOptions3d.Option.cullIfBackface) 
         && !color.isTransparent()
-        && ViewUtils.isBackFace(FeynApp3d.getView().getCamera().getPosition(), center, normal);
+        && ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
   }
 }

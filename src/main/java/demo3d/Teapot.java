@@ -11,7 +11,7 @@ import rcs.feyn.three.entities.models.Model3dBuilder;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 import rcs.feyn.math.MathConsts;
@@ -52,7 +52,7 @@ public class Teapot extends Demo3d {
         Set.of(gouraudShaded),
         Set.of(cullIfBackface));
     
-    FeynApp3d.getRepository().add(teapot);
+    FeynRuntime.getRepository().add(teapot);
     
     camera.translate(0.5, 3, 7);
     camera.rotate(Vector3d.X_AXIS, -20 * MathConsts.DEGREES_TO_RADIANS); 
@@ -61,10 +61,10 @@ public class Teapot extends Demo3d {
     var lightSourceGreen = new VariableIntensityLightSource3d(10, new FeynColor(0, 255, 0));
     lightSourceRed.setPosition(new Vector3d( 3, 4, 5));
     lightSourceGreen.setPosition(new Vector3d(-3, 4, 5));
-    FeynApp3d.addDiffuseLightSource(lightSourceRed);
-    FeynApp3d.addDiffuseLightSource(lightSourceGreen);
+    FeynRuntime.addDiffuseLightSource(lightSourceRed);
+    FeynRuntime.addDiffuseLightSource(lightSourceGreen);
     
-    FeynApp3d.setAmbientLight(new AmbientLightSource3d(0.1)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.1)); 
   } 
 
   @Override

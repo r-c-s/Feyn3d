@@ -7,7 +7,7 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynApp3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 
 public class GouraudTexturedPolygon3dRenderer {
   
@@ -146,7 +146,7 @@ public class GouraudTexturedPolygon3dRenderer {
                 // shadeFactor comes from intensities[], which take into account
                 // the ambient light, so it must be subtracted here
                 // very ugly, needs a better solution
-                shadeFactor - FeynApp3d.getAmbientLight().getIntensity());
+                shadeFactor - FeynRuntime.getAmbientLight().getIntensity());
         	}
 
           source = ColorUtils.setAlphaToRGBA(source, alpha);
