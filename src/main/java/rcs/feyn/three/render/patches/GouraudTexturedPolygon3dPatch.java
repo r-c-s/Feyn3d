@@ -47,10 +47,6 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
         .toViewSpaceCoordinates(vertices, normals, view);
     Vector3d[] viewVertices = viewSpaceCoordinates[0];
     Vector3d[] viewNormals = viewSpaceCoordinates[1];
-    
-    if (viewVertices.length < 3) {
-      return;
-    }
 
     // can't clip textured polygons
     
