@@ -15,7 +15,7 @@ public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
   }
 
   public AnimationCanvas3d() {
-    super(new Graphics3dSynchronized(new Raster(0, 0)));
+    super(new Graphics3d(new Raster(0, 0)));
   }
 
   @Override
