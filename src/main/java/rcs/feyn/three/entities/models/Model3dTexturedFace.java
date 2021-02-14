@@ -29,7 +29,7 @@ public class Model3dTexturedFace extends Model3dFace {
     return textureData;
   }
   
-  public void setTextureData(Raster textureData) {
+  public synchronized void setTextureData(Raster textureData) {
     this.lastTextureDate = textureData;
     this.textureData = textureData;
   }
@@ -38,7 +38,7 @@ public class Model3dTexturedFace extends Model3dFace {
     return alpha;
   }
   
-  public void setAlpha(int alpha) {
+  public synchronized void setAlpha(int alpha) {
     this.lastAlpha = this.alpha;
     this.alpha = alpha;
   }
@@ -48,14 +48,16 @@ public class Model3dTexturedFace extends Model3dFace {
       return lastPatch;
     }
     
-    lastVertices = getVertices(vertices.getVertices());
+    synchronized(this) {
+      lastVertices = getVertices(vertices.getVertices());
+    }
     
     Polygon3dPatch newPatch;
     
     if (vertices instanceof Model3dGouraudVertices) {
       newPatch = new GouraudTexturedPolygon3dPatch(
           lastVertices, 
-          lastNormals = getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
+          getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           textureData,
           alpha,
           zoom,
@@ -73,7 +75,7 @@ public class Model3dTexturedFace extends Model3dFace {
   }
   
   @Override
-  protected boolean matchesLastPatch(Model3dVertices vertices) {
+  protected synchronized boolean matchesLastPatch(Model3dVertices vertices) {
     return textureData == lastTextureDate 
         && alpha == lastAlpha 
         && super.matchesLastPatch(vertices);

@@ -14,7 +14,6 @@ public class Model3dFace extends AbstractColorable {
   protected int[] indices;
   
   protected Vector3d[] lastVertices;
-  protected Vector3d[] lastNormals;
   protected Polygon3dPatch lastPatch;
 
   public Model3dFace(int[] indices, FeynColor color) {
@@ -35,14 +34,16 @@ public class Model3dFace extends AbstractColorable {
       return lastPatch;
     }
     
-    lastVertices = getVertices(vertices.getVertices());
+    synchronized(this) {
+      lastVertices = getVertices(vertices.getVertices());
+    }
     
     Polygon3dPatch newPatch;
     
     if (vertices instanceof Model3dGouraudVertices) {      
       newPatch = new GouraudPolygon3dPatch(
           lastVertices, 
-          lastNormals = getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
+          getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           color,
           options);
     } else {
@@ -69,7 +70,7 @@ public class Model3dFace extends AbstractColorable {
     return true;
   }
 
-  protected synchronized Vector3d[] getVertices(Vector3d[] vertices) {
+  protected Vector3d[] getVertices(Vector3d[] vertices) {
     Vector3d[] patchVertices = new Vector3d[indices.length];
     for (int i = 0; i < indices.length; i++) {
       patchVertices[i] = new Vector3d(vertices[indices[i]]);
