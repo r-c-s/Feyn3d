@@ -36,4 +36,9 @@ public class Model3dGouraudVertices extends Model3dVertices {
       }
     }
   }
+  
+  @Override
+  public synchronized Model3dVertices clone() {
+    return new Model3dGouraudVertices(copyVertices(vertices), copyVertices(normals), copyMasses());
+  }
 }

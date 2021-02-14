@@ -3,11 +3,14 @@ package rcs.feyn.three.entities.models;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.geo.Movable3d;
 import rcs.feyn.three.geo.Transformable3d;
+
+import java.util.Arrays;
+
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.physics.PhysicsUtils;
 
-public class Model3dVertices implements Movable3d, Transformable3d {
+public class Model3dVertices implements Movable3d, Transformable3d, Cloneable {
   
   protected Vector3d[] vertices;
   protected double[] masses;
@@ -29,7 +32,7 @@ public class Model3dVertices implements Movable3d, Transformable3d {
     return vertices;
   }
   
-  public synchronized void setVertices(Vector3d[] vertices, int[] indices) {
+  public synchronized final void setVertices(Vector3d[] vertices, int[] indices) {
     for (int i = 0; i < indices.length; i++) {
       this.vertices[indices[i]] = new Vector3d(vertices[i]);
     }
@@ -63,5 +66,25 @@ public class Model3dVertices implements Movable3d, Transformable3d {
 
   public synchronized Vector3d center() {
     return GeoUtils3d.getCenter(vertices);
+  }
+  
+  @Override
+  public Model3dVertices clone() {
+    return new Model3dVertices(copyVertices(vertices), copyMasses());
+  }
+  
+  protected Vector3d[] copyVertices(Vector3d[] vertices) {
+    Vector3d[] copy = new Vector3d[vertices.length];
+    for (int i = 0; i < vertices.length; i++) {
+      copy[i] = new Vector3d(vertices[i]);
+    }
+    return copy;
+  }
+  
+  protected double[] copyMasses() {
+    if (masses == null) {
+      return null;
+    }
+    return Arrays.copyOf(masses, masses.length);
   }
 }

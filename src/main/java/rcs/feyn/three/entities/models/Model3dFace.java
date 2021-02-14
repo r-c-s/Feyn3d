@@ -73,7 +73,7 @@ public class Model3dFace extends AbstractColorable {
   protected Vector3d[] getVertices(Vector3d[] vertices) {
     Vector3d[] patchVertices = new Vector3d[indices.length];
     for (int i = 0; i < indices.length; i++) {
-      patchVertices[i] = new Vector3d(vertices[indices[i]]);
+      patchVertices[i] = vertices[indices[i]];
     }
     return patchVertices;
   }
