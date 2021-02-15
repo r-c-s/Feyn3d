@@ -3,6 +3,14 @@ package rcs.feyn.three.kernel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
@@ -22,6 +30,10 @@ public final class RenderKernel {
             ? -1 
             : 0;
   };
+
+  private static final int NUM_THREADS = 4;
+  
+  private final ExecutorService tp = Executors.newFixedThreadPool(NUM_THREADS);
   
   private final Collection<Patch3d> alphaBuffer = new ArrayList<>();
   
@@ -38,14 +50,34 @@ public final class RenderKernel {
     var projMatrix = view.getPerspectiveProjectionMatrix();
     var viewPortMatrix = view.getViewPortMatrix();
     
-    repository.patches()
-    	.forEach(patch -> {
-	    	if (patch.isTransparent()) {
-		      alphaBuffer.add(patch);
-	      } else {
-	        patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
-	      }
-	    });
+    AtomicInteger counter = new AtomicInteger();
+    Map<Integer, List<Patch3d>> patchesPerThread = repository.patches()
+        .collect(Collectors.groupingBy(x -> counter.incrementAndGet() % NUM_THREADS));    
+    
+    Future<?>[] futures = new Future[NUM_THREADS];
+
+    for (int i = 0; i < NUM_THREADS; i++) {
+      List<Patch3d> patchBatch = patchesPerThread.get(i);
+      futures[i] = tp.submit(() -> {
+          patchBatch.forEach(patch -> {
+            if (patch.isTransparent()) {
+              synchronized(alphaBuffer) {
+                alphaBuffer.add(patch);
+              }
+            } else {
+              patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
+            }
+          });
+        });
+    }
+    
+    for (Future<?> future : futures) {
+      try {
+        future.get();
+      } catch (InterruptedException | ExecutionException e) {
+        e.printStackTrace();
+      }
+    }
     
     try {
       alphaBuffer.stream()
