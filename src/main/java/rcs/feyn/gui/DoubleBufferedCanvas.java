@@ -61,16 +61,12 @@ public abstract class DoubleBufferedCanvas extends JComponent {
     }
     try {
       File outputfile = new File(filepath);
-      synchronized (getRenderingLock()) {
+      synchronized (renderingLock) {
         ImageIO.write(imageBuffer, "png", outputfile);
       }
     } 
     catch (IOException e) { }
   }
-
-  protected Object getRenderingLock() {
-    return renderingLock;
-  } 
   
   protected void setImageBuffer(BufferedImage imageBuffer) {
     this.imageBuffer = imageBuffer;
@@ -80,7 +76,7 @@ public abstract class DoubleBufferedCanvas extends JComponent {
 
     @Override
     public final void componentResized(ComponentEvent e) {
-      synchronized (getRenderingLock()) {
+      synchronized (renderingLock) {
         Dimension size = getSize();
         int w = size.width, h = size.height;
         setWidth(w);

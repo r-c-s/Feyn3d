@@ -11,45 +11,25 @@ public class Graphics3dSynchronized extends Graphics3d {
   } 
 
   @Override
-  public synchronized void setRaster(Raster raster) {
+  public void setRaster(Raster raster) {
     super.setRaster(raster);
-    
-    updating = true;
     locks = new Object[raster.size()];
     for (int i = 0; i < locks.length; i++) {
       locks[i] = new Object();
     }
-    updating = false;
-    
-    synchronized (this) {
-      notify();
-    }
   } 
  
   @Override
-  public void putPixel(int index, int color) { 
-    waitIfUpdating();
-    
+  public void putPixel(int index, int color) {
     synchronized (locks[index]) {
       super.putPixel(index, color);
     }
   }
  
   @Override
-  public void putPixel(int index, double z, int color) { 
-    waitIfUpdating();
-    
+  public void putPixel(int index, double z, int color) {
     synchronized (locks[index]) {
       super.putPixel(index, z, color);
-    }
-  }
- 
-  public void waitIfUpdating() {
-    if (updating) {
-      try {
-        wait();
-      } 
-      catch (InterruptedException e) { }
     }
   }
 }
