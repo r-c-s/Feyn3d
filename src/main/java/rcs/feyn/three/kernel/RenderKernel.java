@@ -54,11 +54,10 @@ public final class RenderKernel {
     Map<Integer, List<Patch3d>> patchesPerThread = repository.patches()
         .collect(Collectors.groupingBy(x -> counter.incrementAndGet() % NUM_THREADS));    
     
-    Future<?>[] futures = new Future[NUM_THREADS];
+    List<Future<?>> futures = new ArrayList<>(patchesPerThread.keySet().size());
 
-    for (int i = 0; i < NUM_THREADS; i++) {
-      List<Patch3d> patchBatch = patchesPerThread.get(i);
-      futures[i] = tp.submit(() -> {
+    for (List<Patch3d> patchBatch : patchesPerThread.values()) {
+      futures.add(tp.submit(() -> {
           patchBatch.forEach(patch -> {
             if (patch.isTransparent()) {
               synchronized(alphaBuffer) {
@@ -68,7 +67,7 @@ public final class RenderKernel {
               patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
             }
           });
-        });
+        }));
     }
     
     for (Future<?> future : futures) {
