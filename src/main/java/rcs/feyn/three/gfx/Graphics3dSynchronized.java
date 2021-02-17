@@ -1,5 +1,7 @@
 package rcs.feyn.three.gfx;
 
+import rcs.feyn.math.MathUtils;
+
 public class Graphics3dSynchronized extends Graphics3d {
 
   protected boolean updating = false;
@@ -13,7 +15,7 @@ public class Graphics3dSynchronized extends Graphics3d {
   @Override
   public void setRaster(Raster raster) {
     super.setRaster(raster);
-    locks = new Object[raster.size()];
+    locks = new Object[1000];
     for (int i = 0; i < locks.length; i++) {
       locks[i] = new Object();
     }
@@ -21,7 +23,8 @@ public class Graphics3dSynchronized extends Graphics3d {
  
   @Override
   public void putPixel(int index, double z, int color) {
-    synchronized (locks[index]) {
+    int lockIndex = MathUtils.roundToInt((index / (double) raster.size()) * locks.length);
+    synchronized (locks[lockIndex]) {
       super.putPixel(index, z, color);
     }
   }

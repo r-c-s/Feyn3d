@@ -25,16 +25,12 @@ public class Teapot extends Demo3d {
 	@Serial
   private static final long serialVersionUID = 1;
 	
-  private String teapotObjFilePath = System.getProperty("user.dir") + "/objfiles/teapot.obj";
+  private String teapotObjFilePath = System.getProperty("user.dir") + "/objfiles/minicooper.obj";
 
   private Model3d teapot = new Model3dBuilder()
   		.fromObjFile(teapotObjFilePath)
   		.setColor(FeynColor.white)
   		.addTransform(Matrices.create3dScaleMatrix(0.05))
-  		.setTextureData(Model3dUtils.getImageData(
-  		    System.getProperty("user.dir") + "/textures/porcelaintexture.jpg"),
-  		    255, 
-  		    1)
   		.build();
   
   public Teapot() { }
