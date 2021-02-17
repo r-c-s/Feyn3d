@@ -52,14 +52,4 @@ public class Graphics3d {
     } 
     raster.setPixel(index, pixel);
   }
-  
-  protected void putPixel(int index, int color) {
-    int pixel = raster.getPixel(index);
-    if (ColorUtils.getAlphaFromRGBA(pixel) != 255) {
-      pixel = ColorUtils.alphaBlend(pixel, color);
-    } else {
-      pixel = ColorUtils.alphaBlend(color, pixel);
-    }
-    raster.setPixel(index, pixel);
-  }
 }

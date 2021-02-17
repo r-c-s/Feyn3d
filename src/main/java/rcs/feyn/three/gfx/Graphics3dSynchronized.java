@@ -17,13 +17,6 @@ public class Graphics3dSynchronized extends Graphics3d {
     for (int i = 0; i < locks.length; i++) {
       locks[i] = new Object();
     }
-  } 
- 
-  @Override
-  public void putPixel(int index, int color) {
-    synchronized (locks[index]) {
-      super.putPixel(index, color);
-    }
   }
  
   @Override
