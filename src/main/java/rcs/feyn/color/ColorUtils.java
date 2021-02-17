@@ -8,7 +8,7 @@ public final class ColorUtils {
     throw new AssertionError();
   }
 
-  public static final int alphaBlend(int source, int target) {
+  public static int alphaBlend(int source, int target) {
     int alphaSource = getAlphaFromRGBA(source);
     
     if (alphaSource == 0) {
@@ -27,6 +27,10 @@ public final class ColorUtils {
     int newa = (int) (prcTarget * getAlphaFromRGBA(target) + prcSource * alphaSource);
     
     return getRGBA(newr, newg, newb, newa);
+  }
+  
+  public static boolean isTransparent(int rgba) {
+    return getAlphaFromRGBA(rgba) < 255;
   }
 
   public static int getRGBA(int r, int g, int b, int a) {

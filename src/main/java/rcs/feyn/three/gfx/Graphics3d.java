@@ -47,7 +47,7 @@ public class Graphics3d {
     int pixel = raster.getPixel(index);
     if (zbuffer.checkAndSetDepth(index, z)) {
       pixel = ColorUtils.alphaBlend(color, pixel);
-    } else if (ColorUtils.getAlphaFromRGBA(pixel) != 255) {
+    } else if (ColorUtils.isTransparent(pixel)) {
       pixel = ColorUtils.alphaBlend(pixel, color);
     } 
     raster.setPixel(index, pixel);

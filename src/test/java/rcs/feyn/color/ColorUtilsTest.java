@@ -7,6 +7,21 @@ import org.junit.jupiter.api.Test;
 public class ColorUtilsTest {
   
   @Test
+  void testIsTransparent() {
+    // Arrange
+    FeynColor is = new FeynColor(1, 2, 3, 100);
+    FeynColor isNot = new FeynColor(1, 2, 3, 255);
+    
+    // Act
+    boolean isResult = ColorUtils.isTransparent(is.getRGBA());
+    boolean isNotResult = ColorUtils.isTransparent(isNot.getRGBA());
+    
+    // Assert
+    assertThat(isResult).isTrue();
+    assertThat(isNotResult).isFalse();
+  }
+  
+  @Test
   void testGetRedFromRGBA() {
     // Arrange
     FeynColor color = new FeynColor(1, 2, 3);
