@@ -193,18 +193,6 @@ public class Particle3d implements IParticle3d {
     translate(new Vector3d(x, y, z));
   }
 
-  @Override
-  public void translate(Vector3d delta) { 
-    position.addLocal(delta);
-  }
-
-  @Override
-  public void transform(Matrix44 m4x4) {
-    position.affineTransformLocal(m4x4);
-    //velocity.affineTransformAsVectorLocal(m4x4);
-    rf.transform(m4x4);
-  }
-
   public final void scale(double scale) {
     scale(position, scale);
   }
@@ -242,7 +230,14 @@ public class Particle3d implements IParticle3d {
   }
 
   @Override
-  public String toString() {
-    return String.format("%s:[r=%s,v=%s,rf=%s]", this.getClass().getName(), position, velocity, rf);
-  } 
+  public void translate(Vector3d delta) { 
+    position.addLocal(delta);
+  }
+
+  @Override
+  public void transform(Matrix44 m4x4) {
+    position.affineTransformLocal(m4x4);
+    //velocity.affineTransformAsVectorLocal(m4x4);
+    rf.transform(m4x4);
+  }
 }
