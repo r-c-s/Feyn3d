@@ -127,7 +127,7 @@ public class Particle3d implements IParticle3d {
     this.rf.set(rf);
   }
   
-  public void face(Vector3d point) {
+  public final void face(Vector3d point) {
   	Vector3d delta = position.sub(point);
   	double degrees = delta.angleBetween(fw);
   	if (MathUtils.epsilonEquals(degrees, 0)) {
