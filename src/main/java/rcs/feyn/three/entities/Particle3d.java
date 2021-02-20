@@ -170,7 +170,7 @@ public class Particle3d implements IParticle3d {
     return mass;
   }
 
-  public void setMass(double mass) {
+  public final void setMass(double mass) {
     if (mass <= 0) {
       throw new IllegalArgumentException("Error: mass must be greater than 0.");
     }
