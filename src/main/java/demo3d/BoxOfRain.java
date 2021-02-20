@@ -70,7 +70,7 @@ public class BoxOfRain extends Demo3d {
     	var position = new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5));
     	var raindrop = new Line3d(position, position.add(0, 0.1, 0));
     	raindrop.setColor(FeynColor.white);
-    	raindrop.setVelocity(new Vector3d(0, -0.1, 0));
+    	raindrop.setVelocity(0, -0.1, 0);
     	raindrops.add(raindrop);
     }
   }

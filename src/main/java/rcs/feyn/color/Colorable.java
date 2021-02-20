@@ -2,7 +2,7 @@ package rcs.feyn.color;
 
 public interface Colorable {
 
-  public FeynColor getColor();   
+  FeynColor getColor();   
  
-  public void setColor(FeynColor color);
+  void setColor(FeynColor color);
 }
