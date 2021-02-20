@@ -1,7 +1,5 @@
 package rcs.feyn.three.gfx;
 
-import rcs.feyn.math.MathUtils;
-
 public class Graphics3dSynchronized extends Graphics3d {
 
   protected boolean updating = false;
@@ -23,7 +21,7 @@ public class Graphics3dSynchronized extends Graphics3d {
  
   @Override
   public void putPixel(int index, double z, int color) {
-    int lockIndex = MathUtils.roundToInt((index / (double) raster.size()) * locks.length);
+    int lockIndex = (int) ((index / (double) raster.size()) * locks.length);
     synchronized (locks[lockIndex]) {
       super.putPixel(index, z, color);
     }
