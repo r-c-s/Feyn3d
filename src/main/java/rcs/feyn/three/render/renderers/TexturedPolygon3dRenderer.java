@@ -13,7 +13,7 @@ public class TexturedPolygon3dRenderer {
   
   public static void render(
       Graphics3d graphics, 
-      Vector3d[] viewPortCoords, 
+      Vector3d[] deviceCoordinate, 
       double intensity, 
       Optional<int[]> colors,
       Raster textureData, 
@@ -28,7 +28,7 @@ public class TexturedPolygon3dRenderer {
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
 
-    RenderUtils.triangulateWithIndex(viewPortCoords, (va, vb, vc, ia, ib, ic) -> {
+    RenderUtils.triangulateWithIndex(deviceCoordinate, (va, vb, vc, ia, ib, ic) -> {
       
       double xa = va.x();
       double xb = vb.x();

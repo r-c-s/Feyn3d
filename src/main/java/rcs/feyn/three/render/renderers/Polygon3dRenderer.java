@@ -6,8 +6,8 @@ import rcs.feyn.three.gfx.Graphics3d;
 
 public class Polygon3dRenderer {
 
-  public static void render(Graphics3d graphics, Vector3d[] viewPortCoords, int color) {
-    int size = viewPortCoords.length;
+  public static void render(Graphics3d graphics, Vector3d[] deviceCoordinate, int color) {
+    int size = deviceCoordinate.length;
     if (size < 3) {
       return;
     }
@@ -15,7 +15,7 @@ public class Polygon3dRenderer {
     int screenW = graphics.getRaster().getWidth();
     int screenH = graphics.getRaster().getHeight(); 
     
-    RenderUtils.triangulate(viewPortCoords, (va, vb, vc) -> {
+    RenderUtils.triangulate(deviceCoordinate, (va, vb, vc) -> {
       double za = va.z();
       double zb = vb.z();
       double zc = vc.z();

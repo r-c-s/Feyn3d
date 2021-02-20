@@ -6,16 +6,21 @@ import rcs.feyn.three.gfx.Graphics3d;
 
 public class Line3dRenderer {
 
-  public static void render(Graphics3d graphics, Vector3d viewPortCoordA, Vector3d viewPortCoordB, int color) {      
-    int x1 = MathUtils.roundToInt(viewPortCoordA.x());
-    int x2 = MathUtils.roundToInt(viewPortCoordB.x());
-    int y1 = MathUtils.roundToInt(viewPortCoordA.y());
-    int y2 = MathUtils.roundToInt(viewPortCoordB.y());
-    double z1 = viewPortCoordA.z();
-    double z2 = viewPortCoordB.z();
+  public static void render(
+      Graphics3d graphics, 
+      Vector3d deviceCoordinateA, 
+      Vector3d deviceCoordinateB, 
+      int color) {    
     
-    double sdx = viewPortCoordA.x() - viewPortCoordB.x();
-    double sdy = viewPortCoordA.y() - viewPortCoordB.y();
+    int x1 = MathUtils.roundToInt(deviceCoordinateA.x());
+    int x2 = MathUtils.roundToInt(deviceCoordinateB.x());
+    int y1 = MathUtils.roundToInt(deviceCoordinateA.y());
+    int y2 = MathUtils.roundToInt(deviceCoordinateB.y());
+    double z1 = deviceCoordinateA.z();
+    double z2 = deviceCoordinateB.z();
+    
+    double sdx = deviceCoordinateA.x() - deviceCoordinateB.x();
+    double sdy = deviceCoordinateA.y() - deviceCoordinateB.y();
     double slope = sdy / sdx;
     
     if (Math.abs(slope) <= 1) {

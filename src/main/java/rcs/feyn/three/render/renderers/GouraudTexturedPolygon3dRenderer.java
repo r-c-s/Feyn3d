@@ -13,7 +13,7 @@ public class GouraudTexturedPolygon3dRenderer {
   
   public static void render(
       Graphics3d graphics, 
-      Vector3d[] viewPortCoords, 
+      Vector3d[] deviceCoordinates, 
       double[] intensities, 
       Optional<int[]> colors,
       Raster textureData, 
@@ -28,7 +28,7 @@ public class GouraudTexturedPolygon3dRenderer {
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
 
-    RenderUtils.triangulateWithIndex(viewPortCoords, (va, vb, vc, ia, ib, ic) -> {
+    RenderUtils.triangulateWithIndex(deviceCoordinates, (va, vb, vc, ia, ib, ic) -> {
       
       double xa = va.x();
       double xb = vb.x();

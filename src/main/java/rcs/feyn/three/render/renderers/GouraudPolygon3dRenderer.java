@@ -9,13 +9,13 @@ public class GouraudPolygon3dRenderer {
 
   public static void render(
       Graphics3d graphics, 
-      Vector3d[] viewPortCoords,
+      Vector3d[] deviceCoordinates,
       int[] colors) {
     
     int gw = (int) graphics.getRaster().getWidth();
     int gh = (int) graphics.getRaster().getHeight(); 
     
-    RenderUtils.triangulateWithIndex(viewPortCoords, (va, vb, vc, ia, ib, ic) -> {
+    RenderUtils.triangulateWithIndex(deviceCoordinates, (va, vb, vc, ia, ib, ic) -> {
 
       double xa = va.x();
       double xb = vb.x();
