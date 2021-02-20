@@ -71,10 +71,10 @@ public class Gumballs extends Demo3d {
           .setOuterBoundingObject(new BoundingSphere3d(radius))
           .build();
       
-      sphere.setPosition(new Vector3d(
+      sphere.setPosition(
            xor.randomDouble(-0.5, 0.5), 
            xor.randomDouble(-0.5, 0.5), 
-           xor.randomDouble(-0.5, 0.5)));
+           xor.randomDouble(-0.5, 0.5));
       
       sphere.setColor(FeynColor.randomColor());
       sphere.setMass(radius);
