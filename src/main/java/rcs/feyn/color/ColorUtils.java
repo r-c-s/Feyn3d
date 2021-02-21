@@ -8,23 +8,24 @@ public final class ColorUtils {
     throw new AssertionError();
   }
 
-  public static int alphaBlend(int source, int target) {
-    int alphaSource = getAlphaFromRGBA(source);
+  public static int alphaBlend(int inFront, int behind) {
+    int alphaInFront = getAlphaFromRGBA(inFront);
     
-    if (alphaSource == 0) {
-      return target;
+    // trivial cases
+    if (alphaInFront == 0) {
+      return behind;
     }
-    if (alphaSource == 255) {
-      return source;
+    if (alphaInFront == 255) {
+      return inFront;
     }
     
-    double prcSource = (double) alphaSource / 255;
-    double prcTarget = 1 - prcSource;
+    double prcInFront = (double) alphaInFront / 255;
+    double prcBehind = 1 - prcInFront;
 
-    int newr = (int) (prcTarget * getRedFromRGBA(target)   + prcSource * getRedFromRGBA(source));
-    int newg = (int) (prcTarget * getGreenFromRGBA(target) + prcSource * getGreenFromRGBA(source));
-    int newb = (int) (prcTarget * getBlueFromRGBA(target)  + prcSource * getBlueFromRGBA(source));
-    int newa = (int) (prcTarget * getAlphaFromRGBA(target) + prcSource * alphaSource);
+    int newr = (int) (prcBehind * getRedFromRGBA(behind)   + prcInFront * getRedFromRGBA(inFront));
+    int newg = (int) (prcBehind * getGreenFromRGBA(behind) + prcInFront * getGreenFromRGBA(inFront));
+    int newb = (int) (prcBehind * getBlueFromRGBA(behind)  + prcInFront * getBlueFromRGBA(inFront));
+    int newa = (int) (prcBehind * getAlphaFromRGBA(behind) + prcInFront * alphaInFront);
     
     return getRGBA(newr, newg, newb, newa);
   }

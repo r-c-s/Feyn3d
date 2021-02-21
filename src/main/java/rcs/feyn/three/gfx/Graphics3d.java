@@ -43,13 +43,20 @@ public class Graphics3d {
     putPixel(w*y + x, z, color);
   }
  
-  protected void putPixel(int index, double z, int color) {
-    int pixel = raster.getPixel(index);
-    if (zbuffer.checkAndSetDepth(index, z)) {
-      pixel = ColorUtils.alphaBlend(color, pixel);
-    } else if (ColorUtils.isTransparent(pixel)) {
-      pixel = ColorUtils.alphaBlend(pixel, color);
-    } 
-    raster.setPixel(index, pixel);
+  protected void putPixel(int index, double z, int pixelCandidate) {
+    int currentPixel = raster.getPixel(index);
+    int newPixel;
+    
+    boolean candidateIsInFront = zbuffer.checkAndSetDepth(index, z);
+    
+    if (candidateIsInFront) {
+      newPixel = ColorUtils.alphaBlend(pixelCandidate, currentPixel);
+    } else if (ColorUtils.isTransparent(currentPixel)) {
+      newPixel = ColorUtils.alphaBlend(currentPixel, pixelCandidate);
+    } else {
+      return;
+    }
+    
+    raster.setPixel(index, newPixel);
   }
 }
