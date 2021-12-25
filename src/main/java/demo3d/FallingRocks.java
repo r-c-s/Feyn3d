@@ -65,7 +65,7 @@ public class FallingRocks extends Demo3d {
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(5, 5, 5);
     FeynRuntime.addDiffuseLightSource(lightSource);
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(1)); 
   }
 
   @Override
@@ -90,7 +90,7 @@ public class FallingRocks extends Demo3d {
   	Model3dUtils.setOptions(
   			rock, 
   			Set.of(flatShaded), 
-  			Set.of(gouraudShaded, applyLightingColor));
+  			Set.of(gouraudShaded, applyLightingColor, cullIfBackface));
   	
   	Model3dUtils.deform(rock, 0.1);
 
