@@ -38,11 +38,11 @@ public class Rotation extends Demo3d {
   private Grid xzPlane = new Grid(2, 2, 2); 
   private Grid zyPlane = new Grid(2, 2, 2); 
 
-  private final double ANG_VEL = 2 * MathConsts.DEGREES_TO_RADIANS;
+  private final double angularVelocity = 2 * MathConsts.DEGREES_TO_RADIANS;
 
-  private final Matrix44 xTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, ANG_VEL);
-  private final Matrix44 yTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, ANG_VEL);
-  private final Matrix44 zTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, ANG_VEL);
+  private final Matrix44 xTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.X_AXIS, angularVelocity);
+  private final Matrix44 yTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Y_AXIS, angularVelocity);
+  private final Matrix44 zTransform = Matrices.create3dRotateMatrix(Vector3d.ZERO, Vector3d.Z_AXIS, angularVelocity);
    
   private ConstantLightSource3d lightSource; 
   
@@ -118,7 +118,7 @@ public class Rotation extends Demo3d {
      
     if (keyHasBeenPressed(KeyEvent.VK_X)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getSideVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getSideVector(), angularVelocity)); 
       } else {
         transform.mulLocal(xTransform); 
       }
@@ -126,7 +126,7 @@ public class Rotation extends Demo3d {
 
     if (keyHasBeenPressed(KeyEvent.VK_Y)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getUpVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getUpVector(), angularVelocity)); 
       } else {
         transform.mulLocal(yTransform); 
       }
@@ -134,7 +134,7 @@ public class Rotation extends Demo3d {
 
     if (keyHasBeenPressed(KeyEvent.VK_Z)) {
       if (keyHasBeenPressed(KeyEvent.VK_SHIFT)) {
-        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getForwardVector(), ANG_VEL)); 
+        transform.mulLocal(Matrices.create3dRotateMatrix(position, obj.getForwardVector(), angularVelocity)); 
       } else {
         transform.mulLocal(zTransform); 
       }
