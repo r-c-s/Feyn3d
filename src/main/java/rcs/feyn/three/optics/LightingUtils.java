@@ -61,7 +61,9 @@ public class LightingUtils {
         } else {
           intensity = lightSource.getIntensityAt(position, normal);
         }
-        color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
+        if (intensity > 0) {
+          color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
+        }
       }
     }
     return color;
@@ -70,8 +72,8 @@ public class LightingUtils {
   public static final int applyLightsourceColorTo(int objectColor, double intensity) {
     DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     int color = objectColor;
-    for (int i = 0; i < lightSources.length; i++) {
-      FeynColor lsColor = lightSources[i].getColor();
+    for (var lightSource : lightSources) {      
+      FeynColor lsColor = lightSource.getColor();
       if (lsColor != null) {
         color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
       }
