@@ -49,7 +49,7 @@ public class Teapot extends Demo3d {
     Model3dUtils.setOptions(
         teapot, 
         Set.of(),
-        Set.of(cullIfBackface, applyLightingColor, flatShaded, gouraudShaded, textured));
+        Set.of(cullIfBackface, applyLightingColor, flatShaded, gouraudShaded, textured, bothSidesShaded));
     
     FeynRuntime.getRepository().add(teapot);
     

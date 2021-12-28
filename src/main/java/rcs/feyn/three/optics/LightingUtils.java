@@ -24,13 +24,13 @@ public class LightingUtils {
     
     DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     
-    for (int i = 0; i < lightSources.length; i++) {
+    for (var lightSource : lightSources) {
       double diffuse;
       
       if (view != null) {
-        diffuse = lightSources[i].getIntensityAt(point, normal, view);
+        diffuse = lightSource.getIntensityAt(point, normal, view);
       } else {
-        diffuse = lightSources[i].getIntensityAt(point, normal);
+        diffuse = lightSource.getIntensityAt(point, normal);
       }
       
       if (bothSides) {
@@ -61,9 +61,7 @@ public class LightingUtils {
         } else {
           intensity = lightSource.getIntensityAt(position, normal);
         }
-        if (intensity > 0) {
-          color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
-        }
+        color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
       }
     }
     return color;
