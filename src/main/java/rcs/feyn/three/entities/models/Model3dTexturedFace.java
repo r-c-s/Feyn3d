@@ -67,12 +67,15 @@ public class Model3dTexturedFace extends Model3dFace {
           alpha,
           zoom,
           options);
-    } else if (options.isEnabled(Option.gouraudShaded)) { 
+      
+    } else if (vertices instanceof Model3dGouraudVertices 
+        && options.isEnabled(Option.gouraudShaded)) { 
       newPatch = new GouraudPolygon3dPatch(
           lastVertices, 
           getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
           FeynColor.white,
           options);
+      
     } else if (options.isEnabled(Option.textured)) {
       newPatch = new TexturedPolygon3dPatch(
           lastVertices, 
