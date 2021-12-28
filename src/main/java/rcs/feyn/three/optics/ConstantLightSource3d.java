@@ -26,7 +26,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
     return intensity * this.position
         .sub(position)
         .normalizeLocal()
-        .dotProd(normal.normalize().mul(alpha / 255.0));
+        .dotProd(normal.normalize().mulLocal(alpha / 255.0));
   }
 
   @Override
@@ -36,7 +36,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
         .affineTransform(view)
         .subLocal(position)
         .normalizeLocal()
-        .dotProd(normal.normalize().mul(alpha / 255.0));
+        .dotProd(normal.normalize().mulLocal(alpha / 255.0));
   }
 
   @Override
