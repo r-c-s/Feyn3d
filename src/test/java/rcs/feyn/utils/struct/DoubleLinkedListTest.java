@@ -49,6 +49,7 @@ public class DoubleLinkedListTest {
     
     // Assert
     assertThat(target.size()).isEqualTo(1);
+    assertThat(target.contains("2")).isTrue();
     assertThat(target.contains("1")).isFalse();
     assertThat(actual).isEqualTo("1");
   }
@@ -65,28 +66,13 @@ public class DoubleLinkedListTest {
     
     // Assert
     assertThat(target.size()).isEqualTo(1);
+    assertThat(target.contains("1")).isTrue();
     assertThat(target.contains("2")).isFalse();
     assertThat(actual).isEqualTo("2");
   }
   
   @Test
-  void testRemoveContains() {
-    // Arrange
-    DoublyLinkedList<String> target = new DoublyLinkedList<>();
-    target.add("1");
-    target.add("2");
-    
-    // Act
-    String actual = target.remove("2");
-    
-    // Assert
-    assertThat(target.size()).isEqualTo(1);
-    assertThat(target.contains("2")).isFalse();
-    assertThat(actual).isEqualTo("2");
-  }
-  
-  @Test
-  void testRemoveDoesNotConstain() {
+  void testRemoveDoesNotContain() {
     // Arrange
     DoublyLinkedList<String> target = new DoublyLinkedList<>();
     target.add("1");
@@ -97,6 +83,8 @@ public class DoubleLinkedListTest {
     
     // Assert
     assertThat(target.size()).isEqualTo(2);
+    assertThat(target.contains("1")).isTrue();
+    assertThat(target.contains("2")).isTrue();
     assertThat(actual).isNull();
   }
 
@@ -148,6 +136,10 @@ public class DoubleLinkedListTest {
     // Arrange
     DoublyLinkedList<String> target = new DoublyLinkedList<>();
     target.add("head");
+    target.add("in-between-0");
+    target.add("in-between-1");
+    target.add("in-between-2");
+    target.add("tail");
     
     // Act
     for (Iterator<String> it = target.iterator(); it.hasNext(); ) {
