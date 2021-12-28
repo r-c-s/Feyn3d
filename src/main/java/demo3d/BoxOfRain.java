@@ -18,7 +18,7 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class BoxOfRain extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L;
   
   private XORShift xorShift = XORShift.getInstance();
@@ -67,70 +67,70 @@ public class BoxOfRain extends Demo3d {
   
   private void addNewRaindrops() {
     for (int i = 0; i < 1; i++) {
-    	var position = new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5));
-    	var raindrop = new Line3d(position, position.add(0, 0.1, 0));
-    	raindrop.setColor(FeynColor.white);
-    	raindrop.setVelocity(0, -0.1, 0);
-    	raindrops.add(raindrop);
+      var position = new Vector3d(xorShift.randomDouble(-5, 5), 10, xorShift.randomDouble(-5, 5));
+      var raindrop = new Line3d(position, position.add(0, 0.1, 0));
+      raindrop.setColor(FeynColor.white);
+      raindrop.setVelocity(0, -0.1, 0);
+      raindrops.add(raindrop);
     }
   }
   
   private void animateRaindrops() {
-  	raindrops.forEach(raindrop -> {
-    	raindrop.move();
-    	if (raindrop.getA().y() < 0) {
-    		raindrop.destroy();
-    		addNewWave(raindrop);
-    		addNewSplash(raindrop);
-    	}
+    raindrops.forEach(raindrop -> {
+      raindrop.move();
+      if (raindrop.getA().y() < 0) {
+        raindrop.destroy();
+        addNewWave(raindrop);
+        addNewSplash(raindrop);
+      }
     });
   }
   
   private void animateWaves() {
-  	double maxRadius = 2;
-  	waves.forEach(wave -> {
-    	double radius = wave.getVertices()[0].distance(wave.getCenterOfMass());
-    	wave.scale(1 + 0.005/(radius / maxRadius));
-    	wave.setColor(wave.getColor().fadeTo(1 - (radius / maxRadius)));
-    	if (radius > maxRadius) {
-    		wave.destroy();
-    	}
+    double maxRadius = 2;
+    waves.forEach(wave -> {
+      double radius = wave.getVertices()[0].distance(wave.getCenterOfMass());
+      wave.scale(1 + 0.005/(radius / maxRadius));
+      wave.setColor(wave.getColor().fadeTo(1 - (radius / maxRadius)));
+      if (radius > maxRadius) {
+        wave.destroy();
+      }
     });
   }
   
   private void addNewWave(Line3d raindrop) {
-		var wave = Polygon3d.regularPolygon(0.1, 10);
-		wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
-		wave.setColor(FeynColor.white.fadeTo(0.9));
-		wave.getRenderingOptions().enable(meshOnly);
-		waves.add(wave);
+    var wave = Polygon3d.regularPolygon(0.1, 10);
+    wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
+    wave.setColor(FeynColor.white.fadeTo(0.9));
+    wave.getRenderingOptions().enable(meshOnly);
+    waves.add(wave);
   }
   
   private void addNewSplash(Line3d raindrop) {
-  	for (int i = 0; i < 5; i++) {
-  		var position = new Vector3d(raindrop.getA().x(), 0.01, raindrop.getA().z());
-  		var velocity = new Vector3d(
+    for (int i = 0; i < 5; i++) {
+      var position = new Vector3d(raindrop.getA().x(), 0.01, raindrop.getA().z());
+      var velocity = new Vector3d(
           xorShift.randomDouble(-0.02, 0.02),
           0.1, 
           xorShift.randomDouble(-0.02, 0.02));
-  		
-			var splash = Model3dFactory.cube(0.03)
-			    .setPosition(position)
-			    .setVelocity(velocity)
-			    .setColor(FeynColor.white)
-			    .build();
-			
-  		splashes.add(splash);
-  	}
+      
+      var splash = Model3dFactory.cube(0.03)
+          .setPosition(position)
+          .setVelocity(velocity)
+          .setColor(FeynColor.white)
+          .build();
+      
+      splashes.add(splash);
+    }
   }
   
   private void animateSplashes() {
-  	splashes.forEach(splash -> {
-  		splash.accelerate(0, -0.01, 0);
-    	splash.move();
-    	if (splash.getPosition().y() < 0) {
-    		splash.destroy();
-    	}
+    splashes.forEach(splash -> {
+      splash.accelerate(0, -0.01, 0);
+      splash.move();
+      if (splash.getPosition().y() < 0) {
+        splash.destroy();
+      }
     });
   }
 

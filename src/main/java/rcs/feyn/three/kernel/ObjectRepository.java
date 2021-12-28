@@ -33,12 +33,12 @@ public class ObjectRepository {
     return listsOfObjects.remove(listOfRenderables);
   }
   
-	public Stream<Patch3d> patches() {
-		return StreamSupport
-		    .stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
-		    .flatMap(listOfObjects -> StreamSupport
-		        .stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
-		    .map(Renderable3d::getRenderablePatches)
-		    .flatMap(Stream::of);
+  public Stream<Patch3d> patches() {
+    return StreamSupport
+        .stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
+        .flatMap(listOfObjects -> StreamSupport
+            .stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
+        .map(Renderable3d::getRenderablePatches)
+        .flatMap(Stream::of);
   }
 }

@@ -36,9 +36,9 @@ public class Line3dPatch extends Patch3d {
     Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(clippedSpaceCoordinates, projection, viewPort);
 
     int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-    		? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)
-    		: color.getRGBA();
-    		
+        ? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)
+        : color.getRGBA();
+        
     Line3dRenderer.render(
         graphics,
         deviceCoordinates[0], 

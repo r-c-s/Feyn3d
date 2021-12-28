@@ -113,17 +113,17 @@ public class DoublyLinkedList<T> implements Iterable<T> {
     size--;
     
     if (n == head) {
-    	head = n.next;
+      head = n.next;
     }
     if (n == tail) {
-    	tail = n.prev;
+      tail = n.prev;
     }
     
     if (n.prev != null) {
-    	n.prev.next = n.next;
+      n.prev.next = n.next;
     }
     if (n.next != null) {
-    	n.next.prev = n.prev;
+      n.next.prev = n.prev;
     }
     
     return n;

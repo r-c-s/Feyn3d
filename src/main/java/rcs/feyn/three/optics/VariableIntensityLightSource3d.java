@@ -5,7 +5,7 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 
 public class VariableIntensityLightSource3d extends ConstantLightSource3d {
-	
+  
   public VariableIntensityLightSource3d(double intensity) {
     this(intensity, null);
   }

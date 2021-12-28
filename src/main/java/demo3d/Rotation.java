@@ -21,9 +21,9 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Rotation extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L; 
-	
+  
   private Model3d obj = Model3dFactory.dodecahedron(0.25).setColor(FeynColor.white).build();
   
   private Line3d up = new Line3d(Vector3d.ZERO, obj.getUpVector());

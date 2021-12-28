@@ -25,7 +25,7 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class FallingRocks extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L; 
 
   private Raster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
@@ -82,71 +82,71 @@ public class FallingRocks extends Demo3d {
   }
   
   private void addNewRock() {
-  	var rock = Model3dFactory.dodecahedron(0.5)
-  	    .setTextureData(rockTexture)
-  			.setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 15, xorShift.randomDouble(-5, 5)))
-  			.build();
-  	
-  	Model3dUtils.setOptions(
-  			rock, 
-  			Set.of(flatShaded), 
-  			Set.of(gouraudShaded, applyLightingColor, cullIfBackface));
-  	
-  	Model3dUtils.deform(rock, 0.1);
+    var rock = Model3dFactory.dodecahedron(0.5)
+        .setTextureData(rockTexture)
+        .setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 15, xorShift.randomDouble(-5, 5)))
+        .build();
+    
+    Model3dUtils.setOptions(
+        rock, 
+        Set.of(flatShaded), 
+        Set.of(gouraudShaded, applyLightingColor, cullIfBackface));
+    
+    Model3dUtils.deform(rock, 0.1);
 
-  	rock.setColor(FeynColor.rosyBrown);
-  	rock.setVelocity(0, -0.1, 0);
-  	rocks.add(rock);
+    rock.setColor(FeynColor.rosyBrown);
+    rock.setVelocity(0, -0.1, 0);
+    rocks.add(rock);
   }
   
   private void animateRocks() {
-  	rocks.forEach(rock -> {
-  		rock.spin(Vector3d.Z_AXIS, 0.01);
-    	rock.move();
-    	if (rock.getPosY() < 0) {
-    		rock.destroy();
-    		addNewShards(rock);
-    	}
+    rocks.forEach(rock -> {
+      rock.spin(Vector3d.Z_AXIS, 0.01);
+      rock.move();
+      if (rock.getPosY() < 0) {
+        rock.destroy();
+        addNewShards(rock);
+      }
     });
   }
   
   private void animateShards() {
-  	shards.forEach(shard -> {
-    	if (shard.getPosition().y() < 0.05) {
-    		shard.setPosY(0.04);
-    		shard.setVelocity(0, 0, 0);
-    	} else { 
-    		shard.accelerate(0, -0.01, 0);
-      	shard.move();
-    	}
-    	
-    	if (shard.getVelocity().equals(Vector3d.ZERO)) {
-    		for (Model3dFace face : shard.getFaces()) {
-    		  Model3dTexturedFace tFace = (Model3dTexturedFace) face;
-    			int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
+    shards.forEach(shard -> {
+      if (shard.getPosition().y() < 0.05) {
+        shard.setPosY(0.04);
+        shard.setVelocity(0, 0, 0);
+      } else { 
+        shard.accelerate(0, -0.01, 0);
+        shard.move();
+      }
+      
+      if (shard.getVelocity().equals(Vector3d.ZERO)) {
+        for (Model3dFace face : shard.getFaces()) {
+          Model3dTexturedFace tFace = (Model3dTexturedFace) face;
+          int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
           tFace.setAlpha(newAlpha);
-    			if (newAlpha < 5) {
-    				shard.destroy();
-    			}
-    		}
-    	}
+          if (newAlpha < 5) {
+            shard.destroy();
+          }
+        }
+      }
     });
   }
   
   private void addNewShards(Model3d rock) {
-  	var newShards = Model3dUtils.partition3d(rock);
-  	for (var shard : newShards) {
+    var newShards = Model3dUtils.partition3d(rock);
+    for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
           Set.of(gouraudShaded, bothSidesShaded), 
           Set.of());
-  		shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
-			shard.setVelocity(
-					xorShift.randomDouble(-0.05, 0.05), 
-					xorShift.randomDouble(0.1, 0.2), 
-					xorShift.randomDouble(-0.05, 0.05));
-  		shards.add(shard);
-  	}
+      shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
+      shard.setVelocity(
+          xorShift.randomDouble(-0.05, 0.05), 
+          xorShift.randomDouble(0.1, 0.2), 
+          xorShift.randomDouble(-0.05, 0.05));
+      shards.add(shard);
+    }
   }
 
   public static void main(String[] args) {

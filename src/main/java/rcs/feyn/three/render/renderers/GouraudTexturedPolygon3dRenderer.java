@@ -111,29 +111,29 @@ public class GouraudTexturedPolygon3dRenderer {
         double invZ = zd + (y-yd)*dZdy + (xmin-xd)*dInvZdx;
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx, shadeFactor += dShadeFactorDx) {
-        	
-        	Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
-        	
-        	double by = (tdh - 1) / zoom;
-        	double cx = (tdw - 1) / zoom;
-        	double cy = (tdh / 2) / zoom;
-        	
-        	int xdata = MathUtils.roundToInt(cx * t.z());
-        	int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
-        	
-        	int source;
-        	try {
+          
+          Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
+          
+          double by = (tdh - 1) / zoom;
+          double cx = (tdw - 1) / zoom;
+          double cy = (tdh / 2) / zoom;
+          
+          int xdata = MathUtils.roundToInt(cx * t.z());
+          int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
+          
+          int source;
+          try {
             source = textureData.getPixel(xdata, ydata);
-        	} catch (ArrayIndexOutOfBoundsException e) {
-        	  // need to figure out why this is happening
+          } catch (ArrayIndexOutOfBoundsException e) {
+            // need to figure out why this is happening
             source = textureData.getPixel(tdw - 1, tdh - 1);
-        	}
-        	
+          }
+          
           source = ColorUtils.mulRGB(source, shadeFactor);
-        	
-        	if (interpolateColor) {
-        	  int[] colorz = colors.get();
-        	  
+          
+          if (interpolateColor) {
+            int[] colorz = colors.get();
+            
             int interpolatedColor = ColorUtils.addRGBA(
                 ColorUtils.mulRGBA(colorz[ia], t.x()),
                 ColorUtils.addRGBA(
@@ -147,7 +147,7 @@ public class GouraudTexturedPolygon3dRenderer {
                 // the ambient light, so it must be subtracted here
                 // very ugly, needs a better solution
                 shadeFactor - FeynRuntime.getAmbientLight().getIntensity());
-        	}
+          }
 
           source = ColorUtils.setAlphaToRGBA(source, alpha);
           

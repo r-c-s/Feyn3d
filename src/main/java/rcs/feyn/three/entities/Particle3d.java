@@ -128,18 +128,18 @@ public class Particle3d implements IParticle3d {
   }
   
   public final void face(Vector3d point) {
-  	Vector3d delta = position.sub(point);
-  	double degrees = delta.angleBetween(fw);
-  	if (MathUtils.epsilonEquals(degrees, 0)) {
-  		return;
-  	}
-  	Vector3d axis = fw.crossProd(delta);
-  	rotate(position, axis, degrees);
+    Vector3d delta = position.sub(point);
+    double degrees = delta.angleBetween(fw);
+    if (MathUtils.epsilonEquals(degrees, 0)) {
+      return;
+    }
+    Vector3d axis = fw.crossProd(delta);
+    rotate(position, axis, degrees);
   }
   
-//  public void face(Vector3d point, Vector3d direction) {  	
-//  	rotate(point, direction.crossProd(fw), MathConsts.RADIANS_TO_DEGREES*position.sub(point).angleBetween(direction.mul(-1)));
-//  	rotate(position, fw.crossProd(point.sub(position)), MathConsts.RADIANS_TO_DEGREES*fw.angleBetween(point.sub(position)));
+//  public void face(Vector3d point, Vector3d direction) {    
+//    rotate(point, direction.crossProd(fw), MathConsts.RADIANS_TO_DEGREES*position.sub(point).angleBetween(direction.mul(-1)));
+//    rotate(position, fw.crossProd(point.sub(position)), MathConsts.RADIANS_TO_DEGREES*fw.angleBetween(point.sub(position)));
 //  }
 
   public void setOrientation(Particle3d that) {

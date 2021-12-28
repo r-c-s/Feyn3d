@@ -22,19 +22,19 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Teapot extends Demo3d { 
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1;
-	
+  
   private String teapotObjFilePath = System.getProperty("user.dir") + "/objfiles/teapot.obj";
 
   private Model3d teapot = new Model3dBuilder()
-  		.fromObjFile(teapotObjFilePath)
+      .fromObjFile(teapotObjFilePath)
       .setTextureData(Model3dUtils.getImageData(
           System.getProperty("user.dir") + "/textures/porcelaintexture.jpg"),
           255, 
           1)
-  		.addTransform(Matrices.create3dScaleMatrix(0.05))
-  		.build();
+      .addTransform(Matrices.create3dScaleMatrix(0.05))
+      .build();
   
   public Teapot() { }
 

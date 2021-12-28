@@ -29,7 +29,7 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class CollidingRocks extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L; 
   
   private XORShift xorShift = XORShift.getInstance();
@@ -90,46 +90,46 @@ public class CollidingRocks extends Demo3d {
   }
   
   private CollidableModel3d getNewRock() {
-  	var rock = (CollidableModel3d) Model3dFactory.dodecahedron(0.5)
-  			.setOuterBoundingObject(new BoundingSphere3d(0.5))
-  			.build();
-  	
-  	Model3dUtils.setOptions(
-  	    rock, 
-  	    EnumSet.of(gouraudShaded), 
-  	    EnumSet.of(cullIfBackface));
-  	
-  	Model3dUtils.deform(rock, 0.1);
-  	rock.setColor(FeynColor.rosyBrown);
-  	return rock;
+    var rock = (CollidableModel3d) Model3dFactory.dodecahedron(0.5)
+        .setOuterBoundingObject(new BoundingSphere3d(0.5))
+        .build();
+    
+    Model3dUtils.setOptions(
+        rock, 
+        EnumSet.of(gouraudShaded), 
+        EnumSet.of(cullIfBackface));
+    
+    Model3dUtils.deform(rock, 0.1);
+    rock.setColor(FeynColor.rosyBrown);
+    return rock;
   }
   
   private void animateRocks() {
-  	rocks.forEach(rock -> {
-  		rock.spin(Vector3d.Z_AXIS, 0.05);
-    	rock.move();
-    	
-    	boolean outOfBounds = Stream.of(rock.getPosX(), rock.getPosY(), rock.getPosZ())
-		    	.map(Math::abs)
-		    	.anyMatch(pos -> pos > 50);
-    	
-    	if (outOfBounds) {
-    		rock.destroy();
-    	}
+    rocks.forEach(rock -> {
+      rock.spin(Vector3d.Z_AXIS, 0.05);
+      rock.move();
+      
+      boolean outOfBounds = Stream.of(rock.getPosX(), rock.getPosY(), rock.getPosZ())
+          .map(Math::abs)
+          .anyMatch(pos -> pos > 50);
+      
+      if (outOfBounds) {
+        rock.destroy();
+      }
     });
   }
   
   private void animateShards() {
-  	shards.forEach(shard -> {
-    	shard.move();
-    	for (Model3dFace face : shard.getFaces()) {
-  			var newColor = face.getColor().fadeTo(0.999);
-  			if (newColor.getAlpha() < 5) {
-  				shard.destroy();
-  			} else {
-  				face.setColor(newColor);
-  			}
-  		}
+    shards.forEach(shard -> {
+      shard.move();
+      for (Model3dFace face : shard.getFaces()) {
+        var newColor = face.getColor().fadeTo(0.999);
+        if (newColor.getAlpha() < 5) {
+          shard.destroy();
+        } else {
+          face.setColor(newColor);
+        }
+      }
     });
   }
   

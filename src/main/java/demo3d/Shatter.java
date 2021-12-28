@@ -20,7 +20,7 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Shatter extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L;
   
   private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture5.jpg");

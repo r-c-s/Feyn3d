@@ -204,7 +204,7 @@ public final class Model3dBuilder {
     Model3dVertices vs;
     if (n.length > 0) {
       vs = new Model3dGouraudVertices(v, n, m);
-  	} else  {
+    } else  {
       vs = new Model3dVertices(v, m);
     }
      

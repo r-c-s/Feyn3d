@@ -34,9 +34,9 @@ public class Model3dUtils {
     int[] ints = new int[w * h];
     
     for (int x = 0; x < w; x++) {
-    	for (int y = 0; y < h; y++) {
+      for (int y = 0; y < h; y++) {
         ints[y*w + x] = bufferedImage.getRGB(x, y);
-    	}
+      }
     }
     return new Raster(ints, w, h);
   }
@@ -229,8 +229,8 @@ public class Model3dUtils {
         double angleRadians = vertex.sub(com).normalizeLocal().angleBetween(directionBias);
         boolean isInDirectionBias = angleRadians < toleranceAngle;
         if (isInDirectionBias) {
-	        double scalar = 1 + (factor * XORShift.getInstance().randomDouble(-1, 1));
-	        vertex.mulLocal(scalar);
+          double scalar = 1 + (factor * XORShift.getInstance().randomDouble(-1, 1));
+          vertex.mulLocal(scalar);
         }
       }
       

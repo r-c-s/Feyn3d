@@ -10,10 +10,10 @@ import rcs.feyn.math.Vector3d;
 import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
 public class Grid extends Model3d {
-	
-	public Grid(double xDim, double zDim) {
-		this(xDim, zDim, 1);
-	}
+  
+  public Grid(double xDim, double zDim) {
+    this(xDim, zDim, 1);
+  }
 
   public Grid(double xDim, double zDim, int count) {
     double dx =  xDim / count;

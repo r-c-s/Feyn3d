@@ -35,7 +35,7 @@ public class TrigLookUp {
   }
 
   public static final double cos(double radian) {
-  	double angle = MathConsts.RADIANS_TO_DEGREES * radian;
+    double angle = MathConsts.RADIANS_TO_DEGREES * radian;
     if (angle < 0) {
       angle = -angle;
     }
@@ -49,7 +49,7 @@ public class TrigLookUp {
   }
 
   public static final double sin(double radian) {
-  	double angle = MathConsts.RADIANS_TO_DEGREES * radian;
+    double angle = MathConsts.RADIANS_TO_DEGREES * radian;
     if (angle < 0) {
       angle = 180 - angle;
     }

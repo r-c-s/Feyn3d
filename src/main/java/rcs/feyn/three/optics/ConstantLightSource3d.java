@@ -12,7 +12,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
   protected double intensity;
   
   public ConstantLightSource3d(double intensity) {
-  	this(intensity, null);
+    this(intensity, null);
   }
 
   public ConstantLightSource3d(double intensity, FeynColor color) {
@@ -22,7 +22,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
 
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal) {
-  	double alpha = color == null ? 255 : color.getAlpha();
+    double alpha = color == null ? 255 : color.getAlpha();
     return intensity * this.position
         .sub(position)
         .normalizeLocal()
@@ -31,7 +31,7 @@ public class ConstantLightSource3d extends Particle3d implements Colorable, Diff
 
   @Override
   public double getIntensityAt(Vector3d position, Vector3d normal, Matrix44 view) {
-  	double alpha = color == null ? 255 : color.getAlpha();
+    double alpha = color == null ? 255 : color.getAlpha();
     return intensity * this.position
         .affineTransform(view)
         .subLocal(position)

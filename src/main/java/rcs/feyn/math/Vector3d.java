@@ -290,10 +290,10 @@ public class Vector3d implements Freezable<Vector3d> {
 
   public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double radians) {
     if (radians == 0 
-    		|| equals(origin) 
-    		|| equals(ZERO) 
-    		|| MathUtils.epsilonEquals(radians, MathConsts.PI) 
-    		|| MathUtils.epsilonZero(axis.lengthSquared())) {
+        || equals(origin) 
+        || equals(ZERO) 
+        || MathUtils.epsilonEquals(radians, MathConsts.PI) 
+        || MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
     return affineTransformLocal(Matrices.create3dRotateMatrix(origin, axis, radians));
@@ -305,9 +305,9 @@ public class Vector3d implements Freezable<Vector3d> {
 
   public Vector3d rotateLocal(Vector3d axis, double radians) {
     if (radians == 0  
-    		|| equals(ZERO) 
-    		|| MathUtils.epsilonEquals(radians, MathConsts.TWO_PI)
-    		|| MathUtils.epsilonZero(axis.lengthSquared())) {
+        || equals(ZERO) 
+        || MathUtils.epsilonEquals(radians, MathConsts.TWO_PI)
+        || MathUtils.epsilonZero(axis.lengthSquared())) {
       return this;
     }
     return affineTransformLocal(Matrices.create3dRotateMatrix(axis, radians));

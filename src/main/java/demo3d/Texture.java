@@ -18,20 +18,20 @@ import rcs.feyn.three.optics.ConstantLightSource3d;
 
 public class Texture extends Demo3d {
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L;
 
-	String[] textureFiles = {
-			System.getProperty("user.dir") + "/textures/texture.jpg",
-			System.getProperty("user.dir") + "/textures/texture2.jpg",
-			System.getProperty("user.dir") + "/textures/texture3.jpg",
-			System.getProperty("user.dir") + "/textures/texture4.jpg",
-			System.getProperty("user.dir") + "/textures/texture5.jpg",
-			System.getProperty("user.dir") + "/textures/texture6.jpg",
-			System.getProperty("user.dir") + "/textures/texture7.jpg",
-			System.getProperty("user.dir") + "/textures/texture8.jpg"
-	};
-	
+  String[] textureFiles = {
+      System.getProperty("user.dir") + "/textures/texture.jpg",
+      System.getProperty("user.dir") + "/textures/texture2.jpg",
+      System.getProperty("user.dir") + "/textures/texture3.jpg",
+      System.getProperty("user.dir") + "/textures/texture4.jpg",
+      System.getProperty("user.dir") + "/textures/texture5.jpg",
+      System.getProperty("user.dir") + "/textures/texture6.jpg",
+      System.getProperty("user.dir") + "/textures/texture7.jpg",
+      System.getProperty("user.dir") + "/textures/texture8.jpg"
+  };
+  
   private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
@@ -99,7 +99,7 @@ public class Texture extends Demo3d {
   
   int i = 0;
   public Raster nextTexture() {
-		return Model3dUtils.getImageData(textureFiles[i++ % textureFiles.length]);
+    return Model3dUtils.getImageData(textureFiles[i++ % textureFiles.length]);
   }
   
   private class Animation implements Runnable {

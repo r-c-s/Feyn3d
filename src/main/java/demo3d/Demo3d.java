@@ -11,7 +11,7 @@ import rcs.feyn.three.view.Camera3d;
 
 public class Demo3d extends AnimationCanvas3d { 
 
-	@Serial
+  @Serial
   private static final long serialVersionUID = 1L;
   
   protected Camera3d camera = FeynRuntime.getView().getCamera();
