@@ -1,6 +1,9 @@
 package rcs.feyn.three.entities.models;
 
+import rcs.feyn.color.FeynColor;
 import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.render.RenderOptions3d.Option;
+import rcs.feyn.three.render.patches.GouraudPolygon3dPatch;
 import rcs.feyn.three.render.patches.GouraudTexturedPolygon3dPatch;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.patches.TexturedPolygon3dPatch;
@@ -54,7 +57,9 @@ public class Model3dTexturedFace extends Model3dFace {
     
     Polygon3dPatch newPatch;
     
-    if (vertices instanceof Model3dGouraudVertices) {
+    if (vertices instanceof Model3dGouraudVertices 
+        && options.isEnabled(Option.gouraudShaded) 
+        && options.isEnabled(Option.textured)) {
       newPatch = new GouraudTexturedPolygon3dPatch(
           lastVertices, 
           getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
@@ -62,12 +67,23 @@ public class Model3dTexturedFace extends Model3dFace {
           alpha,
           zoom,
           options);
-    } else {
+    } else if (options.isEnabled(Option.gouraudShaded)) { 
+      newPatch = new GouraudPolygon3dPatch(
+          lastVertices, 
+          getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
+          FeynColor.white,
+          options);
+    } else if (options.isEnabled(Option.textured)) {
       newPatch = new TexturedPolygon3dPatch(
           lastVertices, 
           textureData,
           alpha,
           zoom,
+          options);
+    } else {
+      newPatch = new Polygon3dPatch(
+          lastVertices, 
+          FeynColor.white,
           options);
     }
     

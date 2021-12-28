@@ -62,6 +62,7 @@ public class Texture extends Demo3d {
     
     FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1)); 
     FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     
     wzc.setAmount(0.1);
   }
@@ -75,7 +76,6 @@ public class Texture extends Demo3d {
   public void runningLoop() {
     controlCamera();
     handleInput();
-    FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     objAnimation.run();
   }  
 

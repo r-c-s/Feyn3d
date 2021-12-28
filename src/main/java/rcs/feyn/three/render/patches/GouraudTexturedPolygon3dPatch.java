@@ -6,6 +6,7 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudTexturedPolygon3dRenderer;
 
 import java.util.Optional;
@@ -31,8 +32,9 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
 
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    if (!options.isEnabled(RenderOptions3d.Option.gouraudShaded) 
-        || options.isEnabled(RenderOptions3d.Option.meshOnly)) {
+    if (!options.isEnabled(Option.gouraudShaded) 
+        || !options.isEnabled(Option.textured)
+        || options.isEnabled(Option.meshOnly)) {
       super.render(graphics, view, projection, viewPort);
       return;
     }

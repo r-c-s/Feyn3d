@@ -12,7 +12,8 @@ public class RenderOptions3d {
     flatShaded,
     gouraudShaded,
     meshShaded,
-    applyLightingColor
+    applyLightingColor,
+    textured
   }
 
   private Set<Option> options;
@@ -23,7 +24,8 @@ public class RenderOptions3d {
         Option.flatShaded, 
         Option.meshShaded,
         Option.applyLightingColor,
-        Option.gouraudShaded));
+        Option.gouraudShaded,
+        Option.textured));
   }
   
   public RenderOptions3d(RenderOptions3d options) {

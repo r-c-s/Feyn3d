@@ -6,6 +6,7 @@ import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
 
 import java.util.Optional;
@@ -39,7 +40,8 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
 
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
+    if (!options.isEnabled(Option.textured) 
+        || options.isEnabled(Option.meshOnly)) {
       super.render(graphics, view, projection, viewPort);
       return;
     }
@@ -59,15 +61,15 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         .toDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
     double intensity = 1.0;
-    if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
+    if (options.isEnabled(Option.flatShaded)) {
       intensity = LightingUtils.computeLightingIntensity(
             center, 
             normal, 
-            options.isEnabled(RenderOptions3d.Option.bothSidesShaded) || options.isEnabled(RenderOptions3d.Option.meshOnly));
+            options.isEnabled(Option.bothSidesShaded) || options.isEnabled(Option.meshOnly));
     }
    
     int[] colors = null;
-    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
+    if (options.isEnabled(Option.applyLightingColor) 
         && LightingUtils.hasColoredLightsources()) {
       colors = new int[viewSpaceCoordinates.length];
       for (int i = 0; i < colors.length; i++) {

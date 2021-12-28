@@ -48,8 +48,8 @@ public class Teapot extends Demo3d {
     
     Model3dUtils.setOptions(
         teapot, 
-        Set.of(gouraudShaded),
-        Set.of(cullIfBackface));
+        Set.of(),
+        Set.of(cullIfBackface, applyLightingColor, flatShaded, gouraudShaded, textured));
     
     FeynRuntime.getRepository().add(teapot);
     
@@ -86,13 +86,29 @@ public class Teapot extends Demo3d {
     } else {
       inputDelay = 0;
     }
-     
+      
+    if (keyHasBeenPressed(KeyEvent.VK_F)) {
+      inputDelay = 50;
+      for (Model3dFace face : teapot.getFaces()) {
+        face.getRenderOptions().toggle(flatShaded);
+      }
+    }
+  
+    
+    if (keyHasBeenPressed(KeyEvent.VK_T)) {
+      inputDelay = 50;
+      for (Model3dFace face : teapot.getFaces()) {
+        face.getRenderOptions().toggle(textured);
+      }
+    }
+   
     if (keyHasBeenPressed(KeyEvent.VK_G)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
         face.getRenderOptions().toggle(gouraudShaded);
       }
     }
+    
     if (keyHasBeenPressed(KeyEvent.VK_A)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
@@ -106,21 +122,24 @@ public class Teapot extends Demo3d {
         }
       }
     }
+    
     if (keyHasBeenPressed(KeyEvent.VK_M)) { 
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
         face.getRenderOptions().toggle(meshOnly);
       }
     }
-    if (keyHasBeenPressed(KeyEvent.VK_S)) {
-      inputDelay = 50;
-      screenshot("./screenshots/"+System.currentTimeMillis()+".png");
-    }
+    
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
         face.getRenderOptions().toggle(applyLightingColor);
       }
+    }
+    
+    if (keyHasBeenPressed(KeyEvent.VK_S)) {
+      inputDelay = 50;
+      screenshot("./screenshots/"+System.currentTimeMillis()+".png");
     }
   }
 
