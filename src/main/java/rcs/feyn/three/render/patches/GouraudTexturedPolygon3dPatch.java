@@ -67,8 +67,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     }
 
     int[] colors = null;
-    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-        && LightingUtils.hasColoredLightsources()) {
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor) && LightingUtils.hasColoredLightsources()) {
       colors = new int[numVerticesAndNormals];
       for (int i = 0; i < numVerticesAndNormals; i++) {
         colors[i] = LightingUtils.applyLightsourceColorTo(

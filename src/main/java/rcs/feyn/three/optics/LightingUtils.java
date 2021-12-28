@@ -52,17 +52,15 @@ public class LightingUtils {
   public static final int applyLightsourceColorTo(Vector3d position, Vector3d normal, Matrix44 view, int objectColor) {
     DiffuseLightSource3d[] lightSources = FeynRuntime.getDiffuseLightSources();
     int color = objectColor;
-    for (int i = 0; i < lightSources.length; i++) {
-      double intensity;
-      
-      if (view != null) {
-        intensity = lightSources[i].getIntensityAt(position, normal, view);
-      } else {
-        intensity = lightSources[i].getIntensityAt(position, normal);
-      }
-      
-      FeynColor lsColor = lightSources[i].getColor();
+    for (var lightSource : lightSources) {      
+      FeynColor lsColor = lightSource.getColor();
       if (lsColor != null) {
+        double intensity;
+        if (view != null) {
+          intensity = lightSource.getIntensityAt(position, normal, view);
+        } else {
+          intensity = lightSource.getIntensityAt(position, normal);
+        }
         color = ColorUtils.blendRGB(color, lsColor.getRGBA(), intensity);
       }
     }
