@@ -8,9 +8,9 @@ public class AnimationTimer implements Runnable {
   
   private long last;
   
-  public AnimationTimer(Runnable runnable, long millis) {
+  public AnimationTimer(Runnable runnable, long interval) {
     this.runnable = runnable;
-    this.interval = millis;
+    this.interval = interval;
   }
 
   public void run() {
