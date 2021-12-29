@@ -3,11 +3,13 @@ package rcs.feyn.three.render.patches;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
+import rcs.feyn.three.view.ViewUtils;
 
 import java.util.Optional;
 
@@ -48,7 +50,9 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    if (cullIfBackface(center, normal)) {
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
       return;
     }
 
@@ -60,12 +64,12 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] deviceCoordinates = Pipeline3d
         .toDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
 
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
+
     double intensity = 1.0;
     if (options.isEnabled(Option.flatShaded)) {
-      intensity = LightingUtils.computeLightingIntensity(
-            center, 
-            normal, 
-            options.isEnabled(Option.bothSidesShaded) || options.isEnabled(Option.meshOnly));
+      intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
     }
    
     int[] colors = null;
@@ -75,7 +79,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       for (int i = 0; i < colors.length; i++) {
         colors[i] = LightingUtils.applyLightsourceColorTo(
             vertices[i], 
-            normal,
+            normalForLighting,
             colors[i]);
       }
     }

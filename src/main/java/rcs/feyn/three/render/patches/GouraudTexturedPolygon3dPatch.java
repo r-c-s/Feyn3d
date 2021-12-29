@@ -3,11 +3,13 @@ package rcs.feyn.three.render.patches;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudTexturedPolygon3dRenderer;
+import rcs.feyn.three.view.ViewUtils;
 
 import java.util.Optional;
 
@@ -41,7 +43,9 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    if (cullIfBackface(center, normal)) {
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
       return;
     }
     
@@ -58,12 +62,14 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     int numVerticesAndNormals = viewVertices.length;
     
     double[] intensities = new double[numVerticesAndNormals];
+    
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    
     for (int i = 0; i < numVerticesAndNormals; i++) {
       intensities[i] = LightingUtils.computeLightingIntensity(
               viewVertices[i], 
-              viewNormals[i],
-              view,
-              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
+              shouldReverseNormalForLighting ? viewNormals[i].mul(-1) : viewNormals[i],
+              view);
     }
 
     int[] colors = null;
@@ -72,7 +78,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       for (int i = 0; i < numVerticesAndNormals; i++) {
         colors[i] = LightingUtils.applyLightsourceColorTo(
             vertices[i], 
-            normals[i],
+            shouldReverseNormalForLighting ? normals[i].mul(-1) : normals[i],
             FeynColor.black.getRGBA());
       }
     }

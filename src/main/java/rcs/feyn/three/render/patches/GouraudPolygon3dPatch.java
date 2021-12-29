@@ -2,11 +2,13 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
+import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
+import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
-
+import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
@@ -35,9 +37,12 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    if (cullIfBackface(center, normal)) {
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
       return;
     }
+    
     
     Vector3d[][] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, normals, view);
@@ -59,12 +64,14 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     int numVerticesAndNormals = clippedViewVertices.length;
     
     double[] intensities = new double[numVerticesAndNormals];
+     
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    
     for (int i = 0; i < intensities.length; i++) {
       intensities[i] = LightingUtils.computeLightingIntensity(
               clippedViewVertices[i], 
-              clippedViewNormals[i],
-              view,
-              options.isEnabled(RenderOptions3d.Option.bothSidesShaded));
+              shouldReverseNormalForLighting ? clippedViewNormals[i].mul(-1) : clippedViewNormals[i], 
+              view);
     }
 
     boolean applyLightingColor = options.isEnabled(RenderOptions3d.Option.applyLightingColor)
@@ -76,7 +83,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
       if (applyLightingColor) {
         colors[i] = LightingUtils.applyLightsourceColorTo(
             clippedViewVertices[i], 
-            clippedViewNormals[i], 
+            shouldReverseNormalForLighting? clippedViewNormals[i].mul(-1) : clippedViewNormals[i], 
             view, 
             colors[i]);
       }

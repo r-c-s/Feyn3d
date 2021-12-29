@@ -12,13 +12,11 @@ import rcs.feyn.three.kernel.FeynRuntime;
 
 public class LightingUtils {
   
-  public static final double computeLightingIntensity(
-      Vector3d point, Vector3d normal, boolean bothSides) {
-    return computeLightingIntensity(point, normal, null, bothSides);
+  public static final double computeLightingIntensity(Vector3d point, Vector3d normal) {
+    return computeLightingIntensity(point, normal, null);
   } 
 
-  public static final double computeLightingIntensity(
-      Vector3d point, Vector3d normal, Matrix44 view, boolean bothSides) {
+  public static final double computeLightingIntensity(Vector3d point, Vector3d normal, Matrix44 view) {
     double ambient = FeynRuntime.getAmbientLight().getIntensity();
     double intensity = ambient;
     
@@ -31,12 +29,6 @@ public class LightingUtils {
         diffuse = lightSource.getIntensityAt(point, normal, view);
       } else {
         diffuse = lightSource.getIntensityAt(point, normal);
-      }
-      
-      if (bothSides) {
-        diffuse = Math.abs(diffuse);
-      } else {
-        diffuse = Math.max(0, diffuse);
       }
       
       intensity += diffuse;
