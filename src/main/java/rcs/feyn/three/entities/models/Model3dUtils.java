@@ -96,8 +96,18 @@ public class Model3dUtils {
       for (int j = 0; j < indices.length; j++) {
         adjustedIndices[j] = j;
       }
+
+      Model3dFace partFaces;
+      if (faces[i] instanceof Model3dTexturedFace) {
+        partFaces = new Model3dTexturedFace(
+            adjustedIndices, 
+            ((Model3dTexturedFace) faces[i]).getTextureData());
+      } else {
+        partFaces = new Model3dFace(
+            adjustedIndices, 
+            faces[i].getColor());
+      }
       
-      Model3dFace partFaces = new Model3dFace(adjustedIndices, faces[i].getColor());
       Vector3d[] partVertices = getVertices(model.getVertices(), face);
 
       Vector3d com = GeoUtils3d.getCenter(partVertices);
