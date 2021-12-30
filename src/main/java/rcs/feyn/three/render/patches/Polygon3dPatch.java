@@ -48,7 +48,7 @@ public class Polygon3dPatch extends Patch3d {
     Vector3d[] deviceCoordinates = Pipeline3d
         .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
 
-    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
     Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
 
     double intensity = 1.0;
