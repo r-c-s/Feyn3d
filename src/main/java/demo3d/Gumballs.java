@@ -92,7 +92,7 @@ public class Gumballs extends Demo3d {
     Model3dUtils.setOptions(
         cube,
         Set.of(meshOnly), 
-        Set.of(cullIfBackface));
+        Set.of(cullIfBackface, flatShaded, gouraudShaded));
     
     FeynRuntime.getRepository().add(cube);
     FeynRuntime.getRepository().add(spheres);
@@ -111,7 +111,7 @@ public class Gumballs extends Demo3d {
 
     camera.translate(0, 0, 2.5);
     FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.5));
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.6));
   }
 
   @Override
