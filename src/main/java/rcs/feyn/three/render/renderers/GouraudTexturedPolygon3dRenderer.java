@@ -121,15 +121,15 @@ public class GouraudTexturedPolygon3dRenderer {
           int xdata = MathUtils.roundToInt(cx * t.z());
           int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
           
-          int source;
+          int pixel;
           try {
-            source = textureData.getPixel(xdata, ydata);
+            pixel = textureData.getPixel(xdata, ydata);
           } catch (ArrayIndexOutOfBoundsException e) {
             // need to figure out why this is happening
-            source = textureData.getPixel(tdw - 1, tdh - 1);
+            pixel = textureData.getPixel(tdw - 1, tdh - 1);
           }
           
-          source = ColorUtils.mulRGB(source, shadeFactor);
+          int colorWithIntensity = ColorUtils.mulRGB(pixel, shadeFactor);
           
           if (interpolateColor) {
             int[] colorz = colors.get();
@@ -140,8 +140,8 @@ public class GouraudTexturedPolygon3dRenderer {
                     ColorUtils.mulRGBA(colorz[ib], t.y()),
                     ColorUtils.mulRGBA(colorz[ic], t.z())));
             
-            source = ColorUtils.blendRGB(
-                source, 
+            colorWithIntensity = ColorUtils.blendRGB(
+                colorWithIntensity, 
                 interpolatedColor, 
                 // shadeFactor comes from intensities[], which take into account
                 // the ambient light, so it must be subtracted here
@@ -149,9 +149,9 @@ public class GouraudTexturedPolygon3dRenderer {
                 shadeFactor - FeynRuntime.getAmbientLight().getIntensity());
           }
 
-          source = ColorUtils.setAlphaToRGBA(source, alpha);
+          int finalColor = ColorUtils.setAlphaToRGBA(colorWithIntensity, alpha);
           
-          graphics.putPixel(x, y, invZ, source);
+          graphics.putPixel(x, y, invZ, finalColor);
         } 
       } 
     });
