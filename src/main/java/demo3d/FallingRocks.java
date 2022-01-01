@@ -102,7 +102,7 @@ public class FallingRocks extends Demo3d {
   private void animateRocks() {
     rocks.forEach(rock -> {
       rock.spin(Vector3d.Z_AXIS, 0.01);
-      rock.move();
+      rock.animate();
       if (rock.getPosY() < 0) {
         rock.destroy();
         addNewShards(rock);
@@ -117,7 +117,7 @@ public class FallingRocks extends Demo3d {
         shard.setVelocity(0, 0, 0);
       } else { 
         shard.accelerate(0, -0.01, 0);
-        shard.move();
+        shard.animate();
       }
       
       if (shard.getVelocity().equals(Vector3d.ZERO)) {

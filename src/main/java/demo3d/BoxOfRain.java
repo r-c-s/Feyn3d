@@ -77,7 +77,7 @@ public class BoxOfRain extends Demo3d {
   
   private void animateRaindrops() {
     raindrops.forEach(raindrop -> {
-      raindrop.move();
+      raindrop.animate();
       if (raindrop.getA().y() < 0) {
         raindrop.destroy();
         addNewWave(raindrop);
@@ -127,7 +127,7 @@ public class BoxOfRain extends Demo3d {
   private void animateSplashes() {
     splashes.forEach(splash -> {
       splash.accelerate(0, -0.01, 0);
-      splash.move();
+      splash.animate();
       if (splash.getPosition().y() < 0) {
         splash.destroy();
       }

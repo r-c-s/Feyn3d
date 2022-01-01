@@ -128,7 +128,7 @@ public class Gumballs extends Demo3d {
     // saves old position in order to figure out how much the ball needs to spin later
     spheres.forEachWithIndex((sphere, i) -> {   
       delta[i] = sphere.getPosition();
-      sphere.move();
+      sphere.animate();
     }); 
 
     // check for collisions

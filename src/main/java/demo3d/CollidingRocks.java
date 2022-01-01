@@ -13,6 +13,7 @@ import rcs.feyn.three.collision.CollisionHandler3d;
 import rcs.feyn.three.collision.CollisionInfo3d;
 import rcs.feyn.three.collision.CollisionUtils3d;
 import rcs.feyn.three.collision.models.CollidableModel3d;
+import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
@@ -107,7 +108,7 @@ public class CollidingRocks extends Demo3d {
   private void animateRocks() {
     rocks.forEach(rock -> {
       rock.spin(Vector3d.Z_AXIS, 0.05);
-      rock.move();
+      rock.animate();
       
       boolean outOfBounds = Stream.of(rock.getPosX(), rock.getPosY(), rock.getPosZ())
           .map(Math::abs)
@@ -121,7 +122,8 @@ public class CollidingRocks extends Demo3d {
   
   private void animateShards() {
     shards.forEach(shard -> {
-      shard.move();
+      shard.getRotation().setCenter(shard.getPosition());
+      shard.animate();
       for (Model3dFace face : shard.getFaces()) {
         var newColor = face.getColor().fadeTo(0.999);
         if (newColor.getAlpha() < 5) {
@@ -154,6 +156,11 @@ public class CollidingRocks extends Demo3d {
         double speed = rock.getVelocity().length();
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
         shard.setVelocity(velocity);
+        Rotation3d rotation = new Rotation3d(
+            shard.getPosition(),
+            Vector3d.getRandomUnitVector(), 
+            0.1);
+        shard.setRotation(rotation);
         shards.add(shard);
       }
     }

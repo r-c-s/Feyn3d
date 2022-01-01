@@ -15,6 +15,8 @@ public class Particle3d implements IParticle3d {
   protected final Vector3d up = rf.up;
   protected final Vector3d fw = rf.fw;
   
+  protected Rotation3d rotation;
+  
   protected double mass;
 
   public Particle3d() {
@@ -32,6 +34,7 @@ public class Particle3d implements IParticle3d {
   public Particle3d(Vector3d pos, Vector3d vel, double mass) {
     this.position = new Vector3d(pos);
     this.velocity = new Vector3d(vel);
+    this.rotation = null;
     setMass(mass);
   }
 
@@ -127,6 +130,14 @@ public class Particle3d implements IParticle3d {
     this.rf.set(rf);
   }
   
+  public final Rotation3d getRotation() {
+    return rotation;
+  }
+  
+  public final void setRotation(Rotation3d rotation) {
+    this.rotation = rotation;
+  }
+  
   public final void face(Vector3d point) {
     Vector3d delta = position.sub(point);
     double degrees = delta.angleBetween(fw);
@@ -177,8 +188,9 @@ public class Particle3d implements IParticle3d {
     this.mass = mass;
   } 
 
-  public final void move() {
+  public final void animate() {
     translate(velocity);
+    if (rotation != null) transform(rotation.getMatrix());
   }
 
   public final void accelerate(double x, double y, double z) {
