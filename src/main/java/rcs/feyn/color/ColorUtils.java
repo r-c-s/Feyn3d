@@ -108,7 +108,7 @@ public final class ColorUtils {
     }
     int blended = alphaBlend(
         setAlphaToRGBA(a, MathUtils.roundToInt((1 - factor) * 255)), 
-        setAlphaToRGBA(b, MathUtils.roundToInt(     factor  * 255)));
+        setAlphaToRGBA(b, MathUtils.roundToInt(factor * 255)));
     return setAlphaToRGBA(blended, getAlphaFromRGBA(a));
   }
 }

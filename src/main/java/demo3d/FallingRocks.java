@@ -7,6 +7,7 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
+import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
@@ -112,6 +113,7 @@ public class FallingRocks extends Demo3d {
   
   private void animateShards() {
     shards.forEach(shard -> {
+      shard.getRotation().setCenter(shard.getCenter());
       if (shard.getPosition().y() < 0.05) {
         shard.setPosY(0.04);
         shard.setVelocity(0, 0, 0);
@@ -145,6 +147,11 @@ public class FallingRocks extends Demo3d {
           xorShift.randomDouble(-0.05, 0.05), 
           xorShift.randomDouble(0.1, 0.2), 
           xorShift.randomDouble(-0.05, 0.05));
+      Rotation3d rotation = new Rotation3d(
+          shard.getPosition(),
+          Vector3d.getRandomUnitVector(), 
+          0.1);
+      shard.setRotation(rotation);
       shards.add(shard);
     }
   }

@@ -110,8 +110,8 @@ public class Gumballs extends Demo3d {
     FeynRuntime.getRepository().add(z);   
 
     camera.translate(0, 0, 2.5);
-    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(0.5, new FeynColor(255, 0, 0)));
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.6));
+    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(0.5));
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.8));
   }
 
   @Override
