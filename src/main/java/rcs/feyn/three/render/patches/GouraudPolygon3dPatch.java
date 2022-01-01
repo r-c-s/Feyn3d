@@ -29,8 +29,8 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    if (!options.isEnabled(RenderOptions3d.Option.gouraudShaded)
-        || options.isEnabled(RenderOptions3d.Option.meshOnly)) {
+    if (!options.isEnabled(Option.gouraudShaded)
+        || options.isEnabled(Option.meshOnly)) {
       super.render(graphics, view, projection, viewPort);
       return;
     }
@@ -74,7 +74,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
               view);
     }
 
-    boolean applyLightingColor = options.isEnabled(RenderOptions3d.Option.applyLightingColor)
+    boolean applyLightingColor = options.isEnabled(Option.applyLightingColor)
         && LightingUtils.hasColoredLightsources();
 
     int[] colors = new int[numVerticesAndNormals];

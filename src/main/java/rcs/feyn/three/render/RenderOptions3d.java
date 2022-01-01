@@ -11,7 +11,6 @@ public class RenderOptions3d {
     bothSidesShaded,
     flatShaded,
     gouraudShaded,
-    meshShaded,
     applyLightingColor,
     textured
   }
@@ -22,7 +21,6 @@ public class RenderOptions3d {
     return new RenderOptions3d(EnumSet.<Option>of(
         Option.cullIfBackface,
         Option.flatShaded, 
-        Option.meshShaded,
         Option.applyLightingColor,
         Option.gouraudShaded,
         Option.textured));

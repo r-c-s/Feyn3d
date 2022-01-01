@@ -62,7 +62,7 @@ public class Polygon3dPatch extends Patch3d {
     } 
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
-      renderMesh(graphics, deviceCoordinates, intensity, finalColor);
+      renderMesh(graphics, deviceCoordinates, finalColor);
     } else {
       Polygon3dRenderer.render(
         graphics,
@@ -71,20 +71,19 @@ public class Polygon3dPatch extends Patch3d {
     }
   }
 
-  private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, double intensity, int color) {
-    intensity = options.isEnabled(RenderOptions3d.Option.meshShaded) ? intensity : 1;
+  private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, int color) {
     for (int i = 0, j = 1; i < vpcVertices.length; i++, j++, j%=vpcVertices.length) {
       Line3dRenderer.render(
           graphics, 
           vpcVertices[i], 
           vpcVertices[j], 
-          ColorUtils.mulRGBA(color, intensity));
+          color);
     }
   }
   
   protected boolean shouldCullIfBackface(Vector3d center, Vector3d normal) {
-    return !options.isEnabled(RenderOptions3d.Option.meshOnly)
-        && options.isEnabled(RenderOptions3d.Option.cullIfBackface) 
+    return !options.isEnabled(Option.meshOnly)
+        && options.isEnabled(Option.cullIfBackface) 
         && !color.isTransparent();
   }
 }
