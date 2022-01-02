@@ -95,8 +95,7 @@ public class FallingRocks extends Demo3d {
     
     Model3dUtils.deform(rock, 0.1);
 
-    rock.setColor(FeynColor.rosyBrown);
-    rock.setVelocity(0, -0.1, 0);
+    rock.setVelocity(0, -0.2, 0);
     rocks.add(rock);
   }
   
