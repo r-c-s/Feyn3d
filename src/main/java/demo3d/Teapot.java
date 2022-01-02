@@ -53,7 +53,8 @@ public class Teapot extends Demo3d {
     
     FeynRuntime.getRepository().add(teapot);
     
-    camera.translate(0.5, 3, 7);
+    camera.setPosition(teapot.getCenter());
+    camera.translate(0, 2, 7);
     camera.rotate(Vector3d.X_AXIS, -20 * MathConsts.DEGREES_TO_RADIANS); 
 
     var lightSourceRed = new VariableIntensityLightSource3d(10, new FeynColor(255, 0, 0));
