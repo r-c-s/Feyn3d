@@ -31,7 +31,7 @@ public class LightingUtils {
         diffuse = lightSource.getIntensityAt(point, normal);
       }
       
-      intensity += diffuse;
+      intensity += Math.max(0, diffuse);
     }
     
     return intensity;

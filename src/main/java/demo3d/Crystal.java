@@ -43,8 +43,8 @@ public class Crystal extends Demo3d {
 
     camera.translate(0, 0, 3);
     
-    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1.2)); 
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.5));
 
     FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     wzc.setAmount(0.2);
