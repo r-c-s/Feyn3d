@@ -190,7 +190,7 @@ public class Particle3d implements IParticle3d {
 
   public final void animate() {
     translate(velocity);
-    if (rotation != null) transform(rotation.getMatrix());
+    if (rotation != null) transform(rotation.getMatrix(this));
   }
 
   public final void accelerate(double x, double y, double z) {

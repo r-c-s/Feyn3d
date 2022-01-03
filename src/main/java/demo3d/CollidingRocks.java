@@ -122,8 +122,8 @@ public class CollidingRocks extends Demo3d {
   
   private void animateShards() {
     shards.forEach(shard -> {
-      shard.getRotation().setCenter(shard.getPosition());
       shard.animate();
+      
       for (Model3dFace face : shard.getFaces()) {
         var newColor = face.getColor().fadeTo(0.999);
         if (newColor.getAlpha() < 5) {
@@ -158,10 +158,7 @@ public class CollidingRocks extends Demo3d {
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
         shard.setVelocity(velocity);
         
-        Rotation3d rotation = new Rotation3d(
-            shard.getPosition(),
-            Vector3d.getRandomUnitVector(), 
-            0.1);
+        Rotation3d rotation = Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1);
         shard.setRotation(rotation);
         
         shards.add(shard);
