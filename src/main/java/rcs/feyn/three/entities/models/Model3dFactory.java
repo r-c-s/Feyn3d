@@ -32,18 +32,18 @@ public class Model3dFactory {
       vertex.mulLocal(radius);
     }
     
-    dodecahedron.addPatch( 8,  0, 12, 13,  1);
-    dodecahedron.addPatch(12,  3, 10,  6, 13);
-    dodecahedron.addPatch( 0, 16, 18,  3, 12);
-    dodecahedron.addPatch(13,  6, 19, 17,  1);
-    dodecahedron.addPatch( 1, 17,  4,  9,  8);
-    dodecahedron.addPatch( 8,  9,  2, 16,  0);
-    dodecahedron.addPatch( 9,  4, 15, 14,  2);
-    dodecahedron.addPatch(14, 15,  5, 11,  7);
-    dodecahedron.addPatch(10, 11,  5, 19,  6);
-    dodecahedron.addPatch( 3, 18,  7, 11, 10);
-    dodecahedron.addPatch(19,  5, 15,  4, 17);
-    dodecahedron.addPatch(16,  2, 14,  7, 18);
+    dodecahedron.addFace( 8,  0, 12, 13,  1);
+    dodecahedron.addFace(12,  3, 10,  6, 13);
+    dodecahedron.addFace( 0, 16, 18,  3, 12);
+    dodecahedron.addFace(13,  6, 19, 17,  1);
+    dodecahedron.addFace( 1, 17,  4,  9,  8);
+    dodecahedron.addFace( 8,  9,  2, 16,  0);
+    dodecahedron.addFace( 9,  4, 15, 14,  2);
+    dodecahedron.addFace(14, 15,  5, 11,  7);
+    dodecahedron.addFace(10, 11,  5, 19,  6);
+    dodecahedron.addFace( 3, 18,  7, 11, 10);
+    dodecahedron.addFace(19,  5, 15,  4, 17);
+    dodecahedron.addFace(16,  2, 14,  7, 18);
     
     return dodecahedron;
   }
@@ -159,14 +159,14 @@ public class Model3dFactory {
       octahedron.addNormal(vertex.normalize());
     }
 
-    octahedron.addPatch(4, 0, 1);
-    octahedron.addPatch(4, 1, 2);
-    octahedron.addPatch(4, 2, 3);
-    octahedron.addPatch(4, 3, 0);
-    octahedron.addPatch(5, 0, 3);
-    octahedron.addPatch(5, 1, 0);
-    octahedron.addPatch(5, 2, 1);
-    octahedron.addPatch(5, 3, 2);
+    octahedron.addFace(4, 0, 1);
+    octahedron.addFace(4, 1, 2);
+    octahedron.addFace(4, 2, 3);
+    octahedron.addFace(4, 3, 0);
+    octahedron.addFace(5, 0, 3);
+    octahedron.addFace(5, 1, 0);
+    octahedron.addFace(5, 2, 1);
+    octahedron.addFace(5, 3, 2);
     
     return octahedron;
   }
@@ -185,10 +185,10 @@ public class Model3dFactory {
       vertex.mulLocal(radius);
     }
 
-    tetrahedron.addPatch(0, 1, 2);
-    tetrahedron.addPatch(0, 3, 1);
-    tetrahedron.addPatch(0, 2, 3);
-    tetrahedron.addPatch(2, 1, 3);
+    tetrahedron.addFace(0, 1, 2);
+    tetrahedron.addFace(0, 3, 1);
+    tetrahedron.addFace(0, 2, 3);
+    tetrahedron.addFace(2, 1, 3);
     
     return tetrahedron;
   } 
@@ -213,7 +213,7 @@ public class Model3dFactory {
     }  
     
     for (int i = 0; i < sides*2; i+=2) { 
-      prism.addPatch(i, i+1, (i+3) % (sides*2), (i+2) % (sides*2));  
+      prism.addFace(i, i+1, (i+3) % (sides*2), (i+2) % (sides*2));  
     }
     
     Integer[] top = new Integer[sides];
@@ -228,7 +228,7 @@ public class Model3dFactory {
     return prism;
   }
 
-  public static Model3dBuilder pyramid(int sides, double radius, double height) {
+  public static Model3dBuilder pyramid(double radius, double height, int sides) {
     if (sides < 3) {
       throw new IllegalArgumentException("Error: sides of pyramid must be at least 3.");
     }
@@ -244,7 +244,7 @@ public class Model3dFactory {
     pyramid.addVertex(0, off, 0);
     
     for (int i = 0; i < sides; i++) {
-      pyramid.addPatch(i, (i+1) % (sides), sides);
+      pyramid.addFace(i, (i+1) % (sides), sides);
     }
     Integer[] bottom = new Integer[sides];
     for (int i = 0; i < sides; i++) {
@@ -279,18 +279,18 @@ public class Model3dFactory {
       rectangle.addNormal(quandrant(vertex));
     }
 
-    rectangle.addPatch(1, 4, 2, 0);
-    rectangle.addPatch(0, 2, 6, 3);
-    rectangle.addPatch(3, 6, 7, 5);
-    rectangle.addPatch(5, 7, 4, 1);
-    rectangle.addPatch(5, 1, 0, 3);
-    rectangle.addPatch(4, 7, 6, 2);
+    rectangle.addFace(1, 4, 2, 0);
+    rectangle.addFace(0, 2, 6, 3);
+    rectangle.addFace(3, 6, 7, 5);
+    rectangle.addFace(5, 7, 4, 1);
+    rectangle.addFace(5, 1, 0, 3);
+    rectangle.addFace(4, 7, 6, 2);
     
     return rectangle; 
   } 
 
   public static Model3dBuilder cone(double radius, double height) {
-    return pyramid(GeoUtils3d.getNumberOfSidesOfCircle(radius), radius, height);
+    return pyramid(radius, height, GeoUtils3d.getNumberOfSidesOfCircle(radius));
   }
 
   public static Model3dBuilder cylinder(double radius, double length) {
@@ -322,7 +322,7 @@ public class Model3dFactory {
         
         torus.addVertex(point);
         torus.addNormal(point.sub(center).normalizeLocal());
-        torus.addPatch(i*numJ+j, i*numJ+(j+1)%numJ, (i+1)%numI*numJ+(j+1)%numJ, (i+1)%numI*numJ+j);
+        torus.addFace(i*numJ+j, i*numJ+(j+1)%numJ, (i+1)%numI*numJ+(j+1)%numJ, (i+1)%numI*numJ+j);
       } 
     }
     

@@ -72,7 +72,7 @@ public final class Model3dBuilder {
                 for (int i = 0; i < indices.length; i++) {
                   indices[i] = Integer.parseInt(split[indices.length-i].split("/")[0]) - 1;
                 }
-                addPatch(indices);
+                addFace(indices);
               }
           });
     } catch (IOException e) {
@@ -130,7 +130,7 @@ public final class Model3dBuilder {
     return this;
   }
 
-  public Model3dBuilder addPatch(int... patch) {
+  public Model3dBuilder addFace(int... patch) {
     this.faces.add(ArrayUtils.box(patch));
     return this;
   }

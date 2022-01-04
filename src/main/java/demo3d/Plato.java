@@ -37,7 +37,7 @@ public class Plato extends Demo3d {
       .setTextureData(texture)
       .build();
   
-  private Model3d icosahedron  = Model3dFactory.icosahedron (1)
+  private Model3d icosahedron  = Model3dFactory.icosahedron(1)
       .setTextureData(texture)
       .build();
   

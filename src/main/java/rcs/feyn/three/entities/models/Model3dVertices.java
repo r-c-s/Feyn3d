@@ -28,7 +28,7 @@ public class Model3dVertices implements Movable3d, Transformable3d, Cloneable {
     return vertices.length;
   }
   
-  protected Vector3d[] getVertices() {
+  public Vector3d[] getVertices() {
     return vertices;
   }
   
