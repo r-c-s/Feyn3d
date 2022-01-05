@@ -58,11 +58,16 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
 
     Vector3d[] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, view);
+
+    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
+        .clipViewSpaceCoordinates(viewSpaceCoordinates);
     
-    // can't clip textured polygons
+    if (clippedViewSpaceCoordinates.length < 3) {
+      return;
+    }
 
     Vector3d[] deviceCoordinates = Pipeline3d
-        .toDeviceCoordinates(viewSpaceCoordinates, projection, viewPort);
+        .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
 
     boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
     Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
@@ -75,7 +80,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     int[] colors = null;
     if (options.isEnabled(Option.applyLightingColor) 
         && LightingUtils.hasColoredLightsources()) {
-      colors = new int[viewSpaceCoordinates.length];
+      colors = new int[clippedViewSpaceCoordinates.length];
       for (int i = 0; i < colors.length; i++) {
         colors[i] = LightingUtils.applyLightsourceColorTo(
             vertices[i], 

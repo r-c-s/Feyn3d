@@ -44,6 +44,10 @@ public class Polygon3dPatch extends Patch3d {
 
     Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
         .clipViewSpaceCoordinates(viewSpaceCoordinates);
+    
+    if (clippedViewSpaceCoordinates.length < 3) {
+      return;
+    }
 
     Vector3d[] deviceCoordinates = Pipeline3d
         .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);

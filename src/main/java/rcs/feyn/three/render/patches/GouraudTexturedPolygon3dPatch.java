@@ -55,11 +55,20 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     Vector3d[] viewNormals = viewSpaceCoordinates[1];
 
     // can't clip textured polygons
+
+    Vector3d[][] clippedViewSpaceCoordinates = Pipeline3d
+        .clipViewSpaceCoordinates(viewVertices, viewNormals);
+    Vector3d[] clippedViewVertices = clippedViewSpaceCoordinates[0];
+    Vector3d[] clippedViewNormals = clippedViewSpaceCoordinates[1];
+    
+    if (clippedViewVertices.length < 3) {
+      return;
+    }
     
     Vector3d[] deviceCoordinates = Pipeline3d
-        .toDeviceCoordinates(viewVertices, projection, viewPort);
+        .toDeviceCoordinates(clippedViewVertices, projection, viewPort);
     
-    int numVerticesAndNormals = viewVertices.length;
+    int numVerticesAndNormals = clippedViewVertices.length;
     
     double[] intensities = new double[numVerticesAndNormals];
     
@@ -67,9 +76,9 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     
     for (int i = 0; i < numVerticesAndNormals; i++) {
       intensities[i] = LightingUtils.computeLightingIntensity(
-              viewVertices[i], 
-              shouldReverseNormalForLighting ? viewNormals[i].mul(-1) : viewNormals[i],
-              view);
+          clippedViewVertices[i], 
+          shouldReverseNormalForLighting ? clippedViewNormals[i].mul(-1) : clippedViewNormals[i],
+          view);
     }
 
 
@@ -81,7 +90,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       colors = new int[numVerticesAndNormals];
       for (int i = 0; i < numVerticesAndNormals; i++) {
         colors[i] = LightingUtils.applyLightsourceColorTo(
-            vertices[i], 
+            clippedViewVertices[i], 
             shouldReverseNormalForLighting ? normals[i].mul(-1) : normals[i],
             FeynColor.black.getRGBA());
       }
