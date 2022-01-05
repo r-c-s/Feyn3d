@@ -1,6 +1,7 @@
 package demo3d.models;
 
 import static rcs.feyn.three.render.RenderOptions3d.Option.gouraudShaded;
+import static rcs.feyn.three.render.RenderOptions3d.Option.flatShaded;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -36,11 +37,6 @@ public class PineTree extends Model3d {
         .setPosition(position)
         .setColor(FeynColor.saddleBrown)
         .build();
-    
-    Model3dUtils.setOptions(
-        cone, 
-        Set.of(gouraudShaded), 
-        Set.of());
 
     double coneCenterOffset = height - MathConsts.SQURT_2 * height / 2;
     cone.translate(0, coneCenterOffset, 0);
@@ -86,5 +82,10 @@ public class PineTree extends Model3d {
     
     vertices = new Model3dVertices(allVertices);
     faces = allFaces;
+   
+    Model3dUtils.setOptions(
+        this, 
+        Set.of(flatShaded), 
+        Set.of(gouraudShaded));
   }
 }
