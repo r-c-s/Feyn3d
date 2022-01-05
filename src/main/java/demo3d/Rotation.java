@@ -3,6 +3,7 @@ package demo3d;
 import java.awt.event.KeyEvent;
 import java.io.Serial;
 
+import demo3d.models.Grid;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.three.entities.models.Model3d;

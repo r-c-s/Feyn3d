@@ -92,11 +92,11 @@ public class TexturedPolygon3dRenderer {
           
           Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
           
-          double by = (tdh - 1) / zoom;
           double cx = (tdw - 1) / zoom;
+          double by = (tdh - 1) / zoom;
           double cy = (tdh / 2) / zoom;
           
-          int xdata = MathUtils.roundToInt(cx * t.z());
+          int xdata = MathUtils.roundToInt(cx * t.x());
           int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
           
           int pixel;

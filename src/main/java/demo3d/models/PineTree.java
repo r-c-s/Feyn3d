@@ -1,0 +1,90 @@
+package demo3d.models;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.gouraudShaded;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import rcs.feyn.color.FeynColor;
+import rcs.feyn.math.MathConsts;
+import rcs.feyn.math.Vector3d;
+import rcs.feyn.three.entities.models.Model3d;
+import rcs.feyn.three.entities.models.Model3dFace;
+import rcs.feyn.three.entities.models.Model3dFactory;
+import rcs.feyn.three.entities.models.Model3dTexturedFace;
+import rcs.feyn.three.entities.models.Model3dUtils;
+import rcs.feyn.three.entities.models.Model3dVertices;
+import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.kernel.FeynRuntime;
+
+/**
+ * todo: create CompositeModel3d that encapsulates various Model3d's
+ */
+public class PineTree extends Model3d {
+  
+  private static final Raster foliageTexture = 
+      Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/foliage.jpg");
+
+  private final Model3d cone;  
+  private final Model3d[] branches = new Model3d[75];
+  
+  public PineTree(Vector3d position, int height) {
+    
+    cone = Model3dFactory
+        .pyramid(height / 100d, height, 5)
+        .setPosition(position)
+        .setColor(FeynColor.saddleBrown)
+        .build();
+    
+    Model3dUtils.setOptions(
+        cone, 
+        Set.of(gouraudShaded), 
+        Set.of());
+
+    double coneCenterOffset = height - MathConsts.SQURT_2 * height / 2;
+    cone.translate(0, coneCenterOffset, 0);
+    
+    for (int i = 0; i < branches.length; i++) {
+      double y = height * 0.1 + (i / (double) branches.length) * (height * 0.9);
+      
+      Vector3d branchPosition = position.add(0, y, 0);
+      
+      double maxBranchHeight = height / 5d;
+      double branchHeight = maxBranchHeight - ((i / (double) branches.length) * maxBranchHeight);
+      
+      Model3d branch = Model3dFactory
+          .pyramid(height / 50d, branchHeight, 3)
+          .setTextureData(foliageTexture)
+          .setPosition(branchPosition)
+          .setColor(FeynColor.darkOliveGreen)
+          .build();
+      
+      double branchCenterOffset = branchHeight - MathConsts.SQURT_2 * branchHeight / 2;
+      branch.rotate(
+          branchPosition.y(y - branchCenterOffset), 
+          Vector3d.getRandomUnitVector().y(0), 
+          -MathConsts.HALF_PI);
+      
+      branches[i] = branch;
+      FeynRuntime.getRepository().add(branches[i]);
+    }
+    
+    Vector3d[] allVertices = Stream.concat(
+        Arrays.stream(cone.getVertices().getVertices()),
+        Arrays.stream(branches).flatMap(model -> Arrays.stream(model.getVertices().getVertices())))
+        .toArray(Vector3d[]::new);
+    
+    Model3dFace[] allFaces = Stream.concat(
+        Arrays.stream(cone.getFaces()), 
+        Arrays.stream(branches)
+            .flatMap(model -> Arrays.stream(model.getFaces())
+                .map(face -> new Model3dTexturedFace(
+                    Arrays.stream(face.getIndices()).map(index -> index + cone.getVertices().size()).toArray(), 
+                    ((Model3dTexturedFace)face).getTextureData()))))
+        .toArray(Model3dFace[]::new);
+    
+    vertices = new Model3dVertices(allVertices);
+    faces = allFaces;
+  }
+}

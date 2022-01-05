@@ -24,7 +24,7 @@ public class Model3dVertices implements Movable3d, Transformable3d, Cloneable {
     this.masses = masses;
   }
 
-  public double size() {
+  public int size() {
     return vertices.length;
   }
   

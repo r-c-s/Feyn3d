@@ -2,6 +2,7 @@ package demo3d;
 
 import java.io.Serial;
 
+import demo3d.models.Grid;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
 import rcs.feyn.math.Vector3d;
