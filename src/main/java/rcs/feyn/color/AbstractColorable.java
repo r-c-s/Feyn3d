@@ -1,6 +1,6 @@
 package rcs.feyn.color;
 
-public class AbstractColorable implements Colorable {
+public class AbstractColorable implements Colorable, AlphaEnabled {
   
   protected FeynColor color;
 
@@ -16,5 +16,15 @@ public class AbstractColorable implements Colorable {
   @Override
   public void setColor(FeynColor color) {
     this.color = color;
+  }
+
+  @Override
+  public int getAlpha() {
+    return color.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(int alpha) {
+    color = new FeynColor(color.getRed(), color.getGreen(), color.getBlue(), alpha);
   }
 }

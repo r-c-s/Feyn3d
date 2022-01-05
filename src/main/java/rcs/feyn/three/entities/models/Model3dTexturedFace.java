@@ -1,5 +1,6 @@
 package rcs.feyn.three.entities.models;
 
+import rcs.feyn.color.AlphaEnabled;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.render.RenderOptions3d.Option;
@@ -8,7 +9,7 @@ import rcs.feyn.three.render.patches.GouraudTexturedPolygon3dPatch;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.three.render.patches.TexturedPolygon3dPatch;
 
-public class Model3dTexturedFace extends Model3dFace {
+public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
   
   private Raster textureData;
   private int alpha;
@@ -37,10 +38,12 @@ public class Model3dTexturedFace extends Model3dFace {
     this.textureData = textureData;
   }
   
+  @Override
   public int getAlpha() {
     return alpha;
   }
-  
+
+  @Override
   public synchronized void setAlpha(int alpha) {
     this.lastAlpha = this.alpha;
     this.alpha = alpha;

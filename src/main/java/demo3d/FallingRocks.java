@@ -13,7 +13,6 @@ import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
-import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynRuntime;
@@ -99,9 +98,8 @@ public class FallingRocks extends Demo3d {
     shards.forEach(shard -> {
       if (shard.getVelocity().equals(Vector3d.ZERO)) {
         for (Model3dFace face : shard.getFaces()) {
-          Model3dTexturedFace tFace = (Model3dTexturedFace) face;
-          int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
-          tFace.setAlpha(newAlpha);
+          int newAlpha = MathUtils.roundToInt(face.getAlpha() - 1);
+          face.setAlpha(newAlpha);
           if (newAlpha < 5) {
             shard.destroy();
           }
