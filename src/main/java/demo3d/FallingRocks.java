@@ -144,12 +144,16 @@ public class FallingRocks extends Demo3d {
       
       shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
       
-      shard.setVelocity(
+      Vector3d velocity = new Vector3d(
           xorShift.randomDouble(-0.05, 0.05), 
           xorShift.randomDouble(0.1, 0.2), 
           xorShift.randomDouble(-0.05, 0.05));
       
-      Rotation3d rotation = Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1);
+      shard.setVelocity(velocity);
+      
+      Vector3d axis = velocity.crossProd(Vector3d.Y_AXIS);
+      
+      Rotation3d rotation = Rotation3d.spin(axis, -0.1);
       shard.setRotation(rotation);
       
       shards.add(shard);
