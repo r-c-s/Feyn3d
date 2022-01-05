@@ -5,6 +5,7 @@ import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
@@ -75,6 +76,7 @@ public class Plato extends Demo3d {
       Model3d solid = solids[i];
       FeynRuntime.getRepository().add(solid); 
       solid.translate(Vector3d.fromSpherical(3, i*deg, 0));
+      solid.setRotation(Rotation3d.spin(Vector3d.Y_AXIS, 1.5 * MathConsts.DEGREES_TO_RADIANS));
       Model3dUtils.setOptions(
           solid, 
           Set.of(flatShaded), 
@@ -89,11 +91,7 @@ public class Plato extends Demo3d {
     FeynRuntime.getDiffuseLightSources()[0].setPosition(camera.getPosition()); 
     
     for (Model3d solid : solids) {  
-      solid.rotate(Vector3d.Y_AXIS, 1.5 * MathConsts.DEGREES_TO_RADIANS); 
-      Model3dUtils.setOptions(
-          solid, 
-          Set.of(), 
-          Set.of(gouraudShaded)); 
+      solid.animate();
     }
   }
 
