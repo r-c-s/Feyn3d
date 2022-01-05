@@ -84,6 +84,40 @@ public class FallingRocks extends Demo3d {
     animateShards();
   }
   
+  private void animateRocks() {
+    rocks.forEach(rock -> {
+      rock.spin(Vector3d.Z_AXIS, 0.01);
+      rock.animate();
+      if (rock.getPosY() < 0) {
+        rock.destroy();
+        addNewShards(rock);
+      }
+    });
+  }
+  
+  private void animateShards() {
+    shards.forEach(shard -> {
+      if (shard.getVelocity().equals(Vector3d.ZERO)) {
+        for (Model3dFace face : shard.getFaces()) {
+          Model3dTexturedFace tFace = (Model3dTexturedFace) face;
+          int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
+          tFace.setAlpha(newAlpha);
+          if (newAlpha < 5) {
+            shard.destroy();
+          }
+        }
+      } else {
+        if (shard.getPosition().y() < 0.05) {
+          shard.setPosY(0.04);
+          shard.setVelocity(0, 0, 0);
+        } else { 
+          shard.accelerate(0, -0.01, 0);
+          shard.animate();
+        }
+      }
+    });
+  }
+  
   private void addNewRock() {
     var rock = Model3dFactory.dodecahedron(0.5)
         .setTextureData(rockTexture)
@@ -99,40 +133,6 @@ public class FallingRocks extends Demo3d {
 
     rock.setVelocity(0, -0.2, 0);
     rocks.add(rock);
-  }
-  
-  private void animateRocks() {
-    rocks.forEach(rock -> {
-      rock.spin(Vector3d.Z_AXIS, 0.01);
-      rock.animate();
-      if (rock.getPosY() < 0) {
-        rock.destroy();
-        addNewShards(rock);
-      }
-    });
-  }
-  
-  private void animateShards() {
-    shards.forEach(shard -> {
-      if (shard.getPosition().y() < 0.05) {
-        shard.setPosY(0.04);
-        shard.setVelocity(0, 0, 0);
-      } else { 
-        shard.accelerate(0, -0.01, 0);
-        shard.animate();
-      }
-      
-      if (shard.getVelocity().equals(Vector3d.ZERO)) {
-        for (Model3dFace face : shard.getFaces()) {
-          Model3dTexturedFace tFace = (Model3dTexturedFace) face;
-          int newAlpha = MathUtils.roundToInt(tFace.getAlpha() - 1);
-          tFace.setAlpha(newAlpha);
-          if (newAlpha < 5) {
-            shard.destroy();
-          }
-        }
-      }
-    });
   }
   
   private void addNewShards(Model3d rock) {
