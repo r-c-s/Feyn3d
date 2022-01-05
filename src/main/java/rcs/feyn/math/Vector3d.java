@@ -438,6 +438,11 @@ public class Vector3d implements Freezable<Vector3d> {
     }
   }
 
+  /**
+   * @param r : 0 -> infinity
+   * @param theta : 0 -> pi
+   * @param phi : 0 -> 2pi
+   */
   public static Vector3d fromSpherical(double r, double theta, double phi) {
     return new Vector3d(r * Math.sin(theta) * Math.cos(phi),
                         r * Math.sin(theta) * Math.sin(phi),

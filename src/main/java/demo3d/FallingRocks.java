@@ -6,6 +6,7 @@ import java.util.Set;
 import demo3d.models.Grid;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.entities.Rotation3d;
@@ -139,15 +140,15 @@ public class FallingRocks extends Demo3d {
     for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
-          Set.of(gouraudShaded, bothSidesShaded), 
+          Set.of(gouraudShaded), 
           Set.of());
       
       shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
       
-      Vector3d velocity = new Vector3d(
-          xorShift.randomDouble(-0.05, 0.05), 
-          xorShift.randomDouble(0.1, 0.2), 
-          xorShift.randomDouble(-0.05, 0.05));
+      Vector3d velocity = Vector3d.fromSpherical(
+          0.15,
+          xorShift.randomDouble(0, MathConsts.PI),
+          xorShift.randomDouble(0, MathConsts.PI));
       
       shard.setVelocity(velocity);
       
