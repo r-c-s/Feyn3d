@@ -214,6 +214,7 @@ public class Model3dUtils {
   
   /**
    * Need to fix these methods, this creates non-co-planar polygons which poses problems
+   * the polygon being deformed must be a triangle
    */
   public static void deform(Model3d model, double factor) {
     Vector3d com = model.getCenter();
