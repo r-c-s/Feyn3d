@@ -4,10 +4,6 @@ import rcs.feyn.math.MathConsts;
 
 public class TrigLookUp {
   
-  static {
-    new TrigLookUp(1);
-  }
-  
   private static int partitions;
   private static int inverseStep;
 

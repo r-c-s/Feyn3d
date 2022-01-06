@@ -9,7 +9,6 @@ module feyn3d {
     exports rcs.feyn.utils.struct;
     exports rcs.feyn.three.anim;
     exports rcs.feyn.three.collision;
-    exports rcs.feyn.three.collision.models;
     exports rcs.feyn.three.geo;
     exports rcs.feyn.three.gfx;
     exports rcs.feyn.three.kernel;
