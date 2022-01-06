@@ -89,14 +89,14 @@ public class TexturedPolygon3dRenderer {
 
         for (int x = xmin; x < xmax; x++, invZ += dInvZdx) {
           
-          Vector3d t = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
+          Vector3d bary = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
           
           double cx = (tdw - 1) / zoom;
           double by = (tdh - 1) / zoom;
           double cy = (tdh / 2) / zoom;
           
-          int xdata = MathUtils.roundToInt(cx * t.z());
-          int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
+          int xdata = MathUtils.roundToInt(cx * bary.z());
+          int ydata = MathUtils.roundToInt(by * bary.y() + cy * bary.z());
           
           int pixel;
           try {
@@ -112,10 +112,10 @@ public class TexturedPolygon3dRenderer {
             int[] colorz = colors.get();
             
             int interpolatedColor = ColorUtils.addRGBA(
-                ColorUtils.mulRGBA(colorz[ia], t.x()),
+                ColorUtils.mulRGBA(colorz[ia], bary.x()),
                 ColorUtils.addRGBA(
-                    ColorUtils.mulRGBA(colorz[ib], t.y()),
-                    ColorUtils.mulRGBA(colorz[ic], t.z())));
+                    ColorUtils.mulRGBA(colorz[ib], bary.y()),
+                    ColorUtils.mulRGBA(colorz[ic], bary.z())));
             
             colorWithIntensity = ColorUtils.blendRGB(
                 colorWithIntensity, 
