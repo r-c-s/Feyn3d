@@ -146,7 +146,7 @@ public class FallingRocks extends Demo3d {
       Vector3d velocity = Vector3d.fromSpherical(
           0.15,
           xorShift.randomDouble(0, MathConsts.PI),
-          xorShift.randomDouble(0, MathConsts.PI));
+          xorShift.randomDouble(MathConsts.QUARTER_PI, MathConsts.THREE_QUARTER_PI));
       
       shard.setVelocity(velocity);
       

@@ -18,6 +18,7 @@ public final class MathConsts {
   public static final double PI                 = Math.PI; 
   public static final double HALF_PI            = Math.PI / 2; 
   public static final double QUARTER_PI         = Math.PI / 4;
+  public static final double THREE_QUARTER_PI  = 3 * Math.PI / 4;
   public static final double TWO_PI             = Math.PI * 2;
   public static final double THREE_HALFS_PI     = 3 * Math.PI / 2;
   public static final double DEGREES_TO_RADIANS = Math.PI / 180;
