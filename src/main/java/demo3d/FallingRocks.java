@@ -125,7 +125,7 @@ public class FallingRocks extends Demo3d {
     Model3dUtils.setOptions(
         rock, 
         Set.of(flatShaded), 
-        Set.of(gouraudShaded, applyLightingColor, cullIfBackface));
+        Set.of(gouraudShaded, cullIfBackface));
     
     Model3dUtils.deform(rock, 0.1);
 
@@ -138,8 +138,8 @@ public class FallingRocks extends Demo3d {
     for (var shard : newShards) {
       Model3dUtils.setOptions(
           shard, 
-          Set.of(gouraudShaded), 
-          Set.of());
+          Set.of(flatShaded), 
+          Set.of(gouraudShaded, cullIfBackface));
       
       shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
       

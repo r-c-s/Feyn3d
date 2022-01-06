@@ -214,6 +214,9 @@ public class Model3dUtils {
     return parts;
   }
   
+  /**
+   * Need to fix these methods, this creates non-co-planar polygons which poses problems
+   */
   public static void deform(Model3d model, double factor) {
     Vector3d com = model.getCenter();
     
