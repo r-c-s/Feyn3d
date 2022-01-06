@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import rcs.feyn.three.collision.BoundingObject3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
@@ -30,7 +30,7 @@ public final class Model3dBuilder {
   protected BoundingObject3d outerBoundingObject = null;
   protected ArrayList<BoundingObject3d> innerBoundingObjects = new ArrayList<>();
 
-  protected Raster textureData = null;
+  protected TextureRaster textureData = null;
   protected int textureAlpha = 255;
   protected double textureZoom = 1;
 
@@ -169,12 +169,12 @@ public final class Model3dBuilder {
     return this;
   }
   
-  public Model3dBuilder setTextureData(Raster textureData) {
+  public Model3dBuilder setTextureData(TextureRaster textureData) {
     this.textureData = textureData;
     return this;
   }
   
-  public Model3dBuilder setTextureData(Raster textureData, int textureAlpha, double textureZoom) {
+  public Model3dBuilder setTextureData(TextureRaster textureData, int textureAlpha, double textureZoom) {
     this.textureData = textureData;
     this.textureAlpha = textureAlpha;
     this.textureZoom = textureZoom;

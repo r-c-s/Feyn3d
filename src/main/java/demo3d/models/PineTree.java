@@ -16,7 +16,7 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.models.Model3dVertices;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 
 /**
@@ -24,7 +24,7 @@ import rcs.feyn.three.kernel.FeynRuntime;
  */
 public class PineTree extends Model3d {
   
-  private static final Raster foliageTexture = 
+  private static final TextureRaster foliageTexture = 
       Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/foliage.jpg");
 
   private final Model3d cone;  

@@ -13,13 +13,13 @@ import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.geo.GeoUtils3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.utils.XORShift;
 
 public class Model3dUtils {
   
-  public static Raster getImageData(String filename) {
+  public static TextureRaster getImageData(String filename) {
     BufferedImage bufferedImage;
     try {
       bufferedImage = ImageIO.read(new File(filename));
@@ -40,7 +40,7 @@ public class Model3dUtils {
         ints[y*w + x] = bufferedImage.getRGB(x, y);
       }
     }
-    return new Raster(ints, w, h);
+    return new TextureRaster(ints, w, h);
   }
   
   public static Model3d getRenderableSphere(CollidableModel3d model) {

@@ -14,7 +14,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -30,7 +30,7 @@ public class FallingRocks extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L; 
 
-  private Raster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
+  private TextureRaster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
   
   private XORShift xorShift = XORShift.getInstance();
   

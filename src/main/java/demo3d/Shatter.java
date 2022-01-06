@@ -11,7 +11,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.VariableIntensityLightSource3d;
@@ -23,7 +23,7 @@ public class Shatter extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L;
   
-  private Raster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture5.jpg");
+  private TextureRaster texture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture5.jpg");
   
   private Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
   private Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);

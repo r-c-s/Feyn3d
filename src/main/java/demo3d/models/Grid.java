@@ -4,7 +4,7 @@ import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dVertices;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
@@ -22,7 +22,7 @@ public class Grid extends Model3d {
     setFaces(count);
   }
 
-  public Grid(double xDim, double zDim, int count, Raster texture) {
+  public Grid(double xDim, double zDim, int count, TextureRaster texture) {
     setVertices(xDim, zDim, count);
     setFaces(count, texture);
   }
@@ -56,7 +56,7 @@ public class Grid extends Model3d {
     }
   }
   
-  private void setFaces(int count, Raster texture) {
+  private void setFaces(int count, TextureRaster texture) {
     faces = new Model3dTexturedFace[count*count]; 
     
     for (int i = 0, j = 0; i < vertices.getVertices().length - count - 2; i++) {

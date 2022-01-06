@@ -7,7 +7,6 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynRuntime;
 
 public class GouraudTexturedPolygon3dRenderer {
   
@@ -63,9 +62,6 @@ public class GouraudTexturedPolygon3dRenderer {
       int ymax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ya, yb, yc), screenH));
       
       double A = Math.abs(cc) / 2;   
-      double fa = intensities[ia] / A;  
-      double fb = intensities[ib] / A;  
-      double fc = intensities[ic] / A;  
       double ak0 = yc*(xb-xc)-xc*(yb-yc);  
       double ak1 = yb-yc;  
       double ak2 = xb-xc;            
@@ -96,6 +92,10 @@ public class GouraudTexturedPolygon3dRenderer {
         
         int xmin = MathUtils.roundToInt(MathUtils.max(MathUtils.min(ximax, xjmax, xkmax), 0));
         int xmax = MathUtils.roundToInt(MathUtils.min(MathUtils.max(ximin, xjmin, xkmin), screenW));
+
+        double fa = intensities[ia] / A;  
+        double fb = intensities[ib] / A;  
+        double fc = intensities[ic] / A;  
         
         double aMin = 0.5 * Math.abs(ak0 + xmin*ak1 - y*ak2);   
         double bMin = 0.5 * Math.abs(bk0 + xmin*bk1 - y*bk2); 
@@ -143,10 +143,7 @@ public class GouraudTexturedPolygon3dRenderer {
             colorWithIntensity = ColorUtils.blendRGB(
                 colorWithIntensity, 
                 interpolatedColor, 
-                // shadeFactor comes from intensities[], which take into account
-                // the ambient light, so it must be subtracted here
-                // very ugly, needs a better solution
-                shadeFactor - FeynRuntime.getAmbientLight().getIntensity());
+                shadeFactor);
           }
 
           int finalColor = ColorUtils.setAlphaToRGBA(colorWithIntensity, alpha);

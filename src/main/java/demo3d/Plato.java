@@ -9,7 +9,7 @@ import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.entities.models.Model3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -23,7 +23,7 @@ public class Plato extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L; 
   
-  private Raster texture = Model3dUtils
+  private TextureRaster texture = Model3dUtils
       .getImageData(System.getProperty("user.dir") + "/textures/marbletexture.jpg");
   
   private Model3d tetrahedron = Model3dFactory.tetrahedron(1)

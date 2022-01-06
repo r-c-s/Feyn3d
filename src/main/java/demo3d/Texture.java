@@ -11,7 +11,7 @@ import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -90,7 +90,7 @@ public class Texture extends Demo3d {
      
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 20;
-      Raster nextTexture = nextTexture();
+      TextureRaster nextTexture = nextTexture();
       for (var face : obj.getFaces()) {
         ((Model3dTexturedFace) face).setTextureData(nextTexture);
       }
@@ -98,7 +98,7 @@ public class Texture extends Demo3d {
   }
   
   int i = 0;
-  public Raster nextTexture() {
+  public TextureRaster nextTexture() {
     return Model3dUtils.getImageData(textureFiles[i++ % textureFiles.length]);
   }
   
