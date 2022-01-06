@@ -16,7 +16,6 @@ import rcs.feyn.three.collision.InelasticCollision3d;
 import rcs.feyn.three.entities.models.CollidableModel3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
-import rcs.feyn.three.entities.primitives.Line3d;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -41,10 +40,6 @@ public class Gumballs extends Demo3d {
       .cube(2)
       .setOuterBoundingObject(new BoundingBox3d(2, 2, 2))
       .build();
-  
-  private final Line3d x = new Line3d(Vector3d.NEG_X_AXIS, Vector3d.X_AXIS);
-  private final Line3d y = new Line3d(Vector3d.NEG_Y_AXIS, Vector3d.Y_AXIS);
-  private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS); 
 
   private final double energyFactor = 0.5;
   
@@ -96,18 +91,6 @@ public class Gumballs extends Demo3d {
     
     FeynRuntime.getRepository().add(cube);
     FeynRuntime.getRepository().add(spheres);
-
-    x.getRenderOptions().disable(applyLightingColor);
-    y.getRenderOptions().disable(applyLightingColor);
-    z.getRenderOptions().disable(applyLightingColor);
-    
-    x.setColor(FeynColor.red);
-    y.setColor(FeynColor.green);
-    z.setColor(FeynColor.blue);
-    
-    FeynRuntime.getRepository().add(x);
-    FeynRuntime.getRepository().add(y);
-    FeynRuntime.getRepository().add(z);   
 
     camera.translate(0, 0, 2.5);
     FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(0.5));
