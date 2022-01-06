@@ -13,7 +13,7 @@ import rcs.feyn.three.collision.CollisionHandler3d;
 import rcs.feyn.three.collision.CollisionInfo3d;
 import rcs.feyn.three.collision.CollisionUtils3d;
 import rcs.feyn.three.collision.InelasticCollision3d;
-import rcs.feyn.three.collision.models.CollidableModel3d;
+import rcs.feyn.three.entities.models.CollidableModel3d;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Line3d;

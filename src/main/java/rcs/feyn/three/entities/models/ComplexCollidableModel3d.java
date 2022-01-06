@@ -1,11 +1,9 @@
-package rcs.feyn.three.collision.models;
+package rcs.feyn.three.entities.models;
 
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.collision.BoundingObject3d;
 import rcs.feyn.three.collision.ComplexCollidable3d;
-import rcs.feyn.three.entities.models.Model3dFace;
-import rcs.feyn.three.entities.models.Model3dVertices;
 
 public class ComplexCollidableModel3d extends CollidableModel3d implements ComplexCollidable3d {
 

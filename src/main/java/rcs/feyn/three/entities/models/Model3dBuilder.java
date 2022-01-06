@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import rcs.feyn.three.collision.BoundingObject3d;
-import rcs.feyn.three.collision.models.CollidableModel3d;
-import rcs.feyn.three.collision.models.ComplexCollidableModel3d;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
