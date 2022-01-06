@@ -42,7 +42,7 @@ public class PineForest extends Demo3d {
       FeynRuntime.getRepository().add(trees[i]);
     }
 
-    camera.translate(0, 3, 10);
+    camera.translate(0, 4, 10);
 
     FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.8));
     FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1)); 
