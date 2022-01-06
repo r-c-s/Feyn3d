@@ -28,7 +28,7 @@ public class PineForest extends Demo3d {
   protected void initialize() {
     super.initialize(); 
     wzc.setAmount(0.2);
-    setBackgroundColor(FeynColor.black);
+    setBackgroundColor(FeynColor.skyBlue);
     
     FeynRuntime.getRepository().add(ground);
     
