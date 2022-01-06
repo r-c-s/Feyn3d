@@ -26,8 +26,12 @@ public class Model3dUtils {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    int w = bufferedImage.getWidth();
-    int h = bufferedImage.getHeight();
+    int W = bufferedImage.getWidth();
+    int H = bufferedImage.getHeight();
+    
+    // force image to be square
+    int w = Math.min(W, H);
+    int h = w;
     
     int[] ints = new int[w * h];
     

@@ -51,8 +51,8 @@ public class PineTree extends Model3d {
       
       Model3d branch = Model3dFactory
           .pyramid(height / 50d, branchHeight, 3)
+          .setTextureData(foliageTexture)
           .setPosition(branchPosition)
-          .setColor(FeynColor.darkGreen)
           .build();
       
       double branchCenterOffset = branchHeight - MathConsts.SQURT_2 * branchHeight / 2;
@@ -74,9 +74,9 @@ public class PineTree extends Model3d {
         Arrays.stream(cone.getFaces()), 
         Arrays.stream(branches)
             .flatMap(model -> Arrays.stream(model.getFaces())
-                .map(face -> new Model3dFace(
+                .map(face -> new Model3dTexturedFace(
                     Arrays.stream(face.getIndices()).map(index -> index + cone.getVertices().size()).toArray(), 
-                    face.getColor()))))
+                    ((Model3dTexturedFace)face).getTextureData()))))
         .toArray(Model3dFace[]::new);
     
     vertices = new Model3dVertices(allVertices);

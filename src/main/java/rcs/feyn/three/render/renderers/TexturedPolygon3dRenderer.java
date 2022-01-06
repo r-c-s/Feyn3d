@@ -96,7 +96,7 @@ public class TexturedPolygon3dRenderer {
           double by = (tdh - 1) / zoom;
           double cy = (tdh / 2) / zoom;
           
-          int xdata = MathUtils.roundToInt(cx * t.x());
+          int xdata = MathUtils.roundToInt(cx * t.z());
           int ydata = MathUtils.roundToInt(by * t.y() + cy * t.z());
           
           int pixel;

@@ -20,7 +20,7 @@ public class PineForest extends Demo3d {
   
   private Grid ground = new Grid(
       10, 10, 5,
-      Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/forest-ground.png"));
+      Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/forest-ground.jpg"));
 
   private PineTree[] trees = new PineTree[10];
   
