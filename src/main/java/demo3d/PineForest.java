@@ -46,7 +46,7 @@ public class PineForest extends Demo3d {
 
     FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.8));
     FeynRuntime.addDiffuseLightSource(new ConstantLightSource3d(1)); 
-    FeynRuntime.getDiffuseLightSources()[0].setPosition(new Vector3d(5, 15, 5)); 
+    FeynRuntime.getDiffuseLightSources()[0].setPosition(new Vector3d(5, 10, 5)); 
   }
 
   @Override
