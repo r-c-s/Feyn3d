@@ -23,9 +23,4 @@ public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynG
   public final boolean isDestroyed() {
     return !active;
   }
-
-  @Override
-  public String toString() {
-    return String.format("%s [c: %s]", super.toString());
-  }
 }
