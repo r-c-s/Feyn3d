@@ -9,8 +9,8 @@ public class TrigLookUp {
 
   private static double[] cos;
   private static double[] sin; 
-
-  public TrigLookUp(double step) {
+  
+  public static void init(double step) {
     if ((360 / step) % 360 != 0) {
       throw new IllegalArgumentException("Error: partition size must be multiple of 360.");
     }
@@ -29,7 +29,7 @@ public class TrigLookUp {
       sin[i] = Math.sin(rad);
     } 
   }
-
+  
   public static final double cos(double radian) {
     double angle = MathConsts.RADIANS_TO_DEGREES * radian;
     if (angle < 0) {

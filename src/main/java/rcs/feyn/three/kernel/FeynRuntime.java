@@ -11,7 +11,7 @@ import rcs.feyn.math.TrigLookUp;
 public class FeynRuntime {
   
   static { 
-    new TrigLookUp(0.1);
+    TrigLookUp.init(0.1);
   }
   
   private static final View view = new View();
