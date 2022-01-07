@@ -145,7 +145,7 @@ public class SpaceShooter extends Demo3d {
         .setPosition(new Vector3d(xorShift.randomDouble(-10, 10), 0, -200))
         .setVelocity(new Vector3d(0, 0, 0.5))
         .setColor(FeynColor.rosyBrown)
-        .setRotation(Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1))
+        .setRotation(Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.05))
         .build();
 
     Model3dUtils.deform(rock, 0.1);
@@ -221,7 +221,7 @@ public class SpaceShooter extends Demo3d {
             Set.of(gouraudShaded, bothSidesShaded), 
             Set.of());
         
-        double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-1, 1));
+        double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-0.5, 0.5));
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(0.5);
         shard.setVelocity(velocity);
         

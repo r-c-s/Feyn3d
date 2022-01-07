@@ -130,6 +130,9 @@ public class Model3dUtils {
     return parts;
   }
   
+  /**
+   * todo: option to triangulate polygons
+   */
   public static Model3d[] partition3d(Model3d model, double recursionLevel) {
     ArrayList<Model3d> partsBuffer = new ArrayList<>();
     partsBuffer.add(model);
