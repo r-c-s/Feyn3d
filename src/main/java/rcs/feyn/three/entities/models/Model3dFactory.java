@@ -300,7 +300,7 @@ public class Model3dFactory {
   public static Model3dBuilder torus(double innerRadius, double outerRadius) {
     return torus(innerRadius, outerRadius, 
         GeoUtils3d.getNumberOfSidesOfCircle(outerRadius), 
-        GeoUtils3d.getNumberOfSidesOfCircle((outerRadius-innerRadius)/2));
+        GeoUtils3d.getNumberOfSidesOfCircle((outerRadius-innerRadius) / 2.0));
   }
 
   public static Model3dBuilder torus(double innerRadius, double outerRadius, int numI, int numJ) {
@@ -309,19 +309,17 @@ public class Model3dFactory {
     double degI = MathConsts.TWO_PI / numI;
     double degJ = MathConsts.TWO_PI / numJ;
     
+    double radiusOfSlice = (outerRadius - innerRadius) / 2.0;
+    
     for (int i = 0; i < numI; i++) {
-      Vector3d center = 
-        new Vector3d((outerRadius+innerRadius)/2.0, 0, 0)
-          .rotateLocal(Vector3d.Z_AXIS, i*degI);
+      Vector3d centerOfSlice = new Vector3d(innerRadius + radiusOfSlice, 0, 0).rotateLocal(Vector3d.Z_AXIS, i*degI);
     
       for (int j = 0; j < numJ; j++) {
-        Vector3d point = 
-          Vector3d.fromSpherical((outerRadius-innerRadius)/2.0, j*degJ*MathConsts.DEGREES_TO_RADIANS, 0)
-            .addLocal(center)
-            .rotateLocal(center, Vector3d.Z_AXIS, i*degI);
-        
+        Vector3d point = Vector3d.fromSpherical(radiusOfSlice, j*degJ, 0)
+            .addLocal(centerOfSlice)
+            .rotateLocal(centerOfSlice, Vector3d.Z_AXIS, i*degI);
         torus.addVertex(point);
-        torus.addNormal(point.sub(center).normalizeLocal());
+        torus.addNormal(point.sub(centerOfSlice).normalizeLocal());
         torus.addFace(i*numJ+j, i*numJ+(j+1)%numJ, (i+1)%numI*numJ+(j+1)%numJ, (i+1)%numI*numJ+j);
       } 
     }
