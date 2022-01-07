@@ -29,17 +29,19 @@ public class FallingRocks extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L; 
+  
+  private final double rockRadius = 0.5;
 
-  private TextureRaster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
+  private final TextureRaster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/texture2.jpg");
   
-  private XORShift xorShift = XORShift.getInstance();
+  private final XORShift xorShift = XORShift.getInstance();
   
-  private Grid ground = new Grid(10, 10, 10);
+  private final Grid ground = new Grid(10, 10, 10);
   
-  private FeynCollection<Model3d> rocks = new FeynLinkedList<>();
-  private FeynCollection<Model3d> shards = new FeynLinkedList<>();
+  private final FeynCollection<Model3d> rocks = new FeynLinkedList<>();
+  private final FeynCollection<Model3d> shards = new FeynLinkedList<>();
   
-  private AnimationTimer addRockTimer = new AnimationTimer(this::addNewRock, 1000);
+  private final AnimationTimer addRockTimer = new AnimationTimer(this::addNewRock, 1000);
   
   public FallingRocks() {
     super();
@@ -86,11 +88,12 @@ public class FallingRocks extends Demo3d {
   private void animateRocks() {
     rocks.forEach(rock -> {
       rock.spin(Vector3d.Z_AXIS, 0.01);
-      rock.animate();
-      if (rock.getPosY() < 0) {
+      if (rock.getPosY() - rockRadius < 0) {
         rock.destroy();
+        rock.setPosition(rock.getPosX(), rockRadius + 0.1, rock.getPosZ());
         addNewShards(rock);
       }
+      rock.animate();
     });
   }
   
@@ -117,7 +120,7 @@ public class FallingRocks extends Demo3d {
   }
   
   private void addNewRock() {
-    var rock = Model3dFactory.dodecahedron(0.5)
+    var rock = Model3dFactory.dodecahedron(rockRadius)
         .setTextureData(rockTexture)
         .setPosition(new Vector3d(xorShift.randomDouble(-5, 5), 15, xorShift.randomDouble(-5, 5)))
         .build();
@@ -140,8 +143,6 @@ public class FallingRocks extends Demo3d {
           shard, 
           Set.of(flatShaded), 
           Set.of(gouraudShaded, cullIfBackface));
-      
-      shard.setPosition(shard.getPosX(), Math.max(0.1, shard.getPosY()), shard.getPosZ());
       
       Vector3d velocity = Vector3d.fromSpherical(
           0.15,
