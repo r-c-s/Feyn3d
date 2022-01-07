@@ -288,6 +288,11 @@ public class Vector3d implements Freezable<Vector3d> {
     return Math.acos(this.dotProd(that) / (this.length() * that.length()));
   }
 
+  public double angleBetween(Vector3d that, Vector3d reference) {
+    int sign = MathUtils.signum(this.dotProd(reference));
+    return sign * Math.acos(this.dotProd(that) / (this.length() * that.length()));
+  }
+
   public Vector3d rotateLocal(Vector3d origin, Vector3d axis, double radians) {
     if (radians == 0 
         || equals(origin) 

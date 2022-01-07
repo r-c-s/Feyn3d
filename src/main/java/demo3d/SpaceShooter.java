@@ -92,7 +92,7 @@ public class SpaceShooter extends Demo3d {
     CollisionUtils3d.forEachCollision(rocks, projectiles, rockAndProjectileCollisionHandler);
   }
   
-  int inputDelay = 100;
+  int inputDelay = 20;
   public void handleInput() {
     if (inputDelay > 0) {
       inputDelay--;
@@ -102,20 +102,23 @@ public class SpaceShooter extends Demo3d {
     }
       
     if (keyHasBeenPressed(KeyEvent.VK_SPACE)) {
-      inputDelay = 50;
+      inputDelay = 20;
       addNewProjectile();
     }
   }
   
   private void addNewProjectile() {
+    double xDotProd = camera.getForwardVector().dotProd(Vector3d.X_AXIS);
     Vector3d position = new Vector3d(0, 0, 0);
+    Vector3d velocity = new Vector3d(-xDotProd, 0, -1);
     CollidableModel3d projecile = (CollidableModel3d) Model3dFactory.pyramid(0.5, 5, 5)
         .setColor(FeynColor.orangeRed)
         .setOuterBoundingObject(new BoundingSphere3d(0.5))
         .setPosition(position)
-        .setVelocity(new Vector3d(0, 0, -1))
+        .setVelocity(velocity)
         .addTransform(Matrices.create3dRotateMatrix(position, Vector3d.X_AXIS, -MathConsts.HALF_PI))
         .build();
+    projecile.rotate(position, Vector3d.Y_AXIS, velocity.angleBetween(Vector3d.NEG_Z_AXIS, Vector3d.NEG_X_AXIS));
     projectiles.add(projecile);
   }
   
@@ -182,12 +185,12 @@ public class SpaceShooter extends Demo3d {
     public void handleCollision(CollidableModel3d rock, CollidableModel3d projectile, CollisionInfo3d ci) {
       rock.destroy();
       projectile.destroy();
-      addNewShards(rock, 1);
-      addNewShards(projectile, 2);
+      addNewShards(rock);
+      addNewShards(projectile);
     }
 
-    private void addNewShards(Model3d object, int partition) {
-      var newShards = Model3dUtils.partition3d(object, partition);
+    private void addNewShards(Model3d object) {
+      var newShards = Model3dUtils.partition3d(object);
       for (var shard : newShards) {
         Model3dUtils.setOptions(
             shard, 
@@ -195,7 +198,7 @@ public class SpaceShooter extends Demo3d {
             Set.of());
         
         double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-1, 1));
-        Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
+        Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(0.5);
         shard.setVelocity(velocity);
         
         Rotation3d rotation = Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1);
