@@ -77,7 +77,7 @@ public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
       newPatch = new GouraudPolygon3dPatch(
           lastVertices, 
           getVertices(((Model3dGouraudVertices) vertices).getNormals()), 
-          FeynColor.white,
+          color,
           options);
       
     } else if (options.isEnabled(Option.textured)) {
@@ -90,7 +90,7 @@ public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
     } else {
       newPatch = new Polygon3dPatch(
           lastVertices, 
-          FeynColor.white,
+          color,
           options);
     }
     

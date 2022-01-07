@@ -30,9 +30,9 @@ public class Teapot extends Demo3d {
   private Model3d teapot = new Model3dBuilder()
       .fromObjFile(teapotObjFilePath)
       .setTextureData(Model3dUtils.getImageData(
-          System.getProperty("user.dir") + "/textures/porcelaintexture.jpg"),
+          System.getProperty("user.dir") + "/textures/porcelain.jpg"),
           255, 
-          1)
+          2)
       .addTransform(Matrices.create3dScaleMatrix(0.05))
       .build();
   
@@ -44,7 +44,7 @@ public class Teapot extends Demo3d {
     
     wzc.setAmount(0.1);
     
-    setBackgroundColor(FeynColor.superDarkGray); 
+    setBackgroundColor(FeynColor.white); 
     
     Model3dUtils.setOptions(
         teapot, 
@@ -91,41 +91,35 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_F)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
+        face.setColor(new FeynColor((((Model3dTexturedFace) face).getTextureData().getAverageColor())));
         face.getRenderOptions().toggle(flatShaded);
-      }
-    }
-  
-    if (keyHasBeenPressed(KeyEvent.VK_T)) {
-      inputDelay = 50;
-      for (Model3dFace face : teapot.getFaces()) {
-        face.getRenderOptions().toggle(textured);
+        face.getRenderOptions().disable(gouraudShaded);
+        face.getRenderOptions().disable(meshOnly);
       }
     }
    
     if (keyHasBeenPressed(KeyEvent.VK_G)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
+        face.setColor(new FeynColor((((Model3dTexturedFace) face).getTextureData().getAverageColor())));
         face.getRenderOptions().toggle(gouraudShaded);
+        face.getRenderOptions().disable(flatShaded);
+        face.getRenderOptions().disable(meshOnly);
       }
     }
-    
-    if (keyHasBeenPressed(KeyEvent.VK_A)) {
+  
+    if (keyHasBeenPressed(KeyEvent.VK_T)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
-        Model3dTexturedFace texturedFace = (Model3dTexturedFace) face;
-        if (texturedFace.getAlpha() == 255) {
-          texturedFace.setAlpha(200);
-          face.getRenderOptions().disable(cullIfBackface);
-        } else {
-          texturedFace.setAlpha(255);
-          face.getRenderOptions().enable(cullIfBackface);
-        }
+        face.setColor(new FeynColor((((Model3dTexturedFace) face).getTextureData().getAverageColor())));
+        face.getRenderOptions().toggle(textured);
       }
     }
     
     if (keyHasBeenPressed(KeyEvent.VK_M)) { 
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
+        face.setColor(FeynColor.black);
         face.getRenderOptions().toggle(meshOnly);
       }
     }
@@ -133,6 +127,7 @@ public class Teapot extends Demo3d {
     if (keyHasBeenPressed(KeyEvent.VK_C)) {
       inputDelay = 50;
       for (Model3dFace face : teapot.getFaces()) {
+        face.setColor(new FeynColor((((Model3dTexturedFace) face).getTextureData().getAverageColor())));
         face.getRenderOptions().toggle(applyLightingColor);
       }
     }

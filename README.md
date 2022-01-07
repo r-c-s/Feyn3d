@@ -15,18 +15,18 @@ In other words, Feyn is an educational tool. It proudly reinvents the wheel. It 
 The "Hello World" of computer graphics, the Utah Teapot, composed of 530 vertex-normal pairs and 1024 faces.
 
 #### Mesh
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641497994286.png)
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641569359982.png)
 
 #### Flat-shaded
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641498000044.png)
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641569363820.png)
 
 #### Gouraud-shaded
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641498003159.png)
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641569365687.png)
 
 #### Textured (porcelain)
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641498005119.png)
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641569368088.png)
 
 #### Lit by multiple colored light sources
-![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641498012727.png)
+![alt tag](https://raw.githubusercontent.com/r-c-s/Feyn/master/screenshots/1641569370294.png)
 
 Coordinates taken from http://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
