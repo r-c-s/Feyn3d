@@ -141,7 +141,7 @@ public class FallingRocks extends Demo3d {
           Set.of(flatShaded), 
           Set.of(gouraudShaded, cullIfBackface));
       
-      shard.setPosition(rock.getPosX(), 0.1, rock.getPosZ());
+      shard.setPosition(shard.getPosX(), Math.max(0.1, shard.getPosY()), shard.getPosZ());
       
       Vector3d velocity = Vector3d.fromSpherical(
           0.15,
