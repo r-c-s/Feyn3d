@@ -24,7 +24,7 @@ public class Plato extends Demo3d {
   private static final long serialVersionUID = 1L; 
   
   private TextureRaster texture = Model3dUtils
-      .getImageData(System.getProperty("user.dir") + "/textures/marbletexture.jpg");
+      .getImageData(System.getProperty("user.dir") + "/textures/marble.jpeg");
   
   private Model3d tetrahedron = Model3dFactory.tetrahedron(1)
       .setTextureData(texture)
