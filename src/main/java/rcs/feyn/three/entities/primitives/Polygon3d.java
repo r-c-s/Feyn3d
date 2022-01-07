@@ -94,6 +94,10 @@ public class Polygon3d extends Primitive3d implements Colorable {
 
   @Override
   public Patch3d[] getRenderablePatches() {
+    if (isHidden()) {
+      return new Patch3d[] {};
+    }
+    
     return new Patch3d[] {
       new Polygon3dPatch(
           copyVertices(), 

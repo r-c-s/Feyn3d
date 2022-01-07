@@ -8,7 +8,8 @@ public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynG
   
   private long timeOfCreation = System.currentTimeMillis();
   
-  private boolean active = true;
+  private boolean hidden = false;
+  private boolean destroyed = false;
 
   public abstract Vector3d getCenterOfMass();
 
@@ -19,14 +20,22 @@ public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynG
   public final long getTimeOfCreation() {
     return timeOfCreation;
   }
+  
+  public final void setHidden(boolean hidden) {
+    this.hidden = hidden;
+  }
+  
+  public final boolean isHidden() {
+    return hidden;
+  }
 
   @Override
   public final void destroy() {
-    active = false;
+    destroyed = true;
   }
 
   @Override
   public final boolean isDestroyed() {
-    return !active;
+    return destroyed;
   }
 }

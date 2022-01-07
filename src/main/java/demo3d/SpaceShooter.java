@@ -42,7 +42,7 @@ public class SpaceShooter extends Demo3d {
   
   private XORShift xorShift = XORShift.getInstance();
 
-  private FeynCollection<Point3d> stars = new FeynArray<>(1000);
+  private FeynCollection<Point3d> stars = new FeynArray<>(10_000);
   private FeynCollection<CollidableModel3d> rocks = new FeynLinkedList<>();
   private FeynCollection<Model3d> shards = new FeynLinkedList<>();
   private FeynCollection<CollidableModel3d> projectiles = new FeynLinkedList<>();
@@ -60,8 +60,23 @@ public class SpaceShooter extends Demo3d {
     camera.translate(0, 5, 0);
     
     for (int i = 0; i < stars.size(); i++) {
-      Point3d star = new Point3d(Vector3d.getRandomUnitVector().mul(500));
-      star.setColor(xorShift.randomDouble() > 0.5 ? FeynColor.white : FeynColor.darkGray);
+      Point3d star = new Point3d(Vector3d.getRandomUnitVector().mul(500), true);
+      
+      // these will glimmer on animateStars()
+      if (i % 50 == 0) {
+        star.setHidden(xorShift.randomDouble() > 0.5);
+      }
+      
+      if (xorShift.randomDouble() > 0.1) {
+        star.setColor(FeynColor.darkGray);
+      } else if (xorShift.randomDouble() > 0.5) {
+        star.setColor(FeynColor.hotPink);
+      } else if (xorShift.randomDouble() > 0.5) {
+        star.setColor(FeynColor.blue);
+      } else {
+        star.setColor(FeynColor.white);
+      }
+      
       stars.add(star);
     }
 
@@ -89,6 +104,7 @@ public class SpaceShooter extends Demo3d {
     animateProjectiles();
     animateRocks();
     animateShards();
+    animateStars();
     CollisionUtils3d.forEachCollision(rocks, projectiles, rockAndProjectileCollisionHandler);
   }
   
@@ -175,6 +191,14 @@ public class SpaceShooter extends Demo3d {
         } else {
           face.setColor(newColor);
         }
+      }
+    });
+  }
+  
+  private void animateStars() {
+    stars.forEachWithIndex((star, index) -> {
+      if (index % 50 == 0) {
+        star.setHidden(!star.isHidden());
       }
     });
   }

@@ -63,6 +63,10 @@ public class Model3d extends Sprite3d implements Renderable3d {
 
   @Override
   public final Patch3d[] getRenderablePatches() {
+    if (isHidden()) {
+      return new Patch3d[] {};
+    }
+    
     if (changedSinceLastSnapshot) { 
       synchronized(this) {
         if (changedSinceLastSnapshot) {

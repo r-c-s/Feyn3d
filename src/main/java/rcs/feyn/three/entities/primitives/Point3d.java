@@ -6,8 +6,19 @@ import rcs.feyn.three.render.patches.Point3dPatch;
 
 public class Point3d extends Primitive3d {
   
+  // micro-optimization to skip equals check on getRenderablePatches()
+  private final boolean isStatic;
+  
+  private Patch3d[] lastPatches;
+  private Vector3d lastPosition;
+  
   public Point3d(Vector3d position) {
+    this(position, false);
+  }
+  
+  public Point3d(Vector3d position, boolean isStatic) {
     setPosition(position);
+    this.isStatic = isStatic;
   }
 
   @Override
@@ -17,8 +28,18 @@ public class Point3d extends Primitive3d {
 
   @Override
   public synchronized Patch3d[] getRenderablePatches() {
-    return new Patch3d[] { 
-        new Point3dPatch(position, color, options) 
-    };
+    if (isHidden()) {
+      return new Patch3d[] {};
+    }
+    
+    if (null == lastPatches || (!isStatic && positionHasChanged())) {
+      return lastPatches = new Patch3d[] { new Point3dPatch(position, color, options) };
+    }
+    
+    return lastPatches;
+  }
+  
+  private boolean positionHasChanged() {
+    return !position.equals(lastPosition);
   }
 }
