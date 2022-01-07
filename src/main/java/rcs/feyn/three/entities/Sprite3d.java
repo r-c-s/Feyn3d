@@ -6,12 +6,18 @@ import rcs.feyn.utils.struct.FeynGarbageCollectable;
 
 public abstract class Sprite3d extends Particle3d implements Renderable3d, FeynGarbageCollectable {
   
+  private long timeOfCreation = System.currentTimeMillis();
+  
   private boolean active = true;
 
   public abstract Vector3d getCenterOfMass();
 
   public final void spin(Vector3d axis, double deg) {
     super.rotate(getCenterOfMass(), axis, deg);
+  }
+  
+  public final long getTimeOfCreation() {
+    return timeOfCreation;
   }
 
   @Override
