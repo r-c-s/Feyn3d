@@ -44,7 +44,7 @@ public abstract class DoubleBufferedCanvas extends JComponent {
 
   public final void paint(Graphics g) { 
     synchronized (renderingLock) {   
-      graphics.fill(background); 
+      graphics.fill(background);
       render(graphics);
       g.drawImage(imageBuffer, 0, 0, null);
       g.dispose();  

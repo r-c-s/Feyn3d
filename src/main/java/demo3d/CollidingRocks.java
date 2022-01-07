@@ -1,7 +1,6 @@
 package demo3d;
 
 import java.io.Serial;
-import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -60,7 +59,7 @@ public class CollidingRocks extends Demo3d {
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(0, 0, 10);
     FeynRuntime.addDiffuseLightSource(lightSource);
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.1)); 
   }
 
   @Override
@@ -97,8 +96,8 @@ public class CollidingRocks extends Demo3d {
     
     Model3dUtils.setOptions(
         rock, 
-        EnumSet.of(gouraudShaded), 
-        EnumSet.of(cullIfBackface));
+        Set.of(gouraudShaded, cullIfBackface), 
+        Set.of());
     
     Model3dUtils.deform(rock, 0.1);
     rock.setColor(FeynColor.rosyBrown);
@@ -148,11 +147,6 @@ public class CollidingRocks extends Demo3d {
     private void addNewShards(Model3d rock) {
       var newShards = Model3dUtils.partition3d(rock);
       for (var shard : newShards) {
-        Model3dUtils.setOptions(
-            shard, 
-            Set.of(flatShaded), 
-            Set.of());
-        
         double speed = rock.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-1, 1));
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
         shard.setVelocity(velocity);

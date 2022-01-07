@@ -9,6 +9,7 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
+import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 
 import java.util.Optional;
@@ -19,6 +20,8 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 
 public class TexturedPolygon3dPatch extends Polygon3dPatch {
+
+  private static final Camera3d camera = FeynRuntime.getView().getCamera();
   
   protected Raster textureData;
   protected int alpha;
@@ -48,14 +51,10 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       super.render(graphics, view, projection, viewPort);
       return;
     }
-      
+
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
-    
-    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
-      return;
-    }
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(camera.getPosition(), center, normal);
 
     Vector3d[] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, view);

@@ -49,7 +49,7 @@ public class GeoUtils3d {
     
     if (size < 3) {
       throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
-    } 
+    }
     
     int numTriangles = size - 2;
     

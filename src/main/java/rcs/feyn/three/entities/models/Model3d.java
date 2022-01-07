@@ -3,6 +3,9 @@ package rcs.feyn.three.entities.models;
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.entities.Sprite3d;
 import rcs.feyn.three.render.patches.Patch3d;
+
+import java.util.Arrays;
+
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
@@ -68,13 +71,9 @@ public class Model3d extends Sprite3d implements Renderable3d {
         }
       }
     }
-
-    int size = faces.length;
-    Patch3d[] patches = new Patch3d[size]; 
-    for (int i = 0; i < size; i++) {
-      patches[i] = faces[i].makePatch(lastSnapshot);
-    }
     
-    return patches;
+    return Arrays.stream(faces)
+        .flatMap(face -> Arrays.stream(face.makePatch(lastSnapshot)))
+        .toArray(Patch3d[]::new);
   }
 }

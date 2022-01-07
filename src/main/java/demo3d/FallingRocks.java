@@ -128,7 +128,7 @@ public class FallingRocks extends Demo3d {
     Model3dUtils.setOptions(
         rock, 
         Set.of(flatShaded), 
-        Set.of(gouraudShaded, cullIfBackface));
+        Set.of(gouraudShaded));
     
     Model3dUtils.deform(rock, 0.1);
 
@@ -142,7 +142,7 @@ public class FallingRocks extends Demo3d {
       Model3dUtils.setOptions(
           shard, 
           Set.of(flatShaded), 
-          Set.of(gouraudShaded, cullIfBackface));
+          Set.of(gouraudShaded));
       
       Vector3d velocity = Vector3d.fromSpherical(
           0.15,

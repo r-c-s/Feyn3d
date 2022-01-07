@@ -8,6 +8,7 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.Line3dRenderer;
+import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 import rcs.feyn.color.ColorUtils;
@@ -16,6 +17,8 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 
 public class Polygon3dPatch extends Patch3d {
+  
+  private static final Camera3d camera = FeynRuntime.getView().getCamera();
   
   protected Vector3d[] vertices;
   
@@ -37,11 +40,7 @@ public class Polygon3dPatch extends Patch3d {
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
-    
-    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
-      return;
-    }
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(camera.getPosition(), center, normal);
 
     Vector3d[] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, view);
@@ -87,11 +86,5 @@ public class Polygon3dPatch extends Patch3d {
           vpcVertices[j], 
           color);
     }
-  }
-  
-  protected boolean shouldCullIfBackface(Vector3d center, Vector3d normal) {
-    return !options.isEnabled(Option.meshOnly)
-        && options.isEnabled(Option.cullIfBackface) 
-        && !color.isTransparent();
   }
 }

@@ -43,13 +43,15 @@ public class Shatter extends Demo3d {
         .dodecahedron(0.6)
         .setTextureData(texture)
         .build();
+    
+    Model3dUtils.deform(obj, 0.1);
 
     objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
       FeynRuntime.getRepository().add(model);
       Model3dUtils.setOptions(
           model, 
-          Set.of(flatShaded), 
+          Set.of(flatShaded, cullIfBackface), 
           Set.of(applyLightingColor, gouraudShaded));
     }
     

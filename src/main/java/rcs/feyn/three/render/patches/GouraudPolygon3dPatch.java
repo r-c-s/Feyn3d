@@ -8,6 +8,7 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
+import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
@@ -15,6 +16,8 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 
 public class GouraudPolygon3dPatch extends Polygon3dPatch {
+  
+  private static final Camera3d camera = FeynRuntime.getView().getCamera();
   
   protected Vector3d[] normals;
 
@@ -37,12 +40,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     
     Vector3d center = getCenter();
     Vector3d normal = GeoUtils3d.getNormal(vertices);
-    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, normal);
-    
-    if (isBackfaceToCamera && shouldCullIfBackface(center, normal)) {
-      return;
-    }
-    
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(camera.getPosition(), center, normal);    
     
     Vector3d[][] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, normals, view);
