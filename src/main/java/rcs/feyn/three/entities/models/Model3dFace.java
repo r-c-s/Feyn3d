@@ -29,6 +29,10 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
+  public void setRenderOptions(RenderOptions3d options) {
+    this.options = options;
+  }
+
   public Polygon3dPatch makePatch(Model3dVertices vertices) {
     if (matchesLastPatch(vertices)) {
       return lastPatch;

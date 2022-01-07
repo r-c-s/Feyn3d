@@ -17,9 +17,8 @@ public class Point3d extends Primitive3d {
 
   @Override
   public synchronized Patch3d[] getRenderablePatches() {
-    Vector3d pos = new Vector3d(position);
     return new Patch3d[] { 
-        new Point3dPatch(pos, color, options) 
+        new Point3dPatch(position, color, options) 
     };
   }
 }

@@ -138,12 +138,11 @@ public class CollidingRocks extends Demo3d {
   private class RockCollisionHandler implements CollisionHandler3d<CollidableModel3d, CollidableModel3d> {
 
     @Override
-    public void handleCollision(CollidableModel3d t, CollidableModel3d u, CollisionInfo3d ci) {
-      t.destroy();
-      u.destroy();
+    public void handleCollision(CollidableModel3d rock, CollidableModel3d projectile, CollisionInfo3d ci) {
+      rock.destroy();
+      projectile.destroy();
 
-      addNewShards(t);
-      addNewShards(u);
+      addNewShards(rock);
     }
 
     private void addNewShards(Model3d rock) {
@@ -151,7 +150,7 @@ public class CollidingRocks extends Demo3d {
       for (var shard : newShards) {
         Model3dUtils.setOptions(
             shard, 
-            Set.of(gouraudShaded, bothSidesShaded), 
+            Set.of(flatShaded), 
             Set.of());
         
         double speed = rock.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-1, 1));

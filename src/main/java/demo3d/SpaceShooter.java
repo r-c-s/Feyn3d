@@ -1,0 +1,216 @@
+package demo3d;
+
+import static rcs.feyn.three.render.RenderOptions3d.Option.flatShaded;
+import static rcs.feyn.three.render.RenderOptions3d.Option.gouraudShaded;
+import static rcs.feyn.three.render.RenderOptions3d.Option.bothSidesShaded;
+import static rcs.feyn.three.render.RenderOptions3d.Option.cullIfBackface;
+
+import java.awt.event.KeyEvent;
+import java.io.Serial;
+import java.util.EnumSet;
+import java.util.Set;
+
+import rcs.feyn.color.FeynColor;
+import rcs.feyn.gui.FeynFrame;
+import rcs.feyn.math.MathConsts;
+import rcs.feyn.math.Matrices;
+import rcs.feyn.math.Vector3d;
+import rcs.feyn.three.collision.BoundingSphere3d;
+import rcs.feyn.three.collision.CollisionHandler3d;
+import rcs.feyn.three.collision.CollisionInfo3d;
+import rcs.feyn.three.collision.CollisionUtils3d;
+import rcs.feyn.three.entities.Rotation3d;
+import rcs.feyn.three.entities.models.CollidableModel3d;
+import rcs.feyn.three.entities.models.Model3d;
+import rcs.feyn.three.entities.models.Model3dFace;
+import rcs.feyn.three.entities.models.Model3dFactory;
+import rcs.feyn.three.entities.models.Model3dUtils;
+import rcs.feyn.three.entities.primitives.Point3d;
+import rcs.feyn.three.kernel.FeynRuntime;
+import rcs.feyn.three.optics.AmbientLightSource3d;
+import rcs.feyn.three.optics.ConstantLightSource3d;
+import rcs.feyn.utils.AnimationTimer;
+import rcs.feyn.utils.XORShift;
+import rcs.feyn.utils.struct.FeynArray;
+import rcs.feyn.utils.struct.FeynCollection;
+import rcs.feyn.utils.struct.FeynLinkedList;
+
+public class SpaceShooter extends Demo3d {
+
+  @Serial
+  private static final long serialVersionUID = 1L; 
+  
+  private XORShift xorShift = XORShift.getInstance();
+
+  private FeynCollection<Point3d> stars = new FeynArray<>(1000);
+  private FeynCollection<CollidableModel3d> rocks = new FeynLinkedList<>();
+  private FeynCollection<Model3d> shards = new FeynLinkedList<>();
+  private FeynCollection<CollidableModel3d> projectiles = new FeynLinkedList<>();
+  
+  private AnimationTimer addRockTimer = new AnimationTimer(this::addNewRocks, 500);
+  
+  private RockAndProjectileCollisionHandler rockAndProjectileCollisionHandler = new RockAndProjectileCollisionHandler();
+  
+  @Override
+  public void initialize() {
+    super.initialize();
+    super.setBackgroundColor(FeynColor.black);
+    wzc.setAmount(0);
+    
+    camera.translate(0, 5, 0);
+    
+    for (int i = 0; i < stars.size(); i++) {
+      Point3d star = new Point3d(Vector3d.getRandomUnitVector().mul(500));
+      star.setColor(xorShift.randomDouble() > 0.5 ? FeynColor.white : FeynColor.darkGray);
+      stars.add(star);
+    }
+
+    FeynRuntime.getRepository().add(stars);
+    FeynRuntime.getRepository().add(rocks);
+    FeynRuntime.getRepository().add(shards);
+    FeynRuntime.getRepository().add(projectiles);
+    
+    var lightSource = new ConstantLightSource3d(1);
+    lightSource.setPosition(0, 10, 0);
+    FeynRuntime.addDiffuseLightSource(lightSource);
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
+  }
+
+  @Override
+  public void pausedLoop() { 
+    controlCamera();
+  }
+  
+  @Override
+  public void runningLoop() { 
+    controlCamera();
+    handleInput();
+    addRockTimer.run();
+    animateProjectiles();
+    animateRocks();
+    animateShards();
+    CollisionUtils3d.forEachCollision(rocks, projectiles, rockAndProjectileCollisionHandler);
+  }
+  
+  int inputDelay = 100;
+  public void handleInput() {
+    if (inputDelay > 0) {
+      inputDelay--;
+      return;
+    } else {
+      inputDelay = 0;
+    }
+      
+    if (keyHasBeenPressed(KeyEvent.VK_SPACE)) {
+      inputDelay = 50;
+      addNewProjectile();
+    }
+  }
+  
+  private void addNewProjectile() {
+    Vector3d position = new Vector3d(0, 0, 0);
+    CollidableModel3d projecile = (CollidableModel3d) Model3dFactory.pyramid(0.5, 5, 5)
+        .setColor(FeynColor.orangeRed)
+        .setOuterBoundingObject(new BoundingSphere3d(0.5))
+        .setPosition(position)
+        .setVelocity(new Vector3d(0, 0, -1))
+        .addTransform(Matrices.create3dRotateMatrix(position, Vector3d.X_AXIS, -MathConsts.HALF_PI))
+        .build();
+    projectiles.add(projecile);
+  }
+  
+  private void addNewRocks() {
+    double radius = xorShift.randomDouble(0.5, 1.5);
+    var rock = (CollidableModel3d) Model3dFactory.dodecahedron(radius)
+        .setOuterBoundingObject(new BoundingSphere3d(radius))
+        .setPosition(new Vector3d(xorShift.randomDouble(-10, 10), 0, -200))
+        .setVelocity(new Vector3d(0, 0, 0.5))
+        .setColor(FeynColor.rosyBrown)
+        .setRotation(Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1))
+        .build();
+
+    Model3dUtils.deform(rock, 0.1);
+    
+    Model3dUtils.setOptions(
+        rock, 
+        EnumSet.of(flatShaded), 
+        EnumSet.of(cullIfBackface));
+    
+    rocks.add(rock);
+  }
+  
+  private void animateProjectiles() {
+    long now = System.currentTimeMillis();
+    projectiles.forEach(projectile -> {
+      projectile.animate();
+      if (now - projectile.getTimeOfCreation() > 4000) {
+        projectile.destroy();
+      }
+    });
+  }
+
+  private void animateRocks() {
+    rocks.forEach(rock -> {
+      rock.animate();
+      
+      boolean outOfBounds = rock.getPosZ() > 0;
+      
+      if (outOfBounds) {
+        rock.destroy();
+      }
+    });
+  }
+  
+  private void animateShards() {
+    shards.forEach(shard -> {
+      shard.animate();
+      
+      for (Model3dFace face : shard.getFaces()) {
+        var newColor = face.getColor().fadeTo(0.999);
+        if (newColor.getAlpha() < 5) {
+          shard.destroy();
+        } else {
+          face.setColor(newColor);
+        }
+      }
+    });
+  }
+  
+  private class RockAndProjectileCollisionHandler implements CollisionHandler3d<CollidableModel3d, CollidableModel3d> {
+
+    @Override
+    public void handleCollision(CollidableModel3d rock, CollidableModel3d projectile, CollisionInfo3d ci) {
+      rock.destroy();
+      projectile.destroy();
+      addNewShards(rock, 1);
+      addNewShards(projectile, 2);
+    }
+
+    private void addNewShards(Model3d object, int partition) {
+      var newShards = Model3dUtils.partition3d(object, partition);
+      for (var shard : newShards) {
+        Model3dUtils.setOptions(
+            shard, 
+            Set.of(gouraudShaded, bothSidesShaded), 
+            Set.of());
+        
+        double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-1, 1));
+        Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed);
+        shard.setVelocity(velocity);
+        
+        Rotation3d rotation = Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1);
+        shard.setRotation(rotation);
+        
+        shards.add(shard);
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    var frame = new FeynFrame(1000, 800, "Space Shooter Demo", true, false);
+    var demo = new SpaceShooter();
+    frame.add("Center", demo);
+    frame.setVisible(true);
+    demo.init();
+  }
+}

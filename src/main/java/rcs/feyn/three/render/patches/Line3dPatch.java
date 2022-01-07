@@ -12,6 +12,8 @@ import rcs.feyn.math.Vector3d;
 public class Line3dPatch extends Patch3d {
   
   protected Vector3d a, b;
+  
+  protected Vector3d center;
 
   public Line3dPatch(Vector3d a, Vector3d b, FeynColor color, RenderOptions3d options) {
     super(color, options);
@@ -21,13 +23,17 @@ public class Line3dPatch extends Patch3d {
 
   @Override
   public Vector3d getCenter() {
-    return a.midPoint(b);
+    return null != center 
+        ? center
+        : (center = a.midPoint(b));
   }
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.toViewSpaceCoordinates(new Vector3d[] {a, b}, view);
-    Vector3d[] clippedSpaceCoordinates = Pipeline3d.clipViewSpaceCoordinates(viewSpaceCoordinates);
+    Vector3d[] viewSpaceCoordinates = Pipeline3d
+        .toViewSpaceCoordinates(new Vector3d[] {a, b}, view);
+    Vector3d[] clippedSpaceCoordinates = Pipeline3d
+        .clipViewSpaceCoordinates(viewSpaceCoordinates);
     
     if (clippedSpaceCoordinates.length < 2) {
       return;

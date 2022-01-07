@@ -59,7 +59,6 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
 
     Vector3d[] viewSpaceCoordinates = Pipeline3d
         .toViewSpaceCoordinates(vertices, view);
-
     Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
         .clipViewSpaceCoordinates(viewSpaceCoordinates);
     

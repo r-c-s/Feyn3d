@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import rcs.feyn.three.collision.BoundingObject3d;
+import rcs.feyn.three.entities.Rotation3d;
 import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
@@ -20,6 +21,7 @@ public final class Model3dBuilder {
   protected Vector3d position = new Vector3d();
   protected Vector3d velocity = new Vector3d();
   protected Matrix44 transform = new Matrix44();
+  protected Rotation3d rotation = null;
   
   protected ArrayList<Vector3d>  vertices = new ArrayList<>();
   protected ArrayList<Vector3d>  normals  = new ArrayList<>();
@@ -151,6 +153,11 @@ public final class Model3dBuilder {
     this.velocity = new Vector3d(velocity);
     return this;
   } 
+  
+  public Model3dBuilder setRotation(Rotation3d rotation) {
+    this.rotation = rotation;
+    return this;
+  }
 
   public Model3dBuilder addTransform(Matrix44 transform) {
     this.transform.mulLocal(transform);
@@ -235,6 +242,7 @@ public final class Model3dBuilder {
     model.setPosition(position); 
     model.setVelocity(velocity);
     model.transform(transform);
+    model.setRotation(rotation);
     
     return model;
   } 

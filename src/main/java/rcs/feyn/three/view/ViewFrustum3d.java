@@ -78,7 +78,7 @@ public class ViewFrustum3d {
     F.setOrigin(new Vector3d(0, 0, -this.farDist));
   }
 
-  public boolean triviallyNotVisible(Vector3d... vertices) {
+  public boolean triviallyNotVisible(Vector3d[] vertices) {
     for (Plane3d plane : planes) {
       boolean allAreNotVisible = true;
       for (Vector3d vertex : vertices) {

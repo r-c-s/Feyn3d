@@ -18,6 +18,8 @@ import rcs.feyn.math.Vector3d;
 public class Polygon3dPatch extends Patch3d {
   
   protected Vector3d[] vertices;
+  
+  protected Vector3d center;
 
   public Polygon3dPatch(Vector3d[] vertices, FeynColor color, RenderOptions3d options) {
     super(color, options);
@@ -26,7 +28,9 @@ public class Polygon3dPatch extends Patch3d {
 
   @Override
   public final Vector3d getCenter() {
-    return GeoUtils3d.getCenter(vertices);
+    return null != center 
+        ? center
+        : (center = GeoUtils3d.getCenter(vertices));
   }
   
   @Override

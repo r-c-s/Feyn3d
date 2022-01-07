@@ -69,7 +69,7 @@ public class Gumballs extends Demo3d {
       sphere.setPosition(
            xor.randomDouble(-0.5, 0.5), 
            xor.randomDouble(-0.5, 0.5), 
-           xor.randomDouble(-0.5, 0.5));
+           xor.randomDouble(-0.51, 0.5));
       
       sphere.setColor(FeynColor.randomColor());
       sphere.setMass(radius);

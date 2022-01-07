@@ -15,18 +15,21 @@ import java.util.stream.Collectors;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.render.patches.Patch3d;
+import rcs.feyn.three.view.Camera3d;
 
 public final class RenderKernel {
+  
+  private static final Camera3d camera = FeynRuntime.getView().getCamera();
 
   private static final Comparator<Patch3d> DEPTH_COMPARATOR = (a, b) -> {
-    Vector3d cameraPos = FeynRuntime.getView().getCamera().getPosition();
+    Vector3d cameraPos = camera.getPosition();
     
-    double thisDepth = a.getCenter().distanceSquared(cameraPos);
-    double thatDepth = b.getCenter().distanceSquared(cameraPos);
+    double aDepth = a.getCenter().distanceSquared(cameraPos);
+    double bDepth = b.getCenter().distanceSquared(cameraPos);
     
-    return thisDepth < thatDepth 
+    return aDepth < bDepth 
         ?  1
-        : thisDepth > thatDepth 
+        : aDepth > bDepth 
             ? -1 
             : 0;
   };

@@ -202,11 +202,11 @@ public class Model3dUtils {
               idxs, 
               currFace.getColor());
         }
+        
+        partFaces[l].setRenderOptions(currFace.getRenderOptions());
       }
 
-      Model3d part = new Model3d(
-          new Model3dVertices(partVertices), 
-          partFaces);
+      Model3d part = new Model3d(new Model3dVertices(partVertices), partFaces);
       
       part.setPosition(com);
       

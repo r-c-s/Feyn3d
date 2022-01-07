@@ -54,10 +54,6 @@ public class CollisionUtils3d {
     
     collectionA.forEachWithIndex((a, i) -> {
       collectionB.forEachWithIndex((b, j) -> {
-        // this pair has already been processed but in a different order, so skip
-        if (j <= i) {
-          return;
-        }
         CollisionInfo3d ci = CollisionDetection3d.computeCollision(a, b);
         if (ci != null) {
           collisionHandler.handleCollision(a, b, ci);

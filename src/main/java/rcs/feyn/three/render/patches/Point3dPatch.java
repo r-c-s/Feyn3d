@@ -1,7 +1,6 @@
 package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.renderers.Point3dRenderer;
@@ -25,22 +24,21 @@ public class Point3dPatch extends Patch3d {
 
   @Override
   public final void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d[] viewSpaceCoordinates = Pipeline3d.toViewSpaceCoordinates(new Vector3d[] {point}, view);
-    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d.clipViewSpaceCoordinates(viewSpaceCoordinates);
-    
-    if (viewSpaceCoordinates.length == 0) {
+    Vector3d[] viewSpaceCoordinates = Pipeline3d
+        .toViewSpaceCoordinates(new Vector3d[] {point}, view);
+    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
+        .clipViewSpaceCoordinates(viewSpaceCoordinates);
+
+    if (clippedViewSpaceCoordinates.length == 0) {
       return;
     }
     
-    Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
-
-    int colorWithLighting = options.isEnabled(RenderOptions3d.Option.applyLightingColor) 
-        ? LightingUtils.applyLightsourceColorTo(color.getRGBA(), 1)
-        : color.getRGBA();
+    Vector3d[] deviceCoordinates = Pipeline3d
+        .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
     
     Point3dRenderer.render(
         graphics,
         deviceCoordinates[0],
-        colorWithLighting);
+        color.getRGBA());
   }
 }
