@@ -8,6 +8,8 @@ import rcs.feyn.three.view.ViewFrustum3d;
 
 public final class Pipeline3d {  
   
+  private static final ViewFrustum3d viewFrustum = FeynRuntime.getView().getViewFrustum();
+  
   private Pipeline3d() {
     throw new AssertionError();
   }
@@ -33,7 +35,6 @@ public final class Pipeline3d {
   }
 
   public static Vector3d[] clipViewSpaceCoordinates(Vector3d[] vertices) {
-    ViewFrustum3d viewFrustum = FeynRuntime.getView().getViewFrustum();
     if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[]{};
     }
@@ -41,7 +42,6 @@ public final class Pipeline3d {
   }
 
   public static Vector3d[][] clipViewSpaceCoordinates(Vector3d[] vertices, Vector3d[] normals) {
-    ViewFrustum3d viewFrustum = FeynRuntime.getView().getViewFrustum();
     if (viewFrustum.triviallyNotVisible(vertices)) {
       return new Vector3d[][]{ new Vector3d[]{}, new Vector3d[]{} };
     }
