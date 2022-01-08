@@ -15,7 +15,7 @@ public class Torus extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L; 
   
-  private final Model3d torus = Model3dFactory
+  private Model3d torus = Model3dFactory
       .torus(1, 2, 15, 15)
       .build();
 

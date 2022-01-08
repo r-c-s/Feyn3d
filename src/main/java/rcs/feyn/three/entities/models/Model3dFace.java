@@ -32,7 +32,7 @@ public class Model3dFace extends AbstractColorable {
     return options;
   }
 
-  public void setRenderOptions(RenderOptions3d options) {
+  void setRenderOptions(RenderOptions3d options) {
     this.options = options;
   }
 
@@ -81,10 +81,10 @@ public class Model3dFace extends AbstractColorable {
   }
 
   protected Vector3d[] getVertices(Vector3d[] vertices) {
-    Vector3d[] patchVertices = new Vector3d[indices.length];
+    Vector3d[] faceVertices = new Vector3d[indices.length];
     for (int i = 0; i < indices.length; i++) {
-      patchVertices[i] = vertices[indices[i]];
+      faceVertices[i] = vertices[indices[i]];
     }
-    return patchVertices;
+    return faceVertices;
   }
 }

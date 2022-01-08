@@ -20,7 +20,7 @@ public class Crystal extends Demo3d {
   @Serial
   private static final long serialVersionUID = 1L;
 
-  private final Model3d crystal = Model3dFactory
+  private Model3d crystal = Model3dFactory
       .icosphere(1, 2)
       .setTextureData(
           Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/crystaltexture.jpg"),
@@ -39,6 +39,9 @@ public class Crystal extends Demo3d {
         Set.of(gouraudShaded), 
         Set.of());
 
+    
+    Model3dUtils.normalizeFacesToTriangles(crystal);
+    
     FeynRuntime.getRepository().add(crystal);
 
     camera.translate(0, 0, 3);

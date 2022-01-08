@@ -146,6 +146,8 @@ public class SpaceShooter extends Demo3d {
         .setColor(FeynColor.rosyBrown)
         .setRotation(Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.05))
         .build();
+    
+    Model3dUtils.normalizeFacesToTriangles(rock);
 
     Model3dUtils.deform(rock, 0.2);
     

@@ -24,6 +24,14 @@ public class Model3d extends Sprite3d implements Renderable3d {
     this.vertices = vertices;
     this.faces = faces;
   }
+  
+  final void setVertices(Model3dVertices vertices) {
+    this.vertices = vertices;
+  }
+  
+  final void setFaces(Model3dFace[] faces) {
+    this.faces = faces;
+  }
 
   public final Vector3d getCenterOfMass() {
     return vertices.centerOfMass();

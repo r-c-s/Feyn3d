@@ -18,7 +18,7 @@ import rcs.feyn.three.optics.VariableIntensityLightSource3d;
 
 import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
-public class Shatter extends Demo3d {
+public class NormalizeDeformAndShatter extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -43,8 +43,16 @@ public class Shatter extends Demo3d {
         .dodecahedron(0.6)
         .setTextureData(texture)
         .build();
+    
+    // normalize
+    Model3dUtils.normalizeFacesToTriangles(obj);
+    
+    // deform
+    Model3dUtils.deform(obj, 0.2);
 
+    // shatter
     objs = Model3dUtils.partition3d(obj, 1);
+    
     for (Model3d model : objs) {
       FeynRuntime.getRepository().add(model);
       Model3dUtils.setOptions(
@@ -87,14 +95,14 @@ public class Shatter extends Demo3d {
     @Override
     public void run() {
       for (Model3d model : objs) {
-        model.translate(model.getPosition().mul(0.01*TrigLookUp.sin(++i*0.002)));
+        model.translate(model.getPosition().mul(0.005*TrigLookUp.sin(++i*0.0002)));
       }
     }
   }
 
   public static void main(String[] args) {
     FeynFrame frame = new FeynFrame(800, 800, "Shatter Demo", true, false);
-    Demo3d demo = new Shatter();
+    Demo3d demo = new NormalizeDeformAndShatter();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();

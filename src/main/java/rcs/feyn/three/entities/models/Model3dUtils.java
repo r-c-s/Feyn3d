@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -219,11 +220,104 @@ public class Model3dUtils {
     return parts;
   }
   
+  public static void normalizeFacesToTriangles(Model3d model) {
+    Model3dVertices modelVertices = model.getVertices();
+    boolean isGouraud = modelVertices instanceof Model3dGouraudVertices;
+
+    LinkedList<Vector3d> newVertices = new LinkedList<>();
+    LinkedList<Vector3d> newNormals = new LinkedList<>();
+    LinkedList<Model3dFace> newFaces = new LinkedList<>();
+    
+    for (Model3dFace face : model.getFaces()) {
+      Vector3d[] vertices = face.getVertices(modelVertices.getVertices());
+      
+      if (vertices.length > 3) {
+        Vector3d faceCenter = GeoUtils3d.getCenter(vertices);
+        newVertices.add(faceCenter);
+        for (Vector3d vertex : vertices) {
+          if (!newVertices.contains(vertex)) {
+            newVertices.add(vertex);
+          } 
+        }
+        
+        if (isGouraud) {
+          Vector3d[] normals = face.getVertices(((Model3dGouraudVertices) modelVertices).getNormals());
+          newNormals.add(GeoUtils3d.getNormal(vertices));
+          for (Vector3d normal : normals) {
+            if (!newNormals.contains(normal)) {
+              newNormals.add(normal);
+            }
+          }
+        }
+
+        int numberOfNewFaces = vertices.length;
+        
+        for (int i = 0; i < numberOfNewFaces; i++) {
+          int[] newFaceIndices = new int[] { 
+              newVertices.indexOf(faceCenter),
+              newVertices.indexOf(vertices[i]),
+              newVertices.indexOf(vertices[(i+1) % vertices.length])
+          };
+          
+          Model3dFace newFace; 
+          if (face instanceof Model3dTexturedFace) {
+            newFace = new Model3dTexturedFace(newFaceIndices, ((Model3dTexturedFace) face).getTextureData());
+          } else {
+            newFace = new Model3dFace(newFaceIndices, face.getColor()); 
+          }
+          
+          newFace.setRenderOptions(face.getRenderOptions());
+          
+          newFaces.add(newFace);
+        }        
+      } else { 
+        for (Vector3d vertex : vertices) {
+          if (!newVertices.contains(vertex)) {
+            newVertices.add(vertex);
+          }
+        }
+        
+        if (isGouraud) {
+          Vector3d[] normals = face.getVertices(((Model3dGouraudVertices) modelVertices).getNormals());
+          for (Vector3d normal : normals) {
+            if (!newNormals.contains(normal)) {
+              newNormals.add(normal);
+            }
+          }
+        }
+        
+        int[] newFaceIndices = new int[] { 
+            newVertices.indexOf(vertices[0]), 
+            newVertices.indexOf(vertices[1]),
+            newVertices.indexOf(vertices[2])
+        };
+        
+        Model3dFace newFace; 
+        if (face instanceof Model3dTexturedFace) {
+          newFace = new Model3dTexturedFace(newFaceIndices, ((Model3dTexturedFace) face).getTextureData());
+        } else {
+          newFace = new Model3dFace(newFaceIndices, face.getColor());
+        }
+
+        newFace.setRenderOptions(face.getRenderOptions());
+        
+        newFaces.add(newFace);
+      }
+    }
+    
+   model.setVertices(
+        isGouraud
+          ? new Model3dGouraudVertices(newVertices.toArray(Vector3d[]::new), newNormals.toArray(Vector3d[]::new))
+          : new Model3dVertices(newVertices.toArray(Vector3d[]::new)));
+   
+   model.setFaces(newFaces.toArray(Model3dFace[]::new));
+  }
+  
   /**
-   * Need to fix these methods, this creates non-co-planar polygons which poses problems
-   * the polygon being deformed must be a triangle
+   * If you have Models whose faces are not triangles,
+   * it is recommended that you call normalizeFacesToTriangles before calling this method
    */
-  public static void deform(Model3d model, double factor) {
+  public static void deform(Model3d model, double factor) {    
     Vector3d com = model.getCenter();
     
     for (Model3dFace face : model.getFaces()) {

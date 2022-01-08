@@ -16,12 +16,8 @@ public class Model3dGouraudVertices extends Model3dVertices {
     this.normals = normals;
   }
 
-  protected Vector3d[] getNormals() {
-    Vector3d[] copy = new Vector3d[normals.length];
-    for (int i = 0; i < normals.length; i++) {
-      copy[i] = new Vector3d(this.normals[i]);
-    }
-    return copy;
+  final Vector3d[] getNormals() {
+    return normals;
   }
 
   @Override
