@@ -132,7 +132,14 @@ public class SpaceShooter extends Demo3d {
         .setVelocity(velocity)
         .addTransform(Matrices.create3dRotateMatrix(position, Vector3d.X_AXIS, -MathConsts.HALF_PI))
         .build();
+
+    Model3dUtils.setOptions(
+        projecile, 
+        Set.of(flatShaded), 
+        Set.of(gouraudShaded));
+    
     projecile.rotate(position, Vector3d.Y_AXIS, velocity.angleBetween(Vector3d.NEG_Z_AXIS, Vector3d.NEG_X_AXIS));
+    
     projectiles.add(projecile);
   }
   
@@ -154,7 +161,7 @@ public class SpaceShooter extends Demo3d {
     Model3dUtils.setOptions(
         rock, 
         Set.of(flatShaded), 
-        Set.of());
+        Set.of(gouraudShaded));
     
     rocks.add(rock);
   }
@@ -216,12 +223,7 @@ public class SpaceShooter extends Demo3d {
 
     private void addNewShards(Model3d object) {
       var newShards = Model3dUtils.partition3d(object);
-      for (var shard : newShards) {
-        Model3dUtils.setOptions(
-            shard, 
-            Set.of(gouraudShaded, bothSidesShaded), 
-            Set.of());
-        
+      for (var shard : newShards) {        
         double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-0.5, 0.5));
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(object.getVelZ());
         shard.setVelocity(velocity);
