@@ -89,6 +89,7 @@ public final class RenderKernel {
       // this error happens once in a while due to unpredictable 
       // comparison of doubles (floating-point arithmetic); safe to ignore
       if (!e.getMessage().equals("Comparison method violates its general contract!")) {
+        e.printStackTrace();
         throw e;
       }
     }

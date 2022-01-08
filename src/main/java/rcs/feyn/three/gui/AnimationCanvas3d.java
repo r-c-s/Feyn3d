@@ -5,10 +5,13 @@ import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Graphics3dSynchronized;
 import rcs.feyn.three.gfx.Raster;
 import rcs.feyn.three.kernel.FeynRuntime;
+import rcs.feyn.three.kernel.RenderKernel;
 
 public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
   
   private static final long serialVersionUID = 1L;
+  
+  private final RenderKernel renderKernel = FeynRuntime.getRenderKernel(); 
 
   static {
     new FeynRuntime();
@@ -20,7 +23,7 @@ public abstract class AnimationCanvas3d extends AbstractAnimationCanvas {
 
   @Override
   protected final void render(Graphics3d graphics) {
-    FeynRuntime.getRenderKernel().renderAll((Graphics3d) graphics); 
+    renderKernel.renderAll((Graphics3d) graphics); 
   }
 
   @Override

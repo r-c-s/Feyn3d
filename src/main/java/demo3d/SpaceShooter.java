@@ -3,11 +3,9 @@ package demo3d;
 import static rcs.feyn.three.render.RenderOptions3d.Option.flatShaded;
 import static rcs.feyn.three.render.RenderOptions3d.Option.gouraudShaded;
 import static rcs.feyn.three.render.RenderOptions3d.Option.bothSidesShaded;
-import static rcs.feyn.three.render.RenderOptions3d.Option.cullIfBackface;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
-import java.util.EnumSet;
 import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
@@ -140,7 +138,8 @@ public class SpaceShooter extends Demo3d {
   
   private void addNewRocks() {
     double radius = xorShift.randomDouble(0.5, 1.5);
-    var rock = (CollidableModel3d) Model3dFactory.dodecahedron(radius)
+    var rock = (CollidableModel3d) Model3dFactory
+        .dodecahedron(radius)
         .setOuterBoundingObject(new BoundingSphere3d(radius))
         .setPosition(new Vector3d(xorShift.randomDouble(-10, 10), 0, -200))
         .setVelocity(new Vector3d(0, 0, 0.5))
@@ -148,12 +147,12 @@ public class SpaceShooter extends Demo3d {
         .setRotation(Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.05))
         .build();
 
-    Model3dUtils.deform(rock, 0.1);
+    Model3dUtils.deform(rock, 0.2);
     
     Model3dUtils.setOptions(
         rock, 
-        EnumSet.of(flatShaded), 
-        EnumSet.of(cullIfBackface));
+        Set.of(flatShaded), 
+        Set.of());
     
     rocks.add(rock);
   }

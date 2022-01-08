@@ -30,6 +30,9 @@ public class RenderUtils {
     }    
   }
   
+  /**
+   * a, b, c are treated as Vector2d; z is ignored
+   */
   public static Vector3d cartesianToBarycentric(int x, int y, Vector3d a, Vector3d b, Vector3d c) {
     double x1 = a.x();
     double x2 = b.x();

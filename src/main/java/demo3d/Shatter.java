@@ -44,7 +44,7 @@ public class Shatter extends Demo3d {
         .setTextureData(texture)
         .build();
     
-    Model3dUtils.deform(obj, 0.1);
+    Model3dUtils.deform(obj, 0.2);
 
     objs = Model3dUtils.partition3d(obj, 1);
     for (Model3d model : objs) {
