@@ -108,7 +108,6 @@ public class TexturedPolygon3dRenderer {
               Math.max(0, Math.min(tdw - 1, MathUtils.roundToInt(interpolatedTextureCoordinate.x()))), 
               Math.max(0, Math.min(tdh - 1, MathUtils.roundToInt(interpolatedTextureCoordinate.y()))));
         } catch (ArrayIndexOutOfBoundsException e) {
-          System.out.println(interpolatedTextureCoordinate);
           pixel = textureData.getPixel(tdw - 1, tdh - 1);
         }
         
