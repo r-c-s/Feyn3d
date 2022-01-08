@@ -223,7 +223,7 @@ public class SpaceShooter extends Demo3d {
             Set.of());
         
         double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-0.5, 0.5));
-        Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(0.5);
+        Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(object.getVelZ());
         shard.setVelocity(velocity);
         
         Rotation3d rotation = Rotation3d.spin(Vector3d.getRandomUnitVector(), 0.1);
