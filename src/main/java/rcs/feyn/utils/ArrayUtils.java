@@ -84,9 +84,22 @@ public final class ArrayUtils {
       swap(t, i, size-1-i);
     }
   }
+ 
+  public static void reverse(int[] t) {
+    int size = t.length;
+    for (int i = 0; i < size / 2; i++) {
+      swap(t, i, size-1-i);
+    }
+  }
 
   private static <T> void swap(T[] t, int i, int j) {
     T temp = (T) t[i];
+    t[i] = t[j];
+    t[j] = temp;
+  }
+
+  private static void swap(int[] t, int i, int j) {
+    int temp = t[i];
     t[i] = t[j];
     t[j] = temp;
   }

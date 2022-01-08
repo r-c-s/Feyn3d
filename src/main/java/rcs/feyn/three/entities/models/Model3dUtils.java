@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -16,6 +17,7 @@ import rcs.feyn.three.collision.BoundingSphere3d;
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.render.RenderOptions3d;
+import rcs.feyn.utils.ArrayUtils;
 import rcs.feyn.utils.XORShift;
 
 public class Model3dUtils {
@@ -88,11 +90,20 @@ public class Model3dUtils {
   }
   
   public static Model3d[] partition2d(Model3d model) {
+    return partition2d(model, 0);
+  }
+  
+  /**
+   * todo: fix this to partition correctly for thickness
+   * so all pieces fit together perfectly.
+   */
+  public static Model3d[] partition2d(Model3d model, double thickness) {
     Model3dFace[] faces = model.getFaces();
     Model3d[] parts = new Model3d[faces.length];
     
     for (int i = 0; i < faces.length; i++) {
       Model3dFace face = faces[i];
+      Vector3d[] faceVertices = getVertices(model.getVertices(), face);
       
       int[] indices = face.getIndices();
       int[] adjustedIndices = new int[indices.length];
@@ -100,30 +111,59 @@ public class Model3dUtils {
         adjustedIndices[j] = j;
       }
 
-      Model3dFace partFaces;
-      if (faces[i] instanceof Model3dTexturedFace) {
-        partFaces = new Model3dTexturedFace(
-            adjustedIndices, 
-            ((Model3dTexturedFace) faces[i]).getTextureData());
-      } else {
-        partFaces = new Model3dFace(
-            adjustedIndices, 
-            faces[i].getColor());
+      Model3dFace[] partFaces = new Model3dFace[thickness > 0 ? faceVertices.length + 2 : 1];
+      
+      for (int j = 0; j < partFaces.length; j++) {
+
+        int[] indicesToUse;
+        
+        if (j == 0) {
+          // the regular face
+          indicesToUse = adjustedIndices;
+        } else if (j == 1) {
+          // the opposite side of the face
+          indicesToUse = new int[indices.length];
+          for (int k = 0; k < indices.length; k++) {
+            indicesToUse[k] = indices.length + k;
+          }
+          ArrayUtils.reverse(indicesToUse);
+        } else {
+          // the sides
+          indicesToUse = new int[4];
+          int k = j - 2;
+          indicesToUse[0] = k;
+          indicesToUse[1] = k + 3;
+          indicesToUse[2] = (k + 1) % indices.length + indices.length;
+          indicesToUse[3] = (k + 1) % indices.length;
+        }
+        
+        if (face instanceof Model3dTexturedFace) { 
+          partFaces[j] = new Model3dTexturedFace(indicesToUse, ((Model3dTexturedFace) face).getTextureData());
+        } else {
+          partFaces[j] = new Model3dFace(indicesToUse, face.getColor());
+        }
+      }      
+
+      Vector3d centerOfFace = GeoUtils3d.getCenter(faceVertices);
+      Vector3d normalOfFace = GeoUtils3d.getNormal(faceVertices);
+      
+      if (thickness > 0) {
+        Vector3d offsetVertex = normalOfFace.mul(-thickness);
+        faceVertices = Stream.concat(
+              Arrays.stream(faceVertices),
+              Arrays.stream(faceVertices).map(vertex -> vertex.add(offsetVertex)))
+            .toArray(Vector3d[]::new);
       }
       
-      Vector3d[] partVertices = getVertices(model.getVertices(), face);
-
-      Vector3d com = GeoUtils3d.getCenter(partVertices);
-      
-      for (Vector3d vertex : partVertices) {
-        vertex.subLocal(com);
+      for (Vector3d vertex : faceVertices) {
+        vertex.subLocal(centerOfFace);
       }
       
       Model3d part = new Model3d(
-          new Model3dVertices(partVertices), 
-          new Model3dFace[] { partFaces });
+          new Model3dVertices(faceVertices), 
+          partFaces);
       
-      part.setPosition(com);
+      part.setPosition(centerOfFace);
       
       parts[i] = part;
     }
