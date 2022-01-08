@@ -144,7 +144,6 @@ public class Model3dUtils {
         }
       }      
 
-      Vector3d centerOfFace = GeoUtils3d.getCenter(faceVertices);
       Vector3d normalOfFace = GeoUtils3d.getNormal(faceVertices);
       
       if (thickness > 0) {
@@ -155,15 +154,17 @@ public class Model3dUtils {
             .toArray(Vector3d[]::new);
       }
       
+      Vector3d centerOfPart = GeoUtils3d.getCenter(faceVertices);
+      
       for (Vector3d vertex : faceVertices) {
-        vertex.subLocal(centerOfFace);
+        vertex.subLocal(centerOfPart);
       }
       
       Model3d part = new Model3d(
           new Model3dVertices(faceVertices), 
           partFaces);
       
-      part.setPosition(centerOfFace);
+      part.setPosition(centerOfPart);
       
       parts[i] = part;
     }
