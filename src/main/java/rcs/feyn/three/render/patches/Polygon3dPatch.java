@@ -38,53 +38,67 @@ public class Polygon3dPatch extends Patch3d {
   
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
-    Vector3d center = getCenter();
-    Vector3d normal = GeoUtils3d.getNormal(vertices);
-    boolean isBackfaceToCamera = ViewUtils.isBackFace(camera.getPosition(), center, normal);
-
-    Vector3d[] viewSpaceCoordinates = Pipeline3d
-        .toViewSpaceCoordinates(vertices, view);
-
-    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
-        .clipViewSpaceCoordinates(viewSpaceCoordinates);
+    Vector3d[] viewVertices = Pipeline3d.toViewSpaceCoordinates(vertices, view);
+    Vector3d[] clippedViewVertices = Pipeline3d.clipViewSpaceCoordinates(viewVertices);
     
-    if (clippedViewSpaceCoordinates.length < 3) {
+    if (clippedViewVertices.length < 3) {
       return;
     }
-
-    Vector3d[] deviceCoordinates = Pipeline3d
-        .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
-
-    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-    Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
-
-    double intensity = 1.0;
-    if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-      intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
-    }
-
-    int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
-    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-      finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, finalColor);
-    } 
     
     if (options.isEnabled(RenderOptions3d.Option.meshOnly)) {
-      renderMesh(graphics, deviceCoordinates, finalColor);
-    } else {
+      renderMesh(graphics, clippedViewVertices, projection, viewPort);
+      return;
+    }
+    
+    Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
+    
+    Vector3d cameraPositionTransformed = camera.getPosition().affineTransform(view);
+    
+    for (Vector3d[] triangle : triangulatedClippedViewVertices) {
+
+      Vector3d center = GeoUtils3d.getCenter(triangle);
+      Vector3d normal = GeoUtils3d.getNormal(triangle);
+      boolean isBackfaceToCamera = ViewUtils.isBackFace(cameraPositionTransformed, center, normal);
+      
+      if (isBackfaceToCamera && shouldCullIfBackface()) {
+        continue;
+      }
+      
+      Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
+
+      boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+      Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
+
+      double intensity = 1.0;
+      if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
+        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting, view);
+      }
+
+      int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
+      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+        finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, view, finalColor);
+      } 
+      
       Polygon3dRenderer.render(
-        graphics,
-        deviceCoordinates,
-        finalColor);
+          graphics,
+          deviceCoordinates,
+          finalColor);
     }
   }
 
-  private void renderMesh(Graphics3d graphics, Vector3d[] vpcVertices, int color) {
-    for (int i = 0, j = 1; i < vpcVertices.length; i++, j++, j%=vpcVertices.length) {
+  private void renderMesh(Graphics3d graphics, Vector3d[] clippedViewVertices, Matrix44 projection, Matrix44 viewPort) {
+    Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(clippedViewVertices, projection, viewPort);
+    
+    for (int i = 0, j = 1; i < deviceCoordinates.length; i++, j++, j%=deviceCoordinates.length) {
       Line3dRenderer.render(
           graphics, 
-          vpcVertices[i], 
-          vpcVertices[j], 
-          color);
+          deviceCoordinates[i], 
+          deviceCoordinates[j], 
+          color.getRGBA());
     }
+  }
+  
+  protected boolean shouldCullIfBackface() {
+    return !options.isEnabled(Option.meshOnly) && options.isEnabled(Option.cullIfBackface) && !color.isTransparent();
   }
 }

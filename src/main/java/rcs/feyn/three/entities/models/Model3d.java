@@ -77,7 +77,7 @@ public class Model3d extends Sprite3d implements Renderable3d {
     }
     
     return Arrays.stream(faces)
-        .flatMap(face -> Arrays.stream(face.makePatch(lastSnapshot)))
+        .map(face -> face.makePatch(lastSnapshot))
         .toArray(Patch3d[]::new);
   }
 }

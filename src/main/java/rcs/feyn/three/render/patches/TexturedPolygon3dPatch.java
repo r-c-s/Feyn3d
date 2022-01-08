@@ -50,54 +50,59 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         || options.isEnabled(Option.meshOnly)) {
       super.render(graphics, view, projection, viewPort);
       return;
-    }
-
-    Vector3d center = getCenter();
-    Vector3d normal = GeoUtils3d.getNormal(vertices);
-    boolean isBackfaceToCamera = ViewUtils.isBackFace(camera.getPosition(), center, normal);
-
-    Vector3d[] viewSpaceCoordinates = Pipeline3d
-        .toViewSpaceCoordinates(vertices, view);
-    Vector3d[] clippedViewSpaceCoordinates = Pipeline3d
-        .clipViewSpaceCoordinates(viewSpaceCoordinates);
+    }    
     
-    if (clippedViewSpaceCoordinates.length < 3) {
+    Vector3d[] viewVertices = Pipeline3d.toViewSpaceCoordinates(vertices, view);
+    Vector3d[] clippedViewVertices = Pipeline3d.clipViewSpaceCoordinates(viewVertices);
+    
+    if (clippedViewVertices.length < 3) {
       return;
     }
-
-    Vector3d[] deviceCoordinates = Pipeline3d
-        .toDeviceCoordinates(clippedViewSpaceCoordinates, projection, viewPort);
-
-    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-    Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
-
-    double intensity = 1.0;
-    if (options.isEnabled(Option.flatShaded)) {
-      intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
-    }
-
-    boolean applyLightingColor = options.isEnabled(Option.applyLightingColor)
-        && LightingUtils.hasColoredLightsources();
-   
-    int[] colors = null;
-    if (applyLightingColor) {
-      colors = new int[clippedViewSpaceCoordinates.length];
-      for (int i = 0; i < colors.length; i++) {
-        int initialColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
-        colors[i] = LightingUtils.applyLightsourceColorTo(
-            vertices[i], 
-            normalForLighting,
-            initialColor);
-      }
-    }
     
-    TexturedPolygon3dRenderer.render(
-      graphics,
-      deviceCoordinates,
-      intensity,
-      Optional.ofNullable(colors),
-      textureData,
-      alpha, 
-      zoom);
+    Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
+    
+    Vector3d cameraPositionTransformed = camera.getPosition().affineTransform(view);
+
+    for (Vector3d[] triangle : triangulatedClippedViewVertices) {
+
+      Vector3d center = GeoUtils3d.getCenter(triangle);
+      Vector3d normal = GeoUtils3d.getNormal(triangle);
+      boolean isBackfaceToCamera = ViewUtils.isBackFace(cameraPositionTransformed, center, normal);
+      
+      if (isBackfaceToCamera && shouldCullIfBackface()) {
+        continue;
+      }
+      
+      Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
+
+      boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+      Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
+
+      double intensity = 1.0;
+      if (options.isEnabled(Option.flatShaded)) {
+        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting, view);
+      }
+
+      boolean applyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
+     
+      // todo: move this out of loop
+      int[] colors = null;
+      if (applyLightingColor) {
+        colors = new int[3];
+        for (int i = 0; i < 3; i++) {
+          int initialColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
+          colors[i] = LightingUtils.applyLightsourceColorTo(triangle[i], normalForLighting, view, initialColor);
+        }
+      }
+      
+      TexturedPolygon3dRenderer.render(
+        graphics,
+        deviceCoordinates,
+        intensity,
+        Optional.ofNullable(colors),
+        textureData,
+        alpha, 
+        zoom);
+    }
   }
 }
