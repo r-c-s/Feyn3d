@@ -61,44 +61,44 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] viewVertices = Pipeline3d.toViewSpaceCoordinates(vertices, view);
     Vector3d[] clippedViewVertices = Pipeline3d.clipViewSpaceCoordinates(viewVertices);
     
-    if (clippedViewVertices.length < 3) {
+    int numClippedViewVertices = clippedViewVertices.length;
+    
+    if (numClippedViewVertices < 3) {
       return;
     }
     
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
+    
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
 
-    for (Vector3d[] triangle : triangulatedClippedViewVertices) {
-      
-      Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
+    double intensity = 1.0;
+    if (options.isEnabled(Option.flatShaded)) {
+      intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
+    }
 
-      boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-      Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
-
-      double intensity = 1.0;
-      if (options.isEnabled(Option.flatShaded)) {
-        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
+    boolean shouldApplyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
+    
+    int[] colors = null;
+    if (shouldApplyLightingColor) {
+      colors = new int[numClippedViewVertices];
+      int initialColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
+      for (int i = 0; i < numClippedViewVertices; i++) {
+        colors[i] = LightingUtils.applyLightsourceColorTo(
+            clippedViewVertices[i], 
+            surfaceNormal.affineTransformAsVector(view), 
+            view, 
+            initialColor);
       }
+    }
+    
+    int[][] triangulatedColors = shouldApplyLightingColor ? GeoUtils3d.triangulate(colors) : null;
 
-      boolean applyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
-     
-      // todo: move this out of loop
-      int[] colors = null;
-      if (applyLightingColor) {
-        colors = new int[3];
-        for (int i = 0; i < 3; i++) {
-          int initialColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
-          colors[i] = LightingUtils.applyLightsourceColorTo(
-              triangle[i], 
-              normalForLighting,
-              view,
-              initialColor);
-        }
-      }
+    int tdw = textureData.getWidth();    
+    int tdh = textureData.getHeight();
 
-      int tdw = textureData.getWidth();    
-      int tdh = textureData.getHeight();
-      
-      // todo: improve this by using triagle; this distorts the shape of the texture
+    for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {      
+      // todo: improve this by using triangle; this distorts the shape of the texture
       Vector2d[] textureCoordinates = new Vector2d[] {
           new Vector2d(0, 0),
           new Vector2d(0, tdh - 1),
@@ -107,9 +107,9 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       
       TexturedPolygon3dRenderer.render(
         graphics,
-        deviceCoordinates,
+        Pipeline3d.toDeviceCoordinates(triangulatedClippedViewVertices[i], projection, viewPort),
         intensity,
-        Optional.ofNullable(colors),
+        Optional.ofNullable(shouldApplyLightingColor ? triangulatedColors[i] : null),
         textureData,
         textureCoordinates,
         alpha, 

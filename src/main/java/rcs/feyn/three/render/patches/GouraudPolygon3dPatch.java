@@ -9,6 +9,7 @@ import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudPolygon3dRenderer;
 import rcs.feyn.three.view.ViewUtils;
+
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
@@ -35,7 +36,7 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
       return;
     }  
     
-    Vector3d center = GeoUtils3d.getCenter(vertices);
+    Vector3d center = getCenter();
     Vector3d surfaceNormal = GeoUtils3d.getNormal(vertices);
     boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, surfaceNormal);
     
@@ -51,48 +52,55 @@ public class GouraudPolygon3dPatch extends Polygon3dPatch {
     Vector3d[] clippedViewVertices = clippedViewSpaceCoordinates[0];
     Vector3d[] clippedViewNormals = clippedViewSpaceCoordinates[1];
     
-    if (clippedViewVertices.length < 3) {
+    int numClippedViewVertices = clippedViewVertices.length;
+    if (numClippedViewVertices < 3) {
       return;
     }
 
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
-    Vector3d[][] triangulatedClippedViewNormals = GeoUtils3d.triangulate(clippedViewNormals);
+
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    
+    double[] intensities = new double[numClippedViewVertices];      
+    for (int j = 0; j < intensities.length; j++) {
+      intensities[j] = LightingUtils.computeLightingIntensity(
+          clippedViewVertices[j], 
+          shouldReverseNormalForLighting ? clippedViewNormals[j].mul(-1) : clippedViewNormals[j],
+          view);
+    }
+
+    boolean shouldApplyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
+    
+    int[] colors = new int[numClippedViewVertices];
+    for (int k = 0; k < numClippedViewVertices; k++) {
+      colors[k] = color.getRGBA();
+      if (shouldApplyLightingColor) {
+        colors[k] = LightingUtils.applyLightsourceColorTo(
+            clippedViewVertices[k], 
+            shouldReverseNormalForLighting? clippedViewNormals[k].mul(-1) : clippedViewNormals[k], 
+            view, 
+            colors[k]);
+      }
+    }
+
+    double[][] triangulatedIntensities = GeoUtils3d.triangulate(intensities);
+    int[][] triangulatedColors = GeoUtils3d.triangulate(colors);
     
     for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {
       Vector3d[] triangle = triangulatedClippedViewVertices[i];
-      Vector3d[] normals = triangulatedClippedViewNormals[i];
+      double[] triangleIntensities = triangulatedIntensities[i];
+      int[] triangleColors = triangulatedColors[i];
 
       Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
-      
-      double[] intensities = new double[3];
-      
-      boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-      
-      for (int j = 0; j < 3; j++) {
-        intensities[j] = LightingUtils.computeLightingIntensity(
-            triangle[j], 
-            shouldReverseNormalForLighting ? normals[j].mul(-1) : normals[j],
-            view);
-      }
 
-      boolean applyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
-
-      int[] colors = new int[3];
-      for (int k = 0; k < 3; k++) {
-        colors[k] = ColorUtils.mulRGB(color.getRGBA(), intensities[k]);
-        if (applyLightingColor) {
-          colors[k] = LightingUtils.applyLightsourceColorTo(
-              triangle[k], 
-              shouldReverseNormalForLighting? normals[k].mul(-1) : normals[k], 
-              view, 
-              colors[k]);
-        }
-      }
+      triangleColors[0] = ColorUtils.mulRGB(triangleColors[0], triangleIntensities[0]);
+      triangleColors[1] = ColorUtils.mulRGB(triangleColors[1], triangleIntensities[1]);
+      triangleColors[2] = ColorUtils.mulRGB(triangleColors[2], triangleIntensities[2]);
 
       GouraudPolygon3dRenderer.render(
           graphics,
           deviceCoordinates,
-          colors);
+          triangleColors);
     }
   }
 }

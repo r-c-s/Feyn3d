@@ -8,7 +8,6 @@ import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
-import rcs.feyn.three.kernel.FeynRuntime;
 
 public class TexturedPolygon3dRenderer {
   
@@ -69,8 +68,6 @@ public class TexturedPolygon3dRenderer {
     
     int tdw = textureData.getWidth();    
     int tdh = textureData.getHeight();
-    
-    double ambientLightIntensity = FeynRuntime.getAmbientLight().getIntensity();
 
     for (int y = ymin; y <= ymax; y++) {
       double ximin = Integer.MIN_VALUE;
@@ -129,7 +126,7 @@ public class TexturedPolygon3dRenderer {
           colorWithIntensity = ColorUtils.blendRGB(
               colorWithIntensity, 
               interpolatedColor,
-              intensity - ambientLightIntensity);
+              intensity);
         }
 
         int finalColor = ColorUtils.setAlphaToRGBA(colorWithIntensity, alpha);

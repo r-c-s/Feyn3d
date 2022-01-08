@@ -62,6 +62,42 @@ public class GeoUtils3d {
     return triangles;
   }
 
+  public static final double[][] triangulate(double... d) {
+    int size = d.length; 
+    
+    if (size < 3) {
+      throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
+    }
+    
+    int numTriangles = size - 2;
+    
+    double[][] triangles = new double[numTriangles][3];
+    
+    for (int i = 0; i < numTriangles; i++) {
+      triangles[i] = new double[]{d[i+1], d[i+2], d[0]};
+    }
+    
+    return triangles;
+  }
+
+  public static final int[][] triangulate(int... d) {
+    int size = d.length; 
+    
+    if (size < 3) {
+      throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
+    }
+    
+    int numTriangles = size - 2;
+    
+    int[][] triangles = new int[numTriangles][3];
+    
+    for (int i = 0; i < numTriangles; i++) {
+      triangles[i] = new int[]{d[i+1], d[i+2], d[0]};
+    }
+    
+    return triangles;
+  }
+
   public static final boolean areCoplanar(Vector3d... v) {
     int size = v.length;
     if (size <= 3) {

@@ -29,7 +29,7 @@ public final class Pipeline3d {
     Vector3d[] transformedNormals  = new Vector3d[size];
     for (int i = 0; i < vertices.length; i++) {
       transformedVertices[i] = vertices[i].affineTransform(view);
-      transformedNormals [i] = normals [i].affineTransformAsVector(view);
+      transformedNormals [i] = normals[i].affineTransformAsVector(view);
     }
     return new Vector3d[][]{ transformedVertices, transformedNormals };
   }

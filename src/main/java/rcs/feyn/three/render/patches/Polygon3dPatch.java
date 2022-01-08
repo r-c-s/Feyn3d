@@ -57,25 +57,23 @@ public class Polygon3dPatch extends Patch3d {
     
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
     
-    for (Vector3d[] triangle : triangulatedClippedViewVertices) {      
-      Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
+    boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
+    Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
 
-      boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-      Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
+    double intensity = 1.0;
+    if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
+      intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
+    }
 
-      double intensity = 1.0;
-      if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
-      }
-
-      int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
-      if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-        finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, finalColor);
-      } 
-      
+    int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
+    if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
+      finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, finalColor);
+    } 
+    
+    for (Vector3d[] triangle : triangulatedClippedViewVertices) {
       Polygon3dRenderer.render(
           graphics,
-          deviceCoordinates,
+          Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort),
           finalColor);
     }
   }
