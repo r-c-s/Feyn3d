@@ -2,7 +2,6 @@ package demo3d;
 
 import static rcs.feyn.three.render.RenderOptions3d.Option.flatShaded;
 import static rcs.feyn.three.render.RenderOptions3d.Option.gouraudShaded;
-import static rcs.feyn.three.render.RenderOptions3d.Option.bothSidesShaded;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
@@ -131,14 +130,13 @@ public class SpaceShooter extends Demo3d {
         .setPosition(position)
         .setVelocity(velocity)
         .addTransform(Matrices.create3dRotateMatrix(position, Vector3d.X_AXIS, -MathConsts.HALF_PI))
+        .addTransform(Matrices.create3dRotateMatrix(position, Vector3d.Y_AXIS, velocity.angleBetween(Vector3d.NEG_Z_AXIS, Vector3d.NEG_X_AXIS)))
         .build();
 
     Model3dUtils.setOptions(
         projecile, 
         Set.of(flatShaded), 
         Set.of(gouraudShaded));
-    
-    projecile.rotate(position, Vector3d.Y_AXIS, velocity.angleBetween(Vector3d.NEG_Z_AXIS, Vector3d.NEG_X_AXIS));
     
     projectiles.add(projecile);
   }

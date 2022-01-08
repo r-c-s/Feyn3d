@@ -20,14 +20,14 @@ public final class Model3dBuilder {
   
   protected Vector3d position = new Vector3d();
   protected Vector3d velocity = new Vector3d();
-  protected Matrix44 transform = new Matrix44();
   protected Rotation3d rotation = null;
   
-  protected ArrayList<Vector3d>  vertices = new ArrayList<>();
-  protected ArrayList<Vector3d>  normals  = new ArrayList<>();
-  protected ArrayList<Double>    masses   = new ArrayList<>();
-  protected ArrayList<Integer[]> faces    = new ArrayList<>();
-  protected ArrayList<FeynColor> colors   = new ArrayList<>();
+  protected ArrayList<Vector3d>  vertices   = new ArrayList<>();
+  protected ArrayList<Vector3d>  normals    = new ArrayList<>();
+  protected ArrayList<Double>    masses     = new ArrayList<>();
+  protected ArrayList<Integer[]> faces      = new ArrayList<>();
+  protected ArrayList<FeynColor> colors     = new ArrayList<>();
+  protected ArrayList<Matrix44>  transforms = new ArrayList<>();
   
   protected BoundingObject3d outerBoundingObject = null;
   protected ArrayList<BoundingObject3d> innerBoundingObjects = new ArrayList<>();
@@ -160,7 +160,7 @@ public final class Model3dBuilder {
   }
 
   public Model3dBuilder addTransform(Matrix44 transform) {
-    this.transform.mulLocal(transform);
+    this.transforms.add(transform);
     return this;
   }
 
@@ -241,8 +241,9 @@ public final class Model3dBuilder {
     
     model.setPosition(position); 
     model.setVelocity(velocity);
-    model.transform(transform);
     model.setRotation(rotation);
+
+    transforms.forEach(model::transform);
     
     return model;
   } 
