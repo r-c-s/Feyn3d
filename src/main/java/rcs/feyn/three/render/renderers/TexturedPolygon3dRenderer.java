@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
 import rcs.feyn.three.gfx.Raster;
@@ -17,6 +18,7 @@ public class TexturedPolygon3dRenderer {
       double intensity, 
       Optional<int[]> colors,
       Raster textureData, 
+      Vector2d[] textureCoordinates,
       int alpha,
       double zoom) {
     
@@ -56,7 +58,6 @@ public class TexturedPolygon3dRenderer {
     
     double dInvZdx = -aa/cc;
     double dZdy = -bb/cc;
-    
     
     int screenW = graphics.getRaster().getWidth();
     int screenH = graphics.getRaster().getHeight(); 
@@ -101,18 +102,16 @@ public class TexturedPolygon3dRenderer {
         
         Vector3d bary = RenderUtils.cartesianToBarycentric(x, y, va, vb, vc);
         
-        double cx = (tdw - 1) / zoom;
-        double by = (tdh - 1) / zoom;
-        double cy = (tdh / 2) / zoom;
-        
-        int xdata = MathUtils.roundToInt(cx * bary.z());
-        int ydata = MathUtils.roundToInt(by * bary.y() + cy * bary.z());
+        Vector2d interpolatedTextureCoordinate = RenderUtils.barycentricToCartesian(
+            bary, textureCoordinates[0], textureCoordinates[1], textureCoordinates[2]);
         
         int pixel;
         try {
-          pixel = textureData.getPixel(xdata, ydata);
+          pixel = textureData.getPixel(
+              Math.max(0, Math.min(tdw - 1, MathUtils.roundToInt(interpolatedTextureCoordinate.x()))), 
+              Math.max(0, Math.min(tdh - 1, MathUtils.roundToInt(interpolatedTextureCoordinate.y()))));
         } catch (ArrayIndexOutOfBoundsException e) {
-          // need to figure out why this is happening
+          System.out.println(interpolatedTextureCoordinate);
           pixel = textureData.getPixel(tdw - 1, tdh - 1);
         }
         

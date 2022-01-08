@@ -5,6 +5,8 @@ import static rcs.feyn.three.render.RenderOptions3d.Option.flatShaded;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import rcs.feyn.color.FeynColor;
@@ -17,7 +19,6 @@ import rcs.feyn.three.entities.models.Model3dTexturedFace;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.models.Model3dVertices;
 import rcs.feyn.three.gfx.TextureRaster;
-import rcs.feyn.three.kernel.FeynRuntime;
 
 /**
  * todo: create CompositeModel3d that encapsulates various Model3d's
@@ -62,7 +63,6 @@ public class PineTree extends Model3d {
           -MathConsts.HALF_PI);
       
       branches[i] = branch;
-      FeynRuntime.getRepository().add(branches[i]);
     }
     
     Vector3d[] allVertices = Stream.concat(
@@ -70,13 +70,24 @@ public class PineTree extends Model3d {
         Arrays.stream(branches).flatMap(model -> Arrays.stream(model.getVertices().getVertices())))
         .toArray(Vector3d[]::new);
     
+    int coneVerticesSize = cone.getVertices().size();
+    
     Model3dFace[] allFaces = Stream.concat(
-        Arrays.stream(cone.getFaces()), 
-        Arrays.stream(branches)
-            .flatMap(model -> Arrays.stream(model.getFaces())
-                .map(face -> new Model3dTexturedFace(
-                    Arrays.stream(face.getIndices()).map(index -> index + cone.getVertices().size()).toArray(), 
-                    ((Model3dTexturedFace)face).getTextureData()))))
+        Arrays.stream(cone.getFaces()),
+        IntStream.range(0, branches.length)
+          .mapToObj(i -> {
+            Model3d model = branches[i];
+            int modelVerticesLength = model.getVertices().size();
+            return Arrays.stream(model.getFaces())
+              .map(face -> {
+                int[] adjustedIndices = Arrays.stream(face.getIndices()).map(j -> j + coneVerticesSize + i * modelVerticesLength).toArray();
+                return new Model3dTexturedFace(adjustedIndices, ((Model3dTexturedFace) face).getTextureData()); 
+              });
+          })
+          .collect(Collectors.toList())
+          .stream()
+          .flatMap(s -> s)
+        )
         .toArray(Model3dFace[]::new);
     
     vertices = new Model3dVertices(allVertices);

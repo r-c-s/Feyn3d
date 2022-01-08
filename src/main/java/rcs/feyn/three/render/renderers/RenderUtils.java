@@ -1,5 +1,6 @@
 package rcs.feyn.three.render.renderers;
 
+import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.utils.HexaConsumer;
 import rcs.feyn.utils.TriConsumer;
@@ -57,5 +58,23 @@ public class RenderUtils {
       lambda1,
       lambda2,
       1 - lambda1 - lambda2);
+  }
+
+//  public static Vector3d cartesianToBarycentric(Vector3d point, Vector3d a, Vector3d b, Vector3d c) {
+//    double areaABC = (b.sub(a).crossProd(c.sub(a))).length();
+//    
+//    double lambda1 = (b.sub(point).crossProd(c.sub(point))).length()  / areaABC;
+//    double lambda2 = (c.sub(point).crossProd(a.sub(point))).length()  / areaABC;
+//    
+//    return new Vector3d(
+//      lambda1,
+//      lambda2,
+//      1 - lambda1 - lambda2);
+//  }
+  
+  public static Vector2d barycentricToCartesian(Vector3d bary, Vector2d a, Vector2d b, Vector2d c) {
+    return new Vector2d(
+        bary.x() * a.x() + bary.y() * b.x() + bary.z() * c.x(),
+        bary.x() * a.y() + bary.y() * b.y() + bary.z() * c.y());
   }
 }

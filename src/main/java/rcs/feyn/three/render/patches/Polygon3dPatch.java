@@ -8,7 +8,6 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.Line3dRenderer;
-import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 import rcs.feyn.three.render.renderers.Polygon3dRenderer;
 import rcs.feyn.color.ColorUtils;
@@ -17,8 +16,6 @@ import rcs.feyn.math.Matrix44;
 import rcs.feyn.math.Vector3d;
 
 public class Polygon3dPatch extends Patch3d {
-  
-  private static final Camera3d camera = FeynRuntime.getView().getCamera();
   
   protected Vector3d[] vertices;
   
@@ -38,6 +35,14 @@ public class Polygon3dPatch extends Patch3d {
   
   @Override
   public void render(Graphics3d graphics, Matrix44 view, Matrix44 projection, Matrix44 viewPort) {
+    Vector3d center = GeoUtils3d.getCenter(vertices);
+    Vector3d surfaceNormal = GeoUtils3d.getNormal(vertices);
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, surfaceNormal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface()) {
+      return;
+    }
+    
     Vector3d[] viewVertices = Pipeline3d.toViewSpaceCoordinates(vertices, view);
     Vector3d[] clippedViewVertices = Pipeline3d.clipViewSpaceCoordinates(viewVertices);
     
@@ -52,31 +57,20 @@ public class Polygon3dPatch extends Patch3d {
     
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
     
-    Vector3d cameraPositionTransformed = camera.getPosition().affineTransform(view);
-    
-    for (Vector3d[] triangle : triangulatedClippedViewVertices) {
-
-      Vector3d center = GeoUtils3d.getCenter(triangle);
-      Vector3d normal = GeoUtils3d.getNormal(triangle);
-      boolean isBackfaceToCamera = ViewUtils.isBackFace(cameraPositionTransformed, center, normal);
-      
-      if (isBackfaceToCamera && shouldCullIfBackface()) {
-        continue;
-      }
-      
+    for (Vector3d[] triangle : triangulatedClippedViewVertices) {      
       Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
 
       boolean shouldReverseNormalForLighting = !options.isEnabled(Option.meshOnly) && !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-      Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
+      Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
 
       double intensity = 1.0;
       if (options.isEnabled(RenderOptions3d.Option.flatShaded)) {
-        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting, view);
+        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
       }
 
       int finalColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
       if (options.isEnabled(RenderOptions3d.Option.applyLightingColor)) {
-        finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, view, finalColor);
+        finalColor = LightingUtils.applyLightsourceColorTo(center, normalForLighting, finalColor);
       } 
       
       Polygon3dRenderer.render(

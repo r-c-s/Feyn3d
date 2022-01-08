@@ -9,7 +9,6 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
-import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 
 import java.util.Optional;
@@ -17,11 +16,10 @@ import java.util.Optional;
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 
 public class TexturedPolygon3dPatch extends Polygon3dPatch {
-
-  private static final Camera3d camera = FeynRuntime.getView().getCamera();
   
   protected Raster textureData;
   protected int alpha;
@@ -50,7 +48,15 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         || options.isEnabled(Option.meshOnly)) {
       super.render(graphics, view, projection, viewPort);
       return;
-    }    
+    }
+    
+    Vector3d center = GeoUtils3d.getCenter(vertices);
+    Vector3d surfaceNormal = GeoUtils3d.getNormal(vertices);
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, surfaceNormal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface()) {
+      return;
+    }
     
     Vector3d[] viewVertices = Pipeline3d.toViewSpaceCoordinates(vertices, view);
     Vector3d[] clippedViewVertices = Pipeline3d.clipViewSpaceCoordinates(viewVertices);
@@ -60,27 +66,17 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     }
     
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
-    
-    Vector3d cameraPositionTransformed = camera.getPosition().affineTransform(view);
 
     for (Vector3d[] triangle : triangulatedClippedViewVertices) {
-
-      Vector3d center = GeoUtils3d.getCenter(triangle);
-      Vector3d normal = GeoUtils3d.getNormal(triangle);
-      boolean isBackfaceToCamera = ViewUtils.isBackFace(cameraPositionTransformed, center, normal);
-      
-      if (isBackfaceToCamera && shouldCullIfBackface()) {
-        continue;
-      }
       
       Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
 
       boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
-      Vector3d normalForLighting = shouldReverseNormalForLighting ? normal.mul(-1) : normal;
+      Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
 
       double intensity = 1.0;
       if (options.isEnabled(Option.flatShaded)) {
-        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting, view);
+        intensity = LightingUtils.computeLightingIntensity(center, normalForLighting);
       }
 
       boolean applyLightingColor = options.isEnabled(Option.applyLightingColor) && LightingUtils.hasColoredLightsources();
@@ -91,9 +87,23 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         colors = new int[3];
         for (int i = 0; i < 3; i++) {
           int initialColor = ColorUtils.mulRGB(color.getRGBA(), intensity);
-          colors[i] = LightingUtils.applyLightsourceColorTo(triangle[i], normalForLighting, view, initialColor);
+          colors[i] = LightingUtils.applyLightsourceColorTo(
+              triangle[i], 
+              normalForLighting,
+              view,
+              initialColor);
         }
       }
+
+      int tdw = textureData.getWidth();    
+      int tdh = textureData.getHeight();
+      
+      // todo: improve this by using triagle; this distorts the shape of the texture
+      Vector2d[] textureCoordinates = new Vector2d[] {
+          new Vector2d(0, 0),
+          new Vector2d(0, tdh - 1),
+          new Vector2d(tdw - 1, tdh - 1)
+      }; 
       
       TexturedPolygon3dRenderer.render(
         graphics,
@@ -101,6 +111,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         intensity,
         Optional.ofNullable(colors),
         textureData,
+        textureCoordinates,
         alpha, 
         zoom);
     }

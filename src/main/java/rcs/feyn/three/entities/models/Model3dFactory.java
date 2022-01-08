@@ -31,7 +31,7 @@ public class Model3dFactory {
       dodecahedron.addNormal(new Vector3d(vertex));
       vertex.mulLocal(radius);
     }
-    
+
     dodecahedron.addFace( 8,  0, 12, 13,  1);
     dodecahedron.addFace(12,  3, 10,  6, 13);
     dodecahedron.addFace( 0, 16, 18,  3, 12);

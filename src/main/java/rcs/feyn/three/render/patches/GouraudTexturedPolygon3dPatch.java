@@ -9,18 +9,16 @@ import rcs.feyn.three.render.Pipeline3d;
 import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.GouraudTexturedPolygon3dRenderer;
-import rcs.feyn.three.view.Camera3d;
 import rcs.feyn.three.view.ViewUtils;
 
 import java.util.Optional;
 
 import rcs.feyn.color.ColorUtils;
 import rcs.feyn.math.Matrix44;
+import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 
 public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
-  
-  private static final Camera3d camera = FeynRuntime.getView().getCamera();
 
   protected Vector3d[] normals;
 
@@ -44,6 +42,14 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
       return;
     }
     
+    Vector3d center = GeoUtils3d.getCenter(vertices);
+    Vector3d surfaceNormal = GeoUtils3d.getNormal(vertices);
+    boolean isBackfaceToCamera = ViewUtils.isBackFace(FeynRuntime.getView().getCamera().getPosition(), center, surfaceNormal);
+    
+    if (isBackfaceToCamera && shouldCullIfBackface()) {
+      return;
+    }
+    
     Vector3d[][] viewSpaceCoordinates = Pipeline3d.toViewSpaceCoordinates(vertices, normals, view);
     Vector3d[] viewVertices = viewSpaceCoordinates[0];
     Vector3d[] viewNormals = viewSpaceCoordinates[1];
@@ -59,19 +65,9 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
     Vector3d[][] triangulatedClippedViewNormals = GeoUtils3d.triangulate(clippedViewNormals);
     
-    Vector3d cameraPositionTransformed = camera.getPosition().affineTransform(view);
-    
     for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {
       Vector3d[] triangle = triangulatedClippedViewVertices[i];
       Vector3d[] normals = triangulatedClippedViewNormals[i];
-      
-      Vector3d center = GeoUtils3d.getCenter(triangle);
-      Vector3d surfaceNormal = GeoUtils3d.getNormal(triangle);
-      boolean isBackfaceToCamera = ViewUtils.isBackFace(cameraPositionTransformed, center, surfaceNormal);
-      
-      if (isBackfaceToCamera && shouldCullIfBackface()) {
-        continue;
-      }
 
       Vector3d[] deviceCoordinates = Pipeline3d.toDeviceCoordinates(triangle, projection, viewPort);
       
@@ -100,13 +96,24 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
               initialColor);
         }
       }
+      
+      int tdw = textureData.getWidth();    
+      int tdh = textureData.getHeight();
 
+      // todo: improve this by using triagle; this distorts the shape of the texture
+      Vector2d[] textureCoordinates = new Vector2d[] {
+          new Vector2d(0, 0),
+          new Vector2d(0, tdh - 1),
+          new Vector2d(tdw - 1, tdh - 1)
+      };
+      
       GouraudTexturedPolygon3dRenderer.render(
         graphics,
         deviceCoordinates, 
         intensities,
         Optional.ofNullable(colors),
         textureData,
+        textureCoordinates,
         alpha,
         zoom); 
     }    
