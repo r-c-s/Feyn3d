@@ -149,9 +149,13 @@ public class Model3dUtils {
               Arrays.stream(faceVertices).map(vertex -> { 
                 Vector3d csv = centerOfFace.sub(vertex);
                 Vector3d cmv = centerOfModel.sub(vertex);
+                
                 double theta = csv.angleBetween(cmv);
                 double length = Math.abs(thickness / Math.tan(theta));
-                Vector3d offsetVertex = cmv.normalize().mulLocal(length);
+                double maxLength = Math.min(length, 0.95 * cmv.length());
+                
+                Vector3d offsetVertex = cmv.normalize().mulLocal(maxLength);
+                
                 return vertex.add(offsetVertex);
               }))
             .toArray(Vector3d[]::new);

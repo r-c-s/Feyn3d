@@ -44,6 +44,11 @@ public class NormalizeDeformAndShatter extends Demo3d {
         .setTextureData(texture)
         .build();
     
+    Model3dUtils.setOptions(
+        obj, 
+        Set.of(flatShaded, cullIfBackface), 
+        Set.of(applyLightingColor, gouraudShaded));
+    
     // normalize
     Model3dUtils.normalizeFacesToTriangles(obj);
     
@@ -56,10 +61,6 @@ public class NormalizeDeformAndShatter extends Demo3d {
     
     for (Model3d model : objs) {
       FeynRuntime.getRepository().add(model);
-      Model3dUtils.setOptions(
-          model, 
-          Set.of(flatShaded, cullIfBackface), 
-          Set.of(applyLightingColor, gouraudShaded));
     }
     
     x.setColor(FeynColor.red);
