@@ -1,5 +1,6 @@
 package rcs.feyn.three.kernel;
 
+import java.util.LinkedList;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -7,15 +8,16 @@ import java.util.stream.StreamSupport;
 
 import rcs.feyn.three.render.Renderable3d;
 import rcs.feyn.three.render.patches.Patch3d;
-import rcs.feyn.utils.struct.DoublyLinkedList;
 
 public class ObjectRepository {
 
-  private final DoublyLinkedList<Renderable3d>
-    singleObjects = new DoublyLinkedList<>();
+  private final LinkedList<Renderable3d> singleObjects = new LinkedList<>();
   
-  private final DoublyLinkedList<Iterable<? extends Renderable3d>> 
-    listsOfObjects = new DoublyLinkedList<>(singleObjects); 
+  private final LinkedList<Iterable<? extends Renderable3d>> listsOfObjects = new LinkedList<>();
+  
+  ObjectRepository() {
+    listsOfObjects.add(singleObjects);
+  }
   
   public void add(Renderable3d renderable) {
     singleObjects.add(renderable);
@@ -29,13 +31,9 @@ public class ObjectRepository {
     singleObjects.remove(renderable);
   }
 
-  public Iterable<? extends Renderable3d> remove(Iterable<? extends Renderable3d> listOfRenderables) {
-    return listsOfObjects.remove(listOfRenderables);
-  }
-  
   public Stream<Patch3d> patches() {
-    return StreamSupport
-        .stream(Spliterators.spliteratorUnknownSize(listsOfObjects.iterator(), Spliterator.ORDERED), false)
+    return listsOfObjects
+        .stream()
         .flatMap(listOfObjects -> StreamSupport
             .stream(Spliterators.spliteratorUnknownSize(listOfObjects.iterator(), Spliterator.ORDERED), false))
         .map(Renderable3d::getRenderablePatches)

@@ -36,7 +36,7 @@ public final class RenderKernel {
 
   private static final int NUM_THREADS = 4;
   
-  private final ExecutorService tp = Executors.newFixedThreadPool(NUM_THREADS);
+  private final ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);
   
   private final Collection<Patch3d> alphaBuffer = new ArrayList<>();
   
@@ -60,17 +60,19 @@ public final class RenderKernel {
     List<Future<?>> futures = new ArrayList<>(patchesPerThread.keySet().size());
 
     for (List<Patch3d> patchBatch : patchesPerThread.values()) {
-      futures.add(tp.submit(() -> {
-          patchBatch.forEach(patch -> {
-            if (patch.isTransparent()) {
-              synchronized(alphaBuffer) {
-                alphaBuffer.add(patch);
-              }
-            } else {
-              patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
+      var renderProcess = executorService.submit(() -> {
+        for (Patch3d patch : patchBatch){
+          if (patch.isTransparent()) {
+            synchronized(alphaBuffer) {
+              alphaBuffer.add(patch);
             }
-          });
-        }));
+          } else {
+            patch.render(graphics, viewMatrix, projMatrix, viewPortMatrix);
+          }
+        }
+      });
+      
+      futures.add(renderProcess);
     }
     
     for (Future<?> future : futures) {
@@ -88,8 +90,9 @@ public final class RenderKernel {
     } catch (IllegalArgumentException e) {
       // this error happens once in a while due to unpredictable 
       // comparison of doubles (floating-point arithmetic); safe to ignore
-      if (!e.getMessage().equals("Comparison method violates its general contract!")) {
-        e.printStackTrace();
+      boolean isFloatingPointError = e.getMessage().equals("Comparison method violates its general contract!");
+      
+      if (!isFloatingPointError) {
         throw e;
       }
     }
