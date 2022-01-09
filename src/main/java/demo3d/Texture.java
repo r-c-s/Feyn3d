@@ -2,6 +2,7 @@ package demo3d;
 
 import java.awt.event.KeyEvent;
 import java.io.Serial;
+import java.util.Set;
 
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.gui.FeynFrame;
@@ -15,6 +16,7 @@ import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
+import rcs.feyn.three.render.RenderOptions3d;
 
 public class Texture extends Demo3d {
 
@@ -37,7 +39,7 @@ public class Texture extends Demo3d {
   private final Line3d z = new Line3d(Vector3d.NEG_Z_AXIS, Vector3d.Z_AXIS);
 
   private final Model3d obj = Model3dFactory
-      .icosphere(0.6, 1)
+      .dodecahedron(0.6)
       .setTextureData(nextTexture())
       .build();
   
@@ -52,6 +54,11 @@ public class Texture extends Demo3d {
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
+    
+    Model3dUtils.setOptions(
+        obj, 
+        Set.of(RenderOptions3d.Option.flatShaded), 
+        Set.of(RenderOptions3d.Option.gouraudShaded));
 
     FeynRuntime.getRepository().add(obj);
     FeynRuntime.getRepository().add(x);

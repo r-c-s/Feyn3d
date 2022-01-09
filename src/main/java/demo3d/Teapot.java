@@ -30,9 +30,9 @@ public class Teapot extends Demo3d {
   private Model3d teapot = new Model3dBuilder()
       .fromObjFile(teapotObjFilePath)
       .setTextureData(Model3dUtils.getImageData(
-          System.getProperty("user.dir") + "/textures/porcelain.jpg"),
+          System.getProperty("user.dir") + "/textures/tile.jpg"),
           255, 
-          2)
+          1)
       .addTransform(Matrices.create3dScaleMatrix(0.05))
       .build();
   

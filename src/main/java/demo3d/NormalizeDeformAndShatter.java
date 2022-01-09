@@ -97,7 +97,7 @@ public class NormalizeDeformAndShatter extends Demo3d {
     @Override
     public void run() {
       for (Model3d model : objs) {
-        model.translate(model.getPosition().mul(0.006*TrigLookUp.sin(++i*0.0002)));
+        model.translate(model.getPosition().mul(0.005*TrigLookUp.sin(++i*0.0002)));
       }
     }
   }

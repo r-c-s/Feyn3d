@@ -2,6 +2,7 @@ package rcs.feyn.three.geo;
 
 import rcs.feyn.math.MathConsts;
 import rcs.feyn.math.MathUtils;
+import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 
 public class GeoUtils3d {
@@ -42,6 +43,24 @@ public class GeoUtils3d {
         throw new IllegalArgumentException("Polygon3d must be coplanar.");
       }
     }
+  }
+
+  public static final Vector2d[][] triangulate(Vector2d... v) {
+    int size = v.length; 
+    
+    if (size < 3) {
+      throw new IllegalArgumentException("Polygon3d must have 3 or more vertices.");
+    }
+    
+    int numTriangles = size - 2;
+    
+    Vector2d[][] triangles = new Vector2d[numTriangles][3];
+    
+    for (int i = 0; i < numTriangles; i++) {
+      triangles[i] = new Vector2d[]{v[i+1], v[i+2], v[0]};
+    }
+    
+    return triangles;
   }
 
   public static final Vector3d[][] triangulate(Vector3d... v) {

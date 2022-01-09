@@ -2,7 +2,7 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
@@ -25,7 +25,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
   public GouraudTexturedPolygon3dPatch(
       Vector3d[] vertices, 
       Vector3d[] normals,
-      Raster data, 
+      TextureRaster data, 
       int alpha, 
       double zoom,
       RenderOptions3d options) {
@@ -92,25 +92,18 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
 
     double[][] triangulatedIntensities = GeoUtils3d.triangulate(intensities);
     int[][] triangulatedColors = shouldApplyLightingColor ? GeoUtils3d.triangulate(colors) : null;
-
-    int tdw = textureData.getWidth();    
-    int tdh = textureData.getHeight();
     
-    for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {
-      // todo: improve this by using triangle; this distorts the shape of the texture
-      Vector2d[] textureCoordinates = new Vector2d[] {
-          new Vector2d(0, 0),
-          new Vector2d(0, (tdh - 1) / zoom),
-          new Vector2d((tdw - 1) / zoom, (tdh - 1) / zoom)
-      }; 
-      
+    Vector2d[] textureCoordinates = getTextureCoordinates(clippedViewVertices);
+    Vector2d[][] triangulatedTextureCoordinates = GeoUtils3d.triangulate(textureCoordinates);
+
+    for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {      
       GouraudTexturedPolygon3dRenderer.render(
         graphics,
         Pipeline3d.toDeviceCoordinates(triangulatedClippedViewVertices[i], projection, viewPort), 
         triangulatedIntensities[i],
         Optional.ofNullable(shouldApplyLightingColor ? triangulatedColors[i] : null),
         textureData,
-        textureCoordinates,
+        triangulatedTextureCoordinates[i],
         alpha);  
     }    
   }

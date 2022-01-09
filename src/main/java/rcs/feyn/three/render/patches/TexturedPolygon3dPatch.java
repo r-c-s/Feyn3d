@@ -2,7 +2,7 @@ package rcs.feyn.three.render.patches;
 
 import rcs.feyn.three.geo.GeoUtils3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.LightingUtils;
 import rcs.feyn.three.render.Pipeline3d;
@@ -11,6 +11,7 @@ import rcs.feyn.three.render.RenderOptions3d.Option;
 import rcs.feyn.three.render.renderers.TexturedPolygon3dRenderer;
 import rcs.feyn.three.view.ViewUtils;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import rcs.feyn.color.ColorUtils;
@@ -21,13 +22,13 @@ import rcs.feyn.math.Vector3d;
 
 public class TexturedPolygon3dPatch extends Polygon3dPatch {
   
-  protected Raster textureData;
+  protected TextureRaster textureData;
   protected int alpha;
   protected double zoom;
 
   public TexturedPolygon3dPatch(
       Vector3d[] vertices, 
-      Raster data, 
+      TextureRaster data, 
       int alpha, 
       double zoom, 
       RenderOptions3d options) {
@@ -69,6 +70,9 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     
     Vector3d[][] triangulatedClippedViewVertices = GeoUtils3d.triangulate(clippedViewVertices);
     
+    Vector2d[] textureCoordinates = getTextureCoordinates(clippedViewVertices);
+    Vector2d[][] triangulatedTextureCoordinates = GeoUtils3d.triangulate(textureCoordinates);
+    
     boolean shouldReverseNormalForLighting = !options.isEnabled(Option.bothSidesShaded) && isBackfaceToCamera;
     Vector3d normalForLighting = shouldReverseNormalForLighting ? surfaceNormal.mul(-1) : surfaceNormal;
 
@@ -94,25 +98,66 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
     
     int[][] triangulatedColors = shouldApplyLightingColor ? GeoUtils3d.triangulate(colors) : null;
 
-    int tdw = textureData.getWidth();    
-    int tdh = textureData.getHeight();
-
-    for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {      
-      // todo: improve this by using triangle; this distorts the shape of the texture
-      Vector2d[] textureCoordinates = new Vector2d[] {
-          new Vector2d(0, 0),
-          new Vector2d(0, (tdh - 1) / zoom),
-          new Vector2d((tdw - 1) / zoom, (tdh - 1) / zoom)
-      }; 
-      
+    for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {     
       TexturedPolygon3dRenderer.render(
         graphics,
         Pipeline3d.toDeviceCoordinates(triangulatedClippedViewVertices[i], projection, viewPort),
         intensity,
         Optional.ofNullable(shouldApplyLightingColor ? triangulatedColors[i] : null),
         textureData,
-        textureCoordinates,
+        triangulatedTextureCoordinates[i],
         alpha);
     }
+  }
+
+  protected Vector2d[] getTextureCoordinates(Vector3d[] clippedViewVertices) {
+    Vector3d center = GeoUtils3d.getCenter(clippedViewVertices);
+    Vector3d normal = GeoUtils3d.getNormal(clippedViewVertices);
+    
+    Vector3d axis = normal.crossProd(Vector3d.Z_AXIS);
+    double theta = normal.angleBetween(Vector3d.Z_AXIS);
+    
+    Vector3d[] rotated = Arrays.stream(clippedViewVertices)
+        .map(vertex -> vertex.rotate(center, axis, theta))
+        .map(vertex -> vertex.subLocal(center))
+        .map(vertex -> vertex.z(0))
+        .toArray(Vector3d[]::new);
+    
+    Vector3d topBar = rotated[1].sub(rotated[0]);   
+    double phi = topBar.angleBetween(Vector3d.X_AXIS, Vector3d.NEG_Y_AXIS);    
+    
+    rotated = Arrays.stream(rotated)
+        .map(vertex -> vertex.rotateLocal(Vector3d.ZERO, Vector3d.Z_AXIS, phi))
+        .toArray(Vector3d[]::new);
+
+    double minX = 0;
+    double minY = 0;
+    double maxX = 0;
+    double maxY = 0;
+    
+    for (Vector3d vertex : rotated) {
+      minX = Math.min(minX, vertex.x());
+      minY = Math.min(minY, vertex.y());
+    }
+    
+    for (Vector3d vertex : rotated) {
+      vertex.addLocal(Math.abs(minX), Math.abs(minY), 0);
+    }
+    
+    for (Vector3d vertex : rotated) {
+      maxX = Math.max(maxX, vertex.x());
+      maxY = Math.max(maxY, vertex.y());
+    }
+    
+    int tdw = textureData.getWidth() - 1;    
+    int tdh = textureData.getHeight() - 1;
+
+    double finalMaxX = maxX;
+    double finalMaxY = maxY;
+    
+    return Arrays.stream(rotated)
+        .map(vertex -> new Vector2d(vertex.x() / finalMaxX * tdw, vertex.y() / finalMaxY * tdh))
+        .toArray(Vector2d[]::new);
+        
   }
 }

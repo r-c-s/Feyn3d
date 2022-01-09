@@ -7,7 +7,7 @@ import rcs.feyn.math.MathUtils;
 import rcs.feyn.math.Vector2d;
 import rcs.feyn.math.Vector3d;
 import rcs.feyn.three.gfx.Graphics3d;
-import rcs.feyn.three.gfx.Raster;
+import rcs.feyn.three.gfx.TextureRaster;
 
 public class GouraudTexturedPolygon3dRenderer {
   
@@ -16,7 +16,7 @@ public class GouraudTexturedPolygon3dRenderer {
       Vector3d[] deviceCoordinates, 
       double[] intensities, 
       Optional<int[]> colors,
-      Raster textureData, 
+      TextureRaster textureData, 
       Vector2d[] textureCoordinates,
       int alpha) {
 
@@ -124,15 +124,9 @@ public class GouraudTexturedPolygon3dRenderer {
         Vector2d interpolatedTextureCoordinate = RenderUtils.barycentricToCartesian(
             bary, textureCoordinates[0], textureCoordinates[1], textureCoordinates[2]);
         
-        int pixel;
-        try {
-          pixel = textureData.getPixel(
-              MathUtils.roundToInt(interpolatedTextureCoordinate.x()), 
-              MathUtils.roundToInt(interpolatedTextureCoordinate.y()));
-        } catch (ArrayIndexOutOfBoundsException e) {
-          // need to figure out why this is happening
-          pixel = textureData.getPixel(tdw - 1, tdh - 1);
-        }
+        int pixel = textureData.getPixel(
+            (int) Math.max(0, Math.min(interpolatedTextureCoordinate.x(), tdw - 1)),
+            (int) Math.max(0, Math.min(interpolatedTextureCoordinate.y(), tdh - 1)));
         
         int colorWithIntensity = ColorUtils.mulRGB(pixel, shadeFactor);
         
