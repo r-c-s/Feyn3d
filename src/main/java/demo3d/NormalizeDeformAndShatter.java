@@ -56,8 +56,8 @@ public class NormalizeDeformAndShatter extends Demo3d {
     Model3dUtils.deform(obj, 0.2);
 
     // shatter
-    objs = Model3dUtils.partition3d(obj);
-    //objs = Model3dUtils.partition2d(obj, 0.2);
+    //objs = Model3dUtils.partition3d(obj);
+    objs = Model3dUtils.partition2d(obj, 0.2);
     
     for (Model3d model : objs) {
       FeynRuntime.getRepository().add(model);

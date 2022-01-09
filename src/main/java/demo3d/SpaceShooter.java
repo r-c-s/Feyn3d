@@ -55,9 +55,10 @@ public class SpaceShooter extends Demo3d {
     wzc.setAmount(0);
     
     camera.translate(0, 5, 0);
+    camera.rotate(Vector3d.NEG_X_AXIS, 20 * MathConsts.DEGREES_TO_RADIANS);
     
     for (int i = 0; i < stars.size(); i++) {
-      Point3d star = new Point3d(Vector3d.getRandomUnitVector().mul(500), true);
+      Point3d star = new Point3d(Vector3d.getRandomUnitVector().mul(400), true);
       
       // these will glimmer on animateStars()
       if (i % 50 == 0) {
@@ -122,8 +123,9 @@ public class SpaceShooter extends Demo3d {
   
   private void addNewProjectile() {
     double xDotProd = camera.getForwardVector().dotProd(Vector3d.X_AXIS);
+    double zDotProd = camera.getForwardVector().dotProd(Vector3d.Z_AXIS);
     Vector3d position = new Vector3d(0, 0, 0);
-    Vector3d velocity = new Vector3d(-xDotProd, 0, -1);
+    Vector3d velocity = new Vector3d(-xDotProd, 0, -zDotProd).normalizeLocal().mul(2);
     CollidableModel3d projecile = (CollidableModel3d) Model3dFactory.pyramid(0.5, 5, 5)
         .setColor(FeynColor.orangeRed)
         .setOuterBoundingObject(new BoundingSphere3d(0.5))
