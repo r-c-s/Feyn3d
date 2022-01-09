@@ -23,6 +23,12 @@ public class Model3dFace extends AbstractColorable {
     super(color);
     this.indices = indices;
   }
+  
+  public Model3dFace cloneWithNewIndices(int[] indices) {
+    Model3dFace newFace = new Model3dFace(indices, color);
+    newFace.setRenderOptions(options);
+    return newFace;
+  }
 
   public int[] getIndices() {
     return indices.clone();

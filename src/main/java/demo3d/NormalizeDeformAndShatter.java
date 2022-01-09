@@ -56,8 +56,8 @@ public class NormalizeDeformAndShatter extends Demo3d {
     Model3dUtils.deform(obj, 0.2);
 
     // shatter
-    //objs = Model3dUtils.partition3d(obj);
-    objs = Model3dUtils.partition2d(obj, 0.2);
+    objs = Model3dUtils.partition3d(obj);
+    //objs = Model3dUtils.partition2d(obj, 0.2);
     
     for (Model3d model : objs) {
       FeynRuntime.getRepository().add(model);
@@ -74,7 +74,7 @@ public class NormalizeDeformAndShatter extends Demo3d {
     camera.translate(0, 0, 2);
     
     FeynRuntime.addDiffuseLightSource(new VariableIntensityLightSource3d(2)); 
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.2));
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.4));
     
     wzc.setAmount(0.2);
   }
@@ -97,7 +97,7 @@ public class NormalizeDeformAndShatter extends Demo3d {
     @Override
     public void run() {
       for (Model3d model : objs) {
-        model.translate(model.getPosition().mul(0.005*TrigLookUp.sin(++i*0.0002)));
+        model.translate(model.getPosition().mul(0.006*TrigLookUp.sin(++i*0.0002)));
       }
     }
   }

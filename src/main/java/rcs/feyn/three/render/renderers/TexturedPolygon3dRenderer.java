@@ -18,8 +18,7 @@ public class TexturedPolygon3dRenderer {
       Optional<int[]> colors,
       Raster textureData, 
       Vector2d[] textureCoordinates,
-      int alpha,
-      double zoom) {
+      int alpha) {
     
     if (deviceCoordinates.length != 3) {
       throw new IllegalArgumentException("Can only render triangles");

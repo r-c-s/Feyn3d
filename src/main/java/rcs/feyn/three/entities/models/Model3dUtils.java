@@ -133,12 +133,8 @@ public class Model3dUtils {
           indicesToUse[2] = (k + 1) % indices.length + indices.length;
           indicesToUse[3] = (k + 1) % indices.length;
         }
-        
-        if (face instanceof Model3dTexturedFace) { 
-          partFaces[j] = new Model3dTexturedFace(indicesToUse, ((Model3dTexturedFace) face).getTextureData());
-        } else {
-          partFaces[j] = new Model3dFace(indicesToUse, face.getColor());
-        }
+
+        partFaces[j] = face.cloneWithNewIndices(indicesToUse);
       }      
 
       Vector3d centerOfFace = GeoUtils3d.getCenter(faceVertices);
@@ -179,9 +175,6 @@ public class Model3dUtils {
     return parts;
   }
   
-  /**
-   * todo: option to triangulate polygons
-   */
   public static Model3d[] partition3d(Model3d model, double recursionLevel) {
     ArrayList<Model3d> partsBuffer = new ArrayList<>();
     partsBuffer.add(model);
@@ -230,32 +223,12 @@ public class Model3dUtils {
       for (Vector3d vertex : partVertices) {
         vertex.subLocal(com);
       }
-
-      if (faces[i] instanceof Model3dTexturedFace) {
-        partFaces[len] = new Model3dTexturedFace(
-            adjustedIndices, 
-            ((Model3dTexturedFace) faces[i]).getTextureData());
-      } else {
-        partFaces[len] = new Model3dFace(
-            adjustedIndices, 
-            faces[i].getColor());
-      }
+      
+      partFaces[len] = face.cloneWithNewIndices(adjustedIndices);
       
       for (int l = 0; l < len; l++) {
-        Model3dFace currFace = faces[i];
-        int[] idxs = new int[] { (1+l)%len, l, len };
-        
-        if (face instanceof Model3dTexturedFace) {
-          partFaces[l] = new Model3dTexturedFace(
-              idxs, 
-              ((Model3dTexturedFace) face).getTextureData());
-        } else {
-          partFaces[l] = new Model3dFace(
-              idxs, 
-              currFace.getColor());
-        }
-        
-        partFaces[l].setRenderOptions(currFace.getRenderOptions());
+        int[] idxs = new int[] { (1+l)%len, l, len };        
+        partFaces[l] = face.cloneWithNewIndices(idxs);
       }
 
       Model3d part = new Model3d(new Model3dVertices(partVertices), partFaces);
@@ -306,16 +279,7 @@ public class Model3dUtils {
               newVertices.indexOf(vertices[i]),
               newVertices.indexOf(vertices[(i+1) % vertices.length])
           };
-          
-          Model3dFace newFace; 
-          if (face instanceof Model3dTexturedFace) {
-            newFace = new Model3dTexturedFace(newFaceIndices, ((Model3dTexturedFace) face).getTextureData());
-          } else {
-            newFace = new Model3dFace(newFaceIndices, face.getColor()); 
-          }
-          
-          newFace.setRenderOptions(face.getRenderOptions());
-          
+          Model3dFace newFace = face.cloneWithNewIndices(newFaceIndices);          
           newFaces.add(newFace);
         }        
       } else { 
@@ -340,15 +304,7 @@ public class Model3dUtils {
             newVertices.indexOf(vertices[2])
         };
         
-        Model3dFace newFace; 
-        if (face instanceof Model3dTexturedFace) {
-          newFace = new Model3dTexturedFace(newFaceIndices, ((Model3dTexturedFace) face).getTextureData());
-        } else {
-          newFace = new Model3dFace(newFaceIndices, face.getColor());
-        }
-
-        newFace.setRenderOptions(face.getRenderOptions());
-        
+        Model3dFace newFace = face.cloneWithNewIndices(newFaceIndices);
         newFaces.add(newFace);
       }
     }

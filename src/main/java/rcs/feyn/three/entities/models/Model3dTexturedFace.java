@@ -1,6 +1,7 @@
 package rcs.feyn.three.entities.models;
 
 import rcs.feyn.color.AlphaEnabled;
+import rcs.feyn.color.ColorUtils;
 import rcs.feyn.color.FeynColor;
 import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
@@ -27,8 +28,15 @@ public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
     super(indices, null);
     setTextureData(textureData);
     setAlpha(alpha);
-    this.color = new FeynColor(textureData.getAverageColor());
+    this.color = new FeynColor(ColorUtils.setAlphaToRGBA(textureData.getAverageColor(), alpha));
     this.zoom = zoom;
+  }
+  
+  @Override
+  public Model3dTexturedFace cloneWithNewIndices(int[] indices) {
+    Model3dTexturedFace newFace = new Model3dTexturedFace(indices, textureData, alpha, zoom);
+    newFace.setRenderOptions(options);
+    return newFace;
   }
   
   public TextureRaster getTextureData() {
@@ -38,6 +46,10 @@ public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
   public synchronized void setTextureData(TextureRaster textureData) {
     this.lastTextureData = textureData;
     this.textureData = textureData;
+  }
+  
+  public double getZoom() {
+    return zoom;
   }
   
   @Override

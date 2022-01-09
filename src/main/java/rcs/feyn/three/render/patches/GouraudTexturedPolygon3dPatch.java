@@ -97,12 +97,12 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
     int tdh = textureData.getHeight();
     
     for (int i = 0; i < triangulatedClippedViewVertices.length; i++) {
-      // todo: improve this by using triagle; this distorts the shape of the texture
+      // todo: improve this by using triangle; this distorts the shape of the texture
       Vector2d[] textureCoordinates = new Vector2d[] {
           new Vector2d(0, 0),
-          new Vector2d(0, tdh - 1),
-          new Vector2d(tdw - 1, tdh - 1)
-      };
+          new Vector2d(0, (tdh - 1) / zoom),
+          new Vector2d((tdw - 1) / zoom, (tdh - 1) / zoom)
+      }; 
       
       GouraudTexturedPolygon3dRenderer.render(
         graphics,
@@ -111,8 +111,7 @@ public class GouraudTexturedPolygon3dPatch extends TexturedPolygon3dPatch {
         Optional.ofNullable(shouldApplyLightingColor ? triangulatedColors[i] : null),
         textureData,
         textureCoordinates,
-        alpha,
-        zoom);  
+        alpha);  
     }    
   }
 }

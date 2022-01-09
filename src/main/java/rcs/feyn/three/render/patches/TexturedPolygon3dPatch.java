@@ -101,8 +101,8 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
       // todo: improve this by using triangle; this distorts the shape of the texture
       Vector2d[] textureCoordinates = new Vector2d[] {
           new Vector2d(0, 0),
-          new Vector2d(0, tdh - 1),
-          new Vector2d(tdw - 1, tdh - 1)
+          new Vector2d(0, (tdh - 1) / zoom),
+          new Vector2d((tdw - 1) / zoom, (tdh - 1) / zoom)
       }; 
       
       TexturedPolygon3dRenderer.render(
@@ -112,8 +112,7 @@ public class TexturedPolygon3dPatch extends Polygon3dPatch {
         Optional.ofNullable(shouldApplyLightingColor ? triangulatedColors[i] : null),
         textureData,
         textureCoordinates,
-        alpha, 
-        zoom);
+        alpha);
     }
   }
 }
