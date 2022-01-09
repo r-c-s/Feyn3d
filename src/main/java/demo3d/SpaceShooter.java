@@ -23,6 +23,7 @@ import rcs.feyn.three.entities.models.Model3dFace;
 import rcs.feyn.three.entities.models.Model3dFactory;
 import rcs.feyn.three.entities.models.Model3dUtils;
 import rcs.feyn.three.entities.primitives.Point3d;
+import rcs.feyn.three.gfx.TextureRaster;
 import rcs.feyn.three.kernel.FeynRuntime;
 import rcs.feyn.three.optics.AmbientLightSource3d;
 import rcs.feyn.three.optics.ConstantLightSource3d;
@@ -36,6 +37,8 @@ public class SpaceShooter extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L; 
+  
+  private final TextureRaster rockTexture = Model3dUtils.getImageData(System.getProperty("user.dir") + "/textures/rock.jpg");
   
   private XORShift xorShift = XORShift.getInstance();
 
@@ -86,7 +89,7 @@ public class SpaceShooter extends Demo3d {
     var lightSource = new ConstantLightSource3d(1);
     lightSource.setPosition(0, 10, 0);
     FeynRuntime.addDiffuseLightSource(lightSource);
-    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.05)); 
+    FeynRuntime.setAmbientLight(new AmbientLightSource3d(0.1)); 
   }
 
   @Override
@@ -147,6 +150,7 @@ public class SpaceShooter extends Demo3d {
     double radius = xorShift.randomDouble(0.5, 1.5);
     var rock = (CollidableModel3d) Model3dFactory
         .dodecahedron(radius)
+        .setTextureData(rockTexture)
         .setOuterBoundingObject(new BoundingSphere3d(radius))
         .setPosition(new Vector3d(xorShift.randomDouble(-10, 10), 0, -200))
         .setVelocity(new Vector3d(0, 0, 0.5))
@@ -160,8 +164,8 @@ public class SpaceShooter extends Demo3d {
     
     Model3dUtils.setOptions(
         rock, 
-        Set.of(flatShaded), 
-        Set.of(gouraudShaded));
+        Set.of(gouraudShaded), 
+        Set.of());
     
     rocks.add(rock);
   }
@@ -227,7 +231,13 @@ public class SpaceShooter extends Demo3d {
 
     private void addNewShards(Model3d object) {
       var newShards = Model3dUtils.partition3d(object);
-      for (var shard : newShards) {        
+      for (Model3d shard : newShards) {
+
+        Model3dUtils.setOptions(
+            shard, 
+            Set.of(flatShaded), 
+            Set.of(gouraudShaded));
+        
         double speed = object.getVelocity().length() * (1 + XORShift.getInstance().randomDouble(-0.5, 0.5));
         Vector3d velocity = Vector3d.getRandomUnitVector().mulLocal(speed).z(object.getVelZ());
         shard.setVelocity(velocity);
