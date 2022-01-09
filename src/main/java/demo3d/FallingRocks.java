@@ -55,7 +55,7 @@ public class FallingRocks extends Demo3d {
     
     camera.translate(0, 4, 10);
     
-    ground.setColor(FeynColor.darkOliveGreen);
+    ground.setColorToAllFaces(FeynColor.darkOliveGreen);
 
     Model3dUtils.setOptions(
         ground, 

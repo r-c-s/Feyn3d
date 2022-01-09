@@ -43,7 +43,7 @@ public class BoxOfRain extends Demo3d {
     
     camera.translate(0, 4, 10);
     
-    ground.setColor(FeynColor.blueViolet);
+    ground.setColorToAllFaces(FeynColor.blueViolet);
     
     FeynRuntime.getRepository().add(ground);
     FeynRuntime.getRepository().add(raindrops);

@@ -190,6 +190,10 @@ public class SpaceShooter extends Demo3d {
     shards.forEach(shard -> {
       shard.animate();
       
+      if (shard.getPosZ() > 0) {
+        shard.destroy();
+      }
+      
       for (Model3dFace face : shard.getFaces()) {
         var newColor = face.getColor().fadeTo(0.999);
         if (newColor.getAlpha() < 5) {

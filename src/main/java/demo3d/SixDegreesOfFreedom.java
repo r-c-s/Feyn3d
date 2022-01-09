@@ -65,15 +65,15 @@ public class SixDegreesOfFreedom extends Demo3d {
     xyPlane.rotate(Vector3d.X_AXIS, 90 * MathConsts.DEGREES_TO_RADIANS);
     zyPlane.rotate(Vector3d.Z_AXIS, 90 * MathConsts.DEGREES_TO_RADIANS);
     
-    xyPlane.setColor(new FeynColor(255, 255, 0, 50));  
-    xzPlane.setColor(new FeynColor(255, 0, 255, 50));  
-    zyPlane.setColor(new FeynColor(0, 255, 255, 50)); 
+    xyPlane.setColorToAllFaces(new FeynColor(255, 255, 0, 50));  
+    xzPlane.setColorToAllFaces(new FeynColor(255, 0, 255, 50));  
+    zyPlane.setColorToAllFaces(new FeynColor(0, 255, 255, 50)); 
 
     x.setColor(FeynColor.red);
     y.setColor(FeynColor.green);
     z.setColor(FeynColor.blue);
     
-    obj.setColor(FeynColor.white);
+    obj.setColorToAllFaces(FeynColor.white);
     for (Model3dFace face : obj.getFaces()) {
       face.getRenderOptions().enable(cullIfBackface);
       face.getRenderOptions().enable(gouraudShaded);

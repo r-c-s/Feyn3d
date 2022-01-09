@@ -49,7 +49,7 @@ public class Model3d extends Sprite3d implements Renderable3d {
     return faces;
   }
 
-  public final void setColor(FeynColor color) {
+  public final void setColorToAllFaces(FeynColor color) {
     for (var face : faces) {
       face.setColor(color);
     }

@@ -71,7 +71,7 @@ public class Gumballs extends Demo3d {
            xor.randomDouble(-0.5, 0.5), 
            xor.randomDouble(-0.51, 0.5));
       
-      sphere.setColor(FeynColor.randomColor());
+      sphere.setColorToAllFaces(FeynColor.randomColor());
       sphere.setMass(radius);
 
       Model3dUtils.setOptions(
@@ -82,7 +82,7 @@ public class Gumballs extends Demo3d {
       spheres.add(sphere);
     }
 
-    cube.setColor(new FeynColor(255, 255, 255, 255));
+    cube.setColorToAllFaces(new FeynColor(255, 255, 255, 255));
     cube.getOuterBoundingObject().inverse();
     Model3dUtils.setOptions(
         cube,
