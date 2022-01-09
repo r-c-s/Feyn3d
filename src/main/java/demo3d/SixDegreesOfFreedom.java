@@ -20,7 +20,7 @@ import rcs.feyn.math.Vector3d;
 
 import static rcs.feyn.three.render.RenderOptions3d.Option.*;
 
-public class Rotation extends Demo3d {
+public class SixDegreesOfFreedom extends Demo3d {
 
   @Serial
   private static final long serialVersionUID = 1L; 
@@ -47,7 +47,7 @@ public class Rotation extends Demo3d {
    
   private ConstantLightSource3d lightSource; 
   
-  public Rotation() {
+  public SixDegreesOfFreedom() {
     super();
   }
   
@@ -149,7 +149,7 @@ public class Rotation extends Demo3d {
 
   public static void main(String[] args) {
     var frame = new FeynFrame(800, 800, "Rotation Demo", true, false);
-    var demo = new Rotation();
+    var demo = new SixDegreesOfFreedom();
     frame.add("Center", demo);
     frame.setVisible(true);
     demo.init();
