@@ -93,11 +93,8 @@ public class Model3dUtils {
     return partition2d(model, 0);
   }
   
-  /**
-   * todo: fix this to partition correctly for thickness
-   * so all pieces fit together perfectly.
-   */
   public static Model3d[] partition2d(Model3d model, double thickness) {
+    Vector3d centerOfModel = model.getCenter();
     Model3dFace[] faces = model.getFaces();
     Model3d[] parts = new Model3d[faces.length];
     
@@ -144,13 +141,19 @@ public class Model3dUtils {
         }
       }      
 
-      Vector3d normalOfFace = GeoUtils3d.getNormal(faceVertices);
+      Vector3d centerOfFace = GeoUtils3d.getCenter(faceVertices);
       
       if (thickness > 0) {
-        Vector3d offsetVertex = normalOfFace.mul(-thickness);
         faceVertices = Stream.concat(
               Arrays.stream(faceVertices),
-              Arrays.stream(faceVertices).map(vertex -> vertex.add(offsetVertex)))
+              Arrays.stream(faceVertices).map(vertex -> { 
+                Vector3d csv = centerOfFace.sub(vertex);
+                Vector3d cmv = centerOfModel.sub(vertex);
+                double theta = csv.angleBetween(cmv);
+                double length = Math.abs(thickness / Math.tan(theta));
+                Vector3d offsetVertex = cmv.normalize().mulLocal(length);
+                return vertex.add(offsetVertex);
+              }))
             .toArray(Vector3d[]::new);
       }
       
