@@ -201,11 +201,11 @@ public class SpaceShooter extends Demo3d {
       }
       
       for (Model3dFace face : shard.getFaces()) {
-        var newColor = face.getColor().fadeTo(0.999);
-        if (newColor.getAlpha() < 5) {
+        if (face.getAlpha() < 1) {
           shard.destroy();
         } else {
-          face.setColor(newColor);
+          double newAlpha = face.getAlpha() * 0.99;
+          face.setAlpha((int) newAlpha);
         }
       }
     });

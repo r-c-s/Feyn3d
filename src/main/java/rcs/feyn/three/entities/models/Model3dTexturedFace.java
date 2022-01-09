@@ -73,7 +73,7 @@ public class Model3dTexturedFace extends Model3dFace implements AlphaEnabled {
       lastVertices = getVertices(vertices.getVertices());
       lastCameraPosition = FeynRuntime.getView().getCamera().getPosition();
     }
-      
+    
     Polygon3dPatch newPatch;
     if (vertices instanceof Model3dGouraudVertices && options.isEnabled(Option.gouraudShaded) && options.isEnabled(Option.textured)) {
       newPatch = new GouraudTexturedPolygon3dPatch(
