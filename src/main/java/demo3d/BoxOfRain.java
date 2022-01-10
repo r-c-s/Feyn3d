@@ -103,7 +103,7 @@ public class BoxOfRain extends Demo3d {
     var wave = Polygon3d.regularPolygon(0.1, 10);
     wave.setPosition(raindrop.getA().x(), 0.01, raindrop.getA().z());
     wave.setColor(FeynColor.white.fadeTo(0.9));
-    wave.getRenderingOptions().enable(meshOnly);
+    wave.getRenderOptions().enable(meshOnly);
     waves.add(wave);
   }
   

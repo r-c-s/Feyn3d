@@ -161,7 +161,7 @@ public final class FeynColor {
   public static final FeynColor mediumPurple         = new FeynColor(147, 112, 219);
   public static final FeynColor thistle              = new FeynColor(216, 191, 216);
   
-  private static final double FACTOR = 0.7;
+  private static final double DARKENING_FACTOR = 0.7;
   
   private int r;
   private int g;
@@ -256,7 +256,7 @@ public final class FeynColor {
     int B = b;
     int A = a;
 
-    int i = (int)(1.0 / (1.0-FACTOR));
+    int i = (int)(1.0 / (1.0-DARKENING_FACTOR));
     if (R == 0 && G == 0 && B == 0) {
         return new FeynColor(i, i, i, A);
     }
@@ -264,13 +264,13 @@ public final class FeynColor {
     if (G > 0 && G < i) G = i;
     if (B > 0 && B < i) B = i;
 
-    return new FeynColor(Math.min((int)(R / FACTOR), 255),
-                         Math.min((int)(G / FACTOR), 255),
-                         Math.min((int)(B / FACTOR), 255), A);
+    return new FeynColor(Math.min((int)(R / DARKENING_FACTOR), 255),
+                         Math.min((int)(G / DARKENING_FACTOR), 255),
+                         Math.min((int)(B / DARKENING_FACTOR), 255), A);
   }
 
   public FeynColor darker() {
-      return mul(FACTOR);
+      return mul(DARKENING_FACTOR);
   }
 
   public FeynColor fadeTo(double d) {

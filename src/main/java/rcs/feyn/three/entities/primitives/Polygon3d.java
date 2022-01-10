@@ -2,7 +2,6 @@ package rcs.feyn.three.entities.primitives;
 
 import rcs.feyn.three.entities.Particle3d;
 import rcs.feyn.three.geo.GeoUtils3d;
-import rcs.feyn.three.render.RenderOptions3d;
 import rcs.feyn.three.render.patches.Patch3d;
 import rcs.feyn.three.render.patches.Polygon3dPatch;
 import rcs.feyn.color.Colorable;
@@ -13,8 +12,6 @@ import rcs.feyn.utils.ArrayUtils;
 import rcs.feyn.math.MathConsts;
 
 public class Polygon3d extends Primitive3d implements Colorable {
-
-  protected RenderOptions3d options = RenderOptions3d.defaults();
   
   protected Vector3d[] vertices;
 
@@ -88,10 +85,6 @@ public class Polygon3d extends Primitive3d implements Colorable {
     }
   }
 
-  public RenderOptions3d getRenderingOptions() {
-    return options;
-  }
-
   @Override
   public Patch3d[] getRenderablePatches() {
     if (isHidden()) {
@@ -100,7 +93,7 @@ public class Polygon3d extends Primitive3d implements Colorable {
     
     return new Patch3d[] {
       new Polygon3dPatch(
-          copyVertices(), 
+          vertices, 
           color,
           options)
     };

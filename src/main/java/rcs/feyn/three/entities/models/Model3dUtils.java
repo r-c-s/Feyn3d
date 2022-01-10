@@ -89,6 +89,9 @@ public class Model3dUtils {
         getInnerBoundingSpheres(model, recursionLevel));
   }
   
+  /**
+   * todo: this should return an array of Polygon3d
+   */
   public static Model3d[] partition2d(Model3d model) {
     return partition2d(model, 0);
   }
