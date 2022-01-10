@@ -32,7 +32,7 @@ public class Vortex extends Demo3d {
                              (int)(TrigLookUp.cos(r*t*QUARTER_PI + t)*255), 
                              255);
       },
-      0.001, 
+      0.01, 
       0.05);
 
   public Vortex() { }
