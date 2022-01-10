@@ -156,9 +156,6 @@ public class Vector2d implements Freezable<Vector2d> {
                         y / scalar);
   } 
   
-//  /*****************************************************************************
-//   * 
-//   */
 //  public Vector2d mulLocal(Matrix22 transform) {
 //    return set(
 //      x * transform.m00 + y * transform.m10,
@@ -166,9 +163,6 @@ public class Vector2d implements Freezable<Vector2d> {
 //    );
 //  }
 //  
-//  /*****************************************************************************
-//   * 
-//   */
 //  public Vector2d mul(Matrix22 transform) {
 //    return new Vector2d(this).mulLocal(transform);
 //  } 
@@ -252,9 +246,6 @@ public class Vector2d implements Freezable<Vector2d> {
   }
 
   public Vector2d rotateLocal(Vector2d origin, double radians) {
-    if (radians == 0 || radians == 360 || equals(origin) || equals(ZERO)) {
-      return this;
-    } 
     return affineTransformLocal(Matrix33.createRotateMatrix(origin, radians));
   }
 
@@ -263,9 +254,6 @@ public class Vector2d implements Freezable<Vector2d> {
   }
 
   public Vector2d rotateLocal(double radians) {
-    if (radians == 0 || radians == 360 ||equals(ZERO)) {
-      return this;
-    }
     return affineTransformLocal(Matrix33.createRotateMatrix(radians));
   }
 

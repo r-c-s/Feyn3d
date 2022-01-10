@@ -32,7 +32,7 @@ public abstract class AbstractAnimationCanvas
       long duration = TimeUtils.getElapsedTimeMillis(this::repaintSynchronous);
       
       // FPS:
-      // System.out.println(1000.0 / duration);
+      System.out.println(1000.0 / duration);
       
       if (duration < FPS_DELAY_MS) {
         try {
